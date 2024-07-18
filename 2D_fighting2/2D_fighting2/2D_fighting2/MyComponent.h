@@ -10,7 +10,7 @@ using namespace std;
 */
 
 
-//myComponentクラスがメンバ変数にGameObjectクラスを持たせるために前方宣言
+//myComponentクラスがメンバ変数にMyGameObjectクラスを持たせるために前方宣言
 class MyGameObject;
 
 /**
