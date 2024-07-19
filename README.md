@@ -178,7 +178,20 @@
 
 ## MyTransform
 
+<b> <説明> </b>
 
+座標、回転などを管理するコンポーネント
+
+<br />
+<br />
+
+<b> <メソッド> </b>
+
+<body>
+
+
+
+</body>
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
 
