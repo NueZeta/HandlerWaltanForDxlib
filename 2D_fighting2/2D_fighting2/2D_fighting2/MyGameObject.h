@@ -1,7 +1,7 @@
 #pragma once
-#include<vector>
-#include<memory>
-#include"MyComponent.h"
+#include <vector>
+#include <memory>
+#include "MyComponent.h"
 
 
 /**
@@ -37,10 +37,10 @@ public:
 	 * @author		Suzuki N
 	 * @date		24/06/17
 	 */
-	void AddComponent(unique_ptr<MyComponent> _component)
+	void AddMyComponent(unique_ptr<MyComponent> _component)
 	{
 		_component->SetMyGameObject(this);
-		_component->Start();
+		//_component->Start();
 		myComponents.push_back(move(_component));
 	}
 
@@ -73,7 +73,7 @@ public:
 	 */
 	void MyComponentsUpdate()
 	{
-		for (unique_ptr<MyComponent>& component : myComponents)
-			component->Update();
+		//for (unique_ptr<MyComponent>& component : myComponents)
+			//component->Update();
 	}
 };

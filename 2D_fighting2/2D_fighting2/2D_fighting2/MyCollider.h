@@ -1,6 +1,6 @@
-#include<iostream>
-#include"MyComponent.h"
 #pragma once
+#include <iostream>
+#include "MyComponent.h"
 
 
 /**
@@ -46,7 +46,7 @@ public:
 
 	/**
 	 * @brief		MyColliderのコンストラクタ
-	 * @ditail		イニシャライズ用
+	 * @detail		イニシャライズ用
 	 * @author		Suzuki N
 	 * @date		24/07/18
 	 */
@@ -55,13 +55,24 @@ public:
 	}
 
 
+#pragma region オーバーライドメソッド
+
 	/**
 	 * @brief		毎フレーム呼ばれる
-	 * @ditail		オーバーライド関数
+	 * @detail		オーバーライド関数
 	 * @author		Suzuki N
 	 * @date		24/06/17
 	 */
-	void Update() override
+	void Start() override
 	{
+		OnCollisionEnterHandler();
 	}
+
+
+	void OnCollisionEnter() override
+	{
+		cout << "MyColliderコンポーネントのOnCollisionEnterメソッド\n";
+	}
+
+#pragma endregion
 };

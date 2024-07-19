@@ -1,6 +1,6 @@
-#include<iostream>
-#include"MyComponent.h"
 #pragma once
+#include <iostream>
+#include "MyComponent.h"
 
 
 /**
@@ -43,16 +43,8 @@ public:
 
 	/*     メソッド     */
 
-	/**
-	 * @brief		毎フレーム呼ばれる
-	 * @ditail		オーバーライド関数
-	 * @author		Suzuki N
-	 * @date		24/06/17
-	 */
-	void Update() override
-	{
-		cout << "MyTransformコンポーネントのUpdateメソッド\n";
-	}
+
+#pragma region Getterメソッド群
 
 	/**
 	 * @brief		ワールド座標を返す
@@ -61,4 +53,21 @@ public:
 	 * @date		24/06/17
 	 */
 	MyVector3 GetPosition() { return Position; }
+
+#pragma endregion
+
+#pragma region オーバーライドメソッド
+
+	/**
+	 * @brief		毎フレーム呼ばれる
+	 * @detail		オーバーライド関数
+	 * @author		Suzuki N
+	 * @date		24/06/17
+	 */
+	void Update() override
+	{
+		cout << "MyTransformコンポーネントのUpdateメソッド\n";
+	}
+
+#pragma endregion
 };

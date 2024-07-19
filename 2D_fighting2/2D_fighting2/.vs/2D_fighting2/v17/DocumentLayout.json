@@ -1,22 +1,30 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\github\\FightingGames2\\2D_fighting2\\2D_fighting2\\",
+  "WorkspaceRootPath": "D:\\FightingGames2\\2D_fighting2\\2D_fighting2\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{249889D7-2EBD-44C8-B38D-EE779D1610BC}|2D_fighting2\\2D_fighting2.vcxproj|D:\\github\\FightingGames2\\2D_fighting2\\2D_fighting2\\2D_fighting2\\MyComponent.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{249889D7-2EBD-44C8-B38D-EE779D1610BC}|2D_fighting2\\2D_fighting2.vcxproj|solutionrelative:2D_fighting2\\MyComponent.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{249889D7-2EBD-44C8-B38D-EE779D1610BC}|2D_fighting2\\2D_fighting2.vcxproj|D:\\FightingGames2\\2D_fighting2\\2D_fighting2\\2D_fighting2\\HandlerWaltan.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{249889D7-2EBD-44C8-B38D-EE779D1610BC}|2D_fighting2\\2D_fighting2.vcxproj|solutionrelative:2D_fighting2\\HandlerWaltan.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{249889D7-2EBD-44C8-B38D-EE779D1610BC}|2D_fighting2\\2D_fighting2.vcxproj|D:\\github\\FightingGames2\\2D_fighting2\\2D_fighting2\\2D_fighting2\\MyGameObject.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{249889D7-2EBD-44C8-B38D-EE779D1610BC}|2D_fighting2\\2D_fighting2.vcxproj|solutionrelative:2D_fighting2\\MyGameObject.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{249889D7-2EBD-44C8-B38D-EE779D1610BC}|2D_fighting2\\2D_fighting2.vcxproj|D:\\FightingGames2\\2D_fighting2\\2D_fighting2\\2D_fighting2\\MyCollider.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{249889D7-2EBD-44C8-B38D-EE779D1610BC}|2D_fighting2\\2D_fighting2.vcxproj|solutionrelative:2D_fighting2\\MyCollider.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{249889D7-2EBD-44C8-B38D-EE779D1610BC}|2D_fighting2\\2D_fighting2.vcxproj|D:\\github\\FightingGames2\\2D_fighting2\\2D_fighting2\\2D_fighting2\\WinMain.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{249889D7-2EBD-44C8-B38D-EE779D1610BC}|2D_fighting2\\2D_fighting2.vcxproj|D:\\FightingGames2\\2D_fighting2\\2D_fighting2\\2D_fighting2\\WinMain.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{249889D7-2EBD-44C8-B38D-EE779D1610BC}|2D_fighting2\\2D_fighting2.vcxproj|solutionrelative:2D_fighting2\\WinMain.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{249889D7-2EBD-44C8-B38D-EE779D1610BC}|2D_fighting2\\2D_fighting2.vcxproj|D:\\github\\FightingGames2\\2D_fighting2\\2D_fighting2\\2D_fighting2\\MyTransform.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{249889D7-2EBD-44C8-B38D-EE779D1610BC}|2D_fighting2\\2D_fighting2.vcxproj|D:\\FightingGames2\\2D_fighting2\\2D_fighting2\\2D_fighting2\\MyTransform.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{249889D7-2EBD-44C8-B38D-EE779D1610BC}|2D_fighting2\\2D_fighting2.vcxproj|solutionrelative:2D_fighting2\\MyTransform.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{249889D7-2EBD-44C8-B38D-EE779D1610BC}|2D_fighting2\\2D_fighting2.vcxproj|D:\\FightingGames2\\2D_fighting2\\2D_fighting2\\2D_fighting2\\MyGameObject.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{249889D7-2EBD-44C8-B38D-EE779D1610BC}|2D_fighting2\\2D_fighting2.vcxproj|solutionrelative:2D_fighting2\\MyGameObject.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{249889D7-2EBD-44C8-B38D-EE779D1610BC}|2D_fighting2\\2D_fighting2.vcxproj|D:\\FightingGames2\\2D_fighting2\\2D_fighting2\\2D_fighting2\\MyComponent.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{249889D7-2EBD-44C8-B38D-EE779D1610BC}|2D_fighting2\\2D_fighting2.vcxproj|solutionrelative:2D_fighting2\\MyComponent.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,55 +34,82 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "HandlerWaltan.h",
+              "DocumentMoniker": "D:\\FightingGames2\\2D_fighting2\\2D_fighting2\\2D_fighting2\\HandlerWaltan.h",
+              "RelativeDocumentMoniker": "2D_fighting2\\HandlerWaltan.h",
+              "ToolTip": "D:\\FightingGames2\\2D_fighting2\\2D_fighting2\\2D_fighting2\\HandlerWaltan.h",
+              "RelativeToolTip": "2D_fighting2\\HandlerWaltan.h",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAAA4AAAAYAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-07-19T05:12:37.527Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MyCollider.h",
+              "DocumentMoniker": "D:\\FightingGames2\\2D_fighting2\\2D_fighting2\\2D_fighting2\\MyCollider.h",
+              "RelativeDocumentMoniker": "2D_fighting2\\MyCollider.h",
+              "ToolTip": "D:\\FightingGames2\\2D_fighting2\\2D_fighting2\\2D_fighting2\\MyCollider.h",
+              "RelativeToolTip": "2D_fighting2\\MyCollider.h",
+              "ViewState": "AQIAADAAAAAAAAAAAAAAAD0AAAALAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-07-19T00:32:08.07Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 2,
               "Title": "WinMain.cpp",
-              "DocumentMoniker": "D:\\github\\FightingGames2\\2D_fighting2\\2D_fighting2\\2D_fighting2\\WinMain.cpp",
+              "DocumentMoniker": "D:\\FightingGames2\\2D_fighting2\\2D_fighting2\\2D_fighting2\\WinMain.cpp",
               "RelativeDocumentMoniker": "2D_fighting2\\WinMain.cpp",
-              "ToolTip": "D:\\github\\FightingGames2\\2D_fighting2\\2D_fighting2\\2D_fighting2\\WinMain.cpp",
+              "ToolTip": "D:\\FightingGames2\\2D_fighting2\\2D_fighting2\\2D_fighting2\\WinMain.cpp",
               "RelativeToolTip": "2D_fighting2\\WinMain.cpp",
-              "ViewState": "AQIAAAMAAAAAAAAAAAAAACEAAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAXAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-07-16T05:20:19.845Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "MyTransform.h",
-              "DocumentMoniker": "D:\\github\\FightingGames2\\2D_fighting2\\2D_fighting2\\2D_fighting2\\MyTransform.h",
-              "RelativeDocumentMoniker": "2D_fighting2\\MyTransform.h",
-              "ToolTip": "D:\\github\\FightingGames2\\2D_fighting2\\2D_fighting2\\2D_fighting2\\MyTransform.h",
-              "RelativeToolTip": "2D_fighting2\\MyTransform.h",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABoAAAAlAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-07-16T05:18:45.22Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "MyGameObject.h",
-              "DocumentMoniker": "D:\\github\\FightingGames2\\2D_fighting2\\2D_fighting2\\2D_fighting2\\MyGameObject.h",
+              "DocumentMoniker": "D:\\FightingGames2\\2D_fighting2\\2D_fighting2\\2D_fighting2\\MyGameObject.h",
               "RelativeDocumentMoniker": "2D_fighting2\\MyGameObject.h",
-              "ToolTip": "D:\\github\\FightingGames2\\2D_fighting2\\2D_fighting2\\2D_fighting2\\MyGameObject.h",
+              "ToolTip": "D:\\FightingGames2\\2D_fighting2\\2D_fighting2\\2D_fighting2\\MyGameObject.h",
               "RelativeToolTip": "2D_fighting2\\MyGameObject.h",
-              "ViewState": "AQIAADAAAAAAAAAAAAAAADgAAABHAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2024-07-16T05:16:25.015Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
+              "Title": "MyTransform.h",
+              "DocumentMoniker": "D:\\FightingGames2\\2D_fighting2\\2D_fighting2\\2D_fighting2\\MyTransform.h",
+              "RelativeDocumentMoniker": "2D_fighting2\\MyTransform.h",
+              "ToolTip": "D:\\FightingGames2\\2D_fighting2\\2D_fighting2\\2D_fighting2\\MyTransform.h",
+              "RelativeToolTip": "2D_fighting2\\MyTransform.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-07-16T05:18:45.22Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "MyComponent.h",
-              "DocumentMoniker": "D:\\github\\FightingGames2\\2D_fighting2\\2D_fighting2\\2D_fighting2\\MyComponent.h",
+              "DocumentMoniker": "D:\\FightingGames2\\2D_fighting2\\2D_fighting2\\2D_fighting2\\MyComponent.h",
               "RelativeDocumentMoniker": "2D_fighting2\\MyComponent.h",
-              "ToolTip": "D:\\github\\FightingGames2\\2D_fighting2\\2D_fighting2\\2D_fighting2\\MyComponent.h",
+              "ToolTip": "D:\\FightingGames2\\2D_fighting2\\2D_fighting2\\2D_fighting2\\MyComponent.h",
               "RelativeToolTip": "2D_fighting2\\MyComponent.h",
-              "ViewState": "AQIAAB4AAAAAAAAAAAAAACoAAAAEAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAEAAAAPAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2024-07-16T05:07:36.73Z",
               "EditorCaption": ""

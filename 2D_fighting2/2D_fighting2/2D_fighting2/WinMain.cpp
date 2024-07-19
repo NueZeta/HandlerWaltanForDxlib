@@ -1,5 +1,4 @@
-#include"MyTransform.h"
-#include"MyGameObject.h"
+#include "HandlerWaltan.h"
 
 
 
@@ -7,29 +6,20 @@ int main()
 {
 	unique_ptr<MyGameObject> obj = make_unique<MyGameObject>();
 
-	obj->AddComponent(make_unique<MyTransform>());
+	obj->AddMyComponent(make_unique<MyTransform>());
 
 	MyTransform* transform = obj->GetMyComponent<MyTransform>();
+
+	transform->Position = { -1, -2, -3 };
 
 	cout << "X = " << transform->GetPosition().x << endl;
 	cout << "Y = " << transform->GetPosition().y << endl;
 	cout << "Z = " << transform->GetPosition().z << endl;
 
-	transform->Position = { -1, -2, -3 };
-
+	obj->AddMyComponent(make_unique<MyCollider>());
 
 	cout << "\n\n";
-
-	MyGameObject* obj2 = transform->GetMyGameObject();
-
-	auto gege = obj2->GetMyComponent<MyTransform>();
-
-	cout << "X = " << gege->GetPosition().x << endl;
-	cout << "Y = " << gege->GetPosition().y << endl;
-	cout << "Z = " << gege->GetPosition().z << endl;
-
-
-	obj->MyComponentsUpdate();
+	//obj->MyComponentsUpdate();
 
 
 	return 0;
