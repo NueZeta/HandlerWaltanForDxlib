@@ -34,8 +34,6 @@
 
 ## プロジェクトについて
 
-<自作ライブラリ>
-
 来年に製作する予定の自作エンジンに向けて、unityと同じ感覚で使えるコンポーネント思考の
 ライブラリを製作する
 
@@ -67,6 +65,30 @@
 
 ## MyGameObject
 
+<b> <説明> </b>
+
+アタッチされているコンポーネントの管理
+
+コンポーネントのアタッチ、デタッチ
+
+
+
+    <script>
+        function copyToClipboard() {
+            // コピー対象をJavaScript上で変数として定義する
+            var copyTarget = document.getElementById("copyTarget");
+
+            // コピー対象のテキストを選択する
+            copyTarget.select();
+
+            // 選択しているテキストをクリップボードにコピーする
+            document.execCommand("Copy");
+
+            // コピーをお知らせする
+            alert("コピーできました！ : " + copyTarget.value);
+        }
+    </script>
+
 
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
@@ -75,6 +97,7 @@
 
 ## MyComponent
 
+<b>  </b>
 
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
