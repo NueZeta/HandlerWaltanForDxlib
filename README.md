@@ -23,17 +23,12 @@
 
 
 
-<!-- READMEの作成方法のドキュメントのリンク -->
+<!-- READMEの作成方法のテンプレート -->
 <br />
 <div align="right">
-    <a href="READMEの作成方法のリンク"><strong>READMEの作成方法 »</strong></a>
+    <a href="https://qiita.com/shun198/items/c983c713452c041ef787"><strong>READMEの作成方法 »</strong></a>
 </div>
-<br />
-<!-- Dockerfileのドキュメントのリンク -->
-<div align="right">
-    <a href="Dockerfileの詳細リンク"><strong>Dockerfileの詳細 »</strong></a>
-</div>
-<br />
+\</><br />
 <!-- プロジェクト名を記載 -->
 
 
