@@ -11,6 +11,16 @@
 1. [プロジェクトについて](#プロジェクトについて)
 2. [環境](#環境)
 
+<br>
+
+<b> APIリファレンス </b>
+
+1. [MyGameObject](#mygameobject)
+2. [MyComponent](#mycomponent)
+3. [MyTransform](#mytransform)
+4. [MyCollider](#mycollider)
+5. [MyAnimator](#myanimator)
+
 
 
 <!-- READMEの作成方法のドキュメントのリンク -->
@@ -26,17 +36,8 @@
 <br />
 <!-- プロジェクト名を記載 -->
 
-## プロジェクト名
-
-2D格闘ゲーム + 自作ライブラリ
-
-<!-- プロジェクトについて -->
 
 ## プロジェクトについて
-
-<2D格闘ゲーム>
-
-前年度で製作した格闘ゲームのノウハウを生かし、就職活動用の作品として0から製作し直す
 
 <自作ライブラリ>
 
@@ -64,7 +65,49 @@
 | DXライブラリ           | 3.24d      |
 
 
-その他のパッケージのバージョンは pyproject.toml と package.json を参照してください
+<p align="right">(<a href="#top">トップへ</a>)</p>
+
+
+<!-- ここから自作ライブラリのリファレンス -->
+
+## MyGameObject
+
+
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
+
+
+
+## MyComponent
+
+
+
+<p align="right">(<a href="#top">トップへ</a>)</p>
+
+
+
+## MyTransform
+
+
+
+<p align="right">(<a href="#top">トップへ</a>)</p>
+
+
+
+## MyCollider
+
+
+
+<p align="right">(<a href="#top">トップへ</a>)</p>
+
+
+
+## MyAnimator
+
+
+
+<p align="right">(<a href="#top">トップへ</a>)</p>
+
+
+
 
