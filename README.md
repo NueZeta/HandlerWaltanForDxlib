@@ -79,12 +79,13 @@
 <body>
 
 	/**
-	 * @brief	コンポーネントを追加する
-	 * @param[in]	アタッチするコンポーネント
-	 * @author	Suzuki N
-	 * @date	24/06/17
+	 * @brief		コンポーネントを追加する
+	 * @param[in]		アタッチするコンポーネント
+	 * @author		Suzuki N
+	 * @date		24/06/17
 	 */
 	void AddMyComponent(unique_ptr<MyComponent> _component)
+
 
  	/**
 	 * @brief		指定のコンポーネントを返す
@@ -105,8 +106,71 @@
 
 ## MyComponent
 
-<b>  </b>
+<b> <説明> </b>
 
+すべてのコンポーネントの基底クラス
+
+
+<br />
+<br />
+
+<b> <メソッド> </b>
+
+<body>
+
+	/**
+	 * @brief		アタッチされているmyGameObjectを返す
+	 * @return		コンポーネントがアタッチされているmyGameObject
+	 * @date		24/06/17
+	 */
+	MyGameObject* GetMyGameObject()
+
+
+ 	/**
+	 * @brief		myGameObjectにアタッチされた瞬間に働く
+	 * @ditail		仮想関数
+	 * @author		Suzuki N
+	 * @date		24/06/17
+	 */
+	virtual void Start()
+
+
+ 	/**
+	 * @brief		毎フレーム呼ばれるメソッド
+	 * @ditail		仮想関数
+	 * @author		Suzuki N
+	 * @date		24/06/17
+	 */
+	virtual void Update()
+
+
+ 	/**
+	 * @brief		コライダー衝突時に働くメソッド
+	 * @ditail		仮想関数
+	 * @author		Suzuki N
+	 * @date		24/07/19
+	 */
+	virtual void OnCollisionEnter()
+
+
+ 	/**
+	 * @brief		コライダー衝突中に働くメソッド
+	 * @ditail		仮想関数
+	 * @author		Suzuki N
+	 * @date		24/07/19
+	 */
+	virtual void OnCollisionStay()
+
+
+	/**
+	 * @brief		コライダー衝突が解除時に働くメソッド
+	 * @ditail		仮想関数
+	 * @author		Suzuki N
+	 * @date		24/07/19
+	 */
+	virtual void OnCollisionExit()
+
+</body>
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
 
