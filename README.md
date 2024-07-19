@@ -26,7 +26,7 @@
 <!-- READMEの作成方法のテンプレート -->
 <br />
 <div align="right">
-    <a href="https://qiita.com/shun198/items/c983c713452c041ef787"><strong>READMEの作成方法 »</strong></a>
+    <a href="https://qiita.com/shun198/items/c983c713452c041ef787"><strong>READMEのテンプレート »</strong></a>
 </div>
 \</><br />
 <!-- プロジェクト名を記載 -->
