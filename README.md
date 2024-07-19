@@ -71,23 +71,31 @@
 
 コンポーネントのアタッチ、デタッチ
 
+<br />
+<br />
 
+<b> <メソッド> </b>
 
-    <script>
-        function copyToClipboard() {
-            // コピー対象をJavaScript上で変数として定義する
-            var copyTarget = document.getElementById("copyTarget");
+<body>
 
-            // コピー対象のテキストを選択する
-            copyTarget.select();
+	/**
+	 * @brief	コンポーネントを追加する
+	 * @param[in]	アタッチするコンポーネント
+	 * @author	Suzuki N
+	 * @date	24/06/17
+	 */
+	void AddMyComponent(unique_ptr<MyComponent> _component)
 
-            // 選択しているテキストをクリップボードにコピーする
-            document.execCommand("Copy");
+ 	/**
+	 * @brief		指定のコンポーネントを返す
+	 * @return		アタッチされていた場合はインスタンスを返し、それ以外ならnullPtrを返す
+	 * @author		Suzuki N
+	 * @date		24/06/17
+	 */
+	template<typename T>
+	T* GetMyComponent()
 
-            // コピーをお知らせする
-            alert("コピーできました！ : " + copyTarget.value);
-        }
-    </script>
+</body>
 
 
 
