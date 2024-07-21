@@ -132,6 +132,7 @@
     <ClInclude Include="MyComponent.h" />
     <ClInclude Include="MyGameObject.h" />
     <ClInclude Include="MyTransform.h" />
+    <ClInclude Include="Utilities.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp" />

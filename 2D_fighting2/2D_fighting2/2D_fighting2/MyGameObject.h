@@ -28,7 +28,25 @@ private:
 
 
 public:
+	/**
+	 * @brief		ハンドラーやUpdateメソッドの優先順位
+	 * @History		24/07/21 作成(Suzuki N)
+	 */
+	int priority;
+
+
+public:
 	/*     メソッド     */
+
+
+	/**
+	 * @brief		コンストラクタ
+	 * @author		Suzuki N
+	 * @date		24/07/21
+	 */
+	MyGameObject() : priority(0)
+	{
+	}
 
 
 	/**
@@ -64,16 +82,5 @@ public:
 		}
 
 		return nullptr;
-	}
-
-	/**
-	 * @brief		アタッチされているコンポーネントのUpdateメソッドを全て呼び出す
-	 * @author		Suzuki N
-	 * @date		24/06/17
-	 */
-	void MyComponentsUpdate()
-	{
-		//for (unique_ptr<MyComponent>& component : myComponents)
-			//component->Update();
 	}
 };
