@@ -11,6 +11,7 @@
 1. [プロジェクトについて](#プロジェクトについて)
 2. [環境](#環境)
 3. [導入方法](#導入方法)
+4. [使い方](#使い方)
 
 <br>
 
@@ -132,6 +133,72 @@
 <p align="right">(<a href="#top">トップへ</a>)</p>
 
 
+## 使い方
+
+<body>
+
+ 	// 当ライブラリで必須になるインクルードファイル
+  	// "DxLib.h" もincludeされる
+	#include "HandlerWaltanForDxLib.h"
+
+	// プログラムは WinMain から始まります
+	int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+	{
+		// DXライブラリの初期化処理も兼ねている
+		if (HandlerWaltan::Instance().Init() == -1)
+		{
+			return 0;
+		}
+	
+		//! ハンドラーやライフサイクルに基づいたタイミングでメソッドを自動的に呼び出すオブジェクト
+		//! シングルトンで設計されているため、以下の方法以外でインスタンスを取得することはできない
+		HandlerWaltan& HW = HandlerWaltan::Instance();
+	
+		//! オブジェクトの生成(unityでいうところのGameObjectの生成)
+		HWGameObject* obj = new HWGameObject();
+	
+		//! コンストラクタの引数で名前やプライオリティの初期設定も可能(指定しなかった場合は名前は"hwObj",
+		//! プライオリティは 0 になる)
+		// HWGameObject* obj = new HWGameObject("obj");
+		// HWGameObject* obj = new HWGameObject(20);
+		// HWGameObject* obj = new HWGameObject("obj", 20);
+	
+	
+		// メインループ
+		while (ProcessMessage() == 0)
+		{
+			//裏画面消す
+			ClearDrawScreen();
+			//描画先を裏画面に
+			SetDrawScreen(DX_SCREEN_BACK);
+	
+			// ESCAPEキーの入力で終了
+			if (CheckHitKey(KEY_INPUT_ESCAPE))
+				break;
+	
+	
+			// 全てのUpdateメソッドを全て呼び出す
+			HW.Update();
+	
+		
+			//裏画面を表画面にコピー
+			ScreenFlip();
+		}
+		
+		// ソフトの終了 
+		HandlerWaltan::End();
+	
+		return 0;				
+	}
+ 
+</body>
+
+<!-- プロジェクトの概要を記載 -->
+
+
+<p align="right">(<a href="#top">トップへ</a>)</p>
+
+
 
 <!-- ここから自作ライブラリのリファレンス -->
 
@@ -150,21 +217,21 @@
 
 <body>
 
-	/**
-	 * @brief		コンポーネントを追加する
-	 * @param[in]		アタッチするコンポーネント
-	 * @author		Suzuki N
-	 * @date		24/06/17
-	 */
+	@brief		オブジェクトの名前
+	std::string name;
+
+	@brief		ハンドラーやUpdateメソッドの優先順位(降順)
+  	※初期値は 0
+	int priority;
+	
+
+	@brief		コンポーネントを追加する
+	@param[in]	アタッチするコンポーネント
 	void AddMyComponent(unique_ptr<MyComponent> _component)
 
 
- 	/**
-	 * @brief		指定のコンポーネントを返す
-	 * @return		アタッチされていた場合はインスタンスを返し、それ以外ならnullPtrを返す
-	 * @author		Suzuki N
-	 * @date		24/06/17
-	 */
+ 	@brief		指定のコンポーネントを返す
+	@return		アタッチされていた場合はインスタンスを返し、それ以外ならnullPtrを返す
 	template<typename T>
 	T* GetMyComponent()
 
@@ -190,56 +257,33 @@
 
 <body>
 
-	/**
-	 * @brief		アタッチされているmyGameObjectを返す
-	 * @return		コンポーネントがアタッチされているmyGameObject
-	 * @date		24/06/17
-	 */
+	@brief		アタッチされているmyGameObjectを返す
+	@return		コンポーネントがアタッチされているmyGameObject
 	MyGameObject* GetMyGameObject()
 
 
- 	/**
-	 * @brief		myGameObjectにアタッチされた瞬間に働く
-	 * @ditail		仮想関数
-	 * @author		Suzuki N
-	 * @date		24/06/17
-	 */
+	@brief		myGameObjectにアタッチされた瞬間に働く
+	@ditail		仮想関数
 	virtual void Start()
 
 
- 	/**
-	 * @brief		毎フレーム呼ばれるメソッド
-	 * @ditail		仮想関数
-	 * @author		Suzuki N
-	 * @date		24/06/17
-	 */
+ 	@brief		毎フレーム呼ばれるメソッド
+	@ditail		仮想関数
 	virtual void Update()
 
 
- 	/**
-	 * @brief		コライダー衝突時に働くメソッド
-	 * @ditail		仮想関数
-	 * @author		Suzuki N
-	 * @date		24/07/19
-	 */
+ 	@brief		コライダー衝突時に働くメソッド
+	@ditail		仮想関数
 	virtual void OnCollisionEnter()
 
 
- 	/**
-	 * @brief		コライダー衝突中に働くメソッド
-	 * @ditail		仮想関数
-	 * @author		Suzuki N
-	 * @date		24/07/19
-	 */
+ 	@brief		コライダー衝突中に働くメソッド
+	@ditail		仮想関数
 	virtual void OnCollisionStay()
 
 
-	/**
-	 * @brief		コライダー衝突が解除時に働くメソッド
-	 * @ditail		仮想関数
-	 * @author		Suzuki N
-	 * @date		24/07/19
-	 */
+	@brief		コライダー衝突が解除時に働くメソッド
+	@ditail		仮想関数
 	virtual void OnCollisionExit()
 
 </body>
