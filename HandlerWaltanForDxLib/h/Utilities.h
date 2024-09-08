@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include <map>
 #include <string>
 #include <memory>
 #include <functional>
@@ -17,6 +18,37 @@
 * @date     24/07/20
 * @note		汎用的なクラスの定義をまとめたヘッダーファイル
 */
+
+
+/**
+* @enum		InputState
+* @brief	InputSystemの入力パラメータ
+*/
+enum class InputState
+{
+	//! 入力待ち(0)
+	Waiting,
+	//! 入力した瞬間(1)
+	Started,
+	//! 入力中(2)
+	Performed,
+	//! 入力終了(3)
+	Canceled,
+};
+
+/**
+* @struct	KeyInfo
+* @brief	キー情報
+*/
+struct KeyInfo
+{
+	//! キーコード
+	int keyCode;
+	//! 入力時間
+	unsigned int inputTyme;
+	//! ボタン入力のパラメータ
+	InputState inputState;
+};
 
 
 /**
@@ -119,5 +151,109 @@ public:
 		freeBlockHead->nextBlock = freeBlock;
 		// 空きメモリブロックを更新
 		freeBlockHead = freeBlock;	
+	}
+};
+
+
+/**
+ * @class		InputSystem
+ * @brief		入力の検知、入力時にコールバック関数を呼ぶクラス
+ */
+class InputSystem
+{
+private:
+
+	/*     メンバ変数     */
+
+	/**
+	 * @brief		アクティブ
+	 * @History		24/09/07 作成(Suzuki N)
+	 */
+	bool active;
+
+	/**
+	 * @brief		キーマップ
+	 * @History		24/09/07 作成(Suzuki N)
+	 */
+	std::map<std::string, std::vector<std::atomic<KeyInfo>>> keyMap;
+
+	/**
+	 * @brief		キーチェックを別スレッドで回す
+	 * @History		24/09/07 作成(Suzuki N)
+	 */
+	std::thread keyCheck;
+
+
+public:
+
+	/*     メソッド     */
+
+	/**
+	 * @brief		コンストラクタ
+	 * @author		Suzuki N
+	 * @date		24/09/07
+	 */
+	InputSystem() : active(true)
+	{
+	}
+
+	/**
+	 * @brief		ステージにキーを登録する
+	 * @detail		{} で複数入力可能
+	 * @param[in]	std::string	登録するキー	
+	 * @param[in]	int			キーコード
+	 * @author		Suzuki N
+	 * @date		24/09/07
+	 */
+	void AddKeyMap(std::string _key, int _inputKey)
+	{
+		//! 登録するキー情報の初期化宣言
+		KeyInfo keyInfo =
+		{
+			_inputKey,
+			0,
+			InputState::Waiting,
+		};
+
+		// キーが既に存在している場合は要素を追加する
+
+	}
+
+	/**
+	 * @brief		ステージにキーを登録する
+	 * @detail		{} で複数入力可能
+	 * @param[in]	std::string		 登録するキー
+	 * @param[in]	std::vector<int> キーコード
+	 * @author		Suzuki N
+	 * @date		24/09/07
+	 */
+	void AddKeyMap(std::string _key, std::vector<int> _inputKey)
+	{
+		for (int i = 0; i < _inputKey.size(); ++i)
+		{
+			//! 登録するキー情報の初期化宣言
+			KeyInfo keyInfo =
+			{
+				_inputKey[i],
+				0,
+				InputState::Waiting,
+			};
+
+			// キーが既に存在している場合は要素を追加する
+//			auto it = keyMap.find(_key);
+//			if (it != keyMap.end())
+//				it->second.push_back(keyInfo);
+//			else
+//				keyMap[_key].push_back(keyInfo);
+		}
+	}
+
+	/**
+	 * @brief		キーマップに登録されているキーを監視する
+	 * @author		Suzuki N
+	 * @date		24/09/08
+	 */
+	void KeyCheckAsync()
+	{
 	}
 };
