@@ -1,3 +1,4 @@
 2D_fighting2 filter=lfs diff=lfs merge=lfs -text
 HandlerWaltanForDxLib filter=lfs diff=lfs merge=lfs -text
 HandlerWaltanForDxLib/.vs/HandlerWaltanForDxLib/v17/* filter=lfs diff=lfs merge=lfs -text
+HandlerWaltanForDxLib/.vs/HandlerWaltanForDxLib/v17/ipch/AutoPCH/* filter=lfs diff=lfs merge=lfs -text

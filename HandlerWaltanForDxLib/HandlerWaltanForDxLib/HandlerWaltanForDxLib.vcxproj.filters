@@ -15,54 +15,66 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="HWCollider.cpp">
+    <ClCompile Include="..\CollisionWaltan.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="HWComponent.cpp">
+    <ClCompile Include="..\HandlerWaltan.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="HWGameObject.cpp">
+    <ClCompile Include="..\HWAnimator.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="HWTransform.cpp">
+    <ClCompile Include="..\HWCollider.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="CollisionWaltan.cpp">
+    <ClCompile Include="..\HWComponent.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="HandlerWaltan.cpp">
+    <ClCompile Include="..\HWGameObject.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="HWAnimator.cpp">
+    <ClCompile Include="..\HWRenderer.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="..\HWTransform.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Syslog.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="h\CollisionWaltan.h">
+    <ClInclude Include="..\h\HWTransform.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="h\HandlerWaltan.h">
+    <ClInclude Include="..\h\Syslog.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="h\HandlerWaltanForDxLib.h">
+    <ClInclude Include="..\h\Utilities.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="h\HWAnimator.h">
+    <ClInclude Include="..\h\CollisionWaltan.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="h\HWCollider.h">
+    <ClInclude Include="..\h\HandlerWaltan.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="h\HWComponent.h">
+    <ClInclude Include="..\h\HandlerWaltanForDxLib.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="h\HWGameObject.h">
+    <ClInclude Include="..\h\HWAnimator.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="h\HWTransform.h">
+    <ClInclude Include="..\h\HWCollider.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="h\Utilities.h">
+    <ClInclude Include="..\h\HWComponent.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="..\h\HWGameObject.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="..\h\HWRenderer.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
