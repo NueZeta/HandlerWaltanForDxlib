@@ -11,8 +11,6 @@
 #pragma region privateメソッド
 
 
-
-
 #pragma endregion
 
 #pragma region publicメソッド
