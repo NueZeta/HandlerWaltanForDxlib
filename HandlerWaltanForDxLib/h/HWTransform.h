@@ -39,9 +39,17 @@ public:
 	VECTOR scale;
 
 
-public:
-
 	/*     メソッド     */
+
+private:
+
+	/**
+	 * @brief		コンストラクタ
+	 * @author		Suzuki N
+	 * @date		24/06/17
+	 */
+
+public:
 
 #pragma region コンストラクタ
 

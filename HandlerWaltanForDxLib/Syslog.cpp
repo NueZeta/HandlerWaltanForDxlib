@@ -10,6 +10,7 @@
 
 // 静的メンバ変数の初期化
 std::vector<LogInfo> Syslog::logInfoVec;
+std::mutex Syslog::mtx;
 
 
 #pragma region privateメソッド
@@ -18,6 +19,9 @@ std::vector<LogInfo> Syslog::logInfoVec;
 
 void Syslog::AddLogInfoAsymc(const LogLevel _loglevel, const std::string& _logMessage)
 {
+    // スレッドセーフで動かす
+    std::lock_guard <std::mutex> lock(mtx);
+
     //! ログに必要な情報
     LogInfo logInfo;
 
@@ -57,12 +61,8 @@ void Syslog::AddLogInfoAsymc(const LogLevel _loglevel, const std::string& _logMe
 
 void Syslog::Message(const LogLevel _loglevel, const std::string& _logMessage)
 {
-    // 非同期初期で実行
-    std::future<void> result = std::async(std::launch::async,
-        Message, _loglevel, _logMessage);
 
-    // 上記の処理終了まで待機
-    result.get();
+
 }
 
 

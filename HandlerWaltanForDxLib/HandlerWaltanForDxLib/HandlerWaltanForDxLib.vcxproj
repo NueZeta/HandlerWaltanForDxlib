@@ -39,6 +39,7 @@
     <ClInclude Include="..\h\HWGameObject.h" />
     <ClInclude Include="..\h\HWRenderer.h" />
     <ClInclude Include="..\h\HWTransform.h" />
+    <ClInclude Include="..\h\InputSystem.h" />
     <ClInclude Include="..\h\Syslog.h" />
     <ClInclude Include="..\h\Utilities.h" />
   </ItemGroup>

@@ -5,6 +5,7 @@
 #include "HWGameObject.h"
 #include "HWRenderer.h"
 #include "HWTransform.h"
+#include "InputSystem.h"
 
 
 /**

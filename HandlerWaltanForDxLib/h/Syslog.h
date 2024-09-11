@@ -79,6 +79,17 @@ private:
      */
     static std::vector<LogInfo> logInfoVec;
 
+    /**
+     * @brief		スレッドセーフでテキストファイルに書き込むため
+     * @History		24/09/11 作成(Suzuki N)
+     */
+    static std::mutex mtx;
+
+    /**
+     * @brief		スレッドセーフでテキストファイルに書き込むため
+     * @History		24/09/11 作成(Suzuki N)
+     */
+    std::thread syslogThread;
 
 public:
 
