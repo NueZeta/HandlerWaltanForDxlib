@@ -10,6 +10,7 @@
 
 // 静的メンバ変数の初期化
 bool HandlerWaltan::debugMode = false;
+std::vector<InputSystem*> InputSystem::inputSystemVec;
 
 
 #pragma region publucメソッド
@@ -23,6 +24,13 @@ void HandlerWaltan::Update()
 
     // CollisionWaltanのUpdateメソッド(あたり判定)
     CollisionWaltan::Instance().Update();
+
+    // インスタンス化されたInputSystemのUpdateメソッドを呼ぶ
+    for (auto it = InputSystem::inputSystemVec.begin(); it != InputSystem::inputSystemVec.end(); ++it)
+    {
+        if ((*it)->active)
+            (*it)->Update();
+    }
 }
 
 
