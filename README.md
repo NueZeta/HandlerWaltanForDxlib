@@ -22,6 +22,7 @@
 3. [MyTransform](#mytransform)
 4. [MyCollider](#mycollider)
 5. [MyAnimator](#myanimator)
+6. [InputSystem](#inputsystem)
 
 
 
@@ -324,6 +325,82 @@
 ## MyAnimator
 
 
+
+<p align="right">(<a href="#top">トップへ</a>)</p>
+
+## InputSystem
+
+<b> <説明> </b>
+
+キー入力を検知し、入力時に設定したコールバック関数を呼び出すクラス
+
+
+<br />
+<br />
+
+<b> <メソッド> </b>
+
+<body>
+	
+	/**
+	 * @brief			マップにキーを登録する
+	 * @detail			{} で複数入力可能
+	 * @param[in]	std::string	登録するキー
+	 * @param[in]	int		キーコード
+	 * @author			Suzuki N
+	 * @date			24/09/07
+	 */
+	void AddKeyCode(const std::string _key, int _inputKey)
+
+ 	/**
+	 * @brief			InputActionにコールバック関数を登録する
+	 * @param[in]			std::function<void(InputAction::CallBackContext&)> 登録するコールバック関数
+	 * @author			Suzuki N
+	 * @date			24/09/08
+	 */
+	void AddCallBack(const std::string _key, std::function<void(InputAction::CallBackContext&)> _callBack)
+ 
+</body>
+
+<b> <テストプロジェクト> </b>
+
+<body>
+
+	#include "HandlerWaltanForDxLib.h"
+
+ 	// プログラムは WinMain から始まります
+	int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+	{
+		// DXライブラリの初期化処理も兼ねている
+		if (HandlerWaltan::Instance().Init() == -1)
+		{
+			return 0;
+		}
+
+		// Windowモードで起動
+		SetGraphMode(840, 480, 16);
+		ChangeWindowMode(true);
+
+		//! ハンドラーやライフサイクルに基づいたタイミングでメソッドを自動的に呼び出すオブジェクト
+		//! シングルトンで設計されているため、以下の方法以外でインスタンスを取得することはできない
+		HandlerWaltan& HW = HandlerWaltan::Instance();
+
+
+		//! InputSystem
+		InputSystem* input = new InputSystem();
+
+  		// アクション名と登録するキーを指定
+		input->AddKeyCode("map1", KEY_INPUT_RETURN);
+		// アクション時に呼ばれるコールバック関数を登録
+		input->AddCallBack("map1", [](InputAction::CallBackContext& _context)
+		{
+   		}
+
+		// ソフトの終了 
+		HandlerWaltan::End();
+	}
+
+</body>
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
 
