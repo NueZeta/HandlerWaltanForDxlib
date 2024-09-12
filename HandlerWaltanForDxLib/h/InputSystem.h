@@ -57,6 +57,8 @@ public:
 		const InputState state;
 		//! 入力したときの時間(ms)
 		const unsigned int inputTyme;
+		//! 登録されているキー
+		const std::vector<KeyInfo> keys;
 	};
 
 private:
@@ -438,7 +440,7 @@ private:
 					break;
 				}
 				// 登録されたコールバック関数をすべて呼び出す
-				it->second->CallCallbacks({ it->second->GetInputState(),inputTyme, });
+				it->second->CallCallbacks({ it->second->GetInputState(),inputTyme, it->second->GetKeyInfoVec(),});
 			}
 			// 入力がなかった場合
 			else
@@ -452,12 +454,12 @@ private:
 				case InputState::Started:
 					it->second->SetInputState(InputState::Canceled);
 					// 登録されたコールバック関数をすべて呼び出す
-					it->second->CallCallbacks({ it->second->GetInputState(),inputTyme, });
+					it->second->CallCallbacks({ it->second->GetInputState(),inputTyme, it->second->GetKeyInfoVec(), });
 					break;
 				case InputState::Performed:
 					it->second->SetInputState(InputState::Canceled);
 					// 登録されたコールバック関数をすべて呼び出す
-					it->second->CallCallbacks({ it->second->GetInputState(),inputTyme, });
+					it->second->CallCallbacks({ it->second->GetInputState(),inputTyme, it->second->GetKeyInfoVec(), });
 					break;
 				case InputState::Canceled:
 					it->second->SetInputState(InputState::Waiting);

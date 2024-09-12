@@ -19,6 +19,9 @@ public:
 
 	/*     メンバ変数     */
 
+
+#pragma region ワールド
+
 	/**
 	 * @brief		ワールド座標
 	 * @History		24/06/17 作成(Suzuki N)
@@ -26,17 +29,42 @@ public:
 	VECTOR position;
 
 	/**
-	 * @brief		回転
+	 * @brief		ワールド回転
 	 * @History		24/06/17 作成(Suzuki N)
 	 */
 
 	VECTOR rotate;
 
 	/**
-	 * @brief		拡縮
+	 * @brief		ワールド拡縮
 	 * @History		24/06/17 作成(Suzuki N)
 	 */
 	VECTOR scale;
+
+#pragma endregion
+
+#pragma region ローカル
+
+	/**
+	 * @brief		ローカル座標
+	 * @History		24/06/17 作成(Suzuki N)
+	 */
+	VECTOR localPosition;
+
+	/**
+	 * @brief		ローカル回転
+	 * @History		24/06/17 作成(Suzuki N)
+	 */
+
+	VECTOR localRotate;
+
+	/**
+	 * @brief		ローカル拡縮
+	 * @History		24/06/17 作成(Suzuki N)
+	 */
+	VECTOR localScale;
+
+#pragma endregion
 
 
 	/*     メソッド     */
@@ -88,6 +116,8 @@ public:
 	 * @date		24/06/17
 	 */
 	VECTOR GetScale() { return scale; }
+
+
 
 #pragma endregion
 
