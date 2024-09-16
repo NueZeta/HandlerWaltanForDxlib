@@ -19,29 +19,35 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\CollisionWaltan.cpp" />
-    <ClCompile Include="..\HandlerWaltan.cpp" />
-    <ClCompile Include="..\HWAnimator.cpp" />
-    <ClCompile Include="..\HWCollider.cpp" />
-    <ClCompile Include="..\HWComponent.cpp" />
-    <ClCompile Include="..\HWGameObject.cpp" />
-    <ClCompile Include="..\HWRenderer.cpp" />
-    <ClCompile Include="..\HWTransform.cpp" />
-    <ClCompile Include="..\Syslog.cpp" />
+    <ClCompile Include="CollisionWaltan.cpp" />
+    <ClCompile Include="HandlerWaltan.cpp" />
+    <ClCompile Include="HWAnimator.cpp" />
+    <ClCompile Include="HWBoxCollider.cpp" />
+    <ClCompile Include="HWCapsuleCollider.cpp" />
+    <ClCompile Include="HWCollider.cpp" />
+    <ClCompile Include="HWComponent.cpp" />
+    <ClCompile Include="HWGameObject.cpp" />
+    <ClCompile Include="HWRenderer.cpp" />
+    <ClCompile Include="HWSphereCollider.cpp" />
+    <ClCompile Include="HWTransform.cpp" />
+    <ClCompile Include="Syslog.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\h\CollisionWaltan.h" />
-    <ClInclude Include="..\h\HandlerWaltan.h" />
-    <ClInclude Include="..\h\HandlerWaltanForDxLib.h" />
-    <ClInclude Include="..\h\HWAnimator.h" />
-    <ClInclude Include="..\h\HWCollider.h" />
-    <ClInclude Include="..\h\HWComponent.h" />
-    <ClInclude Include="..\h\HWGameObject.h" />
-    <ClInclude Include="..\h\HWRenderer.h" />
-    <ClInclude Include="..\h\HWTransform.h" />
-    <ClInclude Include="..\h\InputSystem.h" />
-    <ClInclude Include="..\h\Syslog.h" />
-    <ClInclude Include="..\h\Utilities.h" />
+    <ClInclude Include="h\CollisionWaltan.h" />
+    <ClInclude Include="h\HandlerWaltan.h" />
+    <ClInclude Include="h\HandlerWaltanForDxLib.h" />
+    <ClInclude Include="h\HWAnimator.h" />
+    <ClInclude Include="h\HWBoxCollider.h" />
+    <ClInclude Include="h\HWCapsuleCollider.h" />
+    <ClInclude Include="h\HWCollider.h" />
+    <ClInclude Include="h\HWComponent.h" />
+    <ClInclude Include="h\HWGameObject.h" />
+    <ClInclude Include="h\HWRenderer.h" />
+    <ClInclude Include="h\HWSphereCollider.h" />
+    <ClInclude Include="h\HWTransform.h" />
+    <ClInclude Include="h\InputSystem.h" />
+    <ClInclude Include="h\Syslog.h" />
+    <ClInclude Include="h\Utilities.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

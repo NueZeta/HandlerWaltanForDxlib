@@ -22,8 +22,51 @@
 
 
 /**
- * @class		PoolAllocator
- * @brief		メモリ管理を高速化するためのメモリアロケーター
+ * @class	ReadOnly
+ * @brief	読み取り専用にするラッパークラス	
+ */
+template<class T>
+class ReadOnly
+{
+private:
+
+	/*     メンバ変数     */
+
+	/**
+	 * @brief		値を保管するオブジェクト
+	 * @History		24/09/14 作成(Suzuki N)
+	 */
+	T obj;
+
+
+public:
+
+	/*     メソッド     */
+
+	/**
+	 * @brief		コンストラクタ
+	 * @param[in]	T 初期値
+	 * @author		Suzuki N
+	 * @date		24/09/14
+	 */
+	ReadOnly(T _obj) : obj(_obj) {}
+
+	/**
+	 * @brief		関数呼び出しoperatorの定義
+	 * @param[in]	T 初期値
+	 * @author		Suzuki N
+	 * @date		24/09/14
+	 */
+	operator T() const { return obj; }
+
+	// 値の変更を禁止するため、代入operatorは削除
+	ReadOnly& operator=(const T&) = delete;
+};
+
+
+/**
+ * @class	PoolAllocator
+ * @brief	メモリ管理を高速化するためのメモリアロケーター
  */
 template<class T, size_t MAXSIZE>
 class PoolAllocator

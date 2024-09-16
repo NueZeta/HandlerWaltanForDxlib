@@ -15,6 +15,11 @@ HWRenderer::HWRenderer(int _modelHandle) : modelHandle(_modelHandle)
 {
 }
 
+HWRenderer::HWRenderer(std::string _pass)
+{
+	modelHandle = MV1LoadModel(_pass.c_str());
+}
+
 
 #pragma endregion
 
@@ -39,8 +44,15 @@ HWRenderer::HWRenderer(int _modelHandle) : modelHandle(_modelHandle)
 
 void HWRenderer::Update()
 {
-	auto transform = gameObject->GetComponent<HWTransform>();
-	MV1SetPosition(modelHandle, transform->GetPosition());
+	if (modelHandle == -1)
+	{
+		return;
+	}
+
+	// HWTransformのグローバル変換行列を参照してモデルに適用
+	MV1SetMatrix(modelHandle, transform->globalMat);
+	// モデルを描画
+	MV1DrawModel(modelHandle);
 }
 
 

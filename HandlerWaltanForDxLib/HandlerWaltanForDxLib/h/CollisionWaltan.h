@@ -23,6 +23,12 @@ private:
 
     /*     メンバ変数     */
 
+    /**
+     * @brief		インスタンス化されているコライダー
+     * @History		24/09/17 作成(Suzuki N)
+     */
+//    std::vector<HWCollider*> ColVec;
+
 
 private:
 
@@ -48,33 +54,5 @@ private:
       * @date        24/08/22
       */
     void Update();
-
-
-public:
-
-    /**
-     * @brief       インスタンスを取得する静的メソッド
-     * @detail      初めの一回だけインスタンスを生成する
-     * @author      Suzuki N
-     * @date        24/08/22
-     */
-    static CollisionWaltan& Instance();
-
-
-    //インスタンスのコピー禁止
-    //デフォルトのコピーコンストラクタを削除
-    CollisionWaltan(const CollisionWaltan&) = delete;
-    //デフォルトのコピー代入演算子も削除
-    CollisionWaltan& operator=(const CollisionWaltan&) = delete;
-
-
-    /**
-     * @brief       イニシャライズ用のメソッド
-     * @detail      インスタンスを生成したときに呼ぶ
-     * @return      int 初期化成功の成否
-     * @author      Suzuki N
-     * @date        24/08/22
-     */
-    static int Init();
 };
 

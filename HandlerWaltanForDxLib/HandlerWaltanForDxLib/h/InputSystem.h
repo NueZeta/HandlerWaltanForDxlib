@@ -39,8 +39,8 @@ struct KeyInfo
 };
 
 /**
- * @class		InputAction
- * @brief		キーマップの情報
+ * @class	InputAction
+ * @brief	アクションマップの情報
  */
 class InputAction
 {
@@ -118,8 +118,8 @@ private:
 public:
 
 	/**
-	 * @brief		キーマップのステータスを返す
-	 * return		InputStatus	キーマップのステータス
+	 * @brief		アクションマップのステータスを返す
+	 * return		InputStatus	アクションマップのステータス
 	 * @author		Suzuki N
 	 * @date		24/09/10
 	 */
@@ -144,8 +144,8 @@ private:
 	std::vector<KeyInfo>& GetKeyInfoRef() { return keyInfoVec; }
 
 	/**
-	 * @brief		キーマップのステータスを変更する
-	 * param[in]	InputStatus	キーマップのステータス
+	 * @brief		アクションマップのステータスを変更する
+	 * param[in]	InputStatus	アクションマップのステータス
 	 * @author		Suzuki N
 	 * @date		24/09/10
 	 */
@@ -223,8 +223,8 @@ private:
 class HandlerWaltan;
 
 /**
- * @class		InputSystem
- * @brief		入力の検知、入力時にコールバック関数を呼ぶクラス
+ * @class	InputSystem
+ * @brief	入力の検知、入力時にコールバック関数を呼ぶクラス
  */
 class InputSystem
 {
@@ -290,7 +290,7 @@ public:
 		// 存在していた場合
 		if (it != keyMap.end())
 			it->second->AddKeyCode(_inputKey);
-		// 存在していなかった場合は、新たにインスタンスを作成する
+		// 存在していなかった場合は、新たにアクションマップを作成する
 		else
 			keyMap[_key] = new InputAction(_inputKey);
 	}
@@ -310,7 +310,7 @@ public:
 		// 存在していた場合
 		if (it != keyMap.end())
 			it->second->AddKeyCode(_inputKey);
-		// 存在していなかった場合は、新たにインスタンスを作成する
+		// 存在していなかった場合は、新たにアクションマップを作成する
 		else
 			keyMap[_key] = new InputAction(_inputKey);
 	}
@@ -328,7 +328,7 @@ public:
 		// 存在していた場合
 		if (it != keyMap.end())
 			it->second->AddCallBack(_callBack);
-		// 存在していなかった場合は、新たにインスタンスを作成する
+		// 存在していなかった場合は、新たにアクションマップを作成する
 		else
 		{
 			keyMap[_key] = new InputAction();
@@ -339,7 +339,7 @@ public:
 private:
 
 	/**
-	 * @brief		キーマップに登録されているキーを監視する
+	 * @brief		アクションマップに登録されているキーを監視する
 	 * @author		Suzuki N
 	 * @date		24/09/08
 	 */
@@ -348,7 +348,7 @@ private:
 		// 登録されているキーの入力状態を監視
 		for (auto it = keyMap.begin(); it != keyMap.end(); ++it)
 		{
-			//! このキーマップ内で入力があったか
+			//! このアクションマップ内で入力があったか
 			bool isInput = false;
 			//! 入力時間
 			unsigned int inputTyme = 0;

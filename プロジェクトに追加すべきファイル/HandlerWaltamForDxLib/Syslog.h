@@ -63,9 +63,9 @@ typedef struct
 
 
 /**
- * @class   	Syslog
- * @brief   	指定のログを出力するクラス
- * @detail      静的クラスで設計する
+ * @class  	Syslog
+ * @brief  	指定のログを出力するクラス
+ * @detail  静的クラスで設計する
  */
 class Syslog
 {

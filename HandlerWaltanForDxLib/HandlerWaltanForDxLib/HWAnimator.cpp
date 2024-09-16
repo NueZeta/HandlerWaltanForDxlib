@@ -1,10 +1,10 @@
-#include "h/HWCollider.h"
+#include "h/HWAnimator.h"
 
 
 /**
 * @author   Suzuki N
-* @date     24/07/29
-* @note		HWColliderの実装ファイル
+* @date     24/08/09
+* @note		HWAnimatorの実装ファイル
 */
 
 
@@ -20,16 +20,18 @@
 
 
 
-
 #pragma endregion
 
+#pragma region protectedメソッド
+
+
+
+
+#pragma endregion
 
 #pragma region オーバーライドメソッド
 
 
-void HWCollider::OnCollisionEnter()
-{
-}
 
 
 #pragma endregion

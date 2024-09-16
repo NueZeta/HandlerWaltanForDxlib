@@ -5,15 +5,20 @@
 
 /**
 * @author   Suzuki N
-* @date     24/07/16
+* @date     24/06/17
 * @note     すべてのコンポーネントの基底クラスの定義ファイル
 */
 
 
 //HWComponentクラスがメンバ変数にHWGameObjectクラスを持たせるために前方宣言
 class HWGameObject;
+class HWTransform;
 
 
+/**
+ * @class	HWComponent
+ * @brief	全てのコンポーネントの基底クラス
+ */
 class HWComponent
 {
 	// 特定のクラス以外からのアクセスを防ぐためのフレンド宣言
@@ -29,6 +34,12 @@ public:
 	 * @History		24/06/17 作成(Suzuki N)
 	 */
 	HWGameObject* gameObject;
+
+	/**
+	 * @brief		HWGameObjectにアタッチされているHWTransform
+	 * @History		24/06/17 作成(Suzuki N)
+	 */
+	HWTransform* transform;
 
 	/**
 	 * @brief		複数アタッチ可能なコンポーネントか
@@ -68,28 +79,12 @@ public:
 
 	/*     メソッド     */
 
-
 	/**
-	 * @brief		アタッチされているHWGameObjectにインスタンスを代入する
-	 * @param[in]	HWGameObject*  代入するHWGameObject
+	 * @brief		デストラクタ
 	 * @author		Suzuki N
-	 * @date		24/06/17
+	 * @date		24/07/19
 	 */
-	void SetGameObject(HWGameObject* _gameObject)
-	{
-		gameObject = _gameObject;
-	}
-
-	/**
-	 * @brief		アタッチされているHWGameObjectを返す
-	 * @return		コンポーネントがアタッチされているHWGameObject
-	 * @author		Suzuki N
-	 * @date		24/06/17
-	 */
-	HWGameObject* GetGameObject()
-	{
-		return gameObject;
-	}
+	virtual ~HWComponent(){}
 
 protected:
 
@@ -98,13 +93,7 @@ protected:
 	 * @author		Suzuki N
 	 * @date		24/07/19
 	 */
-	HWComponent() : isMultiplePossession(false), active(true)
-	{
-		//各コールバック関数にオーバーライドされたメソッドを代入する
-		OnCollisionEnterCallBack = std::bind(&HWComponent::OnCollisionEnter, this);
-		OnCollisionStayCallBack = std::bind(&HWComponent::OnCollisionStay, this);
-		OnCollisionExitCallBack = std::bind(&HWComponent::OnCollisionExit, this);
-	}
+	HWComponent();
 
 #pragma region 仮想関数群
 
@@ -163,8 +152,6 @@ protected:
 
 #pragma endregion
 
-public:
-
 #pragma region 登録されたコールバック関数を呼ぶメソッド群
 
 	/**
@@ -172,33 +159,21 @@ public:
 	 * @author		Suzuki N
 	 * @date		24/07/19
 	 */
-	void OnCollisionEnterHandler()
-	{
-		if (OnCollisionEnterCallBack)
-			OnCollisionEnterCallBack();
-	}
+	void OnCollisionEnterHandler();
 
 	/**
 	 * @brief		登録された衝突時に働くメソッドを働かせる
 	 * @author		Suzuki N
 	 * @date		24/07/19
 	 */
-	void OnCollisionStayHandler()
-	{
-		if (OnCollisionStayCallBack)
-			OnCollisionStayCallBack();
-	}
+	void OnCollisionStayHandler();
 
 	/**
 	 * @brief		登録された衝突時に働くメソッドを働かせる
 	 * @author		Suzuki N
 	 * @date		24/07/19
 	 */
-	void OnCollisionExsitHandler()
-	{
-		if (OnCollisionExitCallBack)
-			OnCollisionExitCallBack();
-	}
+	void OnCollisionExsitHandler();
 
 #pragma endregion
 };

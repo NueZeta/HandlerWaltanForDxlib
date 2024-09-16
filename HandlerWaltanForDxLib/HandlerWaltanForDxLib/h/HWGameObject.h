@@ -13,8 +13,8 @@
 
 
 /**
- * @class		HWGameObject
- * @brief       オブジェクトに関する情報をまとめたクラス
+ * @class	HWGameObject
+ * @brief	オブジェクトに関する情報をまとめたクラス
  */
 class HWGameObject
 {
@@ -146,14 +146,32 @@ public:
 
 #pragma endregion
 
-
 	/**
 	 * @brief		コンポーネントを追加する
 	 * @param[in]	std::unique_ptr<HWComponent> アタッチするコンポーネント
 	 * @author		Suzuki N
 	 * @date		24/06/17
 	 */
-	void AddComponent(std::unique_ptr<HWComponent> _component);
+	template<class T, typename... Args>
+	T* AddComponent(Args&&... args)
+	{
+		//テンプレートのTypeがComponentの派生クラスか調べ、違った場合はコンパイル時にエラーを吐く
+		static_assert(std::is_base_of<HWComponent, T>::value, "Error : Attempted to attach a non-component");
+
+
+		std::unique_ptr<HWComponent> component = std::make_unique<T>(std::forward<Args>(args)...);
+
+		// コンポーネントからアタッチされているGameObjectとTransformを確認できるようにする
+		component->gameObject = this;
+		component->transform = (GetComponent<HWTransform>());
+		hwComponents.push_back(std::move(component));
+
+		T* ret = dynamic_cast<T*>(hwComponents[hwComponents.size() - 1].get());
+		// コンポーネントがアタッチされた瞬間に走るメソッドを呼び出す
+		ret->Awake();
+
+		return ret;
+	}
 
 	/**
 	 * @brief		指定のコンポーネントを返す
@@ -161,13 +179,11 @@ public:
 	 * @author		Suzuki N
 	 * @date		24/06/17
 	 */
-
-
-	template<typename T>
-	inline T* GetComponent()
+	template<class T >
+	T* GetComponent()
 	{
 		//テンプレートのTypeがComponentの派生クラスか調べ、違った場合はコンパイル時にエラーを吐く
-		static_assert(std::is_base_of<HWComponent, T>::value, "コンポーネント以外はアタッチできません");
+		static_assert(std::is_base_of<HWComponent, T>::value, "Error : Trying to get something other than Component");
 
 		//javaやC#でいうところのforeach構文
 		for (auto& component : hwComponents)

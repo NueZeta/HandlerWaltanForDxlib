@@ -1,7 +1,9 @@
 #pragma once
 #include "CollisionWaltan.h"
 #include "HWAnimator.h"
-#include "HWCollider.h"
+#include "HWBoxCollider.h"
+#include "HWCapsuleCollider.h"
+#include "HWSphereCollider.h"
 #include "HWGameObject.h"
 #include "HWRenderer.h"
 #include "HWTransform.h"
@@ -16,8 +18,8 @@
 
 
 /**
- * @class		HandlerWaltan
- * @brief       すべてのハンドラーを管理、実行するクラス
+ * @class	HandlerWaltan
+ * @brief   すべてのハンドラーを管理、実行するクラス
  */
 class HandlerWaltan
 {

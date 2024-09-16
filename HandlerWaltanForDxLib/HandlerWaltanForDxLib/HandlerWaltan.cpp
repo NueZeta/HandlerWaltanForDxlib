@@ -23,8 +23,8 @@ void HandlerWaltan::Update()
     for (auto obj : HWGameObject::GetGameObjects())
         obj->CallAllUpdates();
 
-    // CollisionWaltanのUpdateメソッド(あたり判定)
-    CollisionWaltan::Instance().Update();
+    // あたり判定を確認
+    collisionWaltan->Update();
 
     // インスタンス化されたInputSystemのUpdateメソッドを呼ぶ
     for (auto it = InputSystem::inputSystemVec.begin(); it != InputSystem::inputSystemVec.end(); ++it)
@@ -43,6 +43,7 @@ void HandlerWaltan::Update()
 HandlerWaltan::HandlerWaltan()
 {
     // 各Waltanオブジェクトにインスタンスを与える
+    collisionWaltan = new CollisionWaltan();
 }
 
 

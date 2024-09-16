@@ -10,8 +10,8 @@
 
 
 /**
- * @class		HWAnimator
- * @brief		アニメーション制御管理用のコンポーネント
+ * @class	HWAnimator
+ * @brief	アニメーション制御管理用のコンポーネント
  */
 class HWAnimator : public HWComponent
 {
