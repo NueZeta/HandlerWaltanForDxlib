@@ -95,6 +95,15 @@ void HWBoxCollider::Awake()
 
 void HWBoxCollider::Update()
 {
+	// 回転行列の作成
+	MATRIX rotX = MGetRotX(transform->rotate.x);
+	MATRIX rotY = MGetRotY(transform->rotate.y);
+	MATRIX rotZ = MGetRotZ(transform->rotate.z);
+
+	MATRIX rot = MMult(rotZ, MMult(rotY, rotX));
+
+
+
 	worldPosition = VAdd(transform->position, center);
 
 	// デバッグモード、もしくはコライダーの可視化フラグが立っているなら、コライダーを描画する

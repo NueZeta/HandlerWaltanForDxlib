@@ -115,5 +115,12 @@ private:
       * @date        24/09/17
       */
     bool CollCheck_Capsule(HWCapsuleCollider* _col1, HWCollider* _col2);
+
+    /**
+      * @brief       Boxコライダーがめり込まないようにする処理
+      * @author      Suzuki N
+      * @date        24/09/17
+      */
+
 };
 

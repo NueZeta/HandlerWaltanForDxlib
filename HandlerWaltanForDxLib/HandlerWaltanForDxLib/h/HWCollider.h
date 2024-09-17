@@ -33,6 +33,7 @@ class HWCollider : public HWComponent
 {
 	// 特定のクラス以外からのアクセスを防ぐためのフレンド宣言
 	friend class HWGameObject;
+	friend class CollisionWaltan;
 
 public:
 
@@ -70,6 +71,12 @@ protected:
 	 */
 	ColliderType colliderType;
 
+	/**
+	 * @brief		衝突中のコライダー
+	 * @History		24/09/15 作成(Suzuki N)
+	 */
+	std::vector<HWCollider*> CollidersInCollision;
+
 
 	/*     メソッド     */
 
@@ -80,7 +87,14 @@ public:
 	 * @author		Suzuki N
 	 * @date		24/07/18
 	 */
-	ColliderType GetColliderType() { return colliderType; }
+	const ColliderType GetColliderType() { return colliderType; }
+
+	/**
+	 * @brief		衝突中のコライダー情報を全て取得する
+	 * @author		Suzuki N
+	 * @date		24/09/18
+	 */
+	const std::vector<HWCollider*> GetCollidersInCollision() { return CollidersInCollision; }
 
 	/**
 	 * @brief		HWColliderのデストラクタ
