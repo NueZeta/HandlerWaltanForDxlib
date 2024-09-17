@@ -47,6 +47,11 @@ HWBoxCollider::HWBoxCollider(float _sizeX, float _sizeY, float _sizeZ) : size(VG
 #pragma region オーバーライドメソッド
 
 
+HWBoxCollider::~HWBoxCollider()
+{
+	CollisionWaltan::Instance().UnRegister(dynamic_cast<HWCollider*>(this));
+}
+
 void HWBoxCollider::DrawCollider()
 {
 	//! 頂点座標
@@ -84,6 +89,8 @@ void HWBoxCollider::Awake()
 {
 	center = VGet(0, 0, 0);
 	worldPosition = VAdd(transform->position, center);
+	// CollisionWaltanに登録
+	CollisionWaltan::Instance().ColVec.push_back(dynamic_cast<HWCollider*>(this));
 }
 
 void HWBoxCollider::Update()

@@ -33,6 +33,8 @@ public:
      */
     static bool debugMode;
 
+private:
+
 
 private:
 

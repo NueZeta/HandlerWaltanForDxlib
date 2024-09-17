@@ -97,6 +97,14 @@ public:
 	 */
 	HWTransform();
 
+	/**
+	 * @brief		デストラクタ
+	 * @detail		オーバーライド関数
+	 * @author		Suzuki N
+	 * @date		24/09/17
+	 */
+	~HWTransform(){}
+
 #pragma endregion
 
 protected:

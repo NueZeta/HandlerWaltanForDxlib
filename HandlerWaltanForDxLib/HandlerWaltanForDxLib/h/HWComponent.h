@@ -13,7 +13,7 @@
 //HWComponentクラスがメンバ変数にHWGameObjectクラスを持たせるために前方宣言
 class HWGameObject;
 class HWTransform;
-
+class HWCollider;
 
 /**
  * @class	HWComponent
@@ -60,19 +60,19 @@ private:
 	 * @brief		衝突判定を取った時に呼ばれるコールバック関数
 	 * @History		24/07/19 作成(Suzuki N)
 	 */
-	std::function<void()> OnCollisionEnterCallBack;
+	std::function<void(HWCollider*)> OnCollisionEnterCallBack;
 
 	/**
 	 * @brief		衝突判定を取っている間に呼ばれるコールバック関数
 	 * @History		24/07/19 作成(Suzuki N)
 	 */
-	std::function<void()> OnCollisionStayCallBack;
+	std::function<void(HWCollider*)> OnCollisionStayCallBack;
 	
 	/**
 	 * @brief		衝突判定が解かれた時に呼ばれるコールバック関数
 	 * @History		24/07/19 作成(Suzuki N)
 	 */
-	std::function<void()> OnCollisionExitCallBack;
+	std::function<void(HWCollider*)> OnCollisionExitCallBack;
 
 
 public:
@@ -130,7 +130,7 @@ protected:
 	 * @author		Suzuki N
 	 * @date		24/07/19
 	 */
-	virtual void OnCollisionEnter() {}
+	virtual void OnCollisionEnter(HWCollider* _collider) {}
 
 
 	/**
@@ -139,7 +139,7 @@ protected:
 	 * @author		Suzuki N
 	 * @date		24/07/19
 	 */
-	virtual void OnCollisionStay() {}
+	virtual void OnCollisionStay(HWCollider* _collider) {}
 
 
 	/**
@@ -148,7 +148,7 @@ protected:
 	 * @author		Suzuki N
 	 * @date		24/07/19
 	 */
-	virtual void OnCollisionExit() {}
+	virtual void OnCollisionExit(HWCollider* _collider) {}
 
 #pragma endregion
 
@@ -159,21 +159,21 @@ protected:
 	 * @author		Suzuki N
 	 * @date		24/07/19
 	 */
-	void OnCollisionEnterHandler();
+	void OnCollisionEnterHandler(HWCollider* _collider);
 
 	/**
 	 * @brief		登録された衝突時に働くメソッドを働かせる
 	 * @author		Suzuki N
 	 * @date		24/07/19
 	 */
-	void OnCollisionStayHandler();
+	void OnCollisionStayHandler(HWCollider* _collider);
 
 	/**
 	 * @brief		登録された衝突時に働くメソッドを働かせる
 	 * @author		Suzuki N
 	 * @date		24/07/19
 	 */
-	void OnCollisionExsitHandler();
+	void OnCollisionExsitHandler(HWCollider* _collider);
 
 #pragma endregion
 };

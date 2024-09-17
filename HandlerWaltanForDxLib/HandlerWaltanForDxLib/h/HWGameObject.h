@@ -76,21 +76,21 @@ private:
 	 * @author      Suzuki N
 	 * @date        24/08/22
 	 */
-	void CallAllOnCollisionEnters();
+	void CallAllOnCollisionEnters(HWCollider* _collider);
 
 	/**
 	 * @brief       全てのコンポーネントのOnCollisionStayCallBackメソッドを呼びだす
 	 * @author      Suzuki N
 	 * @date        24/08/22
 	 */
-	void CallAllOnCollisionStays();
+	void CallAllOnCollisionStays(HWCollider* _collider);
 
 	/**
 	 * @brief       全てのコンポーネントのOnCollisionExitCallBackメソッドを呼びだす
 	 * @author      Suzuki N
 	 * @date        24/08/22
 	 */
-	void CallAllOnCollisionExits();
+	void CallAllOnCollisionExits(HWCollider* _collider);
 
 
 public:

@@ -11,6 +11,21 @@
 
 
 /**
+ * @enum	ColliderType
+ * @brief	コライダーの種類
+ */
+enum class ColliderType
+{
+	//! 立方体(0)
+	Box,
+	//! 球体(1)
+	Sphere,
+	//! カプセル型(2)
+	Capsule,
+};
+
+
+/**
  * @class	HWCollider
  * @brief	あたり判定の情報を保持するコライダーの基底コンポーネント
  */
@@ -47,9 +62,25 @@ public:
 	 */
 	VECTOR worldPosition;
 
+protected:
+
+	/**
+	 * @brief		コライダーの種類
+	 * @History		24/09/15 作成(Suzuki N)
+	 */
+	ColliderType colliderType;
+
+
 	/*     メソッド     */
 
 public:
+
+	/**
+	 * @brief		コライダータイプを取得する
+	 * @author		Suzuki N
+	 * @date		24/07/18
+	 */
+	ColliderType GetColliderType() { return colliderType; }
 
 	/**
 	 * @brief		HWColliderのデストラクタ

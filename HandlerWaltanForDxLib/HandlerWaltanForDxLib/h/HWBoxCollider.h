@@ -1,6 +1,7 @@
 #pragma once
 #include "HWCollider.h"
 #include "HandlerWaltan.h"
+#include "CollisionWaltan.h"
 
 
 /**
@@ -59,9 +60,17 @@ public:
 	 */
 	HWBoxCollider(float _sizeX, float _sizeY, float _sizeZ);
 
+	/**
+	 * @brief		デストラクタ
+	 * @author		Suzuki N
+	 * @date		24/09/16
+	 */
+	~HWBoxCollider();
+
 protected:
 
 #pragma region オーバーライドメソッド
+
 
 	/**
 	 * @brief		立方体のコライダーを描画する

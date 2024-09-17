@@ -1,6 +1,9 @@
 #pragma once
 #include "Utilities.h"
 #include "HandlerWaltan.h"
+#include "HWBoxCollider.h"
+#include "HWSphereCollider.h"
+#include "HWCapsuleCollider.h"
 
 
 /**
@@ -18,15 +21,44 @@ class CollisionWaltan
 {
 	// 特定のクラス以外からのアクセスを防ぐためのフレンド宣言
 	friend class HandlerWaltan;
+    friend class HWBoxCollider;
+    friend class HWSphereCollider;
+    friend class HWCapsuleCollider;
+
 
 private:
 
     /*     メンバ変数     */
 
+    /**
+     * @brief		インスタンス化されているコライダー
+     * @History		24/09/17 作成(Suzuki N)
+     */
+    std::vector<HWCollider*> ColVec;
+
 
 private:
 
     /*     メソッド     */
+
+    /**
+     * @brief       インスタンスを取得する静的メソッド
+     * @detail      初めの一回だけインスタンスを生成する
+     * @author      Suzuki N
+     * @date        24/07/19
+     */
+    static CollisionWaltan& Instance()
+    {
+        // シングルトンインスタンスを生成
+        static CollisionWaltan instance;
+        return instance;
+    }
+
+    //インスタンスのコピー禁止
+    //デフォルトのコピーコンストラクタを削除
+    CollisionWaltan(const CollisionWaltan&) = delete;
+    //デフォルトのコピー代入演算子も削除
+    CollisionWaltan& operator=(const CollisionWaltan&) = delete;
 
     /**
      * @brief       コンストラクタ
@@ -49,32 +81,39 @@ private:
       */
     void Update();
 
-
-public:
+    /**
+     * @brief       登録されているコライダー情報を削除する
+     * @author      Suzuki N
+     * @date        24/09/17
+     */
+    void UnRegister(HWCollider* _collider)
+    {
+        // 要素を削除する
+        auto it = std::find(ColVec.begin(), ColVec.end(), _collider);
+        // 見つかった場合は削除
+        if (it != ColVec.end()) 
+            ColVec.erase(it);
+    }
 
     /**
-     * @brief       インスタンスを取得する静的メソッド
-     * @detail      初めの一回だけインスタンスを生成する
-     * @author      Suzuki N
-     * @date        24/08/22
-     */
-    static CollisionWaltan& Instance();
-
-
-    //インスタンスのコピー禁止
-    //デフォルトのコピーコンストラクタを削除
-    CollisionWaltan(const CollisionWaltan&) = delete;
-    //デフォルトのコピー代入演算子も削除
-    CollisionWaltan& operator=(const CollisionWaltan&) = delete;
-
+      * @brief       要素1 がBoxColliderの場合のコリジョンチェック
+      * @author      Suzuki N
+      * @date        24/09/17
+      */
+    bool CollCheck_Box(HWBoxCollider* _col1, HWCollider* _col2);
 
     /**
-     * @brief       イニシャライズ用のメソッド
-     * @detail      インスタンスを生成したときに呼ぶ
-     * @return      int 初期化成功の成否
-     * @author      Suzuki N
-     * @date        24/08/22
-     */
-    static int Init();
+      * @brief       要素1 がSphereColliderの場合のコリジョンチェック
+      * @author      Suzuki N
+      * @date        24/09/17
+      */
+    bool CollCheck_Sphere(HWSphereCollider* _col1, HWCollider* _col2);
+
+    /**
+      * @brief       要素1 がCapsuleColliderの場合のコリジョンチェック
+      * @author      Suzuki N
+      * @date        24/09/17
+      */
+    bool CollCheck_Capsule(HWCapsuleCollider* _col1, HWCollider* _col2);
 };
 

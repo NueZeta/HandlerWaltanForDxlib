@@ -18,22 +18,22 @@
 #pragma region publicメソッド
 
 
-void HWComponent::OnCollisionEnterHandler()
+void HWComponent::OnCollisionEnterHandler(HWCollider* _collider)
 {
 	if (OnCollisionEnterCallBack)
-		OnCollisionEnterCallBack();
+		OnCollisionEnterCallBack(_collider);
 }
 
-void HWComponent::OnCollisionStayHandler()
+void HWComponent::OnCollisionStayHandler(HWCollider* _collider)
 {
 	if (OnCollisionStayCallBack)
-		OnCollisionStayCallBack();
+		OnCollisionStayCallBack(_collider);
 }
 
-void HWComponent::OnCollisionExsitHandler()
+void HWComponent::OnCollisionExsitHandler(HWCollider* _collider)
 {
 	if (OnCollisionExitCallBack)
-		OnCollisionExitCallBack();
+		OnCollisionExitCallBack(_collider);
 }
 
 
@@ -45,9 +45,9 @@ void HWComponent::OnCollisionExsitHandler()
 HWComponent::HWComponent() : isMultiplePossession(true), active(true)
 {
 	//各コールバック関数にオーバーライドされたメソッドを代入する
-	OnCollisionEnterCallBack = std::bind(&HWComponent::OnCollisionEnter, this);
-	OnCollisionStayCallBack = std::bind(&HWComponent::OnCollisionStay, this);
-	OnCollisionExitCallBack = std::bind(&HWComponent::OnCollisionExit, this);
+	OnCollisionEnterCallBack = std::bind(&HWComponent::OnCollisionEnter, this, std::placeholders::_1);
+	OnCollisionStayCallBack = std::bind(&HWComponent::OnCollisionStay, this, std::placeholders::_1);
+	OnCollisionExitCallBack = std::bind(&HWComponent::OnCollisionExit, this, std::placeholders::_1);
 }
 
 

@@ -24,7 +24,7 @@ void HandlerWaltan::Update()
         obj->CallAllUpdates();
 
     // あたり判定を確認
-    collisionWaltan->Update();
+    CollisionWaltan::Instance().Update();
 
     // インスタンス化されたInputSystemのUpdateメソッドを呼ぶ
     for (auto it = InputSystem::inputSystemVec.begin(); it != InputSystem::inputSystemVec.end(); ++it)
@@ -43,7 +43,6 @@ void HandlerWaltan::Update()
 HandlerWaltan::HandlerWaltan()
 {
     // 各Waltanオブジェクトにインスタンスを与える
-    collisionWaltan = new CollisionWaltan();
 }
 
 

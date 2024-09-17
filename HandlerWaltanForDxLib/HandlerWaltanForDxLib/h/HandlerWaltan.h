@@ -35,12 +35,6 @@ public:
 
 private:
 
-    /**
-     * @brief		あたり判定を行うオブジェクト
-     * @History		24/08/23 作成(Suzuki N)
-     */
-    CollisionWaltan* collisionWaltan;
-
 
 private:
 

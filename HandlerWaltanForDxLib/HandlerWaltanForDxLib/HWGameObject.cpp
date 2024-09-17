@@ -69,14 +69,9 @@ HWGameObject::HWGameObject(std::string _name, int _priority) : name(_name), prio
 
 HWGameObject::~HWGameObject()
 {
-    for (auto it = gameObjects.begin(); it != gameObjects.end(); ++it)
-    {
-        if (*it == this)
-        {
-            gameObjects.erase(it);
-            break;
-        }
-    }
+    auto it = std::find(gameObjects.begin(), gameObjects.end(), this);
+    if (it != gameObjects.end())
+        gameObjects.erase(it);
 }
 
 
@@ -99,30 +94,30 @@ void HWGameObject::CallAllUpdates()
     }
 }
 
-void HWGameObject::CallAllOnCollisionEnters()
+void HWGameObject::CallAllOnCollisionEnters(HWCollider* _collider)
 {
     for (auto& component : hwComponents)
     {
         if(component->active)
-            component.get()->OnCollisionEnterHandler();
+            component.get()->OnCollisionEnterHandler(_collider);
     }
 }
 
-void HWGameObject::CallAllOnCollisionStays()
+void HWGameObject::CallAllOnCollisionStays(HWCollider* _collider)
 {
     for (auto& component : hwComponents)
     {
         if (component->active)
-            component.get()->OnCollisionStayHandler();
+            component.get()->OnCollisionStayHandler(_collider);
     }
 }
 
-void HWGameObject::CallAllOnCollisionExits()
+void HWGameObject::CallAllOnCollisionExits(HWCollider* _collider)
 {
     for (auto& component : hwComponents)
     {
         if (component->active)
-            component.get()->OnCollisionExsitHandler();
+            component.get()->OnCollisionExsitHandler(_collider);
     }
 }
 
