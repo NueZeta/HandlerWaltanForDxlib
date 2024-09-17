@@ -37,14 +37,27 @@ void CollisionWaltan::Update()
 		// すでにチェックした組み合わせを省く
 		for (auto it2 = it1 + 1; it2 != ColVec.end(); ++it2)
 		{
+			// コライダーのtriggerが違った場合はその組み合わせは無視
+			if ((*it1)->isTrigger != (*it2)->isTrigger)
+				continue;
+
 			// it1 のコライダータイプによって処理を変える
 			switch ((*it1)->GetColliderType())
 			{
 				// 立方体型コライダーの場合
 			case ColliderType::Box:
 				if (CollCheck_Box(dynamic_cast<HWBoxCollider*>(*it1), *it2))
-					(*it1)->gameObject->CallAllOnCollisionEnters(*it2);
-					(*it2)->gameObject->CallAllOnCollisionEnters(*it1);
+					// コライダーがトリガーかどうかで呼ぶメソッドを変える
+					if ((*it1)->isTrigger)
+					{
+						(*it1)->gameObject->CallAllOnTriggerEnters(*it2);
+						(*it2)->gameObject->CallAllOnTriggerEnters(*it1);
+					}
+					else
+					{
+						(*it1)->gameObject->CallAllOnCollisionEnters(*it2);
+						(*it2)->gameObject->CallAllOnCollisionEnters(*it1);
+					}
 				break;
 				// カプセル型コライダーの場合
 			case ColliderType::Capsule:
@@ -72,6 +85,12 @@ bool CollisionWaltan::CollCheck_Box(HWBoxCollider* _col1, HWCollider* _col2)
 		if (fabs(_col1->worldPosition.x - boxCol->worldPosition.x) > (_col1->size.x / 2 + boxCol->size.x / 2)) return false;
 		if (fabs(_col1->worldPosition.y - boxCol->worldPosition.y) > (_col1->size.y / 2 + boxCol->size.y / 2)) return false;
 		if (fabs(_col1->worldPosition.z - boxCol->worldPosition.z) > (_col1->size.z / 2 + boxCol->size.z / 2)) return false;
+
+		// コライダーがトリガーでないなら、コライダー同士がめり込まないようにする
+		if (!_col1->isTrigger)
+		{
+
+		}
 
 		return true;
 		break;

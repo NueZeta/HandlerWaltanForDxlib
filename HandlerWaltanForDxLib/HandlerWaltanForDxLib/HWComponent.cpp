@@ -36,6 +36,24 @@ void HWComponent::OnCollisionExsitHandler(HWCollider* _collider)
 		OnCollisionExitCallBack(_collider);
 }
 
+void HWComponent::OnTriggerEnterHandler(HWCollider* _collider)
+{
+	if (OnTriggerEnterCallBack)
+		OnTriggerEnterCallBack(_collider);
+}
+
+void HWComponent::OnTriggerStayHandler(HWCollider* _collider)
+{
+	if (OnTriggerStayCallBack)
+		OnTriggerStayCallBack(_collider);
+}
+
+void HWComponent::OnTriggerExsitHandler(HWCollider* _collider)
+{
+	if (OnTriggerExitCallBack)
+		OnTriggerExitCallBack(_collider);
+}
+
 
 #pragma endregion
 
@@ -48,6 +66,9 @@ HWComponent::HWComponent() : isMultiplePossession(true), active(true)
 	OnCollisionEnterCallBack = std::bind(&HWComponent::OnCollisionEnter, this, std::placeholders::_1);
 	OnCollisionStayCallBack = std::bind(&HWComponent::OnCollisionStay, this, std::placeholders::_1);
 	OnCollisionExitCallBack = std::bind(&HWComponent::OnCollisionExit, this, std::placeholders::_1);
+	OnTriggerEnterCallBack = std::bind(&HWComponent::OnTriggerEnter, this, std::placeholders::_1);
+	OnTriggerStayCallBack = std::bind(&HWComponent::OnTriggerStay, this, std::placeholders::_1);
+	OnTriggerExitCallBack = std::bind(&HWComponent::OnTriggerExit, this, std::placeholders::_1);
 }
 
 

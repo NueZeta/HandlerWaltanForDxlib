@@ -121,6 +121,33 @@ void HWGameObject::CallAllOnCollisionExits(HWCollider* _collider)
     }
 }
 
+void HWGameObject::CallAllOnTriggerEnters(HWCollider* _collider)
+{
+    for (auto& component : hwComponents)
+    {
+        if(component->active)
+            component.get()->OnTriggerEnterHandler(_collider);
+    }
+}
+
+void HWGameObject::CallAllOnTriggerStays(HWCollider* _collider)
+{
+    for (auto& component : hwComponents)
+    {
+        if (component->active)
+            component.get()->OnTriggerStayHandler(_collider);
+    }
+}
+
+void HWGameObject::CallAllOnTriggerExits(HWCollider* _collider)
+{
+    for (auto& component : hwComponents)
+    {
+        if (component->active)
+            component.get()->OnTriggerExsitHandler(_collider);
+    }
+}
+
 
 #pragma endregion
 

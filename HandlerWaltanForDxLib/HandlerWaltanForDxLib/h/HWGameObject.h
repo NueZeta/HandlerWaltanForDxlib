@@ -91,6 +91,27 @@ private:
 	 * @date        24/08/22
 	 */
 	void CallAllOnCollisionExits(HWCollider* _collider);
+	
+	/**
+	 * @brief       全てのコンポーネントのOnTriggerEnterCallBackメソッドを呼びだす
+	 * @author      Suzuki N
+	 * @date        24/08/22
+	 */
+	void CallAllOnTriggerEnters(HWCollider* _collider);
+
+	/**
+	 * @brief       全てのコンポーネントのOnTriggerStayCallBackメソッドを呼びだす
+	 * @author      Suzuki N
+	 * @date        24/08/22
+	 */
+	void CallAllOnTriggerStays(HWCollider* _collider);
+
+	/**
+	 * @brief       全てのコンポーネントのOnTriggerExitCallBackメソッドを呼びだす
+	 * @author      Suzuki N
+	 * @date        24/08/22
+	 */
+	void CallAllOnTriggerExits(HWCollider* _collider);
 
 
 public:

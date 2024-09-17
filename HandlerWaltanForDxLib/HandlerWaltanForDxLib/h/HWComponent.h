@@ -67,12 +67,30 @@ private:
 	 * @History		24/07/19 作成(Suzuki N)
 	 */
 	std::function<void(HWCollider*)> OnCollisionStayCallBack;
-	
+
 	/**
 	 * @brief		衝突判定が解かれた時に呼ばれるコールバック関数
 	 * @History		24/07/19 作成(Suzuki N)
 	 */
 	std::function<void(HWCollider*)> OnCollisionExitCallBack;
+
+	/**
+	 * @brief		衝突判定を取った時に呼ばれるコールバック関数
+	 * @History		24/07/19 作成(Suzuki N)
+	 */
+	std::function<void(HWCollider*)> OnTriggerEnterCallBack;
+
+	/**
+	 * @brief		衝突判定を取っている間に呼ばれるコールバック関数
+	 * @History		24/07/19 作成(Suzuki N)
+	 */
+	std::function<void(HWCollider*)> OnTriggerStayCallBack;
+
+	/**
+	 * @brief		衝突判定が解かれた時に呼ばれるコールバック関数
+	 * @History		24/07/19 作成(Suzuki N)
+	 */
+	std::function<void(HWCollider*)> OnTriggerExitCallBack;
 
 
 public:
@@ -84,7 +102,7 @@ public:
 	 * @author		Suzuki N
 	 * @date		24/07/19
 	 */
-	virtual ~HWComponent(){}
+	virtual ~HWComponent() {}
 
 protected:
 
@@ -123,6 +141,7 @@ protected:
 	 */
 	virtual void Update() {}
 
+#pragma region コリジョン関係
 
 	/**
 	 * @brief		コライダー衝突時に働くメソッド
@@ -150,6 +169,35 @@ protected:
 	 */
 	virtual void OnCollisionExit(HWCollider* _collider) {}
 
+	/**
+	 * @brief		コライダー衝突時に働くメソッド
+	 * @detail		仮想関数
+	 * @author		Suzuki N
+	 * @date		24/07/19
+	 */
+	virtual void OnTriggerEnter(HWCollider* _collider) {}
+
+
+	/**
+	 * @brief		コライダー衝突中に働くメソッド
+	 * @detail		仮想関数
+	 * @author		Suzuki N
+	 * @date		24/07/19
+	 */
+	virtual void OnTriggerStay(HWCollider* _collider) {}
+
+
+	/**
+	 * @brief		コライダー衝突が解除時に働くメソッド
+	 * @detail		仮想関数
+	 * @author		Suzuki N
+	 * @date		24/07/19
+	 */
+	virtual void OnTriggerExit(HWCollider* _collider) {}
+
+#pragma endregion
+
+
 #pragma endregion
 
 #pragma region 登録されたコールバック関数を呼ぶメソッド群
@@ -174,6 +222,27 @@ protected:
 	 * @date		24/07/19
 	 */
 	void OnCollisionExsitHandler(HWCollider* _collider);
+
+	/**
+	 * @brief		登録された衝突時に働くメソッドを働かせる
+	 * @author		Suzuki N
+	 * @date		24/07/19
+	*/
+	void OnTriggerEnterHandler(HWCollider* _collider);
+
+	/**
+	 * @brief		登録された衝突時に働くメソッドを働かせる
+	 * @author		Suzuki N
+	 * @date		24/07/19
+	 */
+	void OnTriggerStayHandler(HWCollider* _collider);
+
+	/**
+	 * @brief		登録された衝突時に働くメソッドを働かせる
+	 * @author		Suzuki N
+	 * @date		24/07/19
+	 */
+	void OnTriggerExsitHandler(HWCollider* _collider);
 
 #pragma endregion
 };
