@@ -138,7 +138,16 @@ void CollisionWaltan::Update()
 	}
 }
 
-bool CollisionWaltan::CollCheck_Box(HWBoxCollider* _col1, HWCollider* _col2)
+void CollisionWaltan::UnRegister(HWCollider* _collider)
+{
+	// 要素を削除する
+	auto it = std::find(ColVec.begin(), ColVec.end(), _collider);
+	// 見つかった場合は削除
+	if (it != ColVec.end())
+		ColVec.erase(it);
+}
+
+bool CollisionWaltan::CollCheck_Box(HWBoxCollider* _boxCol1, HWCollider* _col2)
 {
 	// _col2のコライダータイプによって処理を変える
 	switch (_col2->GetColliderType())
@@ -146,14 +155,15 @@ bool CollisionWaltan::CollCheck_Box(HWBoxCollider* _col1, HWCollider* _col2)
 		// 立方体型コライダーの場合
 	case ColliderType::Box:
 	{
-		HWBoxCollider* boxCol = dynamic_cast<HWBoxCollider*>(_col2);
+		//! BoxColliderにキャスト
+		HWBoxCollider* boxCol2 = dynamic_cast<HWBoxCollider*>(_col2);
 
-		if (fabs(_col1->worldPosition.x - boxCol->worldPosition.x) > (_col1->size.x / 2 + boxCol->size.x / 2)) return false;
-		if (fabs(_col1->worldPosition.y - boxCol->worldPosition.y) > (_col1->size.y / 2 + boxCol->size.y / 2)) return false;
-		if (fabs(_col1->worldPosition.z - boxCol->worldPosition.z) > (_col1->size.z / 2 + boxCol->size.z / 2)) return false;
+		//-----------------------------------------------------------
+		// あたり判定を見る　*未実装
+		//-----------------------------------------------------------
 
 		// コライダーがトリガーでないなら、コライダー同士がめり込まないようにする
-		if (!_col1->isTrigger)
+		if (!_boxCol1->isTrigger)
 		{
 
 		}

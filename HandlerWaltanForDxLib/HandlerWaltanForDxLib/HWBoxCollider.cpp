@@ -82,11 +82,16 @@ void HWBoxCollider::SetCollider()
 	vertex[1][2] = VGet(-size.x / 2, -size.y / 2, size.z / 2);
 	vertex[1][3] = VGet(size.x / 2, -size.y / 2, size.z / 2);
 
-	// 回転行列の作成（Z → Y → X の順）
+	// 回転行列の作成（Z -> Y -> X の順）
 	MATRIX rotX = MGetRotX(transform->rotate.x);
 	MATRIX rotY = MGetRotY(transform->rotate.y);
 	MATRIX rotZ = MGetRotZ(transform->rotate.z);
 	MATRIX rot = MMult(rotZ, MMult(rotY, rotX));
+
+	//! 平行移動用の行列(原点からの移動量)
+	MATRIX trans = MGetTranslate(center);
+	//! trans -> rotate で掛けることで開店後に平行移動する(ローカルな平行移動)
+	MATRIX mat = MMult(trans, rot);
 
 	// 各頂点に回転行列を適用し、ワールド座標へ変換
 	for (int i = 0; i < 2; ++i)
@@ -94,9 +99,9 @@ void HWBoxCollider::SetCollider()
 		for (int j = 0; j < 4; ++j)
 		{
 			// ローカル座標での回転
-			vertex[i][j] = VTransform(vertex[i][j], rot);
+			vertex[i][j] = VTransform(vertex[i][j], mat);
 			// ワールド座標への変換
-			vertex[i][j] = VAdd(vertex[i][j], worldPosition);
+			vertex[i][j] = VAdd(vertex[i][j], transform->position);
 		}
 	}
 }
@@ -112,11 +117,10 @@ void HWBoxCollider::Awake()
 
 void HWBoxCollider::Update()
 {
-	localCenter = VCross(transform->rotate, VGet(0,1,0));
 
 	// コライダーの中心座標を更新
 	worldPosition = VAdd(transform->position, center);
-	
+
 	// コライダーの形を構成する
 	SetCollider();
 

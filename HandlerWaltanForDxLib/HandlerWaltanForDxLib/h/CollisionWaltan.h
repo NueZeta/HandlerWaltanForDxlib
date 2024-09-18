@@ -44,6 +44,7 @@ private:
     /**
      * @brief       インスタンスを取得する静的メソッド
      * @detail      初めの一回だけインスタンスを生成する
+     * @return      CollisionWaltan& シングルトンインスタンス
      * @author      Suzuki N
      * @date        24/07/19
      */
@@ -83,27 +84,25 @@ private:
 
     /**
      * @brief       登録されているコライダー情報を削除する
+     * @param[in]   HWCollider* 削除するコライダー情報
      * @author      Suzuki N
      * @date        24/09/17
      */
-    void UnRegister(HWCollider* _collider)
-    {
-        // 要素を削除する
-        auto it = std::find(ColVec.begin(), ColVec.end(), _collider);
-        // 見つかった場合は削除
-        if (it != ColVec.end()) 
-            ColVec.erase(it);
-    }
+    void UnRegister(HWCollider* _collider);
 
     /**
       * @brief       要素1 がBoxColliderの場合のコリジョンチェック
+      * @param[in]   HWBoxCollider* あたり判定の重なりを見る立方体型Collider情報1
+      * @param[in]   HWCollider*    あたり判定の重なりを見るCollider情報2
       * @author      Suzuki N
       * @date        24/09/17
       */
-    bool CollCheck_Box(HWBoxCollider* _col1, HWCollider* _col2);
+    bool CollCheck_Box(HWBoxCollider* _boxCol1, HWCollider* _col2);
 
     /**
       * @brief       要素1 がSphereColliderの場合のコリジョンチェック
+      * @param[in]   HWSphereCollider*   あたり判定の重なりを見る球体型Collider情報1
+      * @param[in]   HWCollider*         あたり判定の重なりを見るCollider情報2
       * @author      Suzuki N
       * @date        24/09/17
       */
@@ -111,6 +110,8 @@ private:
 
     /**
       * @brief       要素1 がCapsuleColliderの場合のコリジョンチェック
+      * @param[in]   HWCapsuleCollider*  あたり判定の重なりを見るカプセル型Collider情報1
+      * @param[in]   HWCollider*         あたり判定の重なりを見るCollider情報2
       * @author      Suzuki N
       * @date        24/09/17
       */
