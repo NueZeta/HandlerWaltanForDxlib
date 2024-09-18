@@ -66,6 +66,13 @@ public:
 protected:
 
 	/**
+	 * @brief		コライダーの中心(ローカル)
+	 * @History		24/09/15 作成(Suzuki N)
+	 */
+	VECTOR localCenter;
+
+
+	/**
 	 * @brief		コライダーの種類
 	 * @History		24/09/15 作成(Suzuki N)
 	 */

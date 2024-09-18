@@ -30,6 +30,9 @@ CollisionWaltan::~CollisionWaltan()
 
 void CollisionWaltan::Update()
 {
+	//! 登録されているColliderの数が一個以下ならそのまま終了
+	if (ColVec.size() < 2)return;
+
 	// 当たり判定をチェックする
 	for (auto it1 = ColVec.begin(); it1 != ColVec.end() - 1; ++it1)
 	{
