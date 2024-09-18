@@ -226,8 +226,10 @@
 	
 
 	@brief		コンポーネントを追加する
-	@param[in]	アタッチするコンポーネント
-	void AddMyComponent(unique_ptr<MyComponent> _component)
+ 	@detail		テンプレートにコンポーネントを指定
+  	@param[in]	引数が存在するコンポーネントの場合は指定
+ 	template<class T>
+	void AddMyComponent<T>()
 
 
  	@brief		指定のコンポーネントを返す
