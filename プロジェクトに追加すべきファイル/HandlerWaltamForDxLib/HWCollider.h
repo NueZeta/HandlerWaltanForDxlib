@@ -120,6 +120,14 @@ protected:
 	 */
 	virtual void DrawCollider(){}
 
+	/**
+	 * @brief		コライダーの座標をセットする
+	 * @detail		仮想関数
+	 * @author		Suzuki N
+	 * @date		24/09/16
+	 */
+	virtual void SetCollider() {}
+
 #pragma region オーバーライドメソッド
 
 #pragma endregion

@@ -54,21 +54,6 @@ HWBoxCollider::~HWBoxCollider()
 
 void HWBoxCollider::DrawCollider()
 {
-	//! 頂点座標
-	// [0][] = 底面, [1][] = 上底
-	// [][0] = 左上, [][1] = 右上, [][2] = 左下, [][3] = 右下
-	VECTOR vertex[2][4];
-
-	vertex[0][0] = VAdd(worldPosition, VGet(-size.x / 2, size.y / 2, -size.z / 2));
-	vertex[0][1] = VAdd(worldPosition, VGet(size.x / 2, size.y / 2, -size.z / 2));
-	vertex[0][2] = VAdd(worldPosition, VGet(-size.x / 2, size.y / 2, size.z / 2));
-	vertex[0][3] = VAdd(worldPosition, VGet(size.x / 2, size.y / 2, size.z / 2));
-	vertex[1][0] = VAdd(worldPosition, VGet(-size.x / 2, -size.y / 2, -size.z / 2));
-	vertex[1][1] = VAdd(worldPosition, VGet(size.x / 2, -size.y / 2, -size.z / 2));
-	vertex[1][2] = VAdd(worldPosition, VGet(-size.x / 2, -size.y / 2, size.z / 2));
-	vertex[1][3] = VAdd(worldPosition, VGet(size.x / 2, -size.y / 2, size.z / 2));
-
-
 	DrawLine3D(vertex[0][0], vertex[0][1], GetColor(0, 255, 0));
 	DrawLine3D(vertex[0][0], vertex[0][2], GetColor(0, 255, 0));
 	DrawLine3D(vertex[0][1], vertex[0][3], GetColor(0, 255, 0));
@@ -85,6 +70,39 @@ void HWBoxCollider::DrawCollider()
 	DrawLine3D(vertex[1][2], vertex[1][3], GetColor(0, 255, 0));
 }
 
+void HWBoxCollider::SetCollider()
+{
+	// ローカル座標での頂点座標設定
+	// [0][] = 底面, [1][] = 上底
+	// [][0] = 左上, [][1] = 右上, [][2] = 左下, [][3] = 右下
+	vertex[0][0] = VGet(-size.x / 2, size.y / 2, -size.z / 2);
+	vertex[0][1] = VGet(size.x / 2, size.y / 2, -size.z / 2);
+	vertex[0][2] = VGet(-size.x / 2, size.y / 2, size.z / 2);
+	vertex[0][3] = VGet(size.x / 2, size.y / 2, size.z / 2);
+	vertex[1][0] = VGet(-size.x / 2, -size.y / 2, -size.z / 2);
+	vertex[1][1] = VGet(size.x / 2, -size.y / 2, -size.z / 2);
+	vertex[1][2] = VGet(-size.x / 2, -size.y / 2, size.z / 2);
+	vertex[1][3] = VGet(size.x / 2, -size.y / 2, size.z / 2);
+
+	// 回転行列の作成（Z → Y → X の順）
+	MATRIX rotZ = MGetRotZ(transform->rotate.z);
+	MATRIX rotY = MGetRotY(transform->rotate.y);
+	MATRIX rotX = MGetRotX(transform->rotate.x);
+	MATRIX rot = MMult(rotZ, MMult(rotY, rotX));
+
+	// 各頂点に回転行列を適用し、ワールド座標へ変換
+	for (int i = 0; i < 2; ++i)
+	{
+		for (int j = 0; j < 4; ++j)
+		{
+			// ローカル座標での回転
+			vertex[i][j] = VTransform(vertex[i][j], rot);
+			// ワールド座標への変換
+			vertex[i][j] = VAdd(vertex[i][j], transform->position);
+		}
+	}
+}
+
 void HWBoxCollider::Awake()
 {
 	center = VGet(0, 0, 0);
@@ -95,16 +113,12 @@ void HWBoxCollider::Awake()
 
 void HWBoxCollider::Update()
 {
-	// 回転行列の作成
-	MATRIX rotX = MGetRotX(transform->rotate.x);
-	MATRIX rotY = MGetRotY(transform->rotate.y);
-	MATRIX rotZ = MGetRotZ(transform->rotate.z);
 
-	MATRIX rot = MMult(rotZ, MMult(rotY, rotX));
-
-
-
+	// コライダーの中心座標を更新
 	worldPosition = VAdd(transform->position, center);
+
+	// コライダーの形を構成する
+	SetCollider();
 
 	// デバッグモード、もしくはコライダーの可視化フラグが立っているなら、コライダーを描画する
 	if (isVisualization || HandlerWaltan::debugMode)

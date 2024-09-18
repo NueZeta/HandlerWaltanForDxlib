@@ -31,6 +31,11 @@ public:
 	 */
 	VECTOR size;
 
+	/**
+	 * @brief		コライダーの各頂点座標
+	 * @History		24/09/18 作成(Suzuki N)
+	 */
+	VECTOR vertex[2][4];
 
 	/*     メソッド     */
 
@@ -79,6 +84,14 @@ protected:
 	 * @date		24/09/16
 	 */
 	void DrawCollider() override;
+
+	/**
+	 * @brief		立方体のコライダーを構成する
+	 * @detail		オーバライドメソッド
+	 * @author		Suzuki N
+	 * @date		24/09/16
+	 */
+	void SetCollider() override;
 
 	/**
 	 * @brief		HWGameObjectにアタッチされた瞬間に働く
