@@ -147,7 +147,7 @@ void CollisionWaltan::UnRegister(HWCollider* _collider)
 		ColVec.erase(it);
 }
 
-bool CollisionWaltan::CollCheck_Box(HWBoxCollider* _boxCol1, HWCollider* _col2)
+bool CollisionWaltan::CollCheck_Box(HWBoxCollider* boxCol1, HWCollider* _col2)
 {
 	// _col2のコライダータイプによって処理を変える
 	switch (_col2->GetColliderType())
@@ -162,8 +162,15 @@ bool CollisionWaltan::CollCheck_Box(HWBoxCollider* _boxCol1, HWCollider* _col2)
 		// あたり判定を見る　*未実装
 		//-----------------------------------------------------------
 
+		OBB obb[2];
+		obb[0].center = boxCol1->worldPosition;
+		//obb[0].axis = { {},{},{} };
+
+		if (!!OBBvsOBB(obb[0], obb[1]))
+			return false;
+
 		// コライダーがトリガーでないなら、コライダー同士がめり込まないようにする
-		if (!_boxCol1->isTrigger)
+		if (!boxCol1->isTrigger)
 		{
 
 		}
