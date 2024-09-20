@@ -23,6 +23,7 @@
     <ClCompile Include="HandlerWaltan.cpp" />
     <ClCompile Include="HWAnimator.cpp" />
     <ClCompile Include="HWBoxCollider.cpp" />
+    <ClCompile Include="HWCamera.cpp" />
     <ClCompile Include="HWCapsuleCollider.cpp" />
     <ClCompile Include="HWCollider.cpp" />
     <ClCompile Include="HWComponent.cpp" />
@@ -38,6 +39,7 @@
     <ClInclude Include="h\HandlerWaltanForDxLib.h" />
     <ClInclude Include="h\HWAnimator.h" />
     <ClInclude Include="h\HWBoxCollider.h" />
+    <ClInclude Include="h\HWCamera.h" />
     <ClInclude Include="h\HWCapsuleCollider.h" />
     <ClInclude Include="h\HWCollider.h" />
     <ClInclude Include="h\HWComponent.h" />

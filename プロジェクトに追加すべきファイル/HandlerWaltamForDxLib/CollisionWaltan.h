@@ -25,6 +25,20 @@ class CollisionWaltan
     friend class HWSphereCollider;
     friend class HWCapsuleCollider;
 
+    // コリジョンチェックに使う構造体
+
+    /**
+    * @struct	OBB
+    * @brief	立方体の当たり判定
+    */
+    struct OBB {
+        //! OBBの中心座標
+        VECTOR center;      
+        //! 各軸ベクトル（正規化済み）
+        VECTOR axis[3];     
+        //! 各軸方向のハーフサイズ
+        float halfSize[3];  
+    };
 
 private:
 
@@ -118,10 +132,15 @@ private:
     bool CollCheck_Capsule(HWCapsuleCollider* _col1, HWCollider* _col2);
 
     /**
-      * @brief       Boxコライダーがめり込まないようにする処理
+      * @brief       
       * @author      Suzuki N
       * @date        24/09/17
       */
+      // ベクトルの絶対値を得る関数
+    inline float AbsDotProduct(const VECTOR& a, const VECTOR& b) { return fabs(VDot(a, b)); }
+
+    // OBB同士の衝突判定（SATを使用）
+    bool CheckOBBCollision(HWBoxCollider* box1, HWBoxCollider* box2);
 
 };
 

@@ -132,56 +132,11 @@ private:
     bool CollCheck_Capsule(HWCapsuleCollider* _col1, HWCollider* _col2);
 
     /**
-      * @brief       分離軸に対する OBB のプロジェクションサイズを計算するためのヘルパー関数
+      * @brief       
       * @author      Suzuki N
       * @date        24/09/17
       */
-    float ProjectOntoAxis(const OBB& obb, const VECTOR& axis)
-    {
-        // OBB の各軸のスケールと、指定した分離軸とのドット積を使用して投影の大きさを求める
-        return obb.halfSize[0] * fabs(VDot(obb.axis[0], axis)) +
-            obb.halfSize[1] * fabs(VDot(obb.axis[1], axis)) +
-            obb.halfSize[2] * fabs(VDot(obb.axis[2], axis));
-    }
+    bool HitCheck_OBB_OBB(OBB _obb1, OBB _obb2);
 
-    bool CheckOverlapOnAxis(const OBB& obb1, const OBB& obb2, const VECTOR& axis) {
-        // 軸がゼロベクトルなら無視する
-        if (VSize(axis) < 1e-6) return true;
-
-        // 両方の OBB をその軸に投影
-        float projection1 = ProjectOntoAxis(obb1, axis);
-        float projection2 = ProjectOntoAxis(obb2, axis);
-
-        // 2つのOBBの中心間のベクトルをその軸に投影
-        float distance = fabs(VDot(VSub(obb2.center, obb1.center), axis));
-
-        // 距離が両方の投影の合計より大きい場合は、分離されている
-        return distance <= (projection1 + projection2);
-    }
-
-    bool OBBvsOBB(const OBB& obb1, const OBB& obb2) {
-        VECTOR axis;
-
-        // obb1 の軸
-        for (int i = 0; i < 3; ++i) {
-            if (!CheckOverlapOnAxis(obb1, obb2, obb1.axis[i])) return false;
-        }
-
-        // obb2 の軸
-        for (int i = 0; i < 3; ++i) {
-            if (!CheckOverlapOnAxis(obb1, obb2, obb2.axis[i])) return false;
-        }
-
-        // 両 OBB の軸間の外積で定義される軸
-        for (int i = 0; i < 3; ++i) {
-            for (int j = 0; j < 3; ++j) {
-                axis = VCross(obb1.axis[i], obb2.axis[j]);
-                if (!CheckOverlapOnAxis(obb1, obb2, axis)) return false;
-            }
-        }
-
-        // 全ての軸で分離が見つからなければ、衝突している
-        return true;
-    }
 };
 

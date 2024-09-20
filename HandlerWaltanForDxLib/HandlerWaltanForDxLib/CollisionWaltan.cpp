@@ -162,11 +162,7 @@ bool CollisionWaltan::CollCheck_Box(HWBoxCollider* boxCol1, HWCollider* _col2)
 		// あたり判定を見る　*未実装
 		//-----------------------------------------------------------
 
-		OBB obb[2];
-		obb[0].center = boxCol1->worldPosition;
-		//obb[0].axis = { {},{},{} };
-
-		if (!!OBBvsOBB(obb[0], obb[1]))
+		//if (!HitCheck_OBB_OBB())
 			return false;
 
 		// コライダーがトリガーでないなら、コライダー同士がめり込まないようにする
@@ -230,6 +226,11 @@ bool CollisionWaltan::CollCheck_Capsule(HWCapsuleCollider* _col1, HWCollider* _c
 		break;
 	}
 
+	return false;
+}
+
+bool CollisionWaltan::HitCheck_OBB_OBB(OBB _obb1, OBB _obb2)
+{
 	return false;
 }
 
