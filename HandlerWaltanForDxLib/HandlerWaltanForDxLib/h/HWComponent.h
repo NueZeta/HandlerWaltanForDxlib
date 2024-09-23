@@ -125,15 +125,6 @@ protected:
 
 
 	/**
-	 * @brief		最初のUpdateメソッドの直前に働く
-	 * @detail		仮想関数
-	 * @author		Suzuki N
-	 * @date		24/06/17
-	 */
-	virtual void Start() {}
-
-
-	/**
 	 * @brief		毎フレーム呼ばれるメソッド
 	 * @detail		仮想関数
 	 * @author		Suzuki N

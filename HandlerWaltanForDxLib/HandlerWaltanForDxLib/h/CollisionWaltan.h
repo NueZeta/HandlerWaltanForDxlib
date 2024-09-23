@@ -132,6 +132,7 @@ private:
     bool CollCheck_Capsule(HWCapsuleCollider* _col1, HWCollider* _col2);
 
     /**
+<<<<<<< HEAD
       * @brief       OBB“¯Žm‚Ì‚ ‚½‚è”»’è
       * @author      Suzuki N
       * @date        24/09/17
