@@ -24,12 +24,12 @@ HWBoxCollider::HWBoxCollider()
 	size = VGet(50.f, 50.f, 50.f);
 }
 
-HWBoxCollider::HWBoxCollider(VECTOR _size) : size(_size)
+HWBoxCollider::HWBoxCollider(const VECTOR& _size) : size(_size)
 {
 	colliderType = ColliderType::Box;
 }
 
-HWBoxCollider::HWBoxCollider(float _sizeX, float _sizeY, float _sizeZ) : size(VGet(_sizeX, _sizeY, _sizeZ))
+HWBoxCollider::HWBoxCollider(const float& _sizeX, const float& _sizeY, const float& _sizeZ) : size(VGet(_sizeX, _sizeY, _sizeZ))
 {
 	colliderType = ColliderType::Box;
 }
@@ -83,15 +83,15 @@ void HWBoxCollider::SetCollider()
 	vertex[1][3] = VGet(size.x / 2, -size.y / 2, size.z / 2);
 
 	// 回転行列の作成（Z -> Y -> X の順）
-	MATRIX rotX = MGetRotX(transform->rotate.x);
-	MATRIX rotY = MGetRotY(transform->rotate.y);
-	MATRIX rotZ = MGetRotZ(transform->rotate.z);
-	MATRIX rot = MMult(rotZ, MMult(rotY, rotX));
+	MATRIX rotX = MGetRotX((float)Deg2Rad(transform->rotate.x));
+	MATRIX rotY = MGetRotY((float)Deg2Rad(transform->rotate.y));
+	MATRIX rotZ = MGetRotZ((float)Deg2Rad(transform->rotate.z));
+	mRotate = MMult(rotZ, MMult(rotY, rotX));
 
 	//! 平行移動用の行列(原点からの移動量)
 	MATRIX trans = MGetTranslate(center);
 	//! trans -> rotate で掛けることで開店後に平行移動する(ローカルな平行移動)
-	MATRIX mat = MMult(trans, rot);
+	MATRIX mat = MMult(trans, mRotate);
 
 	// 各頂点に回転行列を適用し、ワールド座標へ変換
 	for (int i = 0; i < 2; ++i)

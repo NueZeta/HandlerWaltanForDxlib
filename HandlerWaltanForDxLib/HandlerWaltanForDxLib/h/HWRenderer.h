@@ -49,7 +49,7 @@ public:
 	 * @author		Suzuki N
 	 * @date		24/08/25
 	 */
-	HWRenderer(int _modelHandle);
+	HWRenderer(const int _modelHandle);
 
 	/**
 	 * @brief		HWRendererのコンストラクタ
@@ -58,7 +58,7 @@ public:
 	 * @author		Suzuki N
 	 * @date		24/08/25
 	 */
-	HWRenderer(std::string _pass);
+	HWRenderer(const std::string& _pass);
 
 	/**
 	 * @brief		モデルハンドルを取得する
@@ -74,7 +74,7 @@ public:
 	  * @author		Suzuki N
 	  * @date		24/08/25
 	  */
-	void SetModelHandle(int _modelHandle) { modelHandle = _modelHandle; }
+	void SetModelHandle(const int _modelHandle) { modelHandle = _modelHandle; }
 
 protected:
 

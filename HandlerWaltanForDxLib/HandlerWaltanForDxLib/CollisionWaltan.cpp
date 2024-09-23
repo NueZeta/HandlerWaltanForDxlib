@@ -162,12 +162,35 @@ bool CollisionWaltan::CollCheck_Box(HWBoxCollider* boxCol1, HWCollider* _col2)
 		// あたり判定を見る　*未実装
 		//-----------------------------------------------------------
 
-		OBB obb[2];
-		obb[0].center = boxCol1->worldPosition;
-		//obb[0].axis = { {},{},{} };
+		OBB obb1;
+		OBB obb2;
 
-		if (!!OBBvsOBB(obb[0], obb[1]))
+		obb1.center = boxCol1->worldPosition;
+		// 回転行列の作成（X -> Y -> Z の順）
+		MATRIX rotX1 = MGetRotX((float)Deg2Rad(boxCol1->transform->rotate.x));
+		MATRIX rotY1 = MGetRotY((float)Deg2Rad(boxCol1->transform->rotate.y));
+		MATRIX rotZ1 = MGetRotZ((float)Deg2Rad(boxCol1->transform->rotate.z));
+		MATRIX mRotate1 = MMult(rotX1, MMult(rotY1, rotZ1));
+
+		obb1.axis[0] = VGet(mRotate1.m[0][0], mRotate1.m[1][0], mRotate1.m[2][0]); // X軸
+		obb1.axis[1] = VGet(mRotate1.m[0][1], mRotate1.m[1][1], mRotate1.m[2][1]); // Y軸
+		obb1.axis[2] = VGet(mRotate1.m[0][2], mRotate1.m[1][2], mRotate1.m[2][2]); // Z軸
+		obb1.extent = VGet(boxCol1->size.x, boxCol1->size.y / 2, boxCol1->size.z);
+
+		obb2.center = boxCol2->worldPosition;
+		// 回転行列の作成（X -> Y -> Z の順）
+		MATRIX rotX2 = MGetRotX((float)Deg2Rad(boxCol2->transform->rotate.x));
+		MATRIX rotY2 = MGetRotY((float)Deg2Rad(boxCol2->transform->rotate.y));
+		MATRIX rotZ2 = MGetRotZ((float)Deg2Rad(boxCol2->transform->rotate.z));
+		MATRIX mRotate2 = MMult(rotX2, MMult(rotY2, rotZ2));
+		obb2.axis[0] = VGet(mRotate2.m[0][0], mRotate2.m[1][0], mRotate2.m[2][0]); // X軸
+		obb2.axis[1] = VGet(mRotate2.m[0][1], mRotate2.m[1][1], mRotate2.m[2][1]); // Y軸
+		obb2.axis[2] = VGet(mRotate2.m[0][2], mRotate2.m[1][2], mRotate2.m[2][2]); // Z軸
+		obb2.extent = VGet(boxCol2->size.x, boxCol2->size.y / 2, boxCol2->size.z);
+
+		if (!CheckOBBIntersection(obb1, obb2))
 			return false;
+
 
 		// コライダーがトリガーでないなら、コライダー同士がめり込まないようにする
 		if (!boxCol1->isTrigger)

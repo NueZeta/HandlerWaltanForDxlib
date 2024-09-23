@@ -11,11 +11,11 @@
 #pragma region コンストラクタ
 
 
-HWRenderer::HWRenderer(int _modelHandle) : modelHandle(_modelHandle)
+HWRenderer::HWRenderer(const int _modelHandle) : modelHandle(_modelHandle)
 {
 }
 
-HWRenderer::HWRenderer(std::string _pass)
+HWRenderer::HWRenderer(const std::string& _pass)
 {
 	modelHandle = MV1LoadModel(_pass.c_str());
 }

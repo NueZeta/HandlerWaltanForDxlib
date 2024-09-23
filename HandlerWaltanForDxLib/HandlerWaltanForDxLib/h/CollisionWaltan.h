@@ -34,10 +34,10 @@ class CollisionWaltan
     struct OBB {
         //! OBBの中心座標
         VECTOR center;      
-        //! 各軸ベクトル（正規化済み）
+        //! OBBの各軸(正規化された)
         VECTOR axis[3];     
         //! 各軸方向のハーフサイズ
-        float halfSize[3];  
+        VECTOR extent;
     };
 
 private:
@@ -132,55 +132,88 @@ private:
     bool CollCheck_Capsule(HWCapsuleCollider* _col1, HWCollider* _col2);
 
     /**
-      * @brief       分離軸に対する OBB のプロジェクションサイズを計算するためのヘルパー関数
+      * @brief       OBB同士のあたり判定
       * @author      Suzuki N
       * @date        24/09/17
       */
-    float ProjectOntoAxis(const OBB& obb, const VECTOR& axis)
+    bool CheckOBBIntersection(const OBB& _obb1, const OBB& _obb2)
     {
-        // OBB の各軸のスケールと、指定した分離軸とのドット積を使用して投影の大きさを求める
-        return obb.halfSize[0] * fabs(VDot(obb.axis[0], axis)) +
-            obb.halfSize[1] * fabs(VDot(obb.axis[1], axis)) +
-            obb.halfSize[2] * fabs(VDot(obb.axis[2], axis));
-    }
+        // 各OBBの軸
+        const VECTOR& a0 = _obb1.axis[0];
+        const VECTOR& a1 = _obb1.axis[1];
+        const VECTOR& a2 = _obb1.axis[2];
 
-    bool CheckOverlapOnAxis(const OBB& obb1, const OBB& obb2, const VECTOR& axis) {
-        // 軸がゼロベクトルなら無視する
-        if (VSize(axis) < 1e-6) return true;
+        const VECTOR& b0 = _obb2.axis[0];
+        const VECTOR& b1 = _obb2.axis[1];
+        const VECTOR& b2 = _obb2.axis[2];
 
-        // 両方の OBB をその軸に投影
-        float projection1 = ProjectOntoAxis(obb1, axis);
-        float projection2 = ProjectOntoAxis(obb2, axis);
+        //! obb1 と obb2 間の距離ベクトル
+        VECTOR dir = VSub(_obb2.center, _obb1.center);
 
-        // 2つのOBBの中心間のベクトルをその軸に投影
-        float distance = fabs(VDot(VSub(obb2.center, obb1.center), axis));
+        // 各軸で投影して分離軸をチェックするためのサポート変数
+        float c[3][3];
+        float AbsC[3][3];
+        float rA, rB;
 
-        // 距離が両方の投影の合計より大きい場合は、分離されている
-        return distance <= (projection1 + projection2);
-    }
-
-    bool OBBvsOBB(const OBB& obb1, const OBB& obb2) {
-        VECTOR axis;
-
-        // obb1 の軸
-        for (int i = 0; i < 3; ++i) {
-            if (!CheckOverlapOnAxis(obb1, obb2, obb1.axis[i])) return false;
-        }
-
-        // obb2 の軸
-        for (int i = 0; i < 3; ++i) {
-            if (!CheckOverlapOnAxis(obb1, obb2, obb2.axis[i])) return false;
-        }
-
-        // 両 OBB の軸間の外積で定義される軸
-        for (int i = 0; i < 3; ++i) {
-            for (int j = 0; j < 3; ++j) {
-                axis = VCross(obb1.axis[i], obb2.axis[j]);
-                if (!CheckOverlapOnAxis(obb1, obb2, axis)) return false;
+        // 各軸に対する投影を計算
+        for (int i = 0; i < 3; ++i)
+            for (int j = 0; j < 3; ++j)
+            {
+                c[i][j] = VDot(_obb1.axis[i], _obb2.axis[j]);
+                AbsC[i][j] = fabs(c[i][j]) + FLT_EPSILON;  // 浮動小数点エラー対策
             }
-        }
 
-        // 全ての軸で分離が見つからなければ、衝突している
+        // obb1 の軸を基準にして分離軸をテスト
+        rA = _obb1.extent.x;
+        rB = _obb2.extent.x * AbsC[0][1] + _obb2.extent.y * 
+            AbsC[0][1] + _obb2.extent.z * AbsC[0][2];
+        // obb1 と obb2 間の距離が rA + rB (２つのOBBの半分の投影距離)
+        // よりも大きかったらこの軸では接触していない
+        if (fabs(VDot(a0, dir)) > rA + rB)
+            return false;
+
+        rA = _obb1.extent.y;
+        rB = _obb2.extent.x * AbsC[1][0] + _obb2.extent.y * 
+            AbsC[1][1] + _obb2.extent.z * AbsC[1][2];
+        // obb1 と obb2 間の距離が rA + rB (２つのOBBの半分の投影距離)
+        // よりも大きかったらこの軸では接触していない
+        if (fabs(VDot(a1, dir)) > rA + rB)
+            return false;
+
+        rA = _obb1.extent.z;
+        rB = _obb2.extent.x * AbsC[2][0] + _obb2.extent.y * 
+            AbsC[2][1] + _obb2.extent.z * AbsC[2][2];
+        // obb1 と obb2 間の距離が rA + rB (２つのOBBの半分の投影距離)
+        // よりも大きかったらこの軸では接触していない
+        if (fabs(VDot(a2, dir)) > rA + rB)
+            return false;
+
+        // obb2 の軸を基準にして分離軸をテスト
+        rB = _obb1.extent.x * AbsC[0][1] + _obb1.extent.y * 
+            AbsC[0][1] + _obb1.extent.z * AbsC[0][2];
+        rA = _obb2.extent.x;
+        // obb1 と obb2 間の距離が rA + rB (２つのOBBの半分の投影距離)
+        // よりも大きかったらこの軸では接触していない
+        if (fabs(VDot(a0, dir)) > rA + rB)
+            return false;
+
+        rB = _obb1.extent.x * AbsC[1][0] + _obb1.extent.y * 
+            AbsC[1][1] + _obb1.extent.z * AbsC[1][2];
+        rA = _obb2.extent.y;
+        // obb1 と obb2 間の距離が rA + rB (２つのOBBの半分の投影距離)
+        // よりも大きかったらこの軸では接触していない
+        if (fabs(VDot(a1, dir)) > rA + rB)
+            return false;
+
+        rB = _obb1.extent.x * AbsC[2][0] + _obb1.extent.y * 
+            AbsC[2][1] + _obb1.extent.z * AbsC[2][2];
+        rA = _obb2.extent.z;
+        // obb1 と obb2 間の距離が rA + rB (２つのOBBの半分の投影距離)
+        // よりも大きかったらこの軸では接触していない
+        if (fabs(VDot(a2, dir)) > rA + rB)
+            return false;
+
+        // どの軸から見ても接触している
         return true;
     }
 };

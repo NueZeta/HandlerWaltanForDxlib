@@ -27,7 +27,7 @@ HWGameObject::HWGameObject() : priority(0), name("hwObj")
     BubbleSort();
 }
 
-HWGameObject::HWGameObject(std::string _name) : priority(0), name(_name)
+HWGameObject::HWGameObject(const std::string& _name) : priority(0), name(_name)
 {
     gameObjects.push_back(this);
 
@@ -51,7 +51,7 @@ HWGameObject::HWGameObject(int _priority) : priority(_priority), name("hwObj")
     BubbleSort();
 }
 
-HWGameObject::HWGameObject(std::string _name, int _priority) : name(_name), priority(_priority)
+HWGameObject::HWGameObject(const std::string& _name, int _priority) : name(_name), priority(_priority)
 {
     gameObjects.push_back(this);
 

@@ -18,9 +18,9 @@ void HWTransform::SetMatrix()
 	// 平行移動
 	pos = MGetTranslate(position);
 	// 回転
-	MATRIX rotX = MGetRotX(rotate.x);
-	MATRIX rotY = MGetRotY(rotate.y);
-	MATRIX rotZ = MGetRotZ(rotate.z);
+	MATRIX rotX = MGetRotX((float)Deg2Rad(rotate.x));
+	MATRIX rotY = MGetRotY((float)Deg2Rad(rotate.y));
+	MATRIX rotZ = MGetRotZ((float)Deg2Rad(rotate.z));
 	// グローバル回転
 	rot = MMult(rotZ, MMult(rotY, rotX));
 	// ローカル回転

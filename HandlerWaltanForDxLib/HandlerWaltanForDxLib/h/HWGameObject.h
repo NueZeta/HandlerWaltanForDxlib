@@ -131,7 +131,7 @@ public:
 	 * @author		Suzuki N
 	 * @date		24/07/21
 	 */
-	HWGameObject(std::string _name);
+	HWGameObject(const std::string& _name);
 
 	/**
 	 * @brief		コンストラクタ(プライオリティの初期化宣言)
@@ -139,7 +139,7 @@ public:
 	 * @author		Suzuki N
 	 * @date		24/07/21
 	 */
-	HWGameObject(int _priority);
+	HWGameObject(const int _priority);
 
 	/**
 	 * @brief		コンストラクタ(名前とプライオリティの初期化宣言)
@@ -148,7 +148,7 @@ public:
 	 * @author		Suzuki N
 	 * @date		24/07/21
 	 */
-	HWGameObject(std::string _name, int _priority);
+	HWGameObject(const std::string& _name, const int _priority);
 
 #pragma endregion
 
