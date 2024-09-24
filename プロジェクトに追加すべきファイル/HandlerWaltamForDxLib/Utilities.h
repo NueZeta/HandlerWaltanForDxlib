@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <fstream>
 #include <vector>
 #include <map>
 #include <string>
@@ -166,3 +167,113 @@ public:
 		freeBlockHead = freeBlock;
 	}
 };
+
+
+/**
+ * @class	CsvLoader
+ * @brief	csvファイルをカンマ区切りで読み込む
+ * @detail	静的クラス
+ */
+class CsvLoader final
+{
+private:
+
+	/*     メンバ変数     */
+
+
+public:
+
+	/*     メソッド     */
+
+	// 静的クラスのため、コンストラクタとデストラクタを削除
+	CsvLoader() = delete;
+	~CsvLoader() = delete;
+
+
+	/**
+	 * @brief		csvファイルを読み込み、行区切り、カンマ区切りで文字列を返す
+	 * @param[in]	std::string	読み込むcsvファイルのパス
+	 * @return		std::vector<std::vector<std::string>> 読み込んだ文字列を返す(1次元 = 行, 2次元 = カンマ区切り)
+	 * @author		Suzuki N
+	 * @date		24/09/14
+	 */
+	static std::vector<std::vector<std::string>> Load(const std::string _filePath)
+	{
+		//! 戻り値
+		std::vector<std::vector<std::string>> ret;
+
+		// ファイルを読み込む
+		std::ifstream file(_filePath);
+		// ファイル読み込みに失敗した場合、そのまま終了
+		if (!file)
+			return ret;
+
+		//! 行区切りで読み込んだ文字列
+		std::string line;
+
+		// 1行ずつ読み込む
+		while (std::getline(file, line))
+		{
+			//! カンマ区切りで読み込んだ文字列
+			std::vector<std::string> comma;
+			//! 確認済みの文字列のindex
+			size_t confirmed = 0;
+			//! カンマを見つけたindex
+			size_t commaPos = 0;
+			
+			// カンマ区切りで読み込む
+			do
+			{
+				// 前回カンマを見つけたindexからカンマを見つける
+				commaPos = line.find_first_of(',', confirmed);
+				// カンマが見つからなかった場合はそのまま終了
+				if (commaPos == std::string::npos)
+				{
+					// 前回のコンマの位置からコピー
+					comma.push_back(line.substr(confirmed));
+					break;
+				}
+
+				// 前回のコンマの位置から次のコンマの位置までの文字列をコピー
+				comma.push_back(line.substr(confirmed, commaPos - confirmed));
+
+				// 確認済みの文字列を更新
+				confirmed = commaPos + 1;
+			} while (commaPos != std::string::npos);
+
+			// カンマがなくなったら結果を追加
+			ret.push_back(comma);
+		}
+
+		return ret;
+	}
+};
+
+
+//--------------------------------------------------------
+// 関数
+//--------------------------------------------------------
+
+/**
+ * @brief		度数法 -> 弧度法 に変換
+ * @param[in]	double 角度
+ * @return		double 変換したラジアン値
+ * @author		Suzuki N
+ * @date		24/09/23
+ */
+inline double Deg2Rad(const double _angle)
+{
+	return _angle * DX_PI / 180.f;
+}
+
+/**
+ * @brief		弧度法 -> 度数法 に変換
+ * @param[in]	double ラジアン値
+ * @return		double 変換した角度
+ * @author		Suzuki N
+ * @date		24/09/23
+ */
+inline double Rad2Deg(const double _radian)
+{
+	return _radian * 180 / DX_PI;
+}

@@ -32,6 +32,12 @@ public:
 	VECTOR size;
 
 	/**
+	 * @brief		回転行列
+	 * @History		24/09/16 作成(Suzuki N)
+	 */
+	MATRIX mRotate;
+
+	/**
 	 * @brief		コライダーの各頂点座標
 	 * @History		24/09/18 作成(Suzuki N)
 	 */
@@ -55,7 +61,7 @@ public:
 	 * @author		Suzuki N
 	 * @date		24/09/16
 	 */
-	HWBoxCollider(VECTOR _size);
+	HWBoxCollider(const VECTOR& _size);
 
 	/**
 	 * @brief		コンストラクタ
@@ -63,7 +69,7 @@ public:
 	 * @author		Suzuki N
 	 * @date		24/09/16
 	 */
-	HWBoxCollider(float _sizeX, float _sizeY, float _sizeZ);
+	HWBoxCollider(const float& _sizeX, const float& _sizeY, const float& _sizeZ);
 
 	/**
 	 * @brief		デストラクタ

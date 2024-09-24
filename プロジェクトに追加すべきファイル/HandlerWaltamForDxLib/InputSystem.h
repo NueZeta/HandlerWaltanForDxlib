@@ -58,7 +58,7 @@ public:
 		//! 入力したときの時間(ms)
 		const unsigned int inputTyme;
 		//! 登録されているキー
-		const std::vector<KeyInfo> keys;
+		const std::vector<KeyInfo> key;
 	};
 
 private:
@@ -74,7 +74,7 @@ private:
 	 * @brief		登録されたコールバック関数
 	 * @History		24/09/10 作成(Suzuki N)
 	 */
-	std::vector<std::function<void(CallBackContext&)>> callBacks;
+	std::vector<std::function<void(const CallBackContext&)>> callBacks;
 
 	/**
 	 * @brief		InputActionのパラメーター
@@ -149,14 +149,14 @@ private:
 	 * @author		Suzuki N
 	 * @date		24/09/10
 	 */
-	void SetInputState(InputState _state) { inputState = _state; }
+	void SetInputState(const InputState _state) { inputState = _state; }
 
 	/**
 	 * @brief		登録されたコールバック関数をすべて呼び出す
 	 * @author		Suzuki N
 	 * @date		24/09/10
 	 */
-	void CallCallbacks(InputAction::CallBackContext _context)
+	void CallCallbacks(const InputAction::CallBackContext& _context)
 	{
 		for (auto it = callBacks.begin(); it != callBacks.end(); ++it)
 			(*it)(_context);
@@ -213,7 +213,7 @@ private:
 	 * @author		Suzuki N
 	 * @date		24/09/10
 	 */
-	void AddCallBack(const std::function<void(InputAction::CallBackContext&)> _callBack)
+	void AddCallBack(const std::function<void(const InputAction::CallBackContext&)> _callBack)
 	{
 		callBacks.push_back(_callBack);
 	}
@@ -273,7 +273,7 @@ public:
 	 * @author		Suzuki N
 	 * @date		24/09/07
 	 */
-	void SetActive(bool _active) { active = _active; }
+	void SetActive(const bool _active) { active = _active; }
 
 	/**
 	 * @brief		マップにキーを登録する
@@ -303,7 +303,7 @@ public:
 	 * @author		Suzuki N
 	 * @date		24/09/07
 	 */
-	void AddKeyCode(const std::string _key, std::vector<int> _inputKey)
+	void AddKeyCode(const std::string _key, const std::vector<int> _inputKey)
 	{
 		// キーが既に存在している場合は要素を追加する
 		auto it = keyMap.find(_key);
@@ -321,7 +321,7 @@ public:
 	 * @author		Suzuki N
 	 * @date		24/09/08
 	 */
-	void AddCallBack(const std::string _key, std::function<void(InputAction::CallBackContext&)> _callBack)
+	void AddCallBack(const std::string _key, const std::function<void(const InputAction::CallBackContext&)> _callBack)
 	{
 		// キーが既に存在している場合は要素を追加する
 		auto it = keyMap.find(_key);

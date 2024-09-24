@@ -68,6 +68,8 @@ void HWBoxCollider::DrawCollider()
 	DrawLine3D(vertex[1][0], vertex[1][2], GetColor(0, 255, 0));
 	DrawLine3D(vertex[1][1], vertex[1][3], GetColor(0, 255, 0));
 	DrawLine3D(vertex[1][2], vertex[1][3], GetColor(0, 255, 0));
+
+	DrawSphere3D(worldPosition, 5, 16, GetColor(0, 255, 0), GetColor(0, 255, 0), TRUE);
 }
 
 void HWBoxCollider::SetCollider()
@@ -90,7 +92,7 @@ void HWBoxCollider::SetCollider()
 
 	//! 平行移動用の行列(原点からの移動量)
 	MATRIX trans = MGetTranslate(center);
-	//! trans -> rotate で掛けることで開店後に平行移動する(ローカルな平行移動)
+	//! trans -> rotate で掛けることで回転後に平行移動する(ローカルな平行移動)
 	MATRIX mat = MMult(trans, mRotate);
 
 	// 各頂点に回転行列を適用し、ワールド座標へ変換
@@ -104,23 +106,32 @@ void HWBoxCollider::SetCollider()
 			vertex[i][j] = VAdd(vertex[i][j], transform->position);
 		}
 	}
+
+	// 回転行列の作成（Z -> Y -> X の順）
+	rotX = MGetRotX((float)Deg2Rad(transform->rotate.x));
+	rotY = MGetRotY((float)Deg2Rad(transform->rotate.y));
+	rotZ = MGetRotZ((float)Deg2Rad(transform->rotate.z));
+	MATRIX mRotate2 = MMult(rotX, MMult(rotY, rotZ));
+	//! 平行移動用の行列(原点からの移動量)
+	trans = MGetTranslate(center);
+	//! trans -> rotate で掛けることで回転後に平行移動する(ローカルな平行移動)
+	mat = MMult(trans, mRotate);
+	// コライダーの中心座標を更新
+	worldPosition = VTransform(VGet(0,0,0), mat);
+	worldPosition = VAdd(worldPosition, transform->position);
 }
 
 
 void HWBoxCollider::Awake()
 {
 	center = VGet(0, 0, 0);
-	worldPosition = VAdd(transform->position, center);
+
 	// CollisionWaltanに登録
 	CollisionWaltan::Instance().ColVec.push_back(dynamic_cast<HWCollider*>(this));
 }
 
 void HWBoxCollider::Update()
 {
-
-	// コライダーの中心座標を更新
-	worldPosition = VAdd(transform->position, center);
-
 	// コライダーの形を構成する
 	SetCollider();
 

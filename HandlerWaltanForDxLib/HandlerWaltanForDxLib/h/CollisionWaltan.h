@@ -33,11 +33,11 @@ class CollisionWaltan
     */
     struct OBB {
         //! OBBの中心座標
-        VECTOR center;      
+        VECTOR c;      
         //! OBBの各軸(正規化された)
-        VECTOR axis[3];     
+        VECTOR u[3];     
         //! 各軸方向のハーフサイズ
-        VECTOR extent;
+        VECTOR e;
     };
 
 private:
@@ -132,90 +132,104 @@ private:
     bool CollCheck_Capsule(HWCapsuleCollider* _col1, HWCollider* _col2);
 
     /**
-<<<<<<< HEAD
-      * @brief       OBB同士のあたり判定
+      * @brief       OBB同士の当たり判定
       * @author      Suzuki N
-      * @date        24/09/17
+      * @date        24/09/24
       */
-    bool CheckOBBIntersection(const OBB& _obb1, const OBB& _obb2)
+    int TestOBBOBB(OBB* a, OBB* b)
     {
-        // 各OBBの軸
-        const VECTOR& a0 = _obb1.axis[0];
-        const VECTOR& a1 = _obb1.axis[1];
-        const VECTOR& a2 = _obb1.axis[2];
+        const float EPSILON = 1.175494e-37;
 
-        const VECTOR& b0 = _obb2.axis[0];
-        const VECTOR& b1 = _obb2.axis[1];
-        const VECTOR& b2 = _obb2.axis[2];
-
-        //! obb1 と obb2 間の距離ベクトル
-        VECTOR dir = VSub(_obb2.center, _obb1.center);
-
-        // 各軸で投影して分離軸をチェックするためのサポート変数
-        float c[3][3];
-        float AbsC[3][3];
-        float rA, rB;
-
-        // 各軸に対する投影を計算
-        for (int i = 0; i < 3; ++i)
-            for (int j = 0; j < 3; ++j)
+        float R[3][3], AbsR[3][3];
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
             {
-                c[i][j] = VDot(_obb1.axis[i], _obb2.axis[j]);
-                AbsC[i][j] = fabs(c[i][j]) + FLT_EPSILON;  // 浮動小数点エラー対策
+                R[i][j] = VDot(a->u[i], b->u[j]);
+                AbsR[i][j] = fabsf(R[i][j]) + EPSILON;
             }
+        }
 
-        // obb1 の軸を基準にして分離軸をテスト
-        rA = _obb1.extent.x;
-        rB = _obb2.extent.x * AbsC[0][1] + _obb2.extent.y * 
-            AbsC[0][1] + _obb2.extent.z * AbsC[0][2];
-        // obb1 と obb2 間の距離が rA + rB (２つのOBBの半分の投影距離)
-        // よりも大きかったらこの軸では接触していない
-        if (fabs(VDot(a0, dir)) > rA + rB)
-            return false;
+        VECTOR t = VSub(b->c, a->c);
+        t = VGet(VDot(t, a->u[0]), VDot(t, a->u[1]), VDot(t, a->u[2]));
 
-        rA = _obb1.extent.y;
-        rB = _obb2.extent.x * AbsC[1][0] + _obb2.extent.y * 
-            AbsC[1][1] + _obb2.extent.z * AbsC[1][2];
-        // obb1 と obb2 間の距離が rA + rB (２つのOBBの半分の投影距離)
-        // よりも大きかったらこの軸では接触していない
-        if (fabs(VDot(a1, dir)) > rA + rB)
-            return false;
+        //軸L=A0, L=A1, L=A2判定
+        float ra, rb;
 
-        rA = _obb1.extent.z;
-        rB = _obb2.extent.x * AbsC[2][0] + _obb2.extent.y * 
-            AbsC[2][1] + _obb2.extent.z * AbsC[2][2];
-        // obb1 と obb2 間の距離が rA + rB (２つのOBBの半分の投影距離)
-        // よりも大きかったらこの軸では接触していない
-        if (fabs(VDot(a2, dir)) > rA + rB)
-            return false;
+            ra = a->e.x;
+            rb = b->e.x * AbsR[0][0] + b->e.y * AbsR[0][1] + b->e.z * AbsR[0][2];
+            if (fabsf(t.x) > ra + rb)return 0;
 
-        // obb2 の軸を基準にして分離軸をテスト
-        rB = _obb1.extent.x * AbsC[0][1] + _obb1.extent.y * 
-            AbsC[0][1] + _obb1.extent.z * AbsC[0][2];
-        rA = _obb2.extent.x;
-        // obb1 と obb2 間の距離が rA + rB (２つのOBBの半分の投影距離)
-        // よりも大きかったらこの軸では接触していない
-        if (fabs(VDot(a0, dir)) > rA + rB)
-            return false;
+            ra = a->e.y;
+            rb = b->e.x * AbsR[1][0] + b->e.y * AbsR[1][1] + b->e.z * AbsR[1][2];
+            if (fabsf(t.y) > ra + rb)return 0;
+            
+            ra = a->e.z;
+            rb = b->e.x * AbsR[2][0] + b->e.y * AbsR[2][1] + b->e.z * AbsR[2][2];
+            if (fabsf(t.z) > ra + rb)return 0;
 
-        rB = _obb1.extent.x * AbsC[1][0] + _obb1.extent.y * 
-            AbsC[1][1] + _obb1.extent.z * AbsC[1][2];
-        rA = _obb2.extent.y;
-        // obb1 と obb2 間の距離が rA + rB (２つのOBBの半分の投影距離)
-        // よりも大きかったらこの軸では接触していない
-        if (fabs(VDot(a1, dir)) > rA + rB)
-            return false;
+        //軸L=B0, L=B1, L=B2判定
+            ra = a->e.x * AbsR[0][0] + a->e.y * AbsR[1][0] + a->e.z * AbsR[2][0];
+            rb = b->e.x;
+            if (fabsf(t.x * R[0][0] + t.y * R[1][0] + t.z * R[2][0]) > ra + rb)return 0;
 
-        rB = _obb1.extent.x * AbsC[2][0] + _obb1.extent.y * 
-            AbsC[2][1] + _obb1.extent.z * AbsC[2][2];
-        rA = _obb2.extent.z;
-        // obb1 と obb2 間の距離が rA + rB (２つのOBBの半分の投影距離)
-        // よりも大きかったらこの軸では接触していない
-        if (fabs(VDot(a2, dir)) > rA + rB)
-            return false;
+            ra = a->e.x * AbsR[0][1] + a->e.y * AbsR[1][1] + a->e.z * AbsR[2][1];
+            rb = b->e.y;
+            if (fabsf(t.x * R[0][1] + t.y * R[1][1] + t.z * R[2][1]) > ra + rb)return 0;
+            
+            ra = a->e.x * AbsR[0][2] + a->e.y * AbsR[1][2] + a->e.z * AbsR[2][2];
+            rb = b->e.y;
+            if (fabsf(t.x * R[0][2] + t.y * R[1][2] + t.z * R[2][2]) > ra + rb)return 0;
+        
 
-        // どの軸から見ても接触している
-        return true;
+
+
+        //軸L=A0 X B0判定
+        ra = a->e.y * AbsR[2][0] + a->e.z * AbsR[1][0];
+        rb = b->e.y * AbsR[0][2] + b->e.z * AbsR[0][1];
+        if (fabsf(t.z * R[1][0] - t.y * R[2][0]) > ra + rb)return 0;
+
+        //軸L=A0 X B1判定
+        ra = a->e.y * AbsR[2][1] + a->e.z * AbsR[1][1];
+        rb = b->e.x * AbsR[0][2] + b->e.z * AbsR[0][0];
+        if (fabsf(t.z * R[1][1] - t.y * R[2][1]) > ra + rb)return 0;
+
+        //軸L=A0 X B2判定
+        ra = a->e.y * AbsR[2][2] + a->e.z * AbsR[1][2];
+        rb = b->e.x * AbsR[0][1] + b->e.y * AbsR[0][0];
+        if (fabsf(t.z * R[1][2] - t.y * R[2][2]) > ra + rb)return 0;
+
+        //軸L=A1 X B0判定
+        ra = a->e.x * AbsR[2][0] + a->e.z * AbsR[0][0];
+        rb = b->e.y * AbsR[1][2] + b->e.z * AbsR[1][1];
+        if (fabsf(t.x * R[2][0] - t.z * R[0][0]) > ra + rb)return 0;
+
+        //軸L=A1 X B1判定
+        ra = a->e.z * AbsR[2][1] + a->e.z * AbsR[0][1];
+        rb = b->e.z * AbsR[1][2] + b->e.z * AbsR[1][0];
+        if (fabsf(t.x * R[2][1] - t.z * R[0][1]) > ra + rb)return 0;
+
+        //軸L=A1 X B2判定
+        ra = a->e.x * AbsR[2][2] + a->e.z * AbsR[0][2];
+        rb = b->e.x * AbsR[1][1] + b->e.y * AbsR[1][0];
+        if (fabsf(t.x * R[2][2] - t.z * R[0][2]) > ra + rb)return 0;
+
+        //軸L=A2 X B0判定
+        ra = a->e.x * AbsR[1][0] + a->e.y * AbsR[0][0];
+        rb = b->e.y * AbsR[2][2] + b->e.z * AbsR[2][1];
+        if (fabsf(t.y * R[0][0] - t.x * R[1][0]) > ra + rb)return 0;
+
+        //軸L=A2 X B1判定
+        ra = a->e.x * AbsR[1][1] + a->e.y * AbsR[0][1];
+        rb = b->e.x * AbsR[2][2] + b->e.z * AbsR[2][0];
+        if (fabsf(t.y * R[0][1] - t.y * R[1][1]) > ra + rb)return 0;
+
+        //軸L=A2 X B2判定
+        ra = a->e.x * AbsR[1][2] + a->e.y * AbsR[0][2];
+        rb = b->e.x * AbsR[2][1] + b->e.y * AbsR[2][0];
+        if (fabsf(t.y * R[0][2] - t.x * R[1][2]) > ra + rb)return 0;
+
+        return 1;
     }
 };
 

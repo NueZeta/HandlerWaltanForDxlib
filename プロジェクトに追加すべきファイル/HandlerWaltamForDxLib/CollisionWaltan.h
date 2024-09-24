@@ -33,11 +33,11 @@ class CollisionWaltan
     */
     struct OBB {
         //! OBBの中心座標
-        VECTOR center;      
-        //! 各軸ベクトル（正規化済み）
-        VECTOR axis[3];     
+        VECTOR c;      
+        //! OBBの各軸(正規化された)
+        VECTOR u[3];     
         //! 各軸方向のハーフサイズ
-        float halfSize[3];  
+        VECTOR e;
     };
 
 private:
@@ -132,15 +132,104 @@ private:
     bool CollCheck_Capsule(HWCapsuleCollider* _col1, HWCollider* _col2);
 
     /**
-      * @brief       
+      * @brief       OBB同士の当たり判定
       * @author      Suzuki N
-      * @date        24/09/17
+      * @date        24/09/24
       */
-      // ベクトルの絶対値を得る関数
-    inline float AbsDotProduct(const VECTOR& a, const VECTOR& b) { return fabs(VDot(a, b)); }
+    int TestOBBOBB(OBB* a, OBB* b)
+    {
+        const float EPSILON = 1.175494e-37;
 
-    // OBB同士の衝突判定（SATを使用）
-    bool CheckOBBCollision(HWBoxCollider* box1, HWBoxCollider* box2);
+        float R[3][3], AbsR[3][3];
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                R[i][j] = VDot(a->u[i], b->u[j]);
+                AbsR[i][j] = fabsf(R[i][j]) + EPSILON;
+            }
+        }
 
+        VECTOR t = VSub(b->c, a->c);
+        t = VGet(VDot(t, a->u[0]), VDot(t, a->u[1]), VDot(t, a->u[2]));
+
+        //軸L=A0, L=A1, L=A2判定
+        float ra, rb;
+
+            ra = a->e.x;
+            rb = b->e.x * AbsR[0][0] + b->e.y * AbsR[0][1] + b->e.z * AbsR[0][2];
+            if (fabsf(t.x) > ra + rb)return 0;
+
+            ra = a->e.y;
+            rb = b->e.x * AbsR[1][0] + b->e.y * AbsR[1][1] + b->e.z * AbsR[1][2];
+            if (fabsf(t.y) > ra + rb)return 0;
+            
+            ra = a->e.z;
+            rb = b->e.x * AbsR[2][0] + b->e.y * AbsR[2][1] + b->e.z * AbsR[2][2];
+            if (fabsf(t.z) > ra + rb)return 0;
+
+        //軸L=B0, L=B1, L=B2判定
+            ra = a->e.x * AbsR[0][0] + a->e.y * AbsR[1][0] + a->e.z * AbsR[2][0];
+            rb = b->e.x;
+            if (fabsf(t.x * R[0][0] + t.y * R[1][0] + t.z * R[2][0]) > ra + rb)return 0;
+
+            ra = a->e.x * AbsR[0][1] + a->e.y * AbsR[1][1] + a->e.z * AbsR[2][1];
+            rb = b->e.y;
+            if (fabsf(t.x * R[0][1] + t.y * R[1][1] + t.z * R[2][1]) > ra + rb)return 0;
+            
+            ra = a->e.x * AbsR[0][2] + a->e.y * AbsR[1][2] + a->e.z * AbsR[2][2];
+            rb = b->e.y;
+            if (fabsf(t.x * R[0][2] + t.y * R[1][2] + t.z * R[2][2]) > ra + rb)return 0;
+        
+
+
+
+        //軸L=A0 X B0判定
+        ra = a->e.y * AbsR[2][0] + a->e.z * AbsR[1][0];
+        rb = b->e.y * AbsR[0][2] + b->e.z * AbsR[0][1];
+        if (fabsf(t.z * R[1][0] - t.y * R[2][0]) > ra + rb)return 0;
+
+        //軸L=A0 X B1判定
+        ra = a->e.y * AbsR[2][1] + a->e.z * AbsR[1][1];
+        rb = b->e.x * AbsR[0][2] + b->e.z * AbsR[0][0];
+        if (fabsf(t.z * R[1][1] - t.y * R[2][1]) > ra + rb)return 0;
+
+        //軸L=A0 X B2判定
+        ra = a->e.y * AbsR[2][2] + a->e.z * AbsR[1][2];
+        rb = b->e.x * AbsR[0][1] + b->e.y * AbsR[0][0];
+        if (fabsf(t.z * R[1][2] - t.y * R[2][2]) > ra + rb)return 0;
+
+        //軸L=A1 X B0判定
+        ra = a->e.x * AbsR[2][0] + a->e.z * AbsR[0][0];
+        rb = b->e.y * AbsR[1][2] + b->e.z * AbsR[1][1];
+        if (fabsf(t.x * R[2][0] - t.z * R[0][0]) > ra + rb)return 0;
+
+        //軸L=A1 X B1判定
+        ra = a->e.z * AbsR[2][1] + a->e.z * AbsR[0][1];
+        rb = b->e.z * AbsR[1][2] + b->e.z * AbsR[1][0];
+        if (fabsf(t.x * R[2][1] - t.z * R[0][1]) > ra + rb)return 0;
+
+        //軸L=A1 X B2判定
+        ra = a->e.x * AbsR[2][2] + a->e.z * AbsR[0][2];
+        rb = b->e.x * AbsR[1][1] + b->e.y * AbsR[1][0];
+        if (fabsf(t.x * R[2][2] - t.z * R[0][2]) > ra + rb)return 0;
+
+        //軸L=A2 X B0判定
+        ra = a->e.x * AbsR[1][0] + a->e.y * AbsR[0][0];
+        rb = b->e.y * AbsR[2][2] + b->e.z * AbsR[2][1];
+        if (fabsf(t.y * R[0][0] - t.x * R[1][0]) > ra + rb)return 0;
+
+        //軸L=A2 X B1判定
+        ra = a->e.x * AbsR[1][1] + a->e.y * AbsR[0][1];
+        rb = b->e.x * AbsR[2][2] + b->e.z * AbsR[2][0];
+        if (fabsf(t.y * R[0][1] - t.y * R[1][1]) > ra + rb)return 0;
+
+        //軸L=A2 X B2判定
+        ra = a->e.x * AbsR[1][2] + a->e.y * AbsR[0][2];
+        rb = b->e.x * AbsR[2][1] + b->e.y * AbsR[2][0];
+        if (fabsf(t.y * R[0][2] - t.x * R[1][2]) > ra + rb)return 0;
+
+        return 1;
+    }
 };
 
