@@ -268,6 +268,19 @@ public:
 	}
 
 	/**
+	 * @brief		デストラクタ
+	 * @author		Suzuki N
+	 * @date		24/09/07
+	 */
+	~InputSystem()
+	{
+		// keyMapを削除
+		for (auto ptr : keyMap)
+			delete ptr.second;
+		keyMap.clear();
+	}
+
+	/**
 	 * @brief		Activeを変更する
 	 * @param[in]	bool 変更後のbool値
 	 * @author		Suzuki N
