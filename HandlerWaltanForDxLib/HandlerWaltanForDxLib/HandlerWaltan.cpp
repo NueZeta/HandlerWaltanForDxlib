@@ -14,6 +14,11 @@ bool HandlerWaltan::debugMode = false;
 std::vector<InputSystem*> InputSystem::inputSystemVec;
 float GameTime::deltaTime = 1.0f;
 std::chrono::high_resolution_clock::time_point GameTime::lastFrameTime = std::chrono::high_resolution_clock::now();
+int GameTime::N = 0;
+int GameTime::startTime = 0;
+int GameTime::count = 0;
+float GameTime::fps = 0;
+int GameTime::FPS = 120;
 
 //------------------------------------------------------------------------------------------------------------------------
 
@@ -23,6 +28,8 @@ std::chrono::high_resolution_clock::time_point GameTime::lastFrameTime = std::ch
 
 void HandlerWaltan::Update()
 {
+    GameTime::Update();
+
     // インスタンス化された全てのHWGameObjectのUpdateメソッドを呼び出す
     for (auto obj : HWGameObject::GetGameObjects())
         obj->CallAllUpdates();
@@ -36,6 +43,10 @@ void HandlerWaltan::Update()
         if ((*it)->active)
             (*it)->Update();
     }
+
+    if (debugMode)
+        GameTime::Draw();
+    GameTime::Wait();
 }
 
 

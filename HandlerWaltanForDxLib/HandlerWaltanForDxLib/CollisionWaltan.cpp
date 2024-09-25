@@ -127,7 +127,78 @@ void CollisionWaltan::Update()
 				break;
 				// カプセル型コライダーの場合
 			case ColliderType::Capsule:
-				CollCheck_Capsule(dynamic_cast<HWCapsuleCollider*>(*it1), *it2);
+				if (CollCheck_Capsule(dynamic_cast<HWCapsuleCollider*>(*it1), *it2))
+				{
+						// 衝突を検知した
+						// コライダーがtriggerかどうかで呼ぶメソッドを変える
+						if ((*it1)->isTrigger)
+						{
+							if (collisionIt == (*it1)->CollidersInCollision.end())
+							{
+
+								// 衝突時のコールバック関数の呼び出し
+								(*it1)->gameObject->CallAllOnTriggerEnters(*it2);
+								(*it2)->gameObject->CallAllOnTriggerEnters(*it1);
+							}
+							else
+							{
+								// すでに登録されている場合は衝突中のコールバック関数を呼び出す
+								(*it1)->gameObject->CallAllOnTriggerStays(*it2);
+								(*it2)->gameObject->CallAllOnTriggerStays(*it1);
+							}
+						}
+						else
+						{
+							// 非triggerの場合
+							if (collisionIt == (*it1)->CollidersInCollision.end())
+							{
+
+								// 衝突時のコールバック関数の呼び出し
+								(*it1)->gameObject->CallAllOnCollisionEnters(*it2);
+								(*it2)->gameObject->CallAllOnCollisionEnters(*it1);
+							}
+							else
+							{
+								// すでに登録されている場合は衝突中のコールバック関数を呼び出す
+								(*it1)->gameObject->CallAllOnCollisionStays(*it2);
+								(*it2)->gameObject->CallAllOnCollisionStays(*it1);
+							}
+						}
+						// 衝突中のコライダーのリストにない場合は新たに登録
+						if (collisionIt == (*it1)->CollidersInCollision.end())
+						{
+							(*it1)->CollidersInCollision.push_back(*it2);
+							(*it2)->CollidersInCollision.push_back(*it1);
+						}
+					}
+				else
+				{
+					// 衝突を検知しなかった
+					// 登録しているコライダーの場合(前フレームまで衝突していた)
+					if (collisionIt != (*it1)->CollidersInCollision.end())
+					{
+						// コライダーがtriggerかどうかで呼ぶメソッドを変える
+						if ((*it1)->isTrigger)
+						{
+							// 衝突終了時のコールバック関数の呼び出し
+							(*it1)->gameObject->CallAllOnTriggerExits(*it2);
+							(*it2)->gameObject->CallAllOnTriggerExits(*it1);
+						}
+						else
+						{
+							// 非triggerの場合
+							// 衝突終了時のコールバック関数の呼び出し
+							(*it1)->gameObject->CallAllOnCollisionExits(*it2);
+							(*it2)->gameObject->CallAllOnCollisionExits(*it1);
+						}
+						// 登録情報を削除する
+						(*it1)->CollidersInCollision.erase(collisionIt);
+						auto collisionIt2 = std::find((*it2)->CollidersInCollision.begin(),
+							(*it2)->CollidersInCollision.end(), *it1);
+						if (collisionIt2 != (*it2)->CollidersInCollision.end())
+							(*it2)->CollidersInCollision.erase(collisionIt2);
+					}
+				}
 				break;
 				// 球体型コライダーの場合
 			case ColliderType::Sphere:

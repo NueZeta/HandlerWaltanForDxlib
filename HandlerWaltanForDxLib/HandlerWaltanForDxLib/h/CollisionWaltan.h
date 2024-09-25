@@ -131,6 +131,8 @@ private:
       */
     bool CollCheck_Capsule(HWCapsuleCollider* _col1, HWCollider* _col2);
 
+    void ColliderHitCallBacks(HWCollider* _col1, HWCollider* _col2, bool _isTrigger);
+
     /**
       * @brief       OBB“¯Žm‚Ì“–‚½‚è”»’è
       * @author      Suzuki N

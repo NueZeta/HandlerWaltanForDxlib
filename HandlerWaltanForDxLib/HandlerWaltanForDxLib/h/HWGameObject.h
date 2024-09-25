@@ -150,6 +150,14 @@ public:
 	 */
 	HWGameObject(const std::string& _name, const int _priority);
 
+	/**
+	 * @brief		コピーコンストラクタ
+	 * @param[in]	HWGameObject& コピー元のHWGameObject
+	 * @author		Suzuki N
+	 * @date		24/07/21
+	 */
+	HWGameObject(const HWGameObject& _object);
+
 #pragma endregion
 
 

@@ -83,7 +83,7 @@ AnimInfo& HWAnimator::AnimLoad(const std::string& _filePath, const int _animId)
 	animInfo->filePath = _filePath;
 	animInfo->animHandle = MV1LoadModel(_filePath.c_str());
 	animInfo->modelHandle = gameObject->GetComponent<HWRenderer>()->GetModelHandle();
-	animInfo->interruption = false;
+	animInfo->interruption = true;
 	animInfo->isLoop = false;
 	animInfo->playSpeed = 1.0f;
 	animInfo->totalTime = MV1GetAttachAnimTotalTime(animInfo->animHandle, _animId);
@@ -96,12 +96,17 @@ AnimInfo& HWAnimator::AnimLoad(const std::string& _filePath, const int _animId)
 
 void HWAnimator::AnimChange(const int _animId)
 {
+	// 指示の来たアニメーション番号が登録されているアニメーションの総数を超過している場合
+	if (_animId >= animInfoVec.size())
+		return;
+
 	// 再生アニメーションIDが初期値だった場合は
 	// パラメータを参照せずに指示の来たアニメーションをセット
 	if (playAnimId1 == -1)
 	{
 		// 各パラメータを上書き
 		isStop = false;
+		playAnimId1 = _animId;
 	}
 
 	// 同じアニメーションを再生はしない

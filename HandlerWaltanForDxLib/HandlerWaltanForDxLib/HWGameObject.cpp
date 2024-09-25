@@ -63,6 +63,11 @@ HWGameObject::HWGameObject(const std::string& _name, int _priority) : name(_name
     BubbleSort();
 }
 
+HWGameObject::HWGameObject(const HWGameObject& _object)
+{
+
+}
+
 
 #pragma endregion
 
