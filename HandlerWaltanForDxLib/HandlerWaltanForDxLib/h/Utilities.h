@@ -15,6 +15,10 @@
 #include "DxLib.h"
 
 
+//! アニメーションのブレンド率変化速度
+constexpr float PLAYER_ANIM_BLEND_SPEED = 0.0166f;
+
+
 /**
 * @author   Suzuki N
 * @date     24/07/20
@@ -165,6 +169,54 @@ public:
 		freeBlockHead->nextBlock = freeBlock;
 		// 空きメモリブロックを更新
 		freeBlockHead = freeBlock;
+	}
+};
+
+
+/**
+ * @class	
+ * @brief	
+ */
+class GameTime
+{
+	friend class HandlerWaltan;
+
+private:
+
+	/*     メンバ変数     */
+
+private:
+	//! 最後のフレームの時間
+	static std::chrono::high_resolution_clock::time_point lastFrameTime;
+	//! フレーム間の経過時間
+	static float deltaTime;
+
+public:
+
+	/*     メソッド     */
+
+	// 静的クラスのため、コンストラクタとデストラクタを削除
+	GameTime() = delete;
+	~GameTime() = delete;
+
+	const static float DeltaTime() { return deltaTime; }
+
+private:
+
+	/**
+	 * @brief		
+	 * @return		
+	 * @author		Suzuki N
+	 * @date		24/09/25
+	 */
+	static void Update()
+	{
+		auto now = std::chrono::high_resolution_clock::now();
+		// 前回のフレームからの経過時間を計算
+		std::chrono::duration<float> elapsedTime = now - lastFrameTime;
+		deltaTime = elapsedTime.count(); // 経過時間を秒単位で取得
+		// 現在の時間を次回のフレームの開始時間に設定
+		lastFrameTime = now;
 	}
 };
 

@@ -187,7 +187,7 @@ public:
 		component->transform = (GetComponent<HWTransform>());
 		hwComponents.push_back(std::move(component));
 
-		T* ret = dynamic_cast<T*>(hwComponents[hwComponents.size() - 1].get());
+		T* ret = dynamic_cast<T*>(hwComponents.back().get());
 		// コンポーネントがアタッチされた瞬間に走るメソッドを呼び出す
 		ret->Awake();
 

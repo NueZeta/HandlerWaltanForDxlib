@@ -2,6 +2,7 @@
 #include "CollisionWaltan.h"
 #include "HWAnimator.h"
 #include "HWBoxCollider.h"
+#include "HWCamera.h"
 #include "HWCapsuleCollider.h"
 #include "HWSphereCollider.h"
 #include "HWGameObject.h"

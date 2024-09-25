@@ -96,16 +96,34 @@ public:
 	std::vector<std::unique_ptr<AnimInfo>> animInfoVec;
 
 	/**
-	 * @brief		現在の再生時間
+	 * @brief		アニメーション1の現在の再生時間
 	 * @History		24/09/24 作成(Suzuki N)
 	 */
-	float playTime;
+	float playTime1;
 
 	/**
-	 * @brief		再生中のアニメーションインデックス
+	 * @brief		アニメーション2の現在の再生時間
+	 * @History		24/09/25 作成(Suzuki N)
+	 */
+	float playTime2;
+
+	/**
+	 * @brief		再生中のアニメーション1インデックス
 	 * @History		24/09/24 作成(Suzuki N)
 	 */
-	int playAnimId;
+	int playAnimId1;
+
+	/**
+	 * @brief		再生中のアニメーション2インデックス
+	 * @History		24/09/25 作成(Suzuki N)
+	 */
+	int playAnimId2;
+
+	/**
+	 * @brief		playAnimId1 と playAnimId2 のブレンド率
+	 * @History		24/09/25 作成(Suzuki N)
+	 */
+	float animBlendRate;
 
 	/**
 	 * @brief		再生を停止

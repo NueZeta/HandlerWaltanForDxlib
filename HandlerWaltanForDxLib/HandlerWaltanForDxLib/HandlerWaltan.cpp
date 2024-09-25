@@ -8,10 +8,14 @@
 */
 
 
-// 静的メンバ変数の初期化
+// 静的メンバ変数の初期化 ------------------------------------------------------------------------------------------------
+
 bool HandlerWaltan::debugMode = false;
-// 静的メンバ変数の初期化
 std::vector<InputSystem*> InputSystem::inputSystemVec;
+float GameTime::deltaTime = 1.0f;
+std::chrono::high_resolution_clock::time_point GameTime::lastFrameTime = std::chrono::high_resolution_clock::now();
+
+//------------------------------------------------------------------------------------------------------------------------
 
 
 #pragma region publucメソッド
