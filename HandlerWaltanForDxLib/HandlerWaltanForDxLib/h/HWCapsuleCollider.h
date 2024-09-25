@@ -25,17 +25,12 @@ public:
 
 	/*     メンバ変数     */
 
-	/**
-	 * @brief		コライダーの始点
-	 * @History		24/09/16 作成(Suzuki N)
-	 */
-	VECTOR startPos;
 
 	/**
-	 * @brief		コライダーの終点
+	 * @brief		コライダーの高さ
 	 * @History		24/09/16 作成(Suzuki N)
 	 */
-	VECTOR endPos;
+	float height;
 
 	/**
 	 * @brief		コライダーの半径
@@ -48,6 +43,20 @@ public:
 	 * @History		24/09/16 作成(Suzuki N)
 	 */
 	MATRIX mRotate;
+
+private:
+
+	/**
+	 * @brief		コライダーの始点
+	 * @History		24/09/16 作成(Suzuki N)
+	 */
+	VECTOR startPos;
+
+	/**
+	 * @brief		コライダーの終点
+	 * @History		24/09/16 作成(Suzuki N)
+	 */
+	VECTOR endPos;
 
 
 	 /*     メソッド     */
@@ -68,8 +77,42 @@ public:
 	 */
 	~HWCapsuleCollider();
 
-#pragma region オーバーライドメソッド
+private:
 
+	/**
+	 * @brief		線分と線分の最近接点を求めるヘルパー関数
+	 * @author		Suzuki N
+	 * @date		24/09/26
+	 */
+	void ClosestPointsOnLineSegments(const HWCapsuleCollider& other, 
+		VECTOR& outPoint1, VECTOR& outPoint2);
+
+#pragma region 押し出し処理
+
+	/**
+	 * @brief		ボックスタイプのオブジェクトと衝突した際にめり込まなくする処理
+	 * @author		Suzuki N
+	 * @date		24/09/26
+	 */
+	void PushOut_Capsule_Box(HWCollider& other);
+
+	/**
+	 * @brief		カプセルタイプのオブジェクトと衝突した際にめり込まなくする処理
+	 * @author		Suzuki N
+	 * @date		24/09/26
+	 */
+	void PushOut_Capsule_Capsule(HWCapsuleCollider& other);
+
+	/**
+	 * @brief		スフィアタイプのオブジェクトと衝突した際にめり込まなくする処理
+	 * @author		Suzuki N
+	 * @date		24/09/26
+	 */
+	void PushOut_Capsule_Sphere(HWCollider& other);
+
+#pragma endregion
+
+#pragma region オーバーライドメソッド
 
 	/**
 	 * @brief		立方体のコライダーを描画する
@@ -102,6 +145,14 @@ public:
 	 * @date		24/09/16
 	 */
 	void Update() override;
+
+	/**
+	 * @brief		コライダー衝突時に働くメソッド
+	 * @detail		オーバーライドメソッド
+	 * @author		Suzuki N
+	 * @date		24/09/26
+	 */
+	void OnCollisionEnter(HWCollider& _collider)override;
 
 #pragma endregion
 };

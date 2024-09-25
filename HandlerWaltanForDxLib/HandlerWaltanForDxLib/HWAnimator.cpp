@@ -74,6 +74,12 @@ void HWAnimator::AnimPlay()
 #pragma region publicメソッド
 
 
+HWAnimator::~HWAnimator()
+{
+	for (auto it = animInfoVec.begin(); it != animInfoVec.end(); ++it)
+		MV1DeleteModel((*it)->animHandle);
+}
+
 AnimInfo& HWAnimator::AnimLoad(const std::string& _filePath, const int _animId)
 {
 	//! アニメーション情報をまとめたクラスのインスタンスを生成

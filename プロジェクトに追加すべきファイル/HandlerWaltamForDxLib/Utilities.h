@@ -190,6 +190,20 @@ private:
 	static std::chrono::high_resolution_clock::time_point lastFrameTime;
 	//! フレーム間の経過時間
 	static float deltaTime;
+	//!フレームレートの平均
+	static int N;
+	//!計測開始時刻
+	static int startTime;
+	//!カウンタ
+	static int count;
+	//!フレームレート
+	static float fps;
+
+public:
+
+	//!設定したフレームレート
+	static int FPS;
+
 
 public:
 
@@ -204,19 +218,57 @@ public:
 private:
 
 	/**
-	 * @brief		
-	 * @return		
+	 * @brief		毎F呼ばれるメソッド
 	 * @author		Suzuki N
 	 * @date		24/09/25
 	 */
 	static void Update()
 	{
+		////1f目なら時刻を記憶
+		//if (count == 0)
+		//	startTime = GetNowCount();
+		////60f目なら平均を求める
+		//if (count == N)
+		//{
+		//	int t = GetNowCount();
+		//	fps = 1000.f / ((t - startTime) / (float)N);
+		//	count = 0;
+		//	startTime = t;
+		//}
+		//count++;
+
 		auto now = std::chrono::high_resolution_clock::now();
 		// 前回のフレームからの経過時間を計算
 		std::chrono::duration<float> elapsedTime = now - lastFrameTime;
 		deltaTime = elapsedTime.count(); // 経過時間を秒単位で取得
 		// 現在の時間を次回のフレームの開始時間に設定
 		lastFrameTime = now;
+	}
+
+	/**
+	 * @brief		設定されたフレームレートになるように待機
+	 * @author		Suzuki N
+	 * @date		24/09/25
+	 */
+	static void Wait()
+	{
+		//!かかった時間
+		int tookTime = GetNowCount() - startTime;
+		//!待つべき時間
+		int waitTime = count * 1000 / FPS - tookTime;
+
+		if (waitTime > 0)
+			Sleep(waitTime);
+	}
+
+	/**
+	 * @brief		FPSを表示
+	 * @author		Suzuki N
+	 * @date		24/09/25
+	 */
+	static void Draw()
+	{
+		DrawFormatString(260, 5, GetColor(100, 0, 100), "%6.2f FPS", fps);
 	}
 };
 

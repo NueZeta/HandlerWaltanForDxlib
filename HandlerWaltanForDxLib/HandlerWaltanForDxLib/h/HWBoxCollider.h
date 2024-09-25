@@ -115,6 +115,14 @@ protected:
 	 */
 	void Update() override;
 
+	/**
+	 * @brief		コライダー衝突時に働くメソッド
+	 * @detail		オーバーライドメソッド
+	 * @author		Suzuki N
+	 * @date		24/09/26
+	 */
+	void OnCollisionEnter(HWCollider& _collider)override;
+
 #pragma endregion
 };
 

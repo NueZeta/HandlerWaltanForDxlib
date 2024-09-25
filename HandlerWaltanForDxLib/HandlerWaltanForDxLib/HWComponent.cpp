@@ -18,37 +18,37 @@
 #pragma region publicÉÅÉ\ÉbÉh
 
 
-void HWComponent::OnCollisionEnterHandler(HWCollider* _collider)
+void HWComponent::OnCollisionEnterHandler(HWCollider& _collider)
 {
 	if (OnCollisionEnterCallBack)
 		OnCollisionEnterCallBack(_collider);
 }
 
-void HWComponent::OnCollisionStayHandler(HWCollider* _collider)
+void HWComponent::OnCollisionStayHandler(HWCollider& _collider)
 {
 	if (OnCollisionStayCallBack)
 		OnCollisionStayCallBack(_collider);
 }
 
-void HWComponent::OnCollisionExsitHandler(HWCollider* _collider)
+void HWComponent::OnCollisionExsitHandler(HWCollider& _collider)
 {
 	if (OnCollisionExitCallBack)
 		OnCollisionExitCallBack(_collider);
 }
 
-void HWComponent::OnTriggerEnterHandler(HWCollider* _collider)
+void HWComponent::OnTriggerEnterHandler(HWCollider& _collider)
 {
 	if (OnTriggerEnterCallBack)
 		OnTriggerEnterCallBack(_collider);
 }
 
-void HWComponent::OnTriggerStayHandler(HWCollider* _collider)
+void HWComponent::OnTriggerStayHandler(HWCollider& _collider)
 {
 	if (OnTriggerStayCallBack)
 		OnTriggerStayCallBack(_collider);
 }
 
-void HWComponent::OnTriggerExsitHandler(HWCollider* _collider)
+void HWComponent::OnTriggerExsitHandler(HWCollider& _collider)
 {
 	if (OnTriggerExitCallBack)
 		OnTriggerExitCallBack(_collider);

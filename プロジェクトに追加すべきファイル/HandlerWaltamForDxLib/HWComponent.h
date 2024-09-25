@@ -60,37 +60,37 @@ private:
 	 * @brief		衝突判定を取った時に呼ばれるコールバック関数
 	 * @History		24/07/19 作成(Suzuki N)
 	 */
-	std::function<void(HWCollider*)> OnCollisionEnterCallBack;
+	std::function<void(HWCollider&)> OnCollisionEnterCallBack;
 
 	/**
 	 * @brief		衝突判定を取っている間に呼ばれるコールバック関数
 	 * @History		24/07/19 作成(Suzuki N)
 	 */
-	std::function<void(HWCollider*)> OnCollisionStayCallBack;
+	std::function<void(HWCollider&)> OnCollisionStayCallBack;
 
 	/**
 	 * @brief		衝突判定が解かれた時に呼ばれるコールバック関数
 	 * @History		24/07/19 作成(Suzuki N)
 	 */
-	std::function<void(HWCollider*)> OnCollisionExitCallBack;
+	std::function<void(HWCollider&)> OnCollisionExitCallBack;
 
 	/**
 	 * @brief		衝突判定を取った時に呼ばれるコールバック関数
 	 * @History		24/07/19 作成(Suzuki N)
 	 */
-	std::function<void(HWCollider*)> OnTriggerEnterCallBack;
+	std::function<void(HWCollider&)> OnTriggerEnterCallBack;
 
 	/**
 	 * @brief		衝突判定を取っている間に呼ばれるコールバック関数
 	 * @History		24/07/19 作成(Suzuki N)
 	 */
-	std::function<void(HWCollider*)> OnTriggerStayCallBack;
+	std::function<void(HWCollider&)> OnTriggerStayCallBack;
 
 	/**
 	 * @brief		衝突判定が解かれた時に呼ばれるコールバック関数
 	 * @History		24/07/19 作成(Suzuki N)
 	 */
-	std::function<void(HWCollider*)> OnTriggerExitCallBack;
+	std::function<void(HWCollider&)> OnTriggerExitCallBack;
 
 
 public:
@@ -140,7 +140,7 @@ protected:
 	 * @author		Suzuki N
 	 * @date		24/07/19
 	 */
-	virtual void OnCollisionEnter(HWCollider* _collider) {}
+	virtual void OnCollisionEnter(HWCollider& _collider) {}
 
 
 	/**
@@ -149,7 +149,7 @@ protected:
 	 * @author		Suzuki N
 	 * @date		24/07/19
 	 */
-	virtual void OnCollisionStay(HWCollider* _collider) {}
+	virtual void OnCollisionStay(HWCollider& _collider) {}
 
 
 	/**
@@ -158,7 +158,7 @@ protected:
 	 * @author		Suzuki N
 	 * @date		24/07/19
 	 */
-	virtual void OnCollisionExit(HWCollider* _collider) {}
+	virtual void OnCollisionExit(HWCollider& _collider) {}
 
 	/**
 	 * @brief		コライダー衝突時に働くメソッド
@@ -166,7 +166,7 @@ protected:
 	 * @author		Suzuki N
 	 * @date		24/07/19
 	 */
-	virtual void OnTriggerEnter(HWCollider* _collider) {}
+	virtual void OnTriggerEnter(HWCollider& _collider) {}
 
 
 	/**
@@ -175,7 +175,7 @@ protected:
 	 * @author		Suzuki N
 	 * @date		24/07/19
 	 */
-	virtual void OnTriggerStay(HWCollider* _collider) {}
+	virtual void OnTriggerStay(HWCollider& _collider) {}
 
 
 	/**
@@ -184,7 +184,7 @@ protected:
 	 * @author		Suzuki N
 	 * @date		24/07/19
 	 */
-	virtual void OnTriggerExit(HWCollider* _collider) {}
+	virtual void OnTriggerExit(HWCollider& _collider) {}
 
 #pragma endregion
 
@@ -198,42 +198,42 @@ protected:
 	 * @author		Suzuki N
 	 * @date		24/07/19
 	 */
-	void OnCollisionEnterHandler(HWCollider* _collider);
+	void OnCollisionEnterHandler(HWCollider& _collider);
 
 	/**
 	 * @brief		登録された衝突時に働くメソッドを働かせる
 	 * @author		Suzuki N
 	 * @date		24/07/19
 	 */
-	void OnCollisionStayHandler(HWCollider* _collider);
+	void OnCollisionStayHandler(HWCollider& _collider);
 
 	/**
 	 * @brief		登録された衝突時に働くメソッドを働かせる
 	 * @author		Suzuki N
 	 * @date		24/07/19
 	 */
-	void OnCollisionExsitHandler(HWCollider* _collider);
+	void OnCollisionExsitHandler(HWCollider& _collider);
 
 	/**
 	 * @brief		登録された衝突時に働くメソッドを働かせる
 	 * @author		Suzuki N
 	 * @date		24/07/19
 	*/
-	void OnTriggerEnterHandler(HWCollider* _collider);
+	void OnTriggerEnterHandler(HWCollider& _collider);
 
 	/**
 	 * @brief		登録された衝突時に働くメソッドを働かせる
 	 * @author		Suzuki N
 	 * @date		24/07/19
 	 */
-	void OnTriggerStayHandler(HWCollider* _collider);
+	void OnTriggerStayHandler(HWCollider& _collider);
 
 	/**
 	 * @brief		登録された衝突時に働くメソッドを働かせる
 	 * @author		Suzuki N
 	 * @date		24/07/19
 	 */
-	void OnTriggerExsitHandler(HWCollider* _collider);
+	void OnTriggerExsitHandler(HWCollider& _collider);
 
 #pragma endregion
 };

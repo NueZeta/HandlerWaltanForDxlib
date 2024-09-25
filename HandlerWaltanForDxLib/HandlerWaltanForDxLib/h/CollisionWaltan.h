@@ -114,15 +114,6 @@ private:
     bool CollCheck_Box(HWBoxCollider* _boxCol1, HWCollider* _col2);
 
     /**
-      * @brief       要素1 がSphereColliderの場合のコリジョンチェック
-      * @param[in]   HWSphereCollider*   あたり判定の重なりを見る球体型Collider情報1
-      * @param[in]   HWCollider*         あたり判定の重なりを見るCollider情報2
-      * @author      Suzuki N
-      * @date        24/09/17
-      */
-    bool CollCheck_Sphere(HWSphereCollider* _col1, HWCollider* _col2);
-
-    /**
       * @brief       要素1 がCapsuleColliderの場合のコリジョンチェック
       * @param[in]   HWCapsuleCollider*  あたり判定の重なりを見るカプセル型Collider情報1
       * @param[in]   HWCollider*         あたり判定の重なりを見るCollider情報2
@@ -131,107 +122,130 @@ private:
       */
     bool CollCheck_Capsule(HWCapsuleCollider* _col1, HWCollider* _col2);
 
-    void ColliderHitCallBacks(HWCollider* _col1, HWCollider* _col2, bool _isTrigger);
+    /**
+      * @brief       要素1 がSphereColliderの場合のコリジョンチェック
+      * @param[in]   HWSphereCollider*   あたり判定の重なりを見る球体型Collider情報1
+      * @param[in]   HWCollider*         あたり判定の重なりを見るCollider情報2
+      * @author      Suzuki N
+      * @date        24/09/17
+      */
+    bool CollCheck_Sphere(HWSphereCollider* _col1, HWCollider* _col2);
+
+
+#pragma region BOXタイプの衝突判定
+
+    /**
+      * @brief       ボックスとボックスのあたり判定
+      * @param[in]   HWBoxCollider*      あたり判定の重なりを見るCollider情報1
+      * @param[in]   HWBoxCollider*      あたり判定の重なりを見るCollider情報2
+      * @author      Suzuki N
+      * @date        24/09/17
+      */
+    bool CollCheck_Box_Box(HWBoxCollider* _boxCol, HWBoxCollider* _boxCol2);
+
+    /**
+      * @brief       ボックスとカプセルのあたり判定
+      * @param[in]   HWBoxCollider*      あたり判定の重なりを見るCollider情報1
+      * @param[in]   HWCapsuleCollider*  あたり判定の重なりを見るCollider情報2
+      * @author      Suzuki N
+      * @date        24/09/17
+      */
+    bool CollCheck_Box_Capsule(HWBoxCollider* _boxCol, HWCapsuleCollider* _capsuleCol);
+
+    /**
+      * @brief       ボックスとスフィアのあたり判定
+      * @param[in]   HWBoxCollider*      あたり判定の重なりを見るCollider情報1
+      * @param[in]   HWSphereCollider*   あたり判定の重なりを見るCollider情報2
+      * @author      Suzuki N
+      * @date        24/09/17
+      */
+    bool CollCheck_Box_Sphere(HWBoxCollider* _boxCol, HWSphereCollider* _sphereCol);
+
+#pragma endregion
+
+#pragma region CAPSULEタイプの衝突判定
+
+    /**
+      * @brief       カプセルとボックスのあたり判定
+      * @param[in]   HWCapsuleCollider*  あたり判定の重なりを見るCollider情報1
+      * @param[in]   HWBoxCollider*      あたり判定の重なりを見るCollider情報2
+      * @author      Suzuki N
+      * @date        24/09/17
+      */
+    bool CollCheck_Capsule_Box(HWCapsuleCollider* _capsuleCol, HWBoxCollider* _boxCol);
+
+    /**
+      * @brief       カプセルとカプセルのあたり判定
+      * @param[in]   HWCapsuleCollider*  あたり判定の重なりを見るCollider情報1
+      * @param[in]   HWCapsuleCollider*  あたり判定の重なりを見るCollider情報2
+      * @author      Suzuki N
+      * @date        24/09/17
+      */
+    bool CollCheck_Capsule_Capsule(HWCapsuleCollider* _capsuleCol, HWCapsuleCollider* _capsuleCol2);
+
+    /**
+      * @brief       カプセルとスフィアのあたり判定
+      * @param[in]   HWCapsuleCollider*  あたり判定の重なりを見るCollider情報1
+      * @param[in]   HWSphereCollider*   あたり判定の重なりを見るCollider情報2
+      * @author      Suzuki N
+      * @date        24/09/17
+      */
+    bool CollCheck_Capsule_Sphere(HWCapsuleCollider* _capsuleCol, HWSphereCollider* _sphereCol);
+
+#pragma endregion
+
+#pragma region SPHEREタイプの衝突判定
+
+    /**
+      * @brief       スフィアとボックスのあたり判定
+      * @param[in]   HWSphereCollider*   あたり判定の重なりを見るCollider情報1
+      * @param[in]   HWBoxCollider*      あたり判定の重なりを見るCollider情報2
+      * @author      Suzuki N
+      * @date        24/09/17
+      */
+    bool CollCheck_Sphere_Box(HWSphereCollider* _sphereCol, HWBoxCollider* _boxCol);
+
+    /**
+      * @brief       スフィアとカプセルのあたり判定
+      * @param[in]   HWSphereCollider*   あたり判定の重なりを見るCollider情報1
+      * @param[in]   HWCapsuleCollider*  あたり判定の重なりを見るCollider情報2
+      * @author      Suzuki N
+      * @date        24/09/17
+      */
+    bool CollCheck_Sphere_Capsule(HWSphereCollider* _sphereCol, HWCapsuleCollider* _capsuleCol);
+
+    /**
+      * @brief       スフィアとスフィアのあたり判定
+      * @param[in]   HWSphereCollider*   あたり判定の重なりを見るCollider情報1
+      * @param[in]   HWSphereCollider*   あたり判定の重なりを見るCollider情報2
+      * @author      Suzuki N
+      * @date        24/09/17
+      */
+    bool CollCheck_Sphere_Sphere(HWSphereCollider* _sphereCol, HWSphereCollider* _sphereCol2);
+
+#pragma endregion
+
+
+    /**
+      * @brief       コリジョンHit時のコールバック関数を呼び出す
+      * @author      Suzuki N
+      * @date        24/09/17
+      */
+    void ColliderHitCallBacks(std::vector<HWCollider*>::iterator colIt, HWCollider* _col1, HWCollider* _col2, bool _isTrigger);
+
+    /**
+      * @brief       コリジョン接触がない場合の処理
+      * @author      Suzuki N
+      * @date        24/09/17
+      */
+    void ColliderAvoidCallBacks(std::vector<HWCollider*>::iterator colIt, HWCollider* _col1, HWCollider* _col2, bool _isTrigger);
 
     /**
       * @brief       OBB同士の当たり判定
       * @author      Suzuki N
       * @date        24/09/24
       */
-    int TestOBBOBB(OBB* a, OBB* b)
-    {
-        const float EPSILON = 1.175494e-37;
+    int TestOBBOBB(OBB* a, OBB* b);
 
-        float R[3][3], AbsR[3][3];
-        for (int i = 0; i < 3; i++)
-        {
-            for (int j = 0; j < 3; j++)
-            {
-                R[i][j] = VDot(a->u[i], b->u[j]);
-                AbsR[i][j] = fabsf(R[i][j]) + EPSILON;
-            }
-        }
-
-        VECTOR t = VSub(b->c, a->c);
-        t = VGet(VDot(t, a->u[0]), VDot(t, a->u[1]), VDot(t, a->u[2]));
-
-        //軸L=A0, L=A1, L=A2判定
-        float ra, rb;
-
-            ra = a->e.x;
-            rb = b->e.x * AbsR[0][0] + b->e.y * AbsR[0][1] + b->e.z * AbsR[0][2];
-            if (fabsf(t.x) > ra + rb)return 0;
-
-            ra = a->e.y;
-            rb = b->e.x * AbsR[1][0] + b->e.y * AbsR[1][1] + b->e.z * AbsR[1][2];
-            if (fabsf(t.y) > ra + rb)return 0;
-            
-            ra = a->e.z;
-            rb = b->e.x * AbsR[2][0] + b->e.y * AbsR[2][1] + b->e.z * AbsR[2][2];
-            if (fabsf(t.z) > ra + rb)return 0;
-
-        //軸L=B0, L=B1, L=B2判定
-            ra = a->e.x * AbsR[0][0] + a->e.y * AbsR[1][0] + a->e.z * AbsR[2][0];
-            rb = b->e.x;
-            if (fabsf(t.x * R[0][0] + t.y * R[1][0] + t.z * R[2][0]) > ra + rb)return 0;
-
-            ra = a->e.x * AbsR[0][1] + a->e.y * AbsR[1][1] + a->e.z * AbsR[2][1];
-            rb = b->e.y;
-            if (fabsf(t.x * R[0][1] + t.y * R[1][1] + t.z * R[2][1]) > ra + rb)return 0;
-            
-            ra = a->e.x * AbsR[0][2] + a->e.y * AbsR[1][2] + a->e.z * AbsR[2][2];
-            rb = b->e.y;
-            if (fabsf(t.x * R[0][2] + t.y * R[1][2] + t.z * R[2][2]) > ra + rb)return 0;
-        
-
-
-
-        //軸L=A0 X B0判定
-        ra = a->e.y * AbsR[2][0] + a->e.z * AbsR[1][0];
-        rb = b->e.y * AbsR[0][2] + b->e.z * AbsR[0][1];
-        if (fabsf(t.z * R[1][0] - t.y * R[2][0]) > ra + rb)return 0;
-
-        //軸L=A0 X B1判定
-        ra = a->e.y * AbsR[2][1] + a->e.z * AbsR[1][1];
-        rb = b->e.x * AbsR[0][2] + b->e.z * AbsR[0][0];
-        if (fabsf(t.z * R[1][1] - t.y * R[2][1]) > ra + rb)return 0;
-
-        //軸L=A0 X B2判定
-        ra = a->e.y * AbsR[2][2] + a->e.z * AbsR[1][2];
-        rb = b->e.x * AbsR[0][1] + b->e.y * AbsR[0][0];
-        if (fabsf(t.z * R[1][2] - t.y * R[2][2]) > ra + rb)return 0;
-
-        //軸L=A1 X B0判定
-        ra = a->e.x * AbsR[2][0] + a->e.z * AbsR[0][0];
-        rb = b->e.y * AbsR[1][2] + b->e.z * AbsR[1][1];
-        if (fabsf(t.x * R[2][0] - t.z * R[0][0]) > ra + rb)return 0;
-
-        //軸L=A1 X B1判定
-        ra = a->e.z * AbsR[2][1] + a->e.z * AbsR[0][1];
-        rb = b->e.z * AbsR[1][2] + b->e.z * AbsR[1][0];
-        if (fabsf(t.x * R[2][1] - t.z * R[0][1]) > ra + rb)return 0;
-
-        //軸L=A1 X B2判定
-        ra = a->e.x * AbsR[2][2] + a->e.z * AbsR[0][2];
-        rb = b->e.x * AbsR[1][1] + b->e.y * AbsR[1][0];
-        if (fabsf(t.x * R[2][2] - t.z * R[0][2]) > ra + rb)return 0;
-
-        //軸L=A2 X B0判定
-        ra = a->e.x * AbsR[1][0] + a->e.y * AbsR[0][0];
-        rb = b->e.y * AbsR[2][2] + b->e.z * AbsR[2][1];
-        if (fabsf(t.y * R[0][0] - t.x * R[1][0]) > ra + rb)return 0;
-
-        //軸L=A2 X B1判定
-        ra = a->e.x * AbsR[1][1] + a->e.y * AbsR[0][1];
-        rb = b->e.x * AbsR[2][2] + b->e.z * AbsR[2][0];
-        if (fabsf(t.y * R[0][1] - t.y * R[1][1]) > ra + rb)return 0;
-
-        //軸L=A2 X B2判定
-        ra = a->e.x * AbsR[1][2] + a->e.y * AbsR[0][2];
-        rb = b->e.x * AbsR[2][1] + b->e.y * AbsR[2][0];
-        if (fabsf(t.y * R[0][2] - t.x * R[1][2]) > ra + rb)return 0;
-
-        return 1;
-    }
 };
 

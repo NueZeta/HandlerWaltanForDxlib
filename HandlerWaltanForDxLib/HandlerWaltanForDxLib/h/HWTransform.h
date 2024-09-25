@@ -1,5 +1,6 @@
 #pragma once
 #include "HWComponent.h"
+//#include "HandlerWaltan.h"
 
 
 /**
@@ -74,6 +75,20 @@ public:
 
 #pragma endregion
 
+	/**
+	 * @brief		移動ベクトル
+	 * @History		24/09/26 作成(Suzuki N)
+	 */
+	VECTOR velocity;
+
+private:
+
+	/**
+	 * @brief		正面方向のベクトル
+	 * @History		24/09/26 作成(Suzuki N)
+	 */
+	VECTOR forward;
+
 
 	/*     メソッド     */
 
@@ -104,6 +119,13 @@ public:
 	 * @date		24/09/17
 	 */
 	~HWTransform(){}
+
+	/**
+	 * @brief		オブジェクトの正面ベクトルを取得
+	 * @author		Suzuki N
+	 * @date		24/09/26
+	 */
+	const VECTOR& Forward() { return forward; }
 
 #pragma endregion
 

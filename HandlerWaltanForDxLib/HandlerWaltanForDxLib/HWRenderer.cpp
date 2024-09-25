@@ -20,6 +20,11 @@ HWRenderer::HWRenderer(const std::string& _pass)
 	modelHandle = MV1LoadModel(_pass.c_str());
 }
 
+HWRenderer::~HWRenderer()
+{
+	MV1DeleteModel(modelHandle);
+}
+
 
 #pragma endregion
 

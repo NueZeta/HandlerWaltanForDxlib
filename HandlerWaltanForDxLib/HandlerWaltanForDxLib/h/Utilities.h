@@ -224,18 +224,18 @@ private:
 	 */
 	static void Update()
 	{
-		//1f目なら時刻を記憶
-		if (count == 0)
-			startTime = GetNowCount();
-		//60f目なら平均を求める
-		if (count == N)
-		{
-			int t = GetNowCount();
-			fps = 1000.f / ((t - startTime) / (float)N);
-			count = 0;
-			startTime = t;
-		}
-		count++;
+		////1f目なら時刻を記憶
+		//if (count == 0)
+		//	startTime = GetNowCount();
+		////60f目なら平均を求める
+		//if (count == N)
+		//{
+		//	int t = GetNowCount();
+		//	fps = 1000.f / ((t - startTime) / (float)N);
+		//	count = 0;
+		//	startTime = t;
+		//}
+		//count++;
 
 		auto now = std::chrono::high_resolution_clock::now();
 		// 前回のフレームからの経過時間を計算
@@ -243,7 +243,6 @@ private:
 		deltaTime = elapsedTime.count(); // 経過時間を秒単位で取得
 		// 現在の時間を次回のフレームの開始時間に設定
 		lastFrameTime = now;
-
 	}
 
 	/**

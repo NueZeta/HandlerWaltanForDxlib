@@ -19,10 +19,11 @@ HWGameObject::HWGameObject() : priority(0), name("hwObj")
 {
     gameObjects.push_back(this);
 
-    std::unique_ptr<HWTransform> transform = std::make_unique<HWTransform>();
-    transform->gameObject = this;
-    transform->Awake();
-    hwComponents.push_back(std::move(transform));
+    std::unique_ptr<HWTransform> transformCp = std::make_unique<HWTransform>();
+    transformCp->gameObject = this;
+    transformCp->Awake();
+    hwComponents.push_back(std::move(transformCp));
+    transform = GetComponent<HWTransform>();
 
     BubbleSort();
 }
@@ -31,10 +32,11 @@ HWGameObject::HWGameObject(const std::string& _name) : priority(0), name(_name)
 {
     gameObjects.push_back(this);
 
-    std::unique_ptr<HWTransform> transform = std::make_unique<HWTransform>();
-    transform->gameObject = this;
-    transform->Awake();
-    hwComponents.push_back(std::move(transform));
+    std::unique_ptr<HWTransform> transformCp = std::make_unique<HWTransform>();
+    transformCp->gameObject = this;
+    transformCp->Awake();
+    hwComponents.push_back(std::move(transformCp));
+    transform = GetComponent<HWTransform>();
 
     BubbleSort();
 }
@@ -43,10 +45,11 @@ HWGameObject::HWGameObject(int _priority) : priority(_priority), name("hwObj")
 {
     gameObjects.push_back(this);
 
-    std::unique_ptr<HWTransform> transform = std::make_unique<HWTransform>();
-    transform->gameObject = this;
-    transform->Awake();
-    hwComponents.push_back(std::move(transform));
+    std::unique_ptr<HWTransform> transformCp = std::make_unique<HWTransform>();
+    transformCp->gameObject = this;
+    transformCp->Awake();
+    hwComponents.push_back(std::move(transformCp));
+    transform = GetComponent<HWTransform>();
 
     BubbleSort();
 }
@@ -55,10 +58,11 @@ HWGameObject::HWGameObject(const std::string& _name, int _priority) : name(_name
 {
     gameObjects.push_back(this);
 
-    std::unique_ptr<HWTransform> transform = std::make_unique<HWTransform>();
-    transform->gameObject = this;
-    transform->Awake();
-    hwComponents.push_back(std::move(transform));
+    std::unique_ptr<HWTransform> transformCp = std::make_unique<HWTransform>();
+    transformCp->gameObject = this;
+    transformCp->Awake();
+    hwComponents.push_back(std::move(transformCp));
+    transform = GetComponent<HWTransform>();
 
     BubbleSort();
 }
@@ -99,7 +103,7 @@ void HWGameObject::CallAllUpdates()
     }
 }
 
-void HWGameObject::CallAllOnCollisionEnters(HWCollider* _collider)
+void HWGameObject::CallAllOnCollisionEnters(HWCollider& _collider)
 {
     for (auto& component : hwComponents)
     {
@@ -108,7 +112,7 @@ void HWGameObject::CallAllOnCollisionEnters(HWCollider* _collider)
     }
 }
 
-void HWGameObject::CallAllOnCollisionStays(HWCollider* _collider)
+void HWGameObject::CallAllOnCollisionStays(HWCollider& _collider)
 {
     for (auto& component : hwComponents)
     {
@@ -117,7 +121,7 @@ void HWGameObject::CallAllOnCollisionStays(HWCollider* _collider)
     }
 }
 
-void HWGameObject::CallAllOnCollisionExits(HWCollider* _collider)
+void HWGameObject::CallAllOnCollisionExits(HWCollider& _collider)
 {
     for (auto& component : hwComponents)
     {
@@ -126,7 +130,7 @@ void HWGameObject::CallAllOnCollisionExits(HWCollider* _collider)
     }
 }
 
-void HWGameObject::CallAllOnTriggerEnters(HWCollider* _collider)
+void HWGameObject::CallAllOnTriggerEnters(HWCollider& _collider)
 {
     for (auto& component : hwComponents)
     {
@@ -135,7 +139,7 @@ void HWGameObject::CallAllOnTriggerEnters(HWCollider* _collider)
     }
 }
 
-void HWGameObject::CallAllOnTriggerStays(HWCollider* _collider)
+void HWGameObject::CallAllOnTriggerStays(HWCollider& _collider)
 {
     for (auto& component : hwComponents)
     {
@@ -144,7 +148,7 @@ void HWGameObject::CallAllOnTriggerStays(HWCollider* _collider)
     }
 }
 
-void HWGameObject::CallAllOnTriggerExits(HWCollider* _collider)
+void HWGameObject::CallAllOnTriggerExits(HWCollider& _collider)
 {
     for (auto& component : hwComponents)
     {

@@ -140,6 +140,10 @@ void HWBoxCollider::Update()
 		DrawCollider();
 }
 
+void HWBoxCollider::OnCollisionEnter(HWCollider& _collider)
+{
+}
+
 
 #pragma endregion
 

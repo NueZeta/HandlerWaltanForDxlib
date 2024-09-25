@@ -38,6 +38,12 @@ private:
 	 */
 	std::vector<std::unique_ptr<HWComponent>> hwComponents;
 
+	/**
+	 * @brief		子オブジェクト
+	 * @History		24/09/26 作成(Suzuki N)
+	 */
+	std::vector<HWGameObject*> children;
+
 public:
 
 	/**
@@ -51,6 +57,12 @@ public:
 	 * @History		24/07/21 作成(Suzuki N)
 	 */
 	int priority;
+
+	/**
+	 * @brief		Transformコンポーネント
+	 * @History		24/09/26 作成(Suzuki N)
+	 */
+	HWTransform* transform;
 
 
 private:
@@ -76,42 +88,42 @@ private:
 	 * @author      Suzuki N
 	 * @date        24/08/22
 	 */
-	void CallAllOnCollisionEnters(HWCollider* _collider);
+	void CallAllOnCollisionEnters(HWCollider& _collider);
 
 	/**
 	 * @brief       全てのコンポーネントのOnCollisionStayCallBackメソッドを呼びだす
 	 * @author      Suzuki N
 	 * @date        24/08/22
 	 */
-	void CallAllOnCollisionStays(HWCollider* _collider);
+	void CallAllOnCollisionStays(HWCollider& _collider);
 
 	/**
 	 * @brief       全てのコンポーネントのOnCollisionExitCallBackメソッドを呼びだす
 	 * @author      Suzuki N
 	 * @date        24/08/22
 	 */
-	void CallAllOnCollisionExits(HWCollider* _collider);
+	void CallAllOnCollisionExits(HWCollider& _collider);
 	
 	/**
 	 * @brief       全てのコンポーネントのOnTriggerEnterCallBackメソッドを呼びだす
 	 * @author      Suzuki N
 	 * @date        24/08/22
 	 */
-	void CallAllOnTriggerEnters(HWCollider* _collider);
+	void CallAllOnTriggerEnters(HWCollider& _collider);
 
 	/**
 	 * @brief       全てのコンポーネントのOnTriggerStayCallBackメソッドを呼びだす
 	 * @author      Suzuki N
 	 * @date        24/08/22
 	 */
-	void CallAllOnTriggerStays(HWCollider* _collider);
+	void CallAllOnTriggerStays(HWCollider& _collider);
 
 	/**
 	 * @brief       全てのコンポーネントのOnTriggerExitCallBackメソッドを呼びだす
 	 * @author      Suzuki N
 	 * @date        24/08/22
 	 */
-	void CallAllOnTriggerExits(HWCollider* _collider);
+	void CallAllOnTriggerExits(HWCollider& _collider);
 
 
 public:

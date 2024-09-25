@@ -61,6 +61,13 @@ public:
 	HWRenderer(const std::string& _pass);
 
 	/**
+	 * @brief		デストラクタ
+	 * @author		Suzuki N
+	 * @date		24/07/19
+	 */
+	virtual ~HWRenderer();
+
+	/**
 	 * @brief		モデルハンドルを取得する
 	 * @return		int モデルハンドル
 	 * @author		Suzuki N

@@ -31,6 +31,12 @@ void HWTransform::SetMatrix()
 
 	// 最後に行列をかけ合わせる
 	globalMat = MMult(scl, MMult(rot, pos));
+
+
+	// 正面ベクトルを更新
+	forward = VTransform(VGet(0, 0, -1), rot);
+	// ベクトルを正規化
+	forward = VNorm(forward);
 }
 
 
@@ -54,6 +60,11 @@ localScale({ 1.0f, 1.0f, 1.0f })
 
 void HWTransform::Update()
 {
+	// 座標に移動ベクトルを足す
+	position = VAdd(position, velocity);
+	// 移動ベクトルの初期化
+	velocity = VGet(0, 0, 0);
+
 	SetMatrix();
 }
 

@@ -151,6 +151,13 @@ public:
 	HWAnimator(){}
 
 	/**
+	 * @brief		デストラクタ
+	 * @author		Suzuki N
+	 * @date		24/09/24
+	 */
+	~HWAnimator();
+
+	/**
 	 * @brief		アニメーションをロードする ※ロードするアニメーションはアニメーションが一つしかついていないこと
 	 * @param[in]	const std::string& アニメーションファイルのパス
 	 * @param[in]	const int		   読み込むアニメーションID

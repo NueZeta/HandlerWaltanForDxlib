@@ -14,10 +14,10 @@ bool HandlerWaltan::debugMode = false;
 std::vector<InputSystem*> InputSystem::inputSystemVec;
 float GameTime::deltaTime = 1.0f;
 std::chrono::high_resolution_clock::time_point GameTime::lastFrameTime = std::chrono::high_resolution_clock::now();
-int GameTime::N = 0;
-int GameTime::startTime = 0;
-int GameTime::count = 0;
-float GameTime::fps = 0;
+int GameTime::N = NULL;
+int GameTime::startTime = NULL;
+int GameTime::count = NULL;
+float GameTime::fps = NULL;
 int GameTime::FPS = 120;
 
 //------------------------------------------------------------------------------------------------------------------------
@@ -44,9 +44,9 @@ void HandlerWaltan::Update()
             (*it)->Update();
     }
 
-    if (debugMode)
-        GameTime::Draw();
-    GameTime::Wait();
+    //if (debugMode)
+    //    GameTime::Draw();
+    //GameTime::Wait();
 }
 
 
