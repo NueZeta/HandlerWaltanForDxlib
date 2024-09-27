@@ -34,6 +34,18 @@ public:
 	int animHandle;
 
 	/**
+	 * @brief		アタッチするアニメーションモデルのインデックス
+	 * @History		24/09/24 作成(Suzuki N)
+	 */
+	int animIndex;
+
+	/**
+	 * @brief		何番目にアタッチされたか
+	 * @History		24/09/24 作成(Suzuki N)
+	 */
+	int playIndex;
+
+	/**
 	 * @brief		アニメーションファイル
 	 * @History		24/09/24 作成(Suzuki N)
 	 */

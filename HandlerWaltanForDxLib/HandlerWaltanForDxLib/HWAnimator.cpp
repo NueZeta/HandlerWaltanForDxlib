@@ -26,45 +26,40 @@ void HWAnimator::AnimPlay()
 	// 再生しているアニメーション１の処理
 	if (playAnimId1 != -1)
 	{
-		// アニメーションの総時間を取得
-		float animTotalTime = animInfoVec[playAnimId1]->totalTime;
-
 		// 再生時間を進める
 		playTime1 += animInfoVec[playAnimId1]->playSpeed * GameTime::DeltaTime();
 
+		// アニメーションのループフラグが立っていて、
 		// 再生時間が総時間に到達していたら再生時間をループさせる
-		if (playTime1 >= animTotalTime)
+		if (playTime1 >= animInfoVec[playAnimId1]->totalTime && animInfoVec[playAnimId1]->isLoop)
 		{
-			playTime1 = fmodf(playTime1, animTotalTime);
+			playTime1 = fmodf(playTime1, animInfoVec[playAnimId1]->totalTime);
 		}
 
 		// 変更した再生時間をモデルに反映させる
 		MV1SetAttachAnimTime(animInfoVec[playAnimId1]->modelHandle, playAnimId1, playTime1);
 
 		// アニメーション１のモデルに対する反映率をセット
-		MV1SetAttachAnimBlendRate(animInfoVec[playAnimId1]->modelHandle, playAnimId1, animBlendRate);
+		MV1SetAttachAnimBlendRate(animInfoVec[playAnimId1]->modelHandle, playTime1, animBlendRate);
 	}
 
 	// 再生しているアニメーション２の処理
-	if (playAnimId1 != -1)
+	if (playAnimId2 != -1)
 	{
-		// アニメーションの総時間を取得
-		float animTotalTime = MV1GetAttachAnimTotalTime(animInfoVec[playAnimId2]->modelHandle, playAnimId2);
-
 		// 再生時間を進める
 		playTime2 += animInfoVec[playAnimId2]->playSpeed * GameTime::DeltaTime();
 
 		// 再生時間が総時間に到達していたら再生時間をループさせる
-		if (playTime2 > animTotalTime)
+		if (playTime2 > animInfoVec[playAnimId2]->totalTime)
 		{
-			playTime2 = fmodf(playTime2, animTotalTime);
+			playTime2 = fmodf(playTime2, animInfoVec[playAnimId2]->totalTime);
 		}
 
 		// 変更した再生時間をモデルに反映させる
-		MV1SetAttachAnimTime(animInfoVec[playAnimId2] ->modelHandle, playAnimId2, playTime2);
+		MV1SetAttachAnimTime(animInfoVec[playAnimId2]->modelHandle, playAnimId2, playTime2);
 
 		// アニメーション２のモデルに対する反映率をセット
-		MV1SetAttachAnimBlendRate(animInfoVec[playAnimId2]->modelHandle , playAnimId2, 1.0f - animBlendRate);
+		MV1SetAttachAnimBlendRate(animInfoVec[playAnimId2]->modelHandle, playAnimId2, 1.0f - animBlendRate);
 	}
 }
 
@@ -89,6 +84,8 @@ AnimInfo& HWAnimator::AnimLoad(const std::string& _filePath, const int _animId)
 	animInfo->filePath = _filePath;
 	animInfo->animHandle = MV1LoadModel(_filePath.c_str());
 	animInfo->modelHandle = gameObject->GetComponent<HWRenderer>()->GetModelHandle();
+	animInfo->animIndex = _animId;
+	animInfo->playIndex = -1;
 	animInfo->interruption = true;
 	animInfo->isLoop = false;
 	animInfo->playSpeed = 1.0f;
@@ -125,18 +122,19 @@ void HWAnimator::AnimChange(const int _animId)
 
 	// 再生指示が通った
 
-	// 再生中のアニメーション2がすでに存在する場合はデタッチする
+	// 再生中のモーション２が有効だったらデタッチする
 	if (playAnimId2 != -1)
 	{
-		MV1DetachAnim(animInfoVec[playAnimId1]->modelHandle, playAnimId2);
+		MV1DetachAnim(animInfoVec[playAnimId2]->modelHandle, playAnimId2);
 		playAnimId2 = -1;
 	}
-	// アニメーション1の情報を2に移動する
+
+	// 今まで再生中のモーション１だったものの情報を２に移動する
 	playAnimId2 = playAnimId1;
 	playTime2 = playTime1;
 
-	// 新しいアニメーションをアタッチ
-	playAnimId1 = MV1AttachAnim(animInfoVec[_animId]->modelHandle, 0, animInfoVec[_animId]->animHandle);
+	// 新たに指定のモーションをモデルにアタッチして、アタッチ番号を保存する
+	playAnimId1 = MV1AttachAnim(animInfoVec[playAnimId1]->modelHandle, 0, animInfoVec[playAnimId1]->animHandle);
 	playTime1 = 0.0f;
 
 	// ブレンド率は再生中のモーション２が有効ではない場合は１．０ｆ( 再生中のモーション１が１００％の状態 )にする
@@ -160,7 +158,9 @@ void HWAnimator::Awake()
 {
 	// 初期値を入れておく
 	playTime1 = 0.0f;
-	playAnimId1 = -1;
+	animBlendRate = 1.0f;
+	playTime1 = -1;
+	playTime2 = -1;
 	isStop = false;
 }
 

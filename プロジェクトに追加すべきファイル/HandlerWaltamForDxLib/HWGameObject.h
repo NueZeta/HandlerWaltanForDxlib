@@ -38,6 +38,12 @@ private:
 	 */
 	std::vector<std::unique_ptr<HWComponent>> hwComponents;
 
+	/**
+	 * @brief		子オブジェクト
+	 * @History		24/09/26 作成(Suzuki N)
+	 */
+	std::vector<HWGameObject*> children;
+
 public:
 
 	/**
