@@ -17,7 +17,7 @@ void HWAnimator::AnimPlay()
 	if (playIndex1 != -1)
 	{
 		// 再生時間を進める
-		playTime += animInfoVec[playIndex1]->playSpeed * GameTime::DeltaTime();
+		playTime += animInfoVec[playIndex1]->playSpeed;
 
 		// アニメーションの再生が終了した
 		if (playTime >= animInfoVec[playIndex1]->totalTime)
@@ -46,7 +46,7 @@ void HWAnimator::AnimPlay()
 		// ブレンド率が1未満の場合は1に近づける
 		if (animBlendRate < 1.0f)
 		{
-			animBlendRate += blendSpeed * GameTime::DeltaTime();
+			animBlendRate += blendSpeed;
 			// ブレンド率が1以上の場合、アニメーション1を削除し、
 			// アニメーション2の情報をアニメーション1に渡す
 			if (animBlendRate >= 1.0f)
@@ -107,7 +107,6 @@ void HWAnimator::AnimChange(const int _animId)
 {
 	// 指示の来たアニメーション番号が無効な場合は変更指示を無視
 	if (_animId >= animInfoVec.size() || _animId < 0) return;
-	if (_animId == playIndex1) return;
 
 	// 再生アニメーションIDが初期値だった場合は
 	// パラメータを参照せずに指示の来たアニメーションをセット
@@ -135,6 +134,9 @@ void HWAnimator::AnimChange(const int _animId)
 	// モーションブレンド中ではない
 	else if (playIndex1 != -1 && playIndex2 == -1)
 	{
+		// 再生アニメーションと同じアニメーションへの変更指示も無視
+		if (_animId == playIndex1) return;
+
 		// 新しいアニメーションをアタッチ
 		animInfoVec[_animId]->attachIndex = MV1AttachAnim(modelHandle,
 			animInfoVec[_animId]->animIndex, animInfoVec[_animId]->animHandle);
@@ -145,21 +147,31 @@ void HWAnimator::AnimChange(const int _animId)
 		animBlendRate = 0.0f;
 	}
 
-	//// モーションブレンドに変更指示が来た場合
-	//else if (playIndex1 != -1 && playIndex2 != -1)
-	//{
-	//	// 再生中のアニメーションのアニメーションをデタッチ
-	//	MV1DetachAnim(modelHandle, animInfoVec[playIndex1]->attachIndex);
-	//	playIndex1 = playIndex2;
-	//	playIndex2 = -1;
+	else if (playIndex1 != -1 && playIndex2 != -1)
+	{
+		// ブレンド中のアニメーションと同じアニメーションへの変更指示も無視
+		if (_animId == playIndex2) return;
+		// ブレンド中のアニメーションが再生中且つ、中断不可の場合は変更指示を無視
+		if (playTime < animInfoVec[playIndex2]->totalTime &&
+			!animInfoVec[playIndex2]->interruption) return;
 
-	//	animInfoVec[_animId]->attachIndex = MV1AttachAnim(modelHandle,
-	//		animInfoVec[_animId]->animIndex, animInfoVec[_animId]->animHandle);
-	//	
-	//	playIndex2 = _animId;
-	//	playIndex2 = -1;
-	//	playTime = 0.0f;
-	//}
+
+		// 現在のアニメーション1をデタッチ
+		MV1DetachAnim(modelHandle, animInfoVec[playIndex1]->attachIndex);
+
+		// 現在のアニメーション2をアニメーション1に移動
+		playIndex1 = playIndex2;
+
+		// 新しいアニメーションをアタッチ
+		animInfoVec[_animId]->attachIndex = MV1AttachAnim(modelHandle,
+			animInfoVec[_animId]->animIndex, animInfoVec[_animId]->animHandle);
+
+		// 新しいアニメーションをアニメーション2として設定
+		playIndex2 = _animId;
+
+		// ブレンド率をリセット
+		animBlendRate = 0.0f;
+	}
 }
 
 
