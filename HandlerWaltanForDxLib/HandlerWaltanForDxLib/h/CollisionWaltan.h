@@ -135,6 +135,15 @@ private:
 #pragma region BOXタイプの衝突判定
 
     /**
+      * @brief       カプセルとポリゴンのあたり判定
+      * @param[in]   HWBoxCollider*      あたり判定の重なりを見るCollider情報1
+      * @param[in]   const int           あたり判定の重なりを見るモデルハンドル
+      * @author      Suzuki N
+      * @date        24/09/30
+      */
+    bool CollCheck_BOX_Model(HWBoxCollider* _boxCol, const int _modelHandle);
+
+    /**
       * @brief       ボックスとボックスのあたり判定
       * @param[in]   HWBoxCollider*      あたり判定の重なりを見るCollider情報1
       * @param[in]   HWBoxCollider*      あたり判定の重なりを見るCollider情報2
@@ -166,6 +175,15 @@ private:
 #pragma region CAPSULEタイプの衝突判定
 
     /**
+      * @brief       カプセルとポリゴンのあたり判定
+      * @param[in]   HWCapsuleCollider*  あたり判定の重なりを見るCollider情報1
+      * @param[in]   const int           あたり判定の重なりを見るモデルハンドル
+      * @author      Suzuki N
+      * @date        24/09/30
+      */
+    bool CollCheck_Capsule_Model(HWCapsuleCollider* _capsuleCol, const int _modelHandle);
+
+    /**
       * @brief       カプセルとボックスのあたり判定
       * @param[in]   HWCapsuleCollider*  あたり判定の重なりを見るCollider情報1
       * @param[in]   HWBoxCollider*      あたり判定の重なりを見るCollider情報2
@@ -195,6 +213,16 @@ private:
 #pragma endregion
 
 #pragma region SPHEREタイプの衝突判定
+
+    /**
+      * @brief       スフィアとポリゴンのあたり判定
+      * @param[in]   HWSphereCollider*   あたり判定の重なりを見るCollider情報1
+      * @param[in]   const int           あたり判定の重なりを見るモデルハンドル
+      * @author      Suzuki N
+      * @date        24/09/30
+      */
+    bool CollCheck_Sphere_Model(HWSphereCollider* _sphereCol, const int _modelHandle);
+
 
     /**
       * @brief       スフィアとボックスのあたり判定
@@ -246,6 +274,31 @@ private:
       * @date        24/09/24
       */
     int TestOBBOBB(OBB* a, OBB* b);
+
+
+#pragma region MyMathf
+
+    bool IsNearly(float lfs, float rhs)
+    {
+        return (fabsf(lfs - rhs) < NEARLY_THRESHOLD);
+    }
+
+    bool IsNearly(const VECTOR& lfs, const VECTOR& rhs)
+    {
+        return IsNearly(lfs.x, rhs.x) && IsNearly(lfs.y, rhs.y) && IsNearly(lfs.z, rhs.z);
+    }
+
+    bool IsNearlyZero(float x)
+    {
+        return IsNearly(x, 0.0f);
+    }
+
+    bool IsNearlyZero(const VECTOR& x)
+    {
+        return IsNearly(x, VGet(0.0f, 0.0f, 0.0f));
+    }
+
+#pragma endregion
 
 };
 

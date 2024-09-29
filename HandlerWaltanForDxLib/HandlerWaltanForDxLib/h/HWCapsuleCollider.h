@@ -44,6 +44,19 @@ public:
 	 */
 	MATRIX mRotate;
 
+	/**
+	 * @brief		コライダーの始点
+	 * @History		24/09/16 作成(Suzuki N)
+	 */
+	VECTOR UsStartPos;
+
+	/**
+	 * @brief		コライダーの終点
+	 * @History		24/09/16 作成(Suzuki N)
+	 */
+	VECTOR UsEndPos;
+
+
 private:
 
 	/**
@@ -79,13 +92,7 @@ public:
 
 private:
 
-	/**
-	 * @brief		線分と線分の最近接点を求めるヘルパー関数
-	 * @author		Suzuki N
-	 * @date		24/09/26
-	 */
-	void ClosestPointsOnLineSegments(const HWCapsuleCollider& other, 
-		VECTOR& outPoint1, VECTOR& outPoint2);
+
 
 #pragma region 押し出し処理
 

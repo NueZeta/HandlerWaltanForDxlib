@@ -18,6 +18,7 @@ class HWTransform : public HWComponent
 {
 	// 特定のクラス以外からのアクセスを防ぐためのフレンド宣言
 	friend class HWGameObject;
+	friend class CollisionWaltan;
 
 public:
 

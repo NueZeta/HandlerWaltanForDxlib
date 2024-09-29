@@ -17,6 +17,11 @@
 
 //! アニメーションのブレンド率変化速度
 constexpr float PLAYER_ANIM_BLEND_SPEED = 0.0166f;
+// 数学関係.
+constexpr float NEARLY_THRESHOLD = 0.000001f;			// 2つの数値が近いと判断する差の許容値
+// コリジョン関係.
+constexpr float HIT_SLIDE_LENGTH = 5.0f;				// 一度の壁押し出し処理でスライドさせる距離
+
 
 
 /**
@@ -76,7 +81,7 @@ public:
 template<class T, size_t MAXSIZE>
 class PoolAllocator
 {
-public:
+private:
 
 	/*     メンバ変数     */
 
@@ -112,7 +117,7 @@ public:
 	{
 		// メモリブロック同士を連結する
 		for (size_t i = 0; i < MAXSIZE - 1; ++i)
-			block[i]->nextBlock = &block[i + 1];
+			block[i].nextBlock = &block[i + 1];
 		// 末尾は nullptr
 		block[MAXSIZE - 1].nextBlock = nullptr;
 
@@ -146,6 +151,28 @@ public:
 
 		// 動的にコンストラクタを呼ぶ
 		return new(ret) T();
+	}
+
+	/**
+	 * @brief		メモリを確保する
+	 * @return		確保したメモリ
+	 * @author		Suzuki N
+	 * @date		24/09/01
+	 */
+	template<class T, typename... Args>
+	T* Alloc(Args&&... args)
+	{
+		// 空きメモリブロックがない場合、nullptr を返す
+		if (freeBlockHead == nullptr)
+			return nullptr;
+
+		//! 確保したメモリ
+		T* ret = reinterpret_cast<T*>(freeBlockHead);
+		// 空きメモリブロックを更新
+		freeBlockHead = freeBlockHead->nextBlock;
+
+		// 動的にコンストラクタを呼ぶ
+		return new(ret) T(std::forward<Args>(args)...);
 	}
 
 	/**
