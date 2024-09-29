@@ -34,6 +34,18 @@ public:
 	int animHandle;
 
 	/**
+	 * @brief		animModelの登録したアニメーションのインデックス
+	 * @History		24/09/24 作成(Suzuki N)
+	 */
+	int animIndex;
+
+	/**
+	 * @brief		Modelにアタッチした時のインデックス
+	 * @History		24/09/24 作成(Suzuki N)
+	 */
+	int attachIndex;
+
+	/**
 	 * @brief		アニメーションファイル
 	 * @History		24/09/24 作成(Suzuki N)
 	 */
@@ -72,7 +84,9 @@ public:
 	 * @author		Suzuki N
 	 * @date		24/09/24
 	 */
-	AnimInfo(){}
+	AnimInfo() : modelHandle(-1), animHandle(-1), animIndex(-1), attachIndex(-1),
+		filePath(""), isLoop(false), interruption(true), playSpeed(-1.f), totalTime(-1.f)
+	{}
 };
 
 
@@ -85,7 +99,7 @@ class HWAnimator : public HWComponent
 	// 特定のクラス以外からのアクセスを防ぐためのフレンド宣言
 	friend class HWGameObject;
 
-public:
+private:
 
 	/*     メンバ変数     */
 
@@ -96,28 +110,28 @@ public:
 	std::vector<std::unique_ptr<AnimInfo>> animInfoVec;
 
 	/**
-	 * @brief		アニメーション1の現在の再生時間
+	 * @brief		アニメーションの現在の再生時間
 	 * @History		24/09/24 作成(Suzuki N)
 	 */
-	float playTime1;
+	float playTime;
 
 	/**
-	 * @brief		アニメーション2の現在の再生時間
+	 * @brief		モデルハンドル
 	 * @History		24/09/25 作成(Suzuki N)
 	 */
-	float playTime2;
+	int modelHandle;
 
 	/**
 	 * @brief		再生中のアニメーション1インデックス
 	 * @History		24/09/24 作成(Suzuki N)
 	 */
-	int playAnimId1;
+	int playIndex1;
 
 	/**
 	 * @brief		再生中のアニメーション2インデックス
 	 * @History		24/09/25 作成(Suzuki N)
 	 */
-	int playAnimId2;
+	int playIndex2;
 
 	/**
 	 * @brief		playAnimId1 と playAnimId2 のブレンド率
@@ -126,18 +140,25 @@ public:
 	float animBlendRate;
 
 	/**
+	 * @brief		アニメーションの再生が終了したときに再生するIdleのID
+	 * @History		24/09/24 作成(Suzuki N)
+	 */
+	int defaultAnimId = 0;
+
+
+public:
+
+	/**
 	 * @brief		再生を停止
 	 * @History		24/09/24 作成(Suzuki N)
 	 */
 	bool isStop;
 
-private:
-
 	/**
-	 * @brief		アニメーションの再生が終了したときに再生するIdleのID
-	 * @History		24/09/24 作成(Suzuki N)
+	 * @brief		ブレンドのスピード
+	 * @History		24/09/29 作成(Suzuki N)
 	 */
-	int defaultAnimId = 0;
+	float blendSpeed;
 
 
 public:
@@ -186,6 +207,19 @@ public:
 	void SetDefaultAnimId(const int _defaultAnimId) { defaultAnimId = _defaultAnimId; }
 
 #pragma endregion
+
+#pragma region Getter関数
+
+	/**
+	 * @brief		アニメーション情報を格納しているコンテナを取得する
+	 * @return		const std::vector<std::unique_ptr<AnimInfo>>&	アニメーション情報を格納しているコンテナ
+	 * @author		Suzuki N
+	 * @date		24/09/29
+	 */
+	const std::vector<std::unique_ptr<AnimInfo>>& GetAnimInfoVec() { return animInfoVec; }
+
+#pragma endregion
+
 
 
 private:

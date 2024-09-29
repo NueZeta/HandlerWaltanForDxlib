@@ -336,7 +336,7 @@ void CollisionWaltan::ColliderAvoidCallBacks(std::vector<HWCollider*>::iterator 
 
 int CollisionWaltan::TestOBBOBB(OBB* a, OBB* b)
 {
-	const float EPSILON = 1.175494e-37;
+	const float EPSILON = 1.175494e-37f;
 
 	float R[3][3], AbsR[3][3];
 	for (int i = 0; i < 3; i++)

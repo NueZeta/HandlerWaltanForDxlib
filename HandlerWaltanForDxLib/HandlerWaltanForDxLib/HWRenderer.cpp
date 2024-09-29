@@ -13,11 +13,13 @@
 
 HWRenderer::HWRenderer(const int _modelHandle) : modelHandle(_modelHandle)
 {
+	priority = -20;
 }
 
 HWRenderer::HWRenderer(const std::string& _pass)
 {
 	modelHandle = MV1LoadModel(_pass.c_str());
+	priority = -20;
 }
 
 HWRenderer::~HWRenderer()

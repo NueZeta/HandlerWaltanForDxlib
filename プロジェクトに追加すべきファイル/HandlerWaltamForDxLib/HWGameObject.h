@@ -38,6 +38,12 @@ private:
 	 */
 	std::vector<std::unique_ptr<HWComponent>> hwComponents;
 
+	/**
+	 * @brief		子オブジェクト
+	 * @History		24/09/26 作成(Suzuki N)
+	 */
+	std::vector<HWGameObject*> children;
+
 public:
 
 	/**
@@ -64,7 +70,7 @@ private:
 	/*     メソッド     */
 
 	/**
-	 * @brief       プライオリティを参照してソートする
+	 * @brief       プライオリティを参照してソートする(降順)
 	 * @author      Suzuki N
 	 * @date        24/07/19
 	 */
@@ -204,6 +210,11 @@ public:
 		T* ret = dynamic_cast<T*>(hwComponents.back().get());
 		// コンポーネントがアタッチされた瞬間に走るメソッドを呼び出す
 		ret->Awake();
+
+		// コンポーネントをプライオリティ順に並び変える(降順)
+		std::sort(hwComponents.begin(), hwComponents.end(), 
+			[](const std::unique_ptr<HWComponent>& a, const std::unique_ptr<HWComponent>& b) {
+			return a->priority > b->priority; });
 
 		return ret;
 	}

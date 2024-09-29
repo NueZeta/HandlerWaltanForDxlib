@@ -53,6 +53,12 @@ public:
 	 */
 	bool active;
 
+	/**
+	 * @brief		ハンドラーやUpdateメソッドの優先順位(降順)
+	 * @History		24/09/29 作成(Suzuki N)
+	 */
+	int priority;
+
 
 private:
 
