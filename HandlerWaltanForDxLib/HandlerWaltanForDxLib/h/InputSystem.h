@@ -278,6 +278,11 @@ public:
 		for (auto ptr : keyMap)
 			delete ptr.second;
 		keyMap.clear();
+
+		// “o˜^‚µ‚Ä‚¢‚½InputSystem‚Ì“o˜^î•ñ‚ğÁ‚·
+		auto it = std::find(inputSystemVec.begin(), inputSystemVec.end(), this);
+		if (it != inputSystemVec.end())
+			inputSystemVec.erase(it);
 	}
 
 	/**

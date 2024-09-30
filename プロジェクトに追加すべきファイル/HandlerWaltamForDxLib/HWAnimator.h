@@ -218,6 +218,22 @@ public:
 	 */
 	const std::vector<std::unique_ptr<AnimInfo>>& GetAnimInfoVec() { return animInfoVec; }
 
+	/**
+	 * @brief		再生しているアニメーション1のインデックスを取得する
+	 * @return		const int 再生中のアニメーションインデックス1
+	 * @author		Suzuki N
+	 * @date		24/09/30
+	 */
+	const int GetPlayAnimId() { return playIndex1; };
+
+	/**
+	 * @brief		ブレンドしているアニメーション1のインデックスを取得する
+	 * @return		const int ブレンド中のアニメーションインデックス1
+	 * @author		Suzuki N
+	 * @date		24/09/30
+	 */
+	const int GetBlendAnimId() { return playIndex2; };
+
 #pragma endregion
 
 
