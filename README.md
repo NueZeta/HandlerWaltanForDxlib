@@ -21,8 +21,9 @@
 2. [HWComponent](#hwcomponent)
 3. [HWTransform](#hwtransform)
 4. [HWCapsuleCollider](#hwcapsulecollider)
-5. [HWAnimator](#hwanimator)
-6. [InputSystem](#inputsystem)
+5. [HWRenderer](#hwrenderer)
+6. [HWAnimator](#hwanimator)
+7. [InputSystem](#inputsystem)
 
 
 
@@ -461,6 +462,58 @@
 
 
 
+## HWRenderer
+
+<b> <説明> </b>
+
+モデルの描画を行うコンポーネント
+
+
+<br />
+<br />
+
+<b> <コンストラクタ> </b>
+
+
+	@brief		HWRendererのコンストラクタ
+	@detail		引数でモデルファイルのパスか、モデルハンドルを指定可
+	HWRenderer()
+
+	@brief		HWRendererのコンストラクタ
+	@detail		モデルファイルのパスでも可
+	@param[in]	int モデルハンドル
+	HWRenderer(const int)
+
+	@brief		HWRendererのコンストラクタ
+	@detail		モデルファイルのパスでも可
+	@param[in]	std::string 読み込むモデルのMV1ファイルのパス
+	HWRenderer(const std::string&)
+
+
+<b> <Getter関数> </b>
+
+
+	@brief		モデルハンドルを取得する
+	@return		int モデルハンドル
+	int GetModelHandle()
+
+
+<b> <Setter関数> </b>
+
+
+	@brief		モデルハンドルを変更する(モデルの外見を変更する時など)
+	@param[in]	int 新たなモデルハンドル 
+	void SetModelHandle(const int _modelHandle)
+
+
+
+<p align="right">(<a href="#top">トップへ</a>)</p> 
+
+
+
+<!------------------------------------------------------------------------------------------------------------------>
+
+
 
 ## HWAnimator
 
@@ -470,14 +523,88 @@
 
 先にHWRendererをアタッチするようにしてください
 
+AnimLoad関数を実行すると AnimInfo 型で参照が返ってくるので、その値を操作することでアニメーションの設定が行えます
+
 <br />
 <br />
 
-  <b> <> </b>
+  <b> <AnimInfoクラス> </b>
+
+	@brief		アニメーションをアタッチするモデル
+	int modelHandle
+
+	@brief		アニメーションのハンドル
+	int animHandle
+
+	@brief		animModelの登録したアニメーションのインデックス
+	int animIndex
+
+	@brief		Modelにアタッチした時のインデックス
+	int attachIndex
+
+	@brief		アニメーションファイル
+	std::string filePath
+
+	@brief		ループするか
+	bool isLoop
+
+	@brief		中断可能か
+	bool interruption
+
+	@brief		再生速度
+	float playSpeed
+
+	@brief		総再生時間
+	float totalTime
 
 
 
+  <b> <アニメーション制御の変数> </b>
 
+
+	@brief		再生を停止
+	bool isStop
+
+	@brief		ブレンドのスピード
+	float blendSpeed
+
+
+  <b> <アニメーション制御の関数> </b>
+
+
+	@brief		アニメーションをロードする ※ロードするアニメーションはアニメーションが一つしかついていないこと
+	@param[in]	const std::string& 	アニメーションファイルのパス
+	@param[in]	const int		読み込むアニメーションID
+	@return		AnimInfo&	 	アニメーション情報(戻り値からパラメータを操作する)
+	AnimInfo& AnimLoad(const std::string&, const int = 0)
+
+	@brief		再生するアニメーションを指定
+	@param[in]	const int 再生するアニメーションID
+	void AnimChange(const int)
+
+
+  <b> <Setter関数> </b>
+
+
+	@brief		アニメーションの再生が終了した時に自動再生されるdefaultアニメーション(Idolアニメーションなど)
+	@param[in]	const int デフォルトのアニメーションID
+	void SetDefaultAnimId(const int)
+
+
+  <b> <Getter関数> </b>
+
+
+	@brief		アニメーション情報を格納しているコンテナを取得する
+	@return		const std::vector<std::unique_ptr<AnimInfo>>&	アニメーション情報を格納しているコンテナ
+	const std::vector<std::unique_ptr<AnimInfo>>& GetAnimInfoVec()
+
+	@brief		再生しているアニメーション1のインデックスを取得する
+	@return		const int 再生中のアニメーションインデックス1
+	const int GetPlayAnimId()
+
+	@brief		ブレンドしているアニメーション1のインデックスを取得する
+	@return		const int ブレンド中のアニメーションインデックス1
+	const int GetBlendAnimId()
 
 </body>
 
@@ -486,7 +613,6 @@
 
 
 <!------------------------------------------------------------------------------------------------------------------>
-
 
 
 
@@ -565,6 +691,42 @@
 </body>
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
+
+
+
+<!------------------------------------------------------------------------------------------------------------------>
+
+
+
+
+
+
+
+
+<!------------------------------------------------------------------------------------------------------------------>
+
+<!-- ## InputSystem ->
+
+<b> <説明> </b>
+
+キー入力を検知し、入力時に設定したコールバック関数を呼び出すクラス
+
+
+<br />
+<br />
+
+<b> <メソッド> </b>
+
+
+<b> <メソッド1> </b>
+
+
+
+<p align="right">(<a href="#top">トップへ</a>)</p> 
+
+
+
+<!------------------------------------------------------------------------------------------------------------------>
 
 
 
