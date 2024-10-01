@@ -24,6 +24,8 @@
 5. [HWRenderer](#hwrenderer)
 6. [HWAnimator](#hwanimator)
 7. [InputSystem](#inputsystem)
+8. [PoolAllocator](#poolallocator)
+9. [CsvLoader](#csvloader)
 
 
 
@@ -630,22 +632,14 @@ AnimLoad関数を実行すると AnimInfo 型で参照が返ってくるので�
 
 <body>
 	
-	/**
-	 * @brief			マップにキーを登録する
-	 * @detail			{} で複数入力可能
-	 * @param[in]	std::string	登録するキー
-	 * @param[in]	int		キーコード
-	 * @author			Suzuki N
-	 * @date			24/09/07
-	 */
+	@brief			マップにキーを登録する
+	@detail			{} で複数入力可能
+	@param[in]	std::string	登録するキー
+	@param[in]	int		キーコード
 	void AddKeyCode(const std::string _key, int _inputKey)
 
- 	/**
-	 * @brief			InputActionにコールバック関数を登録する
-	 * @param[in]			std::function<void(InputAction::CallBackContext&)> 登録するコールバック関数
-	 * @author			Suzuki N
-	 * @date			24/09/08
-	 */
+	@brief			InputActionにコールバック関数を登録する
+	@param[in]		std::function<void(InputAction::CallBackContext&)> 登録するコールバック関数
 	void AddCallBack(const std::string _key, std::function<void(InputAction::CallBackContext&)> _callBack)
  
 </body>
@@ -698,7 +692,67 @@ AnimLoad関数を実行すると AnimInfo 型で参照が返ってくるので�
 
 
 
+## PoolAllocator
 
+<b> <説明> </b>
+
+事前にメモリを確保しておくことによって動的にメモリを確保する効率を上げるためのクラス
+
+
+<br />
+<br />
+
+<b> <テンプレート> </b>
+
+
+	template<class T, size_t MAXSIZE>
+
+
+<b> <メソッド> </b>
+
+
+	@brief		メモリを確保する
+	@return		確保したメモリ
+	T* Alloc()
+
+	@brief		メモリを解放する
+	@param[in]	T* Allocで確保したメモリ
+	void Free(T* _addr)
+ 
+
+<p align="right">(<a href="#top">トップへ</a>)</p> 
+
+
+
+<!------------------------------------------------------------------------------------------------------------------>
+
+
+
+## CsvLoader
+
+<b> <説明> </b>
+
+csvファイルを読み込む
+
+静的クラスのため、インスタンスは作成不可
+
+<br />
+<br />
+
+<b> <メソッド> </b>
+
+
+	@brief		csvファイルを読み込み、行区切り、カンマ区切りで文字列を返す
+	@param[in]	std::string	読み込むcsvファイルのパス
+	@return		std::vector<std::vector<std::string>> 読み込んだ文字列を返す(1次元 = 行, 2次元 = カンマ区切り)
+	static std::vector<std::vector<std::string>> Load(const std::string _filePath)
+
+
+<p align="right">(<a href="#top">トップへ</a>)</p> 
+
+
+
+<!------------------------------------------------------------------------------------------------------------------>
 
 
 
@@ -709,7 +763,7 @@ AnimLoad関数を実行すると AnimInfo 型で参照が返ってくるので�
 
 <b> <説明> </b>
 
-キー入力を検知し、入力時に設定したコールバック関数を呼び出すクラス
+コンポーネント
 
 
 <br />
