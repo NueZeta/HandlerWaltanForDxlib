@@ -195,6 +195,10 @@ void HWAnimator::Awake()
 	playIndex2 = -1;
 	isStop = false;
 
+	// モデルロード失敗時の例外error
+	if (gameObject->GetComponent<HWRenderer>() == nullptr)
+		throw std::runtime_error("HWRenderer is not attached");
+
 	modelHandle = gameObject->GetComponent<HWRenderer>()->GetModelHandle();
 
 	blendSpeed = PLAYER_ANIM_BLEND_SPEED;

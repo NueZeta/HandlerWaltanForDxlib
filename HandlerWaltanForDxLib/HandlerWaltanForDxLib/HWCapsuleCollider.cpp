@@ -71,7 +71,7 @@ void HWCapsuleCollider::SetCollider()
 	MATRIX rotX = MGetRotX((float)Deg2Rad(transform->rotate.x));
 	MATRIX rotY = MGetRotY((float)Deg2Rad(transform->rotate.y));
 	MATRIX rotZ = MGetRotZ((float)Deg2Rad(transform->rotate.z));
-	mRotate = MMult(rotZ, MMult(rotY, rotX));
+	MATRIX mRotate = MMult(rotZ, MMult(rotY, rotX));
 
 	//! 平行移動用の行列(原点からの移動量)
 	MATRIX trans = MGetTranslate(center);
