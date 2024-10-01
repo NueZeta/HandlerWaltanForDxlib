@@ -17,11 +17,11 @@
 
 <b> APIリファレンス </b>
 
-1. [MyGameObject](#mygameobject)
-2. [MyComponent](#mycomponent)
-3. [MyTransform](#mytransform)
-4. [MyCollider](#mycollider)
-5. [MyAnimator](#myanimator)
+1. [HWGameObject](#hwgameobject)
+2. [HWComponent](#hwcomponent)
+3. [HWTransform](#hwtransform)
+4. [HWCapsuleCollider](#hwcapsulecollider)
+5. [HWAnimator](#hwanimator)
 6. [InputSystem](#inputsystem)
 
 
@@ -31,7 +31,7 @@
 <div align="right">
     <a href="https://qiita.com/shun198/items/c983c713452c041ef787"><strong>READMEのテンプレート »</strong></a>
 </div>
-\</><br />
+</><br />
 <!-- プロジェクト名を記載 -->
 
 
@@ -149,6 +149,10 @@
 		{
 			return 0;
 		}
+
+
+  		SetUseZBuffer3D(TRUE);     // デプスバッファ（Zバッファ）を有効にする
+		SetWriteZBuffer3D(TRUE);   // Zバッファへの書き込みを有効にする
 	
 		//! ハンドラーやライフサイクルに基づいたタイミングでメソッドを自動的に呼び出すオブジェクト
 		//! シングルトンで設計されているため、以下の方法以外でインスタンスを取得することはできない
@@ -202,50 +206,87 @@
 
 <!-- ここから自作ライブラリのリファレンス -->
 
-## MyGameObject
+## HWGameObject
 
 <b> <説明> </b>
 
 アタッチされているコンポーネントの管理
-
-コンポーネントのアタッチ、デタッチ
+オブジェクトの設定
 
 <br />
 <br />
 
-<b> <メソッド> </b>
+<b> <コンポーネント付与、取得の関数> </b>
 
 <body>
-
-	@brief		オブジェクトの名前
-	std::string name;
-
-	@brief		ハンドラーやUpdateメソッドの優先順位(降順)
-  	※初期値は 0
-	int priority;
-	
 
 	@brief		コンポーネントを追加する
  	@detail		テンプレートにコンポーネントを指定
   	@param[in]	引数が存在するコンポーネントの場合は指定
+	@return		アタッチされたコンポーネントのインスタンス
  	template<class T>
-	void AddMyComponent<T>()
-
+	T* AddComponent()
 
  	@brief		指定のコンポーネントを返す
 	@return		アタッチされていた場合はインスタンスを返し、それ以外ならnullPtrを返す
 	template<typename T>
-	T* GetMyComponent()
+	T* GetComponent()
 
 </body>
 
+<b> <オブジェクトの設定> </b>
 
+<body>
+
+	@brief		オブジェクトの名前
+	std::string name
+
+	@brief		ハンドラーやUpdateメソッドの優先順位(降順)
+	int priority
+	
+	@brief		Transformコンポーネント
+	HWTransform* transform
+
+</body>
+
+<b> <コンストラクタ> </b>
+
+<body>
+
+	@brief		コンストラクタ
+	HWGameObject()
+	@brief		コンストラクタ(名前の初期化宣言)
+	@param[in]	std::string オブジェクト名	
+	HWGameObject(const std::string&)
+
+	@brief		コンストラクタ(プライオリティの初期化宣言)
+	@param[in]	int プライオリティ
+	HWGameObject(const int)
+
+	@brief		コンストラクタ(名前とプライオリティの初期化宣言)
+	@param[in]	std::string オブジェクト名
+	@param[in]	int	プライオリティ
+	HWGameObject(const std::string&, const int)
+
+	@brief		コピーコンストラクタ
+	@param[in]	HWGameObject& コピー元のHWGameObject
+	HWGameObject(const HWGameObject&)
+
+</body>
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
 
 
 
-## MyComponent
+
+
+<!------------------------------------------------------------------------------------------------------------------>
+
+
+
+
+
+## HWComponent
 
 <b> <説明> </b>
 
@@ -255,38 +296,67 @@
 <br />
 <br />
 
-<b> <メソッド> </b>
+<b> <オーバーライド関数> </b>
 
 <body>
 
-	@brief		アタッチされているmyGameObjectを返す
-	@return		コンポーネントがアタッチされているmyGameObject
-	MyGameObject* GetMyGameObject()
-
-
-	@brief		myGameObjectにアタッチされた瞬間に働く
-	@ditail		仮想関数
-	virtual void Start()
-
+	@brief		HWGameObjectにアタッチされた瞬間に働く
+ 	@detail		コンポーネントの初期化処理はなるべくコンストラクタではなくこちらで行う
+	virtual void Awake()
 
  	@brief		毎フレーム呼ばれるメソッド
-	@ditail		仮想関数
 	virtual void Update()
 
 
- 	@brief		コライダー衝突時に働くメソッド
-	@ditail		仮想関数
-	virtual void OnCollisionEnter()
+ <b> <非トリガーコリジョン接触時のコールバック関数> </b>
 
+
+ 	@brief		コライダー衝突時に働くメソッド
+  	@param[out]	HWCollider& 衝突した相手のコライダー情報
+	virtual void OnCollisionEnter(HWCollider&)
 
  	@brief		コライダー衝突中に働くメソッド
-	@ditail		仮想関数
-	virtual void OnCollisionStay()
+  	@param[out]	HWCollider& 衝突した相手のコライダー情報
+	virtual void OnCollisionStay(HWCollider&)
+
+	@brief		コライダー衝突が解除時に働くメソッド (コライダーがトリガーの場合)
+  	@param[out]	HWCollider& 衝突した相手のコライダー情報
+	virtual void OnCollisionExit(HWCollider&)
 
 
-	@brief		コライダー衝突が解除時に働くメソッド
-	@ditail		仮想関数
-	virtual void OnCollisionExit()
+ <b> <トリガーコリジョン接触時のコールバック関数> </b>
+
+
+  	@brief		コライダー衝突時に働くメソッド (コライダーがトリガーの場合)
+  	@param[out]	HWCollider& 衝突した相手のコライダー情報
+	virtual void OnTriggerEnter(HWCollider&)
+
+ 	@brief		コライダー衝突中に働くメソッド (コライダーがトリガーの場合)
+  	@param[out]	HWCollider& 衝突した相手のコライダー情報
+	virtual void OnTriggerStay(HWCollider&)
+
+	@brief		コライダー衝突が解除時に働くメソッド (コライダーがトリガーの場合)
+  	@param[out]	HWCollider& 衝突した相手のコライダー情報
+	virtual void OnTriggerExit(HWCollider&)
+
+
+  <b> <継承されるメンバ変数> </b>
+
+
+	@brief		このコンポーネントがアタッチされているHWGameObject
+	HWGameObject* gameObject
+
+	@brief		HWGameObjectにアタッチされているHWTransform
+	HWTransform* transform
+
+	@brief		複数アタッチ可能なコンポーネントか
+	bool isMultiplePossession
+
+	@brief		コンポーネントのアクティブ
+	bool active
+
+	@brief		ハンドラーやUpdateメソッドの優先順位(降順)
+	int priority
 
 </body>
 
@@ -294,18 +364,118 @@
 
 
 
-## MyTransform
+
+
+<!------------------------------------------------------------------------------------------------------------------>
+
+
+
+
+
+## HWTransform
 
 <b> <説明> </b>
 
 座標、回転などを管理するコンポーネント
 
+オブジェクトの正面ベクトルや、移動ベクトルの設定
+
 <br />
 <br />
 
-<b> <メソッド> </b>
+  <b> <平行移動、回転、拡縮> </b>
 
-<body>
+
+	@brief		グローバル座標
+	VECTOR position
+
+	@brief		グローバル回転
+	VECTOR rotate
+
+	@brief		グローバル拡縮
+	VECTOR scale
+
+
+  <b> <メンバ変数> </b>
+
+
+	@brief		移動ベクトル
+	VECTOR velocity
+
+
+   <b> <メンバ関数> </b>
+
+
+	@brief		オブジェクトの正面ベクトルを取得
+	const VECTOR& Forward()
+
+
+</body>
+<p align="right">(<a href="#top">トップへ</a>)</p>
+
+
+
+
+
+<!------------------------------------------------------------------------------------------------------------------>
+
+
+
+
+
+## HWCapsuleCollider
+
+<b> <説明> </b>
+
+カプセル型の当たり判定コンポーネント
+
+自身で始点と終点を定めない場合は、自動でHWGameObjectの座標を原点に height 分の高さを持つコライダーを構築する
+
+<br />
+<br />
+
+  <b> <コライダーの設定> </b>
+
+
+	@brief		コライダーの高さ (自身で始点と終点を設定した場合、無効化される)
+	float height
+
+	@brief		コライダーの半径
+	float radius
+
+	@brief		コライダーの始点
+	VECTOR UsStartPos
+
+	@brief		コライダーの終点
+	VECTOR UsEndPos
+
+
+</body>
+<p align="right">(<a href="#top">トップへ</a>)</p>
+
+
+
+
+
+<!------------------------------------------------------------------------------------------------------------------>
+
+
+
+
+## HWAnimator
+
+<b> <説明> </b>
+
+モデルのアニメーション制御用コンポーネント
+
+先にHWRendererをアタッチするようにしてください
+
+<br />
+<br />
+
+  <b> <> </b>
+
+
 
 
 
@@ -315,19 +485,10 @@
 
 
 
-## MyCollider
+<!------------------------------------------------------------------------------------------------------------------>
 
 
 
-<p align="right">(<a href="#top">トップへ</a>)</p>
-
-
-
-## MyAnimator
-
-
-
-<p align="right">(<a href="#top">トップへ</a>)</p>
 
 ## InputSystem
 
