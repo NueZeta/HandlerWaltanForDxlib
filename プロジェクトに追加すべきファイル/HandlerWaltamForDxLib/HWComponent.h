@@ -143,6 +143,7 @@ protected:
 	/**
 	 * @brief		コライダー衝突時に働くメソッド
 	 * @detail		仮想関数
+	 * @param[out]	HWCollider& 衝突した相手のコライダー情報
 	 * @author		Suzuki N
 	 * @date		24/07/19
 	 */
@@ -152,6 +153,7 @@ protected:
 	/**
 	 * @brief		コライダー衝突中に働くメソッド
 	 * @detail		仮想関数
+	 * @param[out]	HWCollider& 衝突した相手のコライダー情報
 	 * @author		Suzuki N
 	 * @date		24/07/19
 	 */
@@ -161,6 +163,7 @@ protected:
 	/**
 	 * @brief		コライダー衝突が解除時に働くメソッド
 	 * @detail		仮想関数
+	 * @param[out]	HWCollider& 衝突した相手のコライダー情報
 	 * @author		Suzuki N
 	 * @date		24/07/19
 	 */
@@ -169,6 +172,7 @@ protected:
 	/**
 	 * @brief		コライダー衝突時に働くメソッド
 	 * @detail		仮想関数
+	 * @param[out]	HWCollider& 衝突した相手のコライダー情報
 	 * @author		Suzuki N
 	 * @date		24/07/19
 	 */
@@ -178,6 +182,7 @@ protected:
 	/**
 	 * @brief		コライダー衝突中に働くメソッド
 	 * @detail		仮想関数
+	 * @param[out]	HWCollider& 衝突した相手のコライダー情報
 	 * @author		Suzuki N
 	 * @date		24/07/19
 	 */
@@ -187,6 +192,7 @@ protected:
 	/**
 	 * @brief		コライダー衝突が解除時に働くメソッド
 	 * @detail		仮想関数
+	 * @param[out]	HWCollider& 衝突した相手のコライダー情報
 	 * @author		Suzuki N
 	 * @date		24/07/19
 	 */

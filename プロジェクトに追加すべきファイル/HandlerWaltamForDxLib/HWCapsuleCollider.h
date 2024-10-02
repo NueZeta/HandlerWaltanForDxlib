@@ -27,7 +27,7 @@ public:
 
 
 	/**
-	 * @brief		コライダーの高さ
+	 * @brief		コライダーの高さ (自身で始点と終点を設定した場合、無効化される)
 	 * @History		24/09/16 作成(Suzuki N)
 	 */
 	float height;
@@ -37,12 +37,6 @@ public:
 	 * @History		24/09/16 作成(Suzuki N)
 	 */
 	float radius;
-
-	/**
-	 * @brief		回転行列
-	 * @History		24/09/16 作成(Suzuki N)
-	 */
-	MATRIX mRotate;
 
 	/**
 	 * @brief		コライダーの始点

@@ -11,6 +11,7 @@
 #include <future>
 #include <cstdio>
 #include <cstdint>
+#include <unordered_map>
 #include "Syslog.h"
 #include "DxLib.h"
 

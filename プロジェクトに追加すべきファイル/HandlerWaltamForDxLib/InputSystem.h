@@ -74,13 +74,19 @@ private:
 	 * @brief		登録されたコールバック関数
 	 * @History		24/09/10 作成(Suzuki N)
 	 */
-	std::vector<std::function<void(const CallBackContext&)>> callBacks;
+	std::unordered_map<int, std::function<void(const CallBackContext&)>> callBacks;
 
 	/**
 	 * @brief		InputActionのパラメーター
 	 * @History		24/09/10 作成(Suzuki N)
 	 */
 	InputState inputState;
+
+	/**
+	 * @brief		登録したコールバック関数のID
+	 * @History		24/10/02 作成(Suzuki N)
+	 */
+	int nextId;
 
 
 private:
@@ -91,7 +97,7 @@ private:
 	 * @author		Suzuki N
 	 * @date		24/09/10
 	 */
-	InputAction() : inputState(InputState::Waiting)
+	InputAction() : inputState(InputState::Waiting), nextId(0)
 	{
 	}
 
@@ -100,7 +106,7 @@ private:
 	 * @author		Suzuki N
 	 * @date		24/09/10
 	 */
-	InputAction(const int _keyCode) : inputState(InputState::Waiting)
+	InputAction(const int _keyCode) : inputState(InputState::Waiting), nextId(0)
 	{
 		AddKeyCode(_keyCode);
 	}
@@ -110,7 +116,7 @@ private:
 	 * @author		Suzuki N
 	 * @date		24/09/10
 	 */
-	InputAction(const std::vector<int> _keyCodeVec) : inputState(InputState::Waiting)
+	InputAction(const std::vector<int> _keyCodeVec) : inputState(InputState::Waiting), nextId(0)
 	{
 		AddKeyCode(_keyCodeVec);
 	}
@@ -159,7 +165,8 @@ private:
 	void CallCallbacks(const InputAction::CallBackContext& _context)
 	{
 		for (auto it = callBacks.begin(); it != callBacks.end(); ++it)
-			(*it)(_context);
+			if(it->second)
+				(it->second)(_context);
 	}
 
 	/**
@@ -210,12 +217,29 @@ private:
 	/**
 	 * @brief		コールバック関数を追加する
 	 * @param[in]	std::function<void(InputAction::CallBackContext&>)> 追加するコールバック関数
+	 * @return		const int	登録したコールバック関数のID
 	 * @author		Suzuki N
 	 * @date		24/09/10
 	 */
-	void AddCallBack(const std::function<void(const InputAction::CallBackContext&)> _callBack)
+	int AddCallBack(const std::function<void(const InputAction::CallBackContext&)> _callBack)
 	{
-		callBacks.push_back(_callBack);
+		callBacks[nextId] = _callBack;
+		return nextId++;
+	}
+
+	/**
+	 * @brief		コールバック関数を削除する
+	 * @param[in]	std::string	削除するキーの存在するキーマップ
+	 * @param[in]	const int	削除するコールバック関数のID
+	 * @author		Suzuki N
+	 * @date		24/09/08
+	 */
+	void DeleteCallBack(const int _id)
+	{
+		// キーコードが存在していれば削除する
+		for (auto& it : callBacks)
+			if(it.first == _id)
+				it.second = nullptr;
 	}
 };
 
@@ -241,10 +265,10 @@ private:
 	bool active;
 
 	/**
-	 * @brief		キーアクション
+	 * @brief		キーマップ
 	 * @History		24/09/07 作成(Suzuki N)
 	 */
-	std::map<std::string, InputAction*> keyMap;
+	std::unordered_map<std::string, InputAction*> keyMap;
 
 	/**
 	 * @brief		生成されたInputSystemのインスタンス
@@ -293,21 +317,32 @@ public:
 	 */
 	void SetActive(const bool _active) { active = _active; }
 
+
+#pragma region キーコード追加
+
 	/**
 	 * @brief		マップにキーを登録する
 	 * @detail		{} で複数入力可能
-	 * @param[in]	std::string	登録するキー
+	 * @param[in]	std::string&	登録するキー
 	 * @param[in]	int			キーコード
 	 * @author		Suzuki N
 	 * @date		24/09/07
 	 */
-	void AddKeyCode(const std::string _key, int _inputKey)
+	void AddKeyCode(const std::string& _key, int _inputKey)
 	{
 		// キーが既に存在している場合は要素を追加する
 		auto it = keyMap.find(_key);
 		// 存在していた場合
 		if (it != keyMap.end())
+		{
+			if (it->second->keyInfoVec.size() > 0)
+				// キーコードがすでに登録済みでなければ
+				for (auto it2 = it->second->keyInfoVec.begin(); it2 != it->second->keyInfoVec.end(); ++it2)
+					if (it2->keyCode == _inputKey)
+						return;
+
 			it->second->AddKeyCode(_inputKey);
+		}
 		// 存在していなかった場合は、新たにアクションマップを作成する
 		else
 			keyMap[_key] = new InputAction(_inputKey);
@@ -316,43 +351,166 @@ public:
 	/**
 	 * @brief		マップにキーを登録する
 	 * @detail		{} で複数入力可能
-	 * @param[in]	std::string		 登録するキー
+	 * @param[in]	std::string&		 登録するキー
 	 * @param[in]	std::vector<int> キーコード
 	 * @author		Suzuki N
 	 * @date		24/09/07
 	 */
-	void AddKeyCode(const std::string _key, const std::vector<int> _inputKey)
+	void AddKeyCode(const std::string& _key, const std::vector<int> _inputKey)
 	{
 		// キーが既に存在している場合は要素を追加する
 		auto it = keyMap.find(_key);
 		// 存在していた場合
 		if (it != keyMap.end())
+		{
+			if (it->second->keyInfoVec.size() > 0)
+				// キーコードがすでに登録済みでなければ
+				for (auto it2 = it->second->keyInfoVec.begin(); it2 != it->second->keyInfoVec.end(); ++it2)
+					for (auto keyIt = _inputKey.begin(); keyIt != _inputKey.end(); ++keyIt)
+						if (it2->keyCode == *keyIt)
+							break;
+
 			it->second->AddKeyCode(_inputKey);
+		}
 		// 存在していなかった場合は、新たにアクションマップを作成する
 		else
 			keyMap[_key] = new InputAction(_inputKey);
 	}
 
+#pragma endregion
+
+#pragma region キーコード削除
+
+	/**
+	 * @brief		マップに登録したキーコードを削除する
+	 * @detail		{} で複数入力可能
+	 * @param[in]	std::string	削除するキーの存在するキーマップ
+	 * @param[in]	int			削除するキーコード
+	 * @author		Suzuki N
+	 * @date		24/09/07
+	 */
+	void DeleteKeyCode(const std::string& _key, int _inputKey)
+	{
+		// キーマップが存在しない場合はそのまま終了
+		auto keyMapIt = keyMap.find(_key);
+		if (keyMapIt == keyMap.end())
+			return;
+
+		// キーコードが存在していれば削除する
+		for (auto it = keyMapIt->second->keyInfoVec.begin(); it != keyMapIt->second->keyInfoVec.end(); ++it)
+			if (it->keyCode == _inputKey)
+			{
+				keyMapIt->second->keyInfoVec.erase(it);
+				break;
+			}
+	}
+
+	/**
+	 * @brief		マップに登録したキーコードを削除する
+	 * @detail		{} で複数入力可能
+	 * @param[in]	std::string			削除するキーの存在するキーマップ
+	 * @param[in]	std::vector<int>	削除するキーコード
+	 * @author		Suzuki N
+	 * @date		24/09/07
+	 */
+	void DeleteKeyCode(const std::string _key, std::vector<int> _inputKey)
+	{
+		// キーマップが存在しない場合はそのまま終了
+		auto keyMapIt = keyMap.find(_key);
+		if (keyMapIt == keyMap.end())
+			return;
+
+		for(auto keyCodeIt = _inputKey.begin(); keyCodeIt != _inputKey.end(); ++keyCodeIt)
+		{
+			// キーコードが存在していれば削除する
+			for (auto it = keyMapIt->second->keyInfoVec.begin(); it != keyMapIt->second->keyInfoVec.end(); ++it)
+				if (it->keyCode == *keyCodeIt)
+				{
+					keyMapIt->second->keyInfoVec.erase(it);
+					break;
+				}
+		}
+	}
+
+#pragma endregion
+
+#pragma region コールバック追加
+
 	/**
 	 * @brief		InputActionにコールバック関数を登録する
+	 * @param[in]	std::string&	登録するキー
 	 * @param[in]	std::function<void(InputAction::CallBackContext&)> 登録するコールバック関数
+	 * @return		int	登録したコールバック関数のID
 	 * @author		Suzuki N
 	 * @date		24/09/08
 	 */
-	void AddCallBack(const std::string _key, const std::function<void(const InputAction::CallBackContext&)> _callBack)
+	int AddCallBack(const std::string& _key, const std::function<void(const InputAction::CallBackContext&)> _callBack)
 	{
+		//! 登録したコールバック関数のID
+		int id = -1;
+
 		// キーが既に存在している場合は要素を追加する
 		auto it = keyMap.find(_key);
 		// 存在していた場合
 		if (it != keyMap.end())
-			it->second->AddCallBack(_callBack);
+			id = it->second->AddCallBack(_callBack);
 		// 存在していなかった場合は、新たにアクションマップを作成する
 		else
 		{
 			keyMap[_key] = new InputAction();
-			keyMap[_key]->AddCallBack(_callBack);
+			id = keyMap[_key]->AddCallBack(_callBack);
 		}
+
+		// 登録したIDを返す
+		return id;
 	}
+
+#pragma endregion
+
+#pragma region コールバック削除
+
+	/**
+	 * @brief		InputActionにコールバック関数を登録する
+	 * @param[in]	std::string	削除するキーの存在するキーマップ
+	 * @param[in]	const int	削除するコールバック関数のID
+	 * @author		Suzuki N
+	 * @date		24/09/08
+	 */
+	void DeleteCallBack(const std::string& _key, const int _id)
+	{
+		// キーマップが存在しない場合はそのまま終了
+		auto keyMapIt = keyMap.find(_key);
+		if (keyMapIt == keyMap.end())
+			return;
+
+		// キーコードが存在していれば削除する
+		keyMapIt->second->DeleteCallBack(_id);
+	}
+
+#pragma endregion
+
+#pragma region キーマップ削除
+
+	/**
+	 * @brief		登録されているキーマップを削除する
+	 * @param[in]	std::string& _key
+	 * @author		Suzuki N
+	 * @date		24/10/02
+	 */
+	void DeleteKeyMap(const std::string& _key)
+	{
+		// キーマップが存在しない場合はそのまま終了
+		auto keyMapIt = keyMap.find(_key);
+		if (keyMapIt == keyMap.end())
+			return;
+
+		// 削除処理
+		keyMap.erase(keyMapIt);
+	}
+
+#pragma endregion
+
+
 
 private:
 

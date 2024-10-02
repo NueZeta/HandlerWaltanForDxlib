@@ -67,6 +67,9 @@ public:
 	 */
 	virtual ~HWRenderer();
 
+
+#pragma region Getter関数
+
 	/**
 	 * @brief		モデルハンドルを取得する
 	 * @return		int モデルハンドル
@@ -75,6 +78,10 @@ public:
 	 */
 	int GetModelHandle() { return modelHandle; }
 
+#pragma endregion
+
+#pragma region Setter関数
+
 	 /**
 	  * @brief		モデルハンドルを変更する(モデルの外見を変更する時など)
 	  * @param[in]	int 新たなモデルハンドル 
@@ -82,6 +89,8 @@ public:
 	  * @date		24/08/25
 	  */
 	void SetModelHandle(const int _modelHandle) { modelHandle = _modelHandle; }
+
+#pragma endregion
 
 protected:
 
