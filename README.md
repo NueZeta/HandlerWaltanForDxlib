@@ -275,6 +275,33 @@
 	@param[in]	HWGameObject& コピー元のHWGameObject
 	HWGameObject(const HWGameObject&)
 
+
+<b> <Getter関数> </b>
+
+
+	@brief		全ての子オブジェクトを取得する
+	@detail		引数で特定のインデックスの子オブジェクトを取得できる
+	@return		const std::vector<HWGameObject*>& 全ての子オブジェクトを取得する
+	std::vector<HWGameObject*>& GetChildren()
+
+	@brief		子オブジェクトを取得する
+	@detail		引数で特定のインデックスの子オブジェクトを取得できる
+	@return		const std::vector<HWGameObject*>& 全ての子オブジェクトを取得する
+	HWGameObject* GetChild(const int _index)
+
+	@brief		親オブジェクトを取得する
+	@return		HWGameObject* 親オブジェクト 
+	HWGameObject* Parent()	
+
+
+ <b> <Setter関数> </b>
+
+
+	@brief		親オブジェクトを設定する
+	@param[in]	const int 取得する子オブジェクトのインデックス
+	@return		const std::vector<HWGameObject*>& 全ての子オブジェクトを取得する
+	void SetParent(HWGameObject* _parent)
+ 
 </body>
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
@@ -628,19 +655,64 @@ AnimLoad関数を実行すると AnimInfo 型で参照が返ってくるので�
 <br />
 <br />
 
-<b> <メソッド> </b>
+<b> <キーコード追加> </b>
 
 <body>
 	
-	@brief			マップにキーを登録する
-	@detail			{} で複数入力可能
-	@param[in]	std::string	登録するキー
-	@param[in]	int		キーコード
-	void AddKeyCode(const std::string _key, int _inputKey)
+	@brief		マップにキーを登録する
+	@detail		{} で複数入力可能
+	@param[in]	const std::string	登録するキー
+	@param[in]	const int		キーコード
+	void AddKeyCode(const std::string& _key, const int _inputKey)
 
-	@brief			InputActionにコールバック関数を登録する
-	@param[in]		std::function<void(InputAction::CallBackContext&)> 登録するコールバック関数
-	void AddCallBack(const std::string _key, std::function<void(InputAction::CallBackContext&)> _callBack)
+ 	@brief		マップにキーを登録する
+	@detail		{} で複数入力可能
+	@param[in]	const std::string&	 登録するキー
+	@param[in]	const std::vector<int>&  キーコード
+	void AddKeyCode(const std::string& _key, const std::vector<int>& _inputKey)
+
+
+ <b> <コールバック関数追加> </b>
+
+
+	@brief		InputActionにコールバック関数を登録する
+	@param[in]	const std::string&	登録するキー
+	@param[in]	const std::function<void(InputAction::CallBackContext&)> 登録するコールバック関数
+	@return		int			登録したコールバック関数のID
+	int AddCallBack(const std::string& _key, const std::function<void(const InputAction::CallBackContext&)> _callBack)
+
+
+<b> <キーコード削除> </b>
+
+
+ 	 @brief		マップに登録したキーコードを削除する
+	 @detail	{} で複数入力可能
+	 @param[in]	const std::string&	削除するキーの存在するキーマップ
+	 @param[in]	const int		削除するキーコード
+	void DeleteKeyCode(const std::string& _key, const int _inputKey)
+
+	@brief		マップに登録したキーコードを削除する
+	@detail		{} で複数入力可能
+	@param[in]	const std::string&	削除するキーの存在するキーマップ
+	@param[in]	const std::vector<int>&	削除するキーコード
+	void DeleteKeyCode(const std::string& _key, const std::vector<int>& _inputKey) 
+
+
+<b> <コールバック関数削除> </b>
+
+
+ 	@brief		InputActionにコールバック関数を登録する
+	@param[in]	const std::string&	削除するキーの存在するキーマップ
+	@param[in]	const int		削除するコールバック関数のID
+	void DeleteCallBack(const std::string& _key, const int _id)
+
+
+<b> <キーマップ削除> </b>
+
+
+ 	@brief		登録されているキーマップを削除する
+	@param[in]	const std::string& _key	削除するキーマップのキー
+	void DeleteKeyMap(const std::string& _key)
  
 </body>
 
