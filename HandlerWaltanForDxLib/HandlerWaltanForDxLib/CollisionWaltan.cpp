@@ -39,9 +39,10 @@ void CollisionWaltan::Update()
 		// すでにチェックした組み合わせを省く
 		for (auto it2 = it1 + 1; it2 != ColVec.end(); ++it2)
 		{
+			// アタッチされているGameObjectが同じ場合は無視
+			if ((*it1)->gameObject == (*it2)->gameObject) continue;	
 			// triggerと非triggerの場合はその組み合わせは無視
-			if ((*it1)->isTrigger != (*it2)->isTrigger)
-				continue;
+			if ((*it1)->isTrigger != (*it2)->isTrigger) continue;
 
 			// 衝突中のコライダーのリストに登録されているか調べる
 			auto collisionIt = std::find((*it1)->CollidersInCollision.begin(),
@@ -423,13 +424,21 @@ bool CollisionWaltan::CollCheck_Capsule_Box(HWCapsuleCollider* _capsuleCol, HWBo
 
 bool CollisionWaltan::CollCheck_Capsule_Capsule(HWCapsuleCollider* _capsuleCol, HWCapsuleCollider* _capsuleCol2)
 {
-	if (!HitCheck_Capsule_Capsule(_capsuleCol->startPos, _capsuleCol->endPos, _capsuleCol->radius,
-		_capsuleCol2->startPos, _capsuleCol2->endPos, _capsuleCol2->radius))
+	VECTOR sPos1 = VAdd(_capsuleCol->startPos, _capsuleCol->transform->velocity);
+	VECTOR ePos1 = VAdd(_capsuleCol->endPos, _capsuleCol->transform->velocity);
+	VECTOR sPos2 = VAdd(_capsuleCol2->startPos, _capsuleCol2->transform->velocity);
+	VECTOR ePos2 = VAdd(_capsuleCol2->endPos, _capsuleCol2->transform->velocity);
+
+	if (!HitCheck_Capsule_Capsule(sPos1, ePos1, _capsuleCol->radius,
+		sPos2, ePos2, _capsuleCol2->radius))
 		return false;
 
 	// コライダーがトリガーでないなら、コライダー同士がめり込まないようにする
 	if (!_capsuleCol->isTrigger)
 	{
+		// 移動ベクトルを無効化する
+		_capsuleCol->transform->velocity = VGet(0, 0, 0);
+		_capsuleCol2->transform->velocity = VGet(0, 0, 0);
 	}
 
 	return true;

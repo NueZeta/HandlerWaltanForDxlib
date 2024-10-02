@@ -15,7 +15,7 @@ std::vector<HWGameObject*> HWGameObject::gameObjects;
 #pragma region コンストラクタ
 
 
-HWGameObject::HWGameObject() : priority(0), name("hwObj")
+HWGameObject::HWGameObject() : priority(0), name("hwObj"), parent(nullptr)
 {
     gameObjects.push_back(this);
 
@@ -28,7 +28,7 @@ HWGameObject::HWGameObject() : priority(0), name("hwObj")
     BubbleSort();
 }
 
-HWGameObject::HWGameObject(const std::string& _name) : priority(0), name(_name)
+HWGameObject::HWGameObject(const std::string& _name) : priority(0), name(_name), parent(nullptr)
 {
     gameObjects.push_back(this);
 
@@ -41,7 +41,7 @@ HWGameObject::HWGameObject(const std::string& _name) : priority(0), name(_name)
     BubbleSort();
 }
 
-HWGameObject::HWGameObject(int _priority) : priority(_priority), name("hwObj")
+HWGameObject::HWGameObject(int _priority) : priority(_priority), name("hwObj"), parent(nullptr)
 {
     gameObjects.push_back(this);
 
@@ -54,7 +54,8 @@ HWGameObject::HWGameObject(int _priority) : priority(_priority), name("hwObj")
     BubbleSort();
 }
 
-HWGameObject::HWGameObject(const std::string& _name, int _priority) : name(_name), priority(_priority)
+HWGameObject::HWGameObject(const std::string& _name, int _priority) : name(_name), priority(_priority), 
+                           parent(nullptr)
 {
     gameObjects.push_back(this);
 
@@ -164,6 +165,30 @@ void HWGameObject::CallAllOnTriggerExits(HWCollider& _collider)
 
 
 
+HWGameObject* HWGameObject::GetChild(const int _index)
+{
+    if (_index >= 0 && _index < children.size())
+        return children[_index];
+    return nullptr;
+}
+
+void HWGameObject::SetParent(HWGameObject* _parent)
+{
+    // すでに親オブジェクトが存在する場合、親子関係を解消する
+    if (parent != nullptr)
+    {
+        auto it = std::find(parent->children.begin(), parent->children.end(), this);
+        if (it != parent->children.end())
+        {
+            parent->children.erase(it);
+            parent = nullptr;
+        }
+    }
+
+    parent = _parent;
+    // 親オブジェクトの子オブジェクトとして登録
+    parent->children.push_back(this);
+}
 
 
 #pragma endregion

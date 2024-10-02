@@ -44,6 +44,12 @@ private:
 	 */
 	std::vector<HWGameObject*> children;
 
+	/**
+	 * @brief		親オブジェクト
+	 * @History		24/09/26 作成(Suzuki N)
+	 */
+	HWGameObject* parent;
+
 public:
 
 	/**
@@ -183,9 +189,56 @@ public:
 
 #pragma region Getterメソッド群
 
+	/**
+	 * @brief		コンポーネントを追加する
+	 * @return		std::vector<HWGameObject*> World上の全てのGameObjectを取得する
+	 * @author		Suzuki N
+	 * @date		24/06/17
+	 */
 	static std::vector<HWGameObject*> GetGameObjects(){ return gameObjects; }
 
+	/**
+	 * @brief		全ての子オブジェクトを取得する
+	 * @detail		引数で特定のインデックスの子オブジェクトを取得できる
+	 * @return		const std::vector<HWGameObject*>& 全ての子オブジェクトを取得する
+	 * @author		Suzuki N
+	 * @date		24/10/02
+	 */
+	std::vector<HWGameObject*>& GetChildren() { return children; }
+
+	/**
+	 * @brief		子オブジェクトを取得する
+	 * @detail		引数で特定のインデックスの子オブジェクトを取得できる
+	 * @return		const std::vector<HWGameObject*>& 全ての子オブジェクトを取得する
+	 * @author		Suzuki N
+	 * @date		24/10/02
+	 */
+	HWGameObject* GetChild(const int _index);
+
+	/**
+	 * @brief		親オブジェクトを取得する
+	 * @return		HWGameObject* 親オブジェクト 
+	 * @author		Suzuki N
+	 * @date		24/10/02
+	 */
+	HWGameObject* Parent() { return parent; }
+
+
 #pragma endregion
+
+#pragma region Setterメソッド群
+
+	/**
+	 * @brief		親オブジェクトを設定する
+	 * @param[in]	const int 取得する子オブジェクトのインデックス
+	 * @return		const std::vector<HWGameObject*>& 全ての子オブジェクトを取得する
+	 * @author		Suzuki N
+	 * @date		24/10/02
+	 */
+	void SetParent(HWGameObject* _parent);
+
+#pragma endregion
+
 
 	/**
 	 * @brief		コンポーネントを追加する

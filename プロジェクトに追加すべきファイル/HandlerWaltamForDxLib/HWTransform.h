@@ -1,7 +1,8 @@
 #pragma once
 #include "HWComponent.h"
-//#include "HandlerWaltan.h"
+#include "HWGameObject.h"
 
+class HWGameObject;
 
 /**
 * @author   Suzuki N
@@ -82,8 +83,6 @@ public:
 	 */
 	VECTOR velocity;
 
-private:
-
 	/**
 	 * @brief		正面方向のベクトル
 	 * @History		24/09/26 作成(Suzuki N)
@@ -92,6 +91,7 @@ private:
 
 
 	/*     メソッド     */
+
 
 private:
 
@@ -120,13 +120,6 @@ public:
 	 * @date		24/09/17
 	 */
 	~HWTransform(){}
-
-	/**
-	 * @brief		オブジェクトの正面ベクトルを取得
-	 * @author		Suzuki N
-	 * @date		24/09/26
-	 */
-	const VECTOR& Forward() { return forward; }
 
 #pragma endregion
 

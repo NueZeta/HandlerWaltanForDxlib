@@ -63,6 +63,12 @@ void HWTransform::Update()
 {
 	// 座標に移動ベクトルを足す
 	position = VAdd(position, velocity);
+
+	// 自身の移動ベクトルを子オブジェクトの移動ベクトルに足す
+	if (gameObject->GetChildren().size() > 0)
+		for (auto it = gameObject->GetChildren().begin(); it != gameObject->GetChildren().end(); ++it)
+			(*it)->transform->velocity = VAdd((*it)->transform->velocity, velocity);
+
 	// 移動ベクトルの初期化
 	velocity = VGet(0, 0, 0);
 
