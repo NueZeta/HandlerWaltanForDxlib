@@ -219,23 +219,6 @@
 <br />
 <br />
 
-<b> <コンポーネント付与、取得の関数> </b>
-
-<body>
-
-	@brief		コンポーネントを追加する
- 	@detail		テンプレートにコンポーネントを指定
-  	@param[in]	引数が存在するコンポーネントの場合は指定
-	@return		アタッチされたコンポーネントのインスタンス
- 	template<class T>
-	T* AddComponent()
-
- 	@brief		指定のコンポーネントを返す
-	@return		アタッチされていた場合はインスタンスを返し、それ以外ならnullPtrを返す
-	template<typename T>
-	T* GetComponent()
-
-</body>
 
 <b> <オブジェクトの設定> </b>
 
@@ -255,12 +238,31 @@
 
 </body>
 
+<b> <コンポーネント付与、取得の関数> </b>
+
+<body>
+
+	@brief		コンポーネントを追加する
+ 	@detail		テンプレートにコンポーネントを指定
+  	@param[in]	引数が存在するコンポーネントの場合は指定
+	@return		アタッチされたコンポーネントのインスタンス
+ 	template<class T>
+	T* AddComponent()
+
+ 	@brief		指定のコンポーネントを返す
+	@return		アタッチされていた場合はインスタンスを返し、それ以外ならnullPtrを返す
+	template<typename T>
+	T* GetComponent()
+
+</body>
+
 <b> <コンストラクタ> </b>
 
 <body>
 
 	@brief		コンストラクタ
 	HWGameObject()
+ 
 	@brief		コンストラクタ(名前の初期化宣言)
 	@param[in]	std::string オブジェクト名	
 	HWGameObject(const std::string&)
