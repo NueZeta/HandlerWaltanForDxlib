@@ -244,6 +244,9 @@
 	@brief		オブジェクトの名前
 	std::string name
 
+ 	@brief		アクティブ
+	bool active
+
 	@brief		ハンドラーやUpdateメソッドの優先順位(降順)
 	int priority
 	
