@@ -339,6 +339,10 @@
  	@detail		コンポーネントの初期化処理はなるべくコンストラクタではなくこちらで行う
 	virtual void Awake()
 
+ 	@brief		最初のUpdateメソッドの直前に働く
+	@detail		仮想関数
+	virtual void Start() {}
+
  	@brief		毎フレーム呼ばれるメソッド
 	virtual void Update()
 
