@@ -154,6 +154,41 @@ void HWGameObject::DeepCopy(const HWGameObject& _other)
 
 void HWGameObject::ShallowCopy(const HWGameObject& _other)
 {
+        // HWTransformのコピー
+        auto transformCp = std::make_unique<HWTransform>(*(_other.transform));
+        transformCp->gameObject = this;
+        hwComponents.push_back(std::move(transformCp));
+        transform = GetComponent<HWTransform>();
+
+        for (const auto& cp : _other.hwComponents)
+        {
+            // HWTransformは無視
+            if (typeid(*cp) == typeid(HWTransform)) continue;
+
+            // HWRendererの場合は特定のコンストラクタを呼ぶ
+            if (typeid(*cp) == typeid(HWRenderer))
+            {
+                // dynamic_castで正確な型に変換し、特定のコンストラクタを呼び出す
+                HWRenderer* renderer = dynamic_cast<HWRenderer*>(cp.get());
+                if (renderer)
+                {
+                    // HWRendererの特定のコンストラクタを使用して、複製を作成
+                    auto component = std::make_unique<HWRenderer>(renderer->GetModelHandle());
+                    component->gameObject = this;
+                    component->transform = GetComponent<HWTransform>();
+                    hwComponents.push_back(std::move(component));
+                }
+            }
+            else
+            {
+                // そのほかのコンポーネントは通常のコピーを行う
+                auto component = std::make_unique<std::decay_t<decltype(*cp)>>(*cp);
+                component->gameObject = this;
+                component->transform = GetComponent<HWTransform>();
+                hwComponents.push_back(std::move(component));
+            }
+        }
+
 }
 
 void HWGameObject::CallAllUpdates()
