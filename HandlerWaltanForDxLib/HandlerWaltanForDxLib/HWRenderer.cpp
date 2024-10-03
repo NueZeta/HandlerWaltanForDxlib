@@ -11,9 +11,12 @@
 #pragma region コンストラクタ
 
 
-HWRenderer::HWRenderer(const int _modelHandle) : modelHandle(_modelHandle)
+HWRenderer::HWRenderer(const int _modelHandle)
 {
 	priority = -20;
+
+	// 既存のモデルハンドルから複製したモデルを使う
+	modelHandle = MV1DuplicateModel(_modelHandle);
 }
 
 HWRenderer::HWRenderer(const std::string& _pass)

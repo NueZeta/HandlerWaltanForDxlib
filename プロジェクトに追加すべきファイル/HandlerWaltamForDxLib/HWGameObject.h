@@ -3,6 +3,7 @@
 #include <algorithm>
 #include "HWComponent.h"
 #include "HWTransform.h"
+#include "HWRenderer.h"
 
 
 /**
@@ -10,6 +11,19 @@
 * @date     24/07/16
 * @note		コンポーネントを管理する、すべてのオブジェクトが持つクラスの定義
 */
+
+
+/**
+ * @class	CopyType
+ * @brief	コピーコンストラクタのタイプ
+ */
+enum class CopyType
+{
+	//! シャローコピー(0)
+	Shallow,
+	//! ディープコピー(1)
+	Deep,
+};
 
 
 /**
@@ -53,6 +67,12 @@ private:
 public:
 
 	/**
+	 * @brief		アクティブ
+	 * @History		24/10/03 作成(Suzuki N)
+	 */
+	bool active;
+
+	/**
 	 * @brief		オブジェクトの名前
 	 * @History		24/07/29 作成(Suzuki N)
 	 */
@@ -81,6 +101,22 @@ private:
 	 * @date        24/07/19
 	 */
 	void BubbleSort();
+
+	/**
+	 * @brief       オブジェクトをコピーする(オブジェクトとメモリ上のデータのコピー)
+	 * @param[in]	HWGameObject& コピー元になるオブジェクト
+	 * @author      Suzuki N
+	 * @date        24/10/03
+	 */
+	void DeepCopy(const HWGameObject& _other);
+
+	/**
+	 * @brief       オブジェクトをコピーする(参照のコピー)
+	 * @param[in]	HWGameObject& コピー元になるオブジェクト
+	 * @author      Suzuki N
+	 * @date        24/10/03
+	 */
+	void ShallowCopy(const HWGameObject& _other);
 
 	/**
 	 * @brief       全てのコンポーネントのUpdateメソッドを呼びだす
@@ -171,10 +207,11 @@ public:
 	/**
 	 * @brief		コピーコンストラクタ
 	 * @param[in]	HWGameObject& コピー元のHWGameObject
+	 * @param[in]	const CopyType コピーの種類
 	 * @author		Suzuki N
 	 * @date		24/07/21
 	 */
-	HWGameObject(const HWGameObject& _object);
+	HWGameObject(const HWGameObject& _other, const CopyType copyType = CopyType::Deep);
 
 #pragma endregion
 

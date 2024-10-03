@@ -324,11 +324,11 @@ public:
 	 * @brief		マップにキーを登録する
 	 * @detail		{} で複数入力可能
 	 * @param[in]	std::string&	登録するキー
-	 * @param[in]	int			キーコード
+	 * @param[in]	const int		キーコード
 	 * @author		Suzuki N
 	 * @date		24/09/07
 	 */
-	void AddKeyCode(const std::string& _key, int _inputKey)
+	void AddKeyCode(const std::string& _key, const int _inputKey)
 	{
 		// キーが既に存在している場合は要素を追加する
 		auto it = keyMap.find(_key);
@@ -351,12 +351,12 @@ public:
 	/**
 	 * @brief		マップにキーを登録する
 	 * @detail		{} で複数入力可能
-	 * @param[in]	std::string&		 登録するキー
-	 * @param[in]	std::vector<int> キーコード
+	 * @param[in]	const std::string&		 登録するキー
+	 * @param[in]	const std::vector<int>&  キーコード
 	 * @author		Suzuki N
 	 * @date		24/09/07
 	 */
-	void AddKeyCode(const std::string& _key, const std::vector<int> _inputKey)
+	void AddKeyCode(const std::string& _key, const std::vector<int>& _inputKey)
 	{
 		// キーが既に存在している場合は要素を追加する
 		auto it = keyMap.find(_key);
@@ -384,12 +384,12 @@ public:
 	/**
 	 * @brief		マップに登録したキーコードを削除する
 	 * @detail		{} で複数入力可能
-	 * @param[in]	std::string	削除するキーの存在するキーマップ
-	 * @param[in]	int			削除するキーコード
+	 * @param[in]	const std::string&	削除するキーの存在するキーマップ
+	 * @param[in]	const int			削除するキーコード
 	 * @author		Suzuki N
 	 * @date		24/09/07
 	 */
-	void DeleteKeyCode(const std::string& _key, int _inputKey)
+	void DeleteKeyCode(const std::string& _key, const int _inputKey)
 	{
 		// キーマップが存在しない場合はそのまま終了
 		auto keyMapIt = keyMap.find(_key);
@@ -408,12 +408,12 @@ public:
 	/**
 	 * @brief		マップに登録したキーコードを削除する
 	 * @detail		{} で複数入力可能
-	 * @param[in]	std::string			削除するキーの存在するキーマップ
-	 * @param[in]	std::vector<int>	削除するキーコード
+	 * @param[in]	const std::string&			削除するキーの存在するキーマップ
+	 * @param[in]	const std::vector<int>&		削除するキーコード
 	 * @author		Suzuki N
 	 * @date		24/09/07
 	 */
-	void DeleteKeyCode(const std::string _key, std::vector<int> _inputKey)
+	void DeleteKeyCode(const std::string& _key, const std::vector<int> _inputKey)
 	{
 		// キーマップが存在しない場合はそのまま終了
 		auto keyMapIt = keyMap.find(_key);
@@ -493,7 +493,7 @@ public:
 
 	/**
 	 * @brief		登録されているキーマップを削除する
-	 * @param[in]	std::string& _key
+	 * @param[in]	std::string& _key 削除するキーマップのキー
 	 * @author		Suzuki N
 	 * @date		24/10/02
 	 */

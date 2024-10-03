@@ -15,7 +15,7 @@ std::vector<HWGameObject*> HWGameObject::gameObjects;
 #pragma region コンストラクタ
 
 
-HWGameObject::HWGameObject() : priority(0), name("hwObj"), parent(nullptr)
+HWGameObject::HWGameObject() : priority(0), name("hwObj"), parent(nullptr), active(true)
 {
     gameObjects.push_back(this);
 
@@ -28,7 +28,8 @@ HWGameObject::HWGameObject() : priority(0), name("hwObj"), parent(nullptr)
     BubbleSort();
 }
 
-HWGameObject::HWGameObject(const std::string& _name) : priority(0), name(_name), parent(nullptr)
+HWGameObject::HWGameObject(const std::string& _name) : priority(0), name(_name), parent(nullptr),
+                           active(true)
 {
     gameObjects.push_back(this);
 
@@ -41,7 +42,8 @@ HWGameObject::HWGameObject(const std::string& _name) : priority(0), name(_name),
     BubbleSort();
 }
 
-HWGameObject::HWGameObject(int _priority) : priority(_priority), name("hwObj"), parent(nullptr)
+HWGameObject::HWGameObject(int _priority) : priority(_priority), name("hwObj"), parent(nullptr), 
+                           active(true)
 {
     gameObjects.push_back(this);
 
@@ -55,7 +57,7 @@ HWGameObject::HWGameObject(int _priority) : priority(_priority), name("hwObj"), 
 }
 
 HWGameObject::HWGameObject(const std::string& _name, int _priority) : name(_name), priority(_priority), 
-                           parent(nullptr)
+                           parent(nullptr), active(true)
 {
     gameObjects.push_back(this);
 
@@ -68,9 +70,23 @@ HWGameObject::HWGameObject(const std::string& _name, int _priority) : name(_name
     BubbleSort();
 }
 
-HWGameObject::HWGameObject(const HWGameObject& _object)
+HWGameObject::HWGameObject(const HWGameObject& _other, const CopyType copyType) : name(_other.name),
+                           priority(_other.priority), parent(nullptr), active(_other.active)
 {
+    gameObjects.push_back(this);
 
+    switch (copyType)
+    {
+    case CopyType::Shallow:
+        ShallowCopy(_other);
+        break;
+
+    case CopyType::Deep:
+        DeepCopy(_other);
+        break;
+    }
+
+    BubbleSort();
 }
 
 
@@ -94,9 +110,56 @@ void HWGameObject::BubbleSort()
         return a->priority > b->priority; });
 }
 
+void HWGameObject::DeepCopy(const HWGameObject& _other)
+{
+    std::unique_ptr<HWTransform> transformCp = std::make_unique<HWTransform>(*_other.transform);
+    transformCp->gameObject = this;
+    hwComponents.push_back(std::move(transformCp));
+    transform = GetComponent<HWTransform>();
+
+    // コピー元のComponentのコピーを行う
+    for (const auto& cp : _other.hwComponents)
+    {
+        // HWTransformは無視
+        if (typeid(*cp) == typeid(HWTransform)) continue;
+        
+        // HWRendererの場合はモデルの複製を行う
+        if (typeid(*cp) == typeid(HWRenderer))
+        {
+            // dynamic_castで正確な型に変換し、ディープコピーを行う
+            HWRenderer* renderer = dynamic_cast<HWRenderer*>(cp.get());
+            if (renderer) 
+            {
+                auto component = std::make_unique<HWRenderer>(renderer->GetModelHandle());
+                // コンポーネントからアタッチされているGameObjectとTransformを確認できるようにする
+                component->gameObject = this;
+                component->transform = (GetComponent<HWTransform>());
+                // 所有権を譲渡
+                hwComponents.push_back(std::move(component));
+            }
+        }
+        else
+        {
+            // そのほかのコンポーネントは通常のコピーを行う
+            auto component = std::make_unique<HWComponent>(*cp);
+            // コンポーネントからアタッチされているGameObjectとTransformを確認できるようにする
+            component->gameObject = this;
+            component->transform = (GetComponent<HWTransform>());
+            // 所有権を譲渡
+            hwComponents.push_back(std::move(component));
+        }
+    }
+}
+
+
+void HWGameObject::ShallowCopy(const HWGameObject& _other)
+{
+}
 
 void HWGameObject::CallAllUpdates()
 {
+    if (!active) return;
+
     for (auto& component : hwComponents)
     {
         if(component->active)
@@ -106,6 +169,8 @@ void HWGameObject::CallAllUpdates()
 
 void HWGameObject::CallAllOnCollisionEnters(HWCollider& _collider)
 {
+    if (!active) return;
+
     for (auto& component : hwComponents)
     {
         if(component->active)
@@ -115,6 +180,8 @@ void HWGameObject::CallAllOnCollisionEnters(HWCollider& _collider)
 
 void HWGameObject::CallAllOnCollisionStays(HWCollider& _collider)
 {
+    if (!active) return;
+
     for (auto& component : hwComponents)
     {
         if (component->active)
@@ -124,6 +191,8 @@ void HWGameObject::CallAllOnCollisionStays(HWCollider& _collider)
 
 void HWGameObject::CallAllOnCollisionExits(HWCollider& _collider)
 {
+    if (!active) return;
+
     for (auto& component : hwComponents)
     {
         if (component->active)
@@ -133,6 +202,8 @@ void HWGameObject::CallAllOnCollisionExits(HWCollider& _collider)
 
 void HWGameObject::CallAllOnTriggerEnters(HWCollider& _collider)
 {
+    if (!active) return;
+
     for (auto& component : hwComponents)
     {
         if(component->active)
@@ -142,6 +213,8 @@ void HWGameObject::CallAllOnTriggerEnters(HWCollider& _collider)
 
 void HWGameObject::CallAllOnTriggerStays(HWCollider& _collider)
 {
+    if (!active) return;
+
     for (auto& component : hwComponents)
     {
         if (component->active)
@@ -151,6 +224,8 @@ void HWGameObject::CallAllOnTriggerStays(HWCollider& _collider)
 
 void HWGameObject::CallAllOnTriggerExits(HWCollider& _collider)
 {
+    if (!active) return;
+
     for (auto& component : hwComponents)
     {
         if (component->active)
