@@ -219,6 +219,25 @@
 <br />
 <br />
 
+
+<b> <オブジェクトの設定> </b>
+
+<body>
+
+	@brief		オブジェクトの名前
+	std::string name
+
+ 	@brief		アクティブ
+	bool active
+
+	@brief		ハンドラーやUpdateメソッドの優先順位(降順)
+	int priority
+	
+	@brief		Transformコンポーネント
+	HWTransform* transform
+
+</body>
+
 <b> <コンポーネント付与、取得の関数> </b>
 
 <body>
@@ -237,27 +256,13 @@
 
 </body>
 
-<b> <オブジェクトの設定> </b>
-
-<body>
-
-	@brief		オブジェクトの名前
-	std::string name
-
-	@brief		ハンドラーやUpdateメソッドの優先順位(降順)
-	int priority
-	
-	@brief		Transformコンポーネント
-	HWTransform* transform
-
-</body>
-
 <b> <コンストラクタ> </b>
 
 <body>
 
 	@brief		コンストラクタ
 	HWGameObject()
+ 
 	@brief		コンストラクタ(名前の初期化宣言)
 	@param[in]	std::string オブジェクト名	
 	HWGameObject(const std::string&)
