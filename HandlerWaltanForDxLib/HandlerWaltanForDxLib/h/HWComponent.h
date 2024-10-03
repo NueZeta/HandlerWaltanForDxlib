@@ -59,6 +59,14 @@ public:
 	 */
 	int priority;
 
+private:
+
+	/**
+	 * @brief		既にStartメソッドが実行済みか
+	 * @History		24/10/03 作成(Suzuki N)
+	 */
+	bool completedStartMethod;
+
 
 private:
 
@@ -128,6 +136,15 @@ protected:
 	 * @date		24/06/17
 	 */
 	virtual void Awake() {}
+
+
+	/**
+	 * @brief		最初のUpdateメソッドの直前に働く
+	 * @detail		仮想関数
+	 * @author		Suzuki N
+	 * @date		24/06/17
+	 */
+	virtual void Start() {}
 
 
 	/**

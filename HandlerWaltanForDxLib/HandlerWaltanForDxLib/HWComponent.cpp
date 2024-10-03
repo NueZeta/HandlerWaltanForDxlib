@@ -60,7 +60,8 @@ void HWComponent::OnTriggerExsitHandler(HWCollider& _collider)
 #pragma region protectedメソッド
 
 
-HWComponent::HWComponent() : isMultiplePossession(true), active(true), priority(0)
+HWComponent::HWComponent() : isMultiplePossession(true), active(true), priority(0), completedStartMethod(false),
+							 gameObject(nullptr), transform(nullptr)
 {
 	//各コールバック関数にオーバーライドされたメソッドを代入する
 	OnCollisionEnterCallBack = std::bind(&HWComponent::OnCollisionEnter, this, std::placeholders::_1);

@@ -163,7 +163,16 @@ void HWGameObject::CallAllUpdates()
     for (auto& component : hwComponents)
     {
         if(component->active)
+        {
+            // まだStartメソッドを実行していない場合は実行する
+            if(!component->completedStartMethod)
+            {
+                component.get()->Start();
+                // Startメソッドを実行済みにする
+                component->completedStartMethod = true;
+            }
             component.get()->Update();
+        }
     }
 }
 
