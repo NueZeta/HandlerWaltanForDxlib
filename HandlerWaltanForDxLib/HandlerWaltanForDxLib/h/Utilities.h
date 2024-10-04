@@ -160,19 +160,20 @@ public:
 	 * @author		Suzuki N
 	 * @date		24/09/01
 	 */
-	template<class T, typename... Args>
+	template<typename... Args>
 	T* Alloc(Args&&... args)
 	{
 		// 空きメモリブロックがない場合、nullptr を返す
 		if (freeBlockHead == nullptr)
 			return nullptr;
 
-		//! 確保したメモリ
+		// メモリブロックを確保
 		T* ret = reinterpret_cast<T*>(freeBlockHead);
+
 		// 空きメモリブロックを更新
 		freeBlockHead = freeBlockHead->nextBlock;
 
-		// 動的にコンストラクタを呼ぶ
+		// 引数付きコンストラクタを呼び出す
 		return new(ret) T(std::forward<Args>(args)...);
 	}
 
@@ -193,10 +194,16 @@ public:
 		//! 解放するアドレス
 		Block* freeBlock = reinterpret_cast<Block*>(_addr);
 
-		// 解放したブロックの後ろにfreeBlockHeadをつなげる
-		freeBlockHead->nextBlock = freeBlock;
-		// 空きメモリブロックを更新
-		freeBlockHead = freeBlock;
+		// freeBlockHeadがnullptrの場合に対応
+		if (freeBlockHead == nullptr) {
+			freeBlock->nextBlock = nullptr;
+			freeBlockHead = freeBlock;
+		}
+		else {
+			// 解放したブロックをリストの先頭に追加
+			freeBlock->nextBlock = freeBlockHead;
+			freeBlockHead = freeBlock;
+		}
 	}
 };
 

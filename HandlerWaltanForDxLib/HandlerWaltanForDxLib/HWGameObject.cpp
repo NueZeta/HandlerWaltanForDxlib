@@ -15,7 +15,7 @@ std::vector<HWGameObject*> HWGameObject::gameObjects;
 #pragma region コンストラクタ
 
 
-HWGameObject::HWGameObject() : priority(0), name("hwObj"), parent(nullptr), active(true)
+HWGameObject::HWGameObject() : priority(0), name("hwObj"), tag(0), parent(nullptr), active(true)
 {
     gameObjects.push_back(this);
 
@@ -28,7 +28,7 @@ HWGameObject::HWGameObject() : priority(0), name("hwObj"), parent(nullptr), acti
     BubbleSort();
 }
 
-HWGameObject::HWGameObject(const std::string& _name) : priority(0), name(_name), parent(nullptr),
+HWGameObject::HWGameObject(const std::string& _name) : priority(0), name(_name), tag(0), parent(nullptr),
                            active(true)
 {
     gameObjects.push_back(this);
@@ -42,7 +42,7 @@ HWGameObject::HWGameObject(const std::string& _name) : priority(0), name(_name),
     BubbleSort();
 }
 
-HWGameObject::HWGameObject(int _priority) : priority(_priority), name("hwObj"), parent(nullptr), 
+HWGameObject::HWGameObject(int _priority) : priority(_priority), name("hwObj"), tag(0), parent(nullptr),
                            active(true)
 {
     gameObjects.push_back(this);
@@ -56,7 +56,7 @@ HWGameObject::HWGameObject(int _priority) : priority(_priority), name("hwObj"), 
     BubbleSort();
 }
 
-HWGameObject::HWGameObject(const std::string& _name, int _priority) : name(_name), priority(_priority), 
+HWGameObject::HWGameObject(const std::string& _name, int _priority) : name(_name), tag(0), priority(_priority),
                            parent(nullptr), active(true)
 {
     gameObjects.push_back(this);
@@ -71,7 +71,7 @@ HWGameObject::HWGameObject(const std::string& _name, int _priority) : name(_name
 }
 
 HWGameObject::HWGameObject(const HWGameObject& _other, const CopyType copyType) : name(_other.name),
-                           priority(_other.priority), parent(nullptr), active(_other.active)
+                           tag(_other.tag), priority(_other.priority), parent(nullptr), active(_other.active)
 {
     gameObjects.push_back(this);
 

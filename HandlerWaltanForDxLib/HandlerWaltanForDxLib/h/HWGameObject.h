@@ -79,6 +79,12 @@ public:
 	std::string name;
 
 	/**
+	 * @brief		オブジェクトのタグ(enumなどで別個定義してください)
+	 * @History		24/10/04 作成(Suzuki N)
+	 */
+	int tag;
+
+	/**
 	 * @brief		ハンドラーやUpdateメソッドの優先順位(降順)
 	 * @History		24/07/21 作成(Suzuki N)
 	 */
