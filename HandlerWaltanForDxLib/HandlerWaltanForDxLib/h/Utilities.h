@@ -11,9 +11,10 @@
 #include <future>
 #include <cstdio>
 #include <cstdint>
+#include <random>
 #include <unordered_map>
 #include "Syslog.h"
-#include "DxLib.h"
+#include "EffekseerForDXLib.h"
 
 
 //! アニメーションのブレンド率変化速度
@@ -212,7 +213,7 @@ public:
  * @class	
  * @brief	
  */
-class GameTime
+class Time
 {
 	friend class HandlerWaltan;
 
@@ -245,8 +246,8 @@ public:
 	/*     メソッド     */
 
 	// 静的クラスのため、コンストラクタとデストラクタを削除
-	GameTime() = delete;
-	~GameTime() = delete;
+	Time() = delete;
+	~Time() = delete;
 
 	const static float DeltaTime() { return deltaTime; }
 
@@ -386,6 +387,58 @@ public:
 
 		return ret;
 	}
+};
+
+
+/**
+ * @class	Random
+ * @brief	乱数関係
+ * @detail	静的クラス
+ */
+class Random
+{
+public:
+	// 整数のランダムな値を生成するメソッド
+	static int GetRandomInt(int min, int max) {
+		std::uniform_int_distribution<> dist(min, max);
+		return dist(GetGenerator());
+	}
+
+	// float型のランダムな値を生成するメソッド
+	static float GetRandomFloat(float min, float max) {
+		std::uniform_real_distribution<float> dist(min, max);
+		return dist(GetGenerator());
+	}
+
+	// シードを設定するメソッド（これで決定的な乱数を生成できる）
+	static void SetSeed(unsigned int seed) {
+		GetGenerator(seed);
+	}
+
+private:
+	// 乱数生成器を返すメソッド（シード付きバージョン）
+	static std::mt19937& GetGenerator(unsigned int seed = 0) {
+		static std::mt19937 gen;  // 乱数生成器（静的に保持）
+		static bool seeded = false; // シードが設定されたかどうかのフラグ
+
+		// シードが0でなく、かつまだシードされていない場合のみ設定
+		if (seed != 0 || !seeded) {
+			if (seed == 0) {
+				// 非決定的なシード（デフォルト動作）
+				std::random_device rd;
+				gen.seed(rd());
+			}
+			else {
+				// 決定的なシードを設定
+				gen.seed(seed);
+			}
+			seeded = true; // シードが設定されたことを記録
+		}
+		return gen;
+	}
+
+	// コンストラクタは削除
+	Random() = delete;
 };
 
 

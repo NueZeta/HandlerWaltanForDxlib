@@ -64,7 +64,17 @@ void HWTransform::Update()
 	// 座標に移動ベクトルを足す
 	position = VAdd(position, velocity);
 
-	// 自身の移動ベクトルを子オブジェクトの移動ベクトルに足す
+	// 親オブジェクトが存在する場合、親の行列を子に適用
+	if (gameObject->Parent() != nullptr) 
+	{
+		// 親のグローバル行列を取得
+		MATRIX parentMatrix = gameObject->Parent()->transform->globalMat;
+
+		// 子のローカル行列に親の行列を掛ける
+		globalMat = MMult(globalMat, parentMatrix);
+	}
+
+	// 子オブジェクトに親の変換を適用
 	if (gameObject->GetChildren().size() > 0)
 		for (auto it = gameObject->GetChildren().begin(); it != gameObject->GetChildren().end(); ++it)
 			(*it)->transform->velocity = VAdd((*it)->transform->velocity, velocity);

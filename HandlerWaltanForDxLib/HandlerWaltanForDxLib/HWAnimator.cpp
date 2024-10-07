@@ -17,7 +17,7 @@ void HWAnimator::AnimPlay()
 	if (playIndex1 != -1)
 	{
 		// 再生時間を進める
-		playTime += animInfoVec[playIndex1]->playSpeed * GameTime::DeltaTime();
+		playTime += animInfoVec[playIndex1]->playSpeed * Time::DeltaTime();
 
 		// アニメーションの再生が終了した
 		if (playTime >= animInfoVec[playIndex1]->totalTime)
@@ -46,7 +46,7 @@ void HWAnimator::AnimPlay()
 		// ブレンド率が1未満の場合は1に近づける
 		if (animBlendRate < 1.0f)
 		{
-			animBlendRate += blendSpeed * GameTime::DeltaTime();
+			animBlendRate += blendSpeed * Time::DeltaTime();
 			// ブレンド率が1以上の場合、アニメーション1を削除し、
 			// アニメーション2の情報をアニメーション1に渡す
 			if (animBlendRate >= 1.0f)

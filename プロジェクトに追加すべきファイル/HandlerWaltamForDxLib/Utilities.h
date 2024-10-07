@@ -11,9 +11,10 @@
 #include <future>
 #include <cstdio>
 #include <cstdint>
+#include <random>
 #include <unordered_map>
 #include "Syslog.h"
-#include "DxLib.h"
+#include "EffekseerForDXLib.h"
 
 
 //! アニメーションのブレンド率変化速度
@@ -160,19 +161,20 @@ public:
 	 * @author		Suzuki N
 	 * @date		24/09/01
 	 */
-	template<class T, typename... Args>
+	template<typename... Args>
 	T* Alloc(Args&&... args)
 	{
 		// 空きメモリブロックがない場合、nullptr を返す
 		if (freeBlockHead == nullptr)
 			return nullptr;
 
-		//! 確保したメモリ
+		// メモリブロックを確保
 		T* ret = reinterpret_cast<T*>(freeBlockHead);
+
 		// 空きメモリブロックを更新
 		freeBlockHead = freeBlockHead->nextBlock;
 
-		// 動的にコンストラクタを呼ぶ
+		// 引数付きコンストラクタを呼び出す
 		return new(ret) T(std::forward<Args>(args)...);
 	}
 
@@ -193,10 +195,16 @@ public:
 		//! 解放するアドレス
 		Block* freeBlock = reinterpret_cast<Block*>(_addr);
 
-		// 解放したブロックの後ろにfreeBlockHeadをつなげる
-		freeBlockHead->nextBlock = freeBlock;
-		// 空きメモリブロックを更新
-		freeBlockHead = freeBlock;
+		// freeBlockHeadがnullptrの場合に対応
+		if (freeBlockHead == nullptr) {
+			freeBlock->nextBlock = nullptr;
+			freeBlockHead = freeBlock;
+		}
+		else {
+			// 解放したブロックをリストの先頭に追加
+			freeBlock->nextBlock = freeBlockHead;
+			freeBlockHead = freeBlock;
+		}
 	}
 };
 
@@ -205,7 +213,7 @@ public:
  * @class	
  * @brief	
  */
-class GameTime
+class Time
 {
 	friend class HandlerWaltan;
 
@@ -238,8 +246,8 @@ public:
 	/*     メソッド     */
 
 	// 静的クラスのため、コンストラクタとデストラクタを削除
-	GameTime() = delete;
-	~GameTime() = delete;
+	Time() = delete;
+	~Time() = delete;
 
 	const static float DeltaTime() { return deltaTime; }
 
@@ -379,6 +387,58 @@ public:
 
 		return ret;
 	}
+};
+
+
+/**
+ * @class	Random
+ * @brief	乱数関係
+ * @detail	静的クラス
+ */
+class Random
+{
+public:
+	// 整数のランダムな値を生成するメソッド
+	static int GetRandomInt(int min, int max) {
+		std::uniform_int_distribution<> dist(min, max);
+		return dist(GetGenerator());
+	}
+
+	// float型のランダムな値を生成するメソッド
+	static float GetRandomFloat(float min, float max) {
+		std::uniform_real_distribution<float> dist(min, max);
+		return dist(GetGenerator());
+	}
+
+	// シードを設定するメソッド（これで決定的な乱数を生成できる）
+	static void SetSeed(unsigned int seed) {
+		GetGenerator(seed);
+	}
+
+private:
+	// 乱数生成器を返すメソッド（シード付きバージョン）
+	static std::mt19937& GetGenerator(unsigned int seed = 0) {
+		static std::mt19937 gen;  // 乱数生成器（静的に保持）
+		static bool seeded = false; // シードが設定されたかどうかのフラグ
+
+		// シードが0でなく、かつまだシードされていない場合のみ設定
+		if (seed != 0 || !seeded) {
+			if (seed == 0) {
+				// 非決定的なシード（デフォルト動作）
+				std::random_device rd;
+				gen.seed(rd());
+			}
+			else {
+				// 決定的なシードを設定
+				gen.seed(seed);
+			}
+			seeded = true; // シードが設定されたことを記録
+		}
+		return gen;
+	}
+
+	// コンストラクタは削除
+	Random() = delete;
 };
 
 

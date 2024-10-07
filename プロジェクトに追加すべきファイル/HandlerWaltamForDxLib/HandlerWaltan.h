@@ -3,6 +3,7 @@
 #include "HWAnimator.h"
 #include "HWBoxCollider.h"
 #include "HWCamera.h"
+#include "HWEffect.h"
 #include "HWCapsuleCollider.h"
 #include "HWSphereCollider.h"
 #include "HWGameObject.h"
@@ -88,7 +89,7 @@ public:
      * @author      Suzuki N
      * @date        24/07/29
      */
-    static int Init();
+    static int Init(int _particle = 8000);
 
     /**
      * @brief       終了時用のメソッド

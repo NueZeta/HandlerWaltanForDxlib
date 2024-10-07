@@ -12,13 +12,13 @@
 
 bool HandlerWaltan::debugMode = false;
 std::vector<InputSystem*> InputSystem::inputSystemVec;
-float GameTime::deltaTime = 1.0f;
-std::chrono::high_resolution_clock::time_point GameTime::lastFrameTime = std::chrono::high_resolution_clock::now();
-int GameTime::N = NULL;
-int GameTime::startTime = NULL;
-int GameTime::count = NULL;
-float GameTime::fps = NULL;
-int GameTime::FPS = 120;
+float Time::deltaTime = 1.0f;
+std::chrono::high_resolution_clock::time_point Time::lastFrameTime = std::chrono::high_resolution_clock::now();
+int Time::N = NULL;
+int Time::startTime = NULL;
+int Time::count = NULL;
+float Time::fps = NULL;
+int Time::FPS = 120;
 
 //------------------------------------------------------------------------------------------------------------------------
 
@@ -28,7 +28,7 @@ int GameTime::FPS = 120;
 
 void HandlerWaltan::Update()
 {
-    GameTime::Update();
+    Time::Update();
 
     // インスタンス化された全てのHWGameObjectのUpdateメソッドを呼び出す
     for (auto obj : HWGameObject::GetGameObjects())
@@ -43,6 +43,15 @@ void HandlerWaltan::Update()
         if ((*it)->active)
             (*it)->Update();
     }
+
+    // Effekseerにより再生中のエフェクトを更新する。
+    UpdateEffekseer3D();
+
+    // Effekseerにより再生中のエフェクトを描画する。
+    DrawEffekseer3D();
+
+    // DXライブラリのカメラとEffekseerのカメラを同期する。
+    Effekseer_Sync3DSetting();
 
     //if (debugMode)
     //    GameTime::Draw();
@@ -79,21 +88,51 @@ HandlerWaltan& HandlerWaltan::Instance()
     return instance;
 }
 
-int HandlerWaltan::Init()
+int HandlerWaltan::Init(int _particle)
 {
-    // DXライブラリの初期化
+    // DXライブラリとEffekseerの初期化
+
+    // DirectX11を使用するようにする。(DirectX9も可、一部機能不可)
+    // Effekseerを使用するには必ず設定する。
+    SetUseDirect3DVersion(DX_DIRECT3D_11);
 
     if (DxLib_Init() == -1)		// ＤＸライブラリ初期化処理
-    {
         // エラーコードを返す
         return -1;
+
+    // Effekseerを初期化する。
+    // 引数には画面に表示する最大パーティクル数を設定する。
+    if (Effekseer_Init(8000) == -1)
+    {
+        DxLib_End();
+        return -1;
     }
+
+    // フルスクリーンウインドウの切り替えでリソースが消えるのを防ぐ。
+    // Effekseerを使用する場合は必ず設定する。
+    SetChangeScreenModeGraphicsSystemResetFlag(FALSE);
+
+    // DXライブラリのデバイスロストした時のコールバックを設定する。
+    // ウインドウとフルスクリーンの切り替えが発生する場合は必ず実行する。
+    // ただし、DirectX11を使用する場合は実行する必要はない。
+    Effekseer_SetGraphicsDeviceLostCallbackFunctions();
+
+    // Zバッファを有効にする。
+    // Effekseerを使用する場合、2DゲームでもZバッファを使用する。
+    SetUseZBuffer3D(TRUE);
+
+    // Zバッファへの書き込みを有効にする。
+    // Effekseerを使用する場合、2DゲームでもZバッファを使用する。
+    SetWriteZBuffer3D(TRUE);
 
     return 0;
 }
 
 void HandlerWaltan::End()
 {
+    // Effekseerを終了する。
+    Effkseer_End();
+
     DxLib_End();				// ＤＸライブラリ使用の終了処理
 }
 
