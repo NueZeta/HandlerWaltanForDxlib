@@ -12,13 +12,18 @@
 
 bool HandlerWaltan::debugMode = false;
 std::vector<InputSystem*> InputSystem::inputSystemVec;
-float Time::deltaTime = 1.0f;
-std::chrono::high_resolution_clock::time_point Time::lastFrameTime = std::chrono::high_resolution_clock::now();
-int Time::N = NULL;
-int Time::startTime = NULL;
-int Time::count = NULL;
-float Time::fps = NULL;
-int Time::FPS = 120;
+
+int HWUtility::ScreenSizeX = -1;
+int HWUtility::ScreenSizeY = -1;
+
+float Time::deltaTime = 0.0f;
+float Time::lastTime = 0.0f;
+int Time::targetFPS = -1;  // デフォルトは-1
+float Time::targetFrameTime = 1.0f / 60.0f;  // 60FPSなら1フレームあたり約0.01666秒
+bool Time::debugMode = false;
+int Time::frameCount = 0;  // フレーム数の初期化
+float Time::elapsedTime = 0.0f;  // 経過時間の初期化
+unsigned int Time::color = GetColor(255,0,255);
 
 //------------------------------------------------------------------------------------------------------------------------
 
@@ -53,9 +58,13 @@ void HandlerWaltan::Update()
     // DXライブラリのカメラとEffekseerのカメラを同期する。
     Effekseer_Sync3DSetting();
 
-    //if (debugMode)
-    //    GameTime::Draw();
-    //GameTime::Wait();
+    // フレーム終了時に次のフレームまで待機（FPS固定）
+    if(Time::targetFPS != -1)
+    {
+        Time::WaitForNextFrame();
+        if (Time::debugMode)
+            Time::ShowFPS();
+    }
 }
 
 
@@ -124,6 +133,8 @@ int HandlerWaltan::Init(int _particle)
     // Zバッファへの書き込みを有効にする。
     // Effekseerを使用する場合、2DゲームでもZバッファを使用する。
     SetWriteZBuffer3D(TRUE);
+
+    GetWindowSize(&HWUtility::ScreenSizeX, &HWUtility::ScreenSizeY);
 
     return 0;
 }

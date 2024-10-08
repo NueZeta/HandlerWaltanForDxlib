@@ -25,6 +25,17 @@ constexpr float NEARLY_THRESHOLD = 0.000001f;			// 2つの数値が近いと判断する差の
 constexpr float HIT_SLIDE_LENGTH = 5.0f;				// 一度の壁押し出し処理でスライドさせる距離
 
 
+/**
+ * @class	Utility
+ * @brief	
+ */
+class HWUtility
+{
+public:
+	static int ScreenSizeX;
+	static int ScreenSizeY;
+};
+
 
 /**
 * @author   Suzuki N
@@ -210,102 +221,77 @@ public:
 
 
 /**
- * @class	
- * @brief	
+ * @class	Time
+ * @brief	時間関係
  */
-class Time
+class Time 
 {
 	friend class HandlerWaltan;
 
-private:
-
-	/*     メンバ変数     */
-
-private:
-	//! 最後のフレームの時間
-	static std::chrono::high_resolution_clock::time_point lastFrameTime;
-	//! フレーム間の経過時間
-	static float deltaTime;
-	//!フレームレートの平均
-	static int N;
-	//!計測開始時刻
-	static int startTime;
-	//!カウンタ
-	static int count;
-	//!フレームレート
-	static float fps;
-
 public:
+	// deltaTimeを返す関数
+	static float DeltaTime() { return deltaTime; }
 
-	//!設定したフレームレート
-	static int FPS;
+	// 1秒経過した場合はフレーム数を返す
+	int GetCurrentFPS() { return frameCount; }
 
+	// n秒後のフレーム数を計算
+	int GetFrameCountInFuture(float seconds) { return static_cast<int>(seconds * Time::targetFPS); }
 
-public:
-
-	/*     メソッド     */
-
-	// 静的クラスのため、コンストラクタとデストラクタを削除
-	Time() = delete;
-	~Time() = delete;
-
-	const static float DeltaTime() { return deltaTime; }
-
-private:
-
-	/**
-	 * @brief		毎F呼ばれるメソッド
-	 * @author		Suzuki N
-	 * @date		24/09/25
-	 */
+	// ゲームループで毎フレーム呼び出される関数
 	static void Update()
 	{
-		////1f目なら時刻を記憶
-		//if (count == 0)
-		//	startTime = GetNowCount();
-		////60f目なら平均を求める
-		//if (count == N)
-		//{
-		//	int t = GetNowCount();
-		//	fps = 1000.f / ((t - startTime) / (float)N);
-		//	count = 0;
-		//	startTime = t;
-		//}
-		//count++;
+		float currentTime = GetNowCount() / 1000.0f;  // 秒に変換
+		deltaTime = currentTime - lastTime;
+		lastTime = currentTime;
 
-		auto now = std::chrono::high_resolution_clock::now();
-		// 前回のフレームからの経過時間を計算
-		std::chrono::duration<float> elapsedTime = now - lastFrameTime;
-		deltaTime = elapsedTime.count(); // 経過時間を秒単位で取得
-		// 現在の時間を次回のフレームの開始時間に設定
-		lastFrameTime = now;
+		// フレーム数と経過時間を更新
+		frameCount++;
+		elapsedTime += deltaTime;
+
+		// 1秒経過したらFPSをリセット
+		if (elapsedTime >= 1.0f) {
+			elapsedTime = 0.0f;
+			frameCount = 0;  // フレーム数のリセット
+		}
 	}
 
-	/**
-	 * @brief		設定されたフレームレートになるように待機
-	 * @author		Suzuki N
-	 * @date		24/09/25
-	 */
-	static void Wait()
+	// FPS固定化のための関数
+	static void SetTargetFPS(int fps)
 	{
-		//!かかった時間
-		int tookTime = GetNowCount() - startTime;
-		//!待つべき時間
-		int waitTime = count * 1000 / FPS - tookTime;
-
-		if (waitTime > 0)
-			Sleep(waitTime);
+		targetFPS = fps;
+		targetFrameTime = 1.0f / static_cast<float>(fps);  // 1フレームあたりの時間を計算
 	}
 
-	/**
-	 * @brief		FPSを表示
-	 * @author		Suzuki N
-	 * @date		24/09/25
-	 */
-	static void Draw()
+	static void WaitForNextFrame()
 	{
-		DrawFormatString(260, 5, GetColor(100, 0, 100), "%6.2f FPS", fps);
+		float frameEndTime = GetNowCount() / 1000.0f;
+		float frameDuration = frameEndTime - lastTime;
+		if (frameDuration < targetFrameTime)
+		{
+			int sleepTime = static_cast<int>((targetFrameTime - frameDuration) * 1000);
+			if (sleepTime > 0)
+				std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
+		}
 	}
+
+	static void ShowFPS()
+	{
+		DrawFormatString(HWUtility::ScreenSizeX / 2 - 30, 10, color, "%d FPS", frameCount);
+	}
+
+private:
+	static float deltaTime;    // 前フレームとの時間差
+	static float lastTime;     // 前フレームの時間
+	static int targetFPS;      // ターゲットFPS
+	static float targetFrameTime;  // ターゲットのフレーム時間 (秒)    
+	static int frameCount;      // フレーム数をカウントする変数
+	static float elapsedTime;    // 経過時間を保持する変数
+
+public:
+	static bool debugMode;
+	static unsigned int color;
+
 };
 
 

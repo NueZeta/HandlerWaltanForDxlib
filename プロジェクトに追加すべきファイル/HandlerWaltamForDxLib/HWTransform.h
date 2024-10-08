@@ -104,6 +104,14 @@ private:
 
 public:
 
+	/**
+	 * @brief		ターゲットのほうへ向く
+	 * @param[in]	const VECTOR&	ターゲットの座標
+	 * @author		Suzuki N
+	 * @date		24/10/09
+	 */
+	void LookAt(const VECTOR& _target);
+
 #pragma region コンストラクタ
 
 	/**

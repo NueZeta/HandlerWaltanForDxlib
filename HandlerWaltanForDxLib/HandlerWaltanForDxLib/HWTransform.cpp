@@ -45,7 +45,23 @@ void HWTransform::SetMatrix()
 #pragma region publicメソッド
 
 
-HWTransform::HWTransform() : position({ 0.0f, 0.0f, 0.0f }), rotate({ 0.0f, 0.0f, 0.0f }), 
+void HWTransform::LookAt(const VECTOR& _target)
+{
+	//! ENEMY -> Player への方向ベクトル
+	VECTOR dir = VNorm(VSub(_target, position));
+	//! 内積を使ってベクトル間の角度を計算
+	float dot = VDot(forward, dir);
+	//! なす角
+	float angle = acosf(dot);
+	//! 外積を用いて回転軸を求める
+	VECTOR axis = VNorm(VCross(forward, dir));
+	// 回転に適用
+	rotate.x += (float)Rad2Deg(axis.x * angle);
+	rotate.y += (float)Rad2Deg(axis.y * angle);
+	rotate.z += (float)Rad2Deg(axis.z * angle);
+}
+
+HWTransform::HWTransform() : position({ 0.0f, 0.0f, 0.0f }), rotate({ 0.0f, 0.0f, 0.0f }),
 scale({ 1.0f, 1.0f, 1.0f }), localPosition({ 0.0f, 0.0f, 0.0f }), localRotate({ 0.0f, 0.0f, 0.0f }),
 localScale({ 1.0f, 1.0f, 1.0f })
 {
