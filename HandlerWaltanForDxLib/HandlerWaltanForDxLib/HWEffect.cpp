@@ -1,13 +1,9 @@
 #include "h/HWEffect.h"
 
 HWEffect::HWEffect(const std::string& _path, const float _size)
+	: effectResourceHandle(LoadEffekseerEffect(_path.c_str(), _size)), playingEffectHandle(-1),
+	playSpeed(-1), isPlay(false), stopAction(StopAction::None), color{ 0,0,0,0 }
 {
-	effectResourceHandle = LoadEffekseerEffect(_path.c_str(), _size);
-	playingEffectHandle = -1;
-
-	playSpeed = 1;
-	isPlay = false;
-	stopAction = StopAction::None;
 }
 
 HWEffect::~HWEffect()
@@ -18,15 +14,20 @@ HWEffect::~HWEffect()
 
 void HWEffect::Play()
 {
-	if (isPlay) return;
+	if (isPlay || playingEffectHandle != -1) return;
 	// エフェクトを再生する。
 	playingEffectHandle = PlayEffekseer3DEffect(effectResourceHandle);
+
+	// カラーの設定をしていた場合は、再度設定
+	if (!(color.r == 0 && color.g == 0 && color.b == 0 && color.a == 0))
+		SetColor(color.r, color.g, color.b, color.a);
+
 	isPlay = true;
 }
 
 void HWEffect::Stop()
 {
-	if (!isPlay) return;
+	if (!isPlay || playingEffectHandle != -1) return;
 	// エフェクトの再生を中止する
 	StopEffekseer3DEffect(playingEffectHandle);
 	isPlay = false;
@@ -52,10 +53,13 @@ void HWEffect::Update()
 	// スケール
 	SetScalePlayingEffekseer3DEffect(playingEffectHandle, transform->scale.x, transform->scale.y, transform->scale.z);
 
+
 	// 再生終了
 	if (IsEffekseer3DEffectPlaying(playingEffectHandle))
 	{
 		isPlay = false;
+		playingEffectHandle = -1;
+
 		// 再生終了時のアクション
 		switch (stopAction)
 		{
@@ -79,11 +83,9 @@ void HWEffect::Update()
 
 		case StopAction::Callback:
 			// 登録されたコールバック関数を呼ぶ
-			if(CallBack)
+			if (CallBack)
 				CallBack();
 			break;
 		}
 	}
-
-
 }

@@ -68,6 +68,17 @@ private:
 	 */
 	std::function<void()> CallBack;
 
+	struct Color
+	{
+		unsigned int r, g, b, a;
+	};
+
+	/**
+	 * @brief		カラー
+	 * @History		24/10/07 作成(Suzuki N)
+	 */
+	Color color;
+
 public:
 
 	/**
@@ -150,6 +161,24 @@ public:
 	void SetCallBack(std::function<void()> _callBack)
 	{
 		CallBack = _callBack;
+	}
+
+	/**
+	 * @brief		エフェクトのカラーを設定する
+	 * @rparam[in]	const Color& カラー
+	 * @author		Suzuki N
+	 * @date		24/10/07
+	 */
+	void SetColor(const int r, const int g, const int b, const int a)
+	{
+		if(playingEffectHandle != -1)
+		{
+			SetColorPlayingEffekseer3DEffect(playingEffectHandle, r, g, b, a);
+			color.r = r;
+			color.g = g;
+			color.b = b;
+			color.a = a;			
+		}
 	}
 
 #pragma endregion
