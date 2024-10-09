@@ -670,6 +670,59 @@ AnimLoad関数を実行すると AnimInfo 型で参照が返ってくるので�
 <br />
 <br />
 
+<b> <列挙体> </b>
+
+	@brief	InputSystemの入力パラメータ
+	enum class InputState
+	{
+		//! 入力待ち(0)
+		Waiting,
+		//! 入力した瞬間(1)
+		Started,	
+		//! 入力中(2)
+		Performed,
+		//! 入力終了(3)
+		Canceled,
+	}
+
+	@brief	入力を取るコンソール
+	enum class InputType
+	{
+		//! キーボード(0)
+		Key,
+		//! キーボード or Pad1(1)
+		Key_Pad1,	
+		//! Pad1(2)
+		Pad1,
+		//! Pad2(3)
+		Pad2,
+		//! Pad3(4)
+		Pad3,
+		//! Pad4(5)
+		Pad4,
+	}
+
+<br />
+<br />
+
+<b> <コールバック時の引数> </b>
+
+InputActionクラスのメンバクラスのため、記述するときは　InputAction::CCallBackContext にしてください
+
+	@brief	コールバックで渡す情報
+	struct CallBackContext
+	{
+		//! InputActionのパラメータ
+		const InputState state;
+		//! 入力したときの時間(ms)
+		const unsigned int inputTime;
+		//! 登録されているキー
+		const std::vector<KeyInfo> key;
+	}
+
+<br />
+<br />
+
 <b> <キーコード追加> </b>
 
 <body>
@@ -678,13 +731,15 @@ AnimLoad関数を実行すると AnimInfo 型で参照が返ってくるので�
 	@detail		{} で複数入力可能
 	@param[in]	const std::string	登録するキー
 	@param[in]	const int		キーコード
-	void AddKeyCode(const std::string& _key, const int _inputKey)
+	@param[in]	const InputType&	入力を見るコンソールの種類
+	void AddKeyCode(const std::string& _key, const int _inputKey, const InputType& _inputType = InputType::Key)
 
  	@brief		マップにキーを登録する
 	@detail		{} で複数入力可能
 	@param[in]	const std::string&	 登録するキー
 	@param[in]	const std::vector<int>&  キーコード
-	void AddKeyCode(const std::string& _key, const std::vector<int>& _inputKey)
+	@param[in]	const InputType&	入力を見るコンソールの種類
+	void AddKeyCode(const std::string& _key, const std::vector<int>& _inputKey, const InputType& _inputType = InputType::Key)
 
 
  <b> <コールバック関数追加> </b>
@@ -759,7 +814,7 @@ AnimLoad関数を実行すると AnimInfo 型で参照が返ってくるので�
 		InputSystem* input = new InputSystem();
 
   		// アクション名と登録するキーを指定
-		input->AddKeyCode("map1", KEY_INPUT_RETURN);
+		input->AddKeyCode("map1", KEY_INPUT_RETURN, InputType::Key);
 		// アクション時に呼ばれるコールバック関数を登録
 		input->AddCallBack("map1", [](InputAction::CallBackContext& _context)
 		{
