@@ -414,10 +414,11 @@ public:
 	 * @detail		{} で複数入力可能
 	 * @param[in]	const std::string&	削除するキーの存在するキーマップ
 	 * @param[in]	const int			削除するキーコード
+	 * @param[in]	const InputType&	削除するコンソールの種類
 	 * @author		Suzuki N
 	 * @date		24/09/07
 	 */
-	void DeleteKeyCode(const std::string& _key, const int _inputKey)
+	void DeleteKeyCode(const std::string& _key, const int _inputKey, const InputType& _inputType)
 	{
 		// キーマップが存在しない場合はそのまま終了
 		auto keyMapIt = keyMap.find(_key);
@@ -426,7 +427,7 @@ public:
 
 		// キーコードが存在していれば削除する
 		for (auto it = keyMapIt->second->keyInfoVec.begin(); it != keyMapIt->second->keyInfoVec.end(); ++it)
-			if (it->keyCode == _inputKey)
+			if (it->keyCode == _inputKey && it->inputType == _inputType)
 			{
 				keyMapIt->second->keyInfoVec.erase(it);
 				break;
@@ -438,10 +439,11 @@ public:
 	 * @detail		{} で複数入力可能
 	 * @param[in]	const std::string&			削除するキーの存在するキーマップ
 	 * @param[in]	const std::vector<int>&		削除するキーコード
+	 * @param[in]	const InputType&			削除するコンソールの種類
 	 * @author		Suzuki N
 	 * @date		24/09/07
 	 */
-	void DeleteKeyCode(const std::string& _key, const std::vector<int> _inputKey)
+	void DeleteKeyCode(const std::string& _key, const std::vector<int> _inputKey, const InputType& _inputType)
 	{
 		// キーマップが存在しない場合はそのまま終了
 		auto keyMapIt = keyMap.find(_key);
@@ -452,7 +454,7 @@ public:
 		{
 			// キーコードが存在していれば削除する
 			for (auto it = keyMapIt->second->keyInfoVec.begin(); it != keyMapIt->second->keyInfoVec.end(); ++it)
-				if (it->keyCode == *keyCodeIt)
+				if (it->keyCode == *keyCodeIt && it->inputType == _inputType)
 				{
 					keyMapIt->second->keyInfoVec.erase(it);
 					break;
@@ -560,7 +562,6 @@ private:
 			for (auto it2 = it->second->GetKeyInfoRef().begin(); it2 != it->second->GetKeyInfoRef().end(); ++it2)
 			{
 				// 登録されたキーの入力状態を確認
-//				if (CheckHitKey((*it2).keyCode))
 				if ((it2->inputType == InputType::Key && CheckHitKey(it2->keyCode)) ||
 					(it2->inputType == InputType::Key_Pad1 && GetJoypadInputState(DX_INPUT_KEY_PAD1) & it2->keyCode) ||
 					(it2->inputType == InputType::Pad1 && GetJoypadInputState(DX_INPUT_PAD1) & it2->keyCode) ||
@@ -577,24 +578,24 @@ private:
 					case InputState::Waiting:
 						it2->inputState = InputState::Started;
 						// 実行時間を保管
-						inputTime = (*it2).inputTime = GetNowCount();
+						inputTime = it2->inputTime = GetNowCount();
 						break;
 
 					case InputState::Started:
 						// 入力中にパラメーターを変更
-						(*it2).inputState = InputState::Performed;
-						inputTime = (*it2).inputTime;
+						it2->inputState = InputState::Performed;
+						inputTime = it2->inputTime;
 						break;
 
 					case InputState::Performed:
 						// 押下状態の継続なため、パラメーターの変更はなし
-						inputTime = (*it2).inputTime;
+						inputTime = it2->inputTime;
 						break;
 
 					case InputState::Canceled:
-						(*it2).inputState = InputState::Started;
+						it2->inputState = InputState::Started;
 						// 実行時間を保管
-						inputTime = (*it2).inputTime = GetNowCount();
+						inputTime = it2->inputTime = GetNowCount();
 						break;
 					}
 				}
@@ -602,29 +603,29 @@ private:
 				else
 				{
 					// キーの入力状態でパラメーターを変える
-					switch ((*it2).inputState)
+					switch (it2->inputState)
 					{
 					case InputState::Waiting:
-						inputTime = (*it2).inputTime;
+						inputTime = it2->inputTime;
 						// 待機状態を継続しているため、変更なし
 						break;
 
 					case InputState::Started:
 						// 入力終了のパラメーターに変更
-						(*it2).inputState = InputState::Canceled;
-						inputTime = (*it2).inputTime;
+						it2->inputState = InputState::Canceled;
+						inputTime = it2->inputTime;
 						break;
 
 					case InputState::Performed:
 						// 入力終了のパラメーターに変更
-						(*it2).inputState = InputState::Canceled;
-						inputTime = (*it2).inputTime;
+						it2->inputState = InputState::Canceled;
+						inputTime = it2->inputTime;
 						break;
 
 					case InputState::Canceled:
 						// 入力待機のパラメーターに変更
-						(*it2).inputState = InputState::Waiting;
-						inputTime = (*it2).inputTime;
+						it2->inputState = InputState::Waiting;
+						inputTime = it2->inputTime;
 						break;
 					}
 				}
