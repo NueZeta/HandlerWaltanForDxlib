@@ -759,13 +759,15 @@ InputActionクラスのメンバクラスのため、記述するときは　Inp
 	 @detail	{} で複数入力可能
 	 @param[in]	const std::string&	削除するキーの存在するキーマップ
 	 @param[in]	const int		削除するキーコード
-	void DeleteKeyCode(const std::string& _key, const int _inputKey)
+	 @param[in]	const InputType&	削除するキーのコンソールの種類
+	 void DeleteKeyCode(const std::string& _key, const int _inputKey, const InputType& _inputType)
 
 	@brief		マップに登録したキーコードを削除する
 	@detail		{} で複数入力可能
 	@param[in]	const std::string&	削除するキーの存在するキーマップ
 	@param[in]	const std::vector<int>&	削除するキーコード
-	void DeleteKeyCode(const std::string& _key, const std::vector<int>& _inputKey) 
+	@param[in]	const InputType&	削除するキーのコンソールの種類
+	void DeleteKeyCode(const std::string& _key, const std::vector<int>& _inputKey, const InputType& _inputType) 
 
 
 <b> <コールバック関数削除> </b>
