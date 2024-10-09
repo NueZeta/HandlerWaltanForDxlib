@@ -25,6 +25,26 @@ enum class InputState
 };
 
 /**
+* @enum		InputType
+* @brief	入力を取るコンソール
+*/
+enum class InputType
+{
+	//! キーボード(0)
+	Key,
+	//! キーボード or Pad1(1)
+	Key_Pad1,
+	//! Pad1(2)
+	Pad1,
+	//! Pad2(3)
+	Pad2,
+	//! Pad3(4)
+	Pad3,
+	//! Pad4(5)
+	Pad4,
+};
+
+/**
 * @struct	KeyInfo
 * @brief	キー情報
 */
@@ -32,8 +52,10 @@ struct KeyInfo
 {
 	//! キーコード
 	int keyCode;
+	//! コンソールの種類
+	InputType inputType;
 	//! 入力時間
-	unsigned int inputTyme;
+	unsigned int inputTime;
 	//! ボタン入力のパラメータ
 	InputState inputState;
 };
@@ -56,7 +78,7 @@ public:
 		//! InputActionのパラメータ
 		const InputState state;
 		//! 入力したときの時間(ms)
-		const unsigned int inputTyme;
+		const unsigned int inputTime;
 		//! 登録されているキー
 		const std::vector<KeyInfo> key;
 	};
@@ -106,9 +128,9 @@ private:
 	 * @author		Suzuki N
 	 * @date		24/09/10
 	 */
-	InputAction(const int _keyCode) : inputState(InputState::Waiting), nextId(0)
+	InputAction(const int _keyCode, const InputType& _inputType) : inputState(InputState::Waiting), nextId(0)
 	{
-		AddKeyCode(_keyCode);
+		AddKeyCode(_keyCode, _inputType);
 	}
 
 	/**
@@ -116,9 +138,9 @@ private:
 	 * @author		Suzuki N
 	 * @date		24/09/10
 	 */
-	InputAction(const std::vector<int> _keyCodeVec) : inputState(InputState::Waiting), nextId(0)
+	InputAction(const std::vector<int> _keyCodeVec, const InputType& _inputType) : inputState(InputState::Waiting), nextId(0)
 	{
-		AddKeyCode(_keyCodeVec);
+		AddKeyCode(_keyCodeVec, _inputType);
 	}
 
 public:
@@ -173,15 +195,17 @@ private:
 	 * @brief		キーコードを追加する
 	 * @detail		{} で複数選択可能
 	 * @param[in]	int 追加するキーコード
+	 * @param[in]	const InputType& 入力を見るコンソールの種類
 	 * @author		Suzuki N
 	 * @date		24/09/10
 	 */
-	void AddKeyCode(const int _keyCode)
+	void AddKeyCode(const int _keyCode, const InputType& _inputType)
 	{
 		//! 登録するキー情報の初期化宣言
 		KeyInfo keyInfo =
 		{
 			_keyCode,
+			_inputType,
 			0,
 			InputState::Waiting,
 		};
@@ -194,10 +218,11 @@ private:
 	 * @brief		キーコードを追加する
 	 * @detail		{} で複数選択可能
 	 * @param[in]	std::vector<int> 追加するキーコード
+	 * @param[in]	const InputType& 入力を見るコンソールの種類
 	 * @author		Suzuki N
 	 * @date		24/09/10
 	 */
-	void AddKeyCode(const std::vector<int> _keyCodeVec)
+	void AddKeyCode(const std::vector<int> _keyCodeVec, const InputType& _inputType)
 	{
 		for (auto it = _keyCodeVec.begin(); it != _keyCodeVec.end(); ++it)
 		{
@@ -205,6 +230,7 @@ private:
 			KeyInfo keyInfo =
 			{
 				*it,
+				_inputType,
 				0,
 				InputState::Waiting,
 			};
@@ -325,10 +351,11 @@ public:
 	 * @detail		{} で複数入力可能
 	 * @param[in]	std::string&	登録するキー
 	 * @param[in]	const int		キーコード
+	 * @param[in]	const InputType& 入力を見るコンソールの種類
 	 * @author		Suzuki N
 	 * @date		24/09/07
 	 */
-	void AddKeyCode(const std::string& _key, const int _inputKey)
+	void AddKeyCode(const std::string& _key, const int _inputKey, const InputType& _inputType = InputType::Key)
 	{
 		// キーが既に存在している場合は要素を追加する
 		auto it = keyMap.find(_key);
@@ -341,11 +368,11 @@ public:
 					if (it2->keyCode == _inputKey)
 						return;
 
-			it->second->AddKeyCode(_inputKey);
+			it->second->AddKeyCode(_inputKey, _inputType);
 		}
 		// 存在していなかった場合は、新たにアクションマップを作成する
 		else
-			keyMap[_key] = new InputAction(_inputKey);
+			keyMap[_key] = new InputAction(_inputKey, _inputType);
 	}
 
 	/**
@@ -353,10 +380,11 @@ public:
 	 * @detail		{} で複数入力可能
 	 * @param[in]	const std::string&		 登録するキー
 	 * @param[in]	const std::vector<int>&  キーコード
+	 * @param[in]	const InputType& 入力を見るコンソールの種類
 	 * @author		Suzuki N
 	 * @date		24/09/07
 	 */
-	void AddKeyCode(const std::string& _key, const std::vector<int>& _inputKey)
+	void AddKeyCode(const std::string& _key, const std::vector<int>& _inputKey, const InputType& _inputType = InputType::Key)
 	{
 		// キーが既に存在している場合は要素を追加する
 		auto it = keyMap.find(_key);
@@ -370,11 +398,11 @@ public:
 						if (it2->keyCode == *keyIt)
 							break;
 
-			it->second->AddKeyCode(_inputKey);
+			it->second->AddKeyCode(_inputKey, _inputType);
 		}
 		// 存在していなかった場合は、新たにアクションマップを作成する
 		else
-			keyMap[_key] = new InputAction(_inputKey);
+			keyMap[_key] = new InputAction(_inputKey, _inputType);
 	}
 
 #pragma endregion
@@ -527,40 +555,46 @@ private:
 			//! このアクションマップ内で入力があったか
 			bool isInput = false;
 			//! 入力時間
-			unsigned int inputTyme = 0;
+			unsigned int inputTime = 0;
 
 			for (auto it2 = it->second->GetKeyInfoRef().begin(); it2 != it->second->GetKeyInfoRef().end(); ++it2)
 			{
 				// 登録されたキーの入力状態を確認
-				if (CheckHitKey((*it2).keyCode))
+//				if (CheckHitKey((*it2).keyCode))
+				if ((it2->inputType == InputType::Key && CheckHitKey(it2->keyCode)) ||
+					(it2->inputType == InputType::Key_Pad1 && GetJoypadInputState(DX_INPUT_KEY_PAD1) & it2->keyCode) ||
+					(it2->inputType == InputType::Pad1 && GetJoypadInputState(DX_INPUT_PAD1) & it2->keyCode) ||
+					(it2->inputType == InputType::Pad2 && GetJoypadInputState(DX_INPUT_PAD2) & it2->keyCode) ||
+					(it2->inputType == InputType::Pad3 && GetJoypadInputState(DX_INPUT_PAD3) & it2->keyCode) ||
+					(it2->inputType == InputType::Pad4 && GetJoypadInputState(DX_INPUT_PAD4) & it2->keyCode))
 				{
 					// 入力があった
 					isInput = true;
 
 					// キーの入力状態でパラメーターを変える
-					switch ((*it2).inputState)
+					switch (it2->inputState)
 					{
 					case InputState::Waiting:
-						(*it2).inputState = InputState::Started;
+						it2->inputState = InputState::Started;
 						// 実行時間を保管
-						inputTyme = (*it2).inputTyme = GetNowCount();
+						inputTime = (*it2).inputTime = GetNowCount();
 						break;
 
 					case InputState::Started:
 						// 入力中にパラメーターを変更
 						(*it2).inputState = InputState::Performed;
-						inputTyme = (*it2).inputTyme;
+						inputTime = (*it2).inputTime;
 						break;
 
 					case InputState::Performed:
 						// 押下状態の継続なため、パラメーターの変更はなし
-						inputTyme = (*it2).inputTyme;
+						inputTime = (*it2).inputTime;
 						break;
 
 					case InputState::Canceled:
 						(*it2).inputState = InputState::Started;
 						// 実行時間を保管
-						inputTyme = (*it2).inputTyme = GetNowCount();
+						inputTime = (*it2).inputTime = GetNowCount();
 						break;
 					}
 				}
@@ -571,26 +605,26 @@ private:
 					switch ((*it2).inputState)
 					{
 					case InputState::Waiting:
-						inputTyme = (*it2).inputTyme;
+						inputTime = (*it2).inputTime;
 						// 待機状態を継続しているため、変更なし
 						break;
 
 					case InputState::Started:
 						// 入力終了のパラメーターに変更
 						(*it2).inputState = InputState::Canceled;
-						inputTyme = (*it2).inputTyme;
+						inputTime = (*it2).inputTime;
 						break;
 
 					case InputState::Performed:
 						// 入力終了のパラメーターに変更
 						(*it2).inputState = InputState::Canceled;
-						inputTyme = (*it2).inputTyme;
+						inputTime = (*it2).inputTime;
 						break;
 
 					case InputState::Canceled:
 						// 入力待機のパラメーターに変更
 						(*it2).inputState = InputState::Waiting;
-						inputTyme = (*it2).inputTyme;
+						inputTime = (*it2).inputTime;
 						break;
 					}
 				}
@@ -616,7 +650,7 @@ private:
 					break;
 				}
 				// 登録されたコールバック関数をすべて呼び出す
-				it->second->CallCallbacks({ it->second->GetInputState(),inputTyme, it->second->GetKeyInfoVec(),});
+				it->second->CallCallbacks({ it->second->GetInputState(),inputTime, it->second->GetKeyInfoVec(),});
 			}
 			// 入力がなかった場合
 			else
@@ -630,12 +664,12 @@ private:
 				case InputState::Started:
 					it->second->SetInputState(InputState::Canceled);
 					// 登録されたコールバック関数をすべて呼び出す
-					it->second->CallCallbacks({ it->second->GetInputState(),inputTyme, it->second->GetKeyInfoVec(), });
+					it->second->CallCallbacks({ it->second->GetInputState(),inputTime, it->second->GetKeyInfoVec(), });
 					break;
 				case InputState::Performed:
 					it->second->SetInputState(InputState::Canceled);
 					// 登録されたコールバック関数をすべて呼び出す
-					it->second->CallCallbacks({ it->second->GetInputState(),inputTyme, it->second->GetKeyInfoVec(), });
+					it->second->CallCallbacks({ it->second->GetInputState(),inputTime, it->second->GetKeyInfoVec(), });
 					break;
 				case InputState::Canceled:
 					it->second->SetInputState(InputState::Waiting);
