@@ -227,6 +227,9 @@
 	@brief		オブジェクトの名前
 	std::string name
 
+ 	@brief		オブジェクトのタグ
+	int tag
+
  	@brief		アクティブ
 	bool active
 
@@ -441,13 +444,16 @@
 	@brief		移動ベクトル
 	VECTOR velocity
 
+	@brief		正面ベクトル
+	VECTOR forward
+
 
    <b> <メンバ関数> </b>
 
 
-	@brief		オブジェクトの正面ベクトルを取得
-	const VECTOR& Forward()
-
+	@brief		目標のほうを向く
+ 	@param@[in]	const VECTOR& 目標
+	void LookAt(const VECTOR&)
 
 </body>
 <p align="right">(<a href="#top">トップへ</a>)</p>
