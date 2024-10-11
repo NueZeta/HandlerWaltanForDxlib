@@ -254,7 +254,7 @@
 
  	@brief		指定のコンポーネントを返す
 	@return		アタッチされていた場合はインスタンスを返し、それ以外ならnullPtrを返す
-	template<typename T>
+	template<class T>
 	T* GetComponent()
 
 </body>
