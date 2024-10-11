@@ -23,9 +23,10 @@
 4. [HWCapsuleCollider](#hwcapsulecollider)
 5. [HWRenderer](#hwrenderer)
 6. [HWAnimator](#hwanimator)
-7. [InputSystem](#inputsystem)
-8. [PoolAllocator](#poolallocator)
-9. [CsvLoader](#csvloader)
+7. [HWEffect](#hweffect)
+8. [InputSystem](#inputsystem)
+9. [PoolAllocator](#poolallocator)
+10. [CsvLoader](#csvloader)
 
 
 
@@ -627,14 +628,6 @@ AnimLoad関数を実行すると AnimInfo 型で参照が返ってくるので�
 	void AnimChange(const int)
 
 
-  <b> <Setter関数> </b>
-
-
-	@brief		アニメーションの再生が終了した時に自動再生されるdefaultアニメーション(Idolアニメーションなど)
-	@param[in]	const int デフォルトのアニメーションID
-	void SetDefaultAnimId(const int)
-
-
   <b> <Getter関数> </b>
 
 
@@ -650,6 +643,13 @@ AnimLoad関数を実行すると AnimInfo 型で参照が返ってくるので�
 	@return		const int ブレンド中のアニメーションインデックス1
 	const int GetBlendAnimId()
 
+  <b> <Setter関数> </b>
+
+
+	@brief		アニメーションの再生が終了した時に自動再生されるdefaultアニメーション(Idolアニメーションなど)
+	@param[in]	const int デフォルトのアニメーションID
+	void SetDefaultAnimId(const int) 
+
 </body>
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
@@ -658,6 +658,79 @@ AnimLoad関数を実行すると AnimInfo 型で参照が返ってくるので�
 
 <!------------------------------------------------------------------------------------------------------------------>
 
+## HWEffect
+
+<b> <説明> </b>
+
+Effekseerで作成したエフェクトを再生するコンポーネント
+
+<br />
+<br />
+
+<b> <列挙体> </b>
+
+	 @brief	再生終了時のアクション
+	{
+		//! 何もしない(0)
+		None,
+		//! ループする(1)
+		Loop,
+		//! 削除する(2)
+		Destroy,
+		//! 非アクティブにする(3)
+		Disable,
+		//! コールバック関数を呼ぶ(4)
+		Callback,
+	}
+
+
+<b> <メンバ変数> </b>
+
+	@brief		再生終了時のアクション
+	StopAction stopAction;	
+
+ 
+<b> <Getter関数> </b>
+
+	@brief		再生状況を取得する
+	@return		bool 再生中か 	
+	bool IsPlay() { return isPlay; }
+
+	@brief		エフェクトの再生速度を取得する
+	@return		float 再生速度
+	float GetPlaySpeed()
+
+	@brief		再生中のエフェクトハンドル
+	@return		int エフェクトハンドル
+	int GetPlayEffectHandle()
+
+
+<b> <Setter関数> </b>
+
+	@brief		エフェクトを再生する
+	void Play()
+
+	@brief		再生を停止する
+	void Stop()
+
+	@brief		エフェクトの再生速度を設定する
+	@rparam[in]	const float 再生速度
+	void SetPlaySpeed(float _speed)
+
+	@brief		エフェクト再生終了時に呼ばれるコールバック関数を登録する
+	@rparam[in]	std::function<void()> 登録するコールバック関数
+	void SetCallBack(std::function<void()> _callBack)
+
+	@brief		エフェクトのカラーを設定する
+	@rparam[in]	const Color& カラー
+	void SetColor(const int r, const int g, const int b, const int a)
+
+
+<p align="right">(<a href="#top">トップへ</a>)</p> 
+
+
+
+<!------------------------------------------------------------------------------------------------------------------>
 
 
 ## InputSystem
