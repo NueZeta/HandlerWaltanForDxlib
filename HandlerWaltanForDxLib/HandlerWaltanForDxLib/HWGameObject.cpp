@@ -191,12 +191,20 @@ void HWGameObject::ShallowCopy(const HWGameObject& _other)
 
 }
 
+void HWGameObject::CallTransformUpdate()
+{
+    transform->Update();
+}
+
 void HWGameObject::CallAllUpdates()
 {
     if (!active) return;
 
     for (auto& component : hwComponents)
     {
+        // HWTransformは無視
+        if (typeid(*component) == typeid(HWTransform)) continue;
+
         if(component->active)
         {
             // まだStartメソッドを実行していない場合は実行する
@@ -208,6 +216,17 @@ void HWGameObject::CallAllUpdates()
             }
             component.get()->Update();
         }
+    }
+}
+
+void HWGameObject::CallAllLateUpdates()
+{
+    if (!active) return;
+
+    for (auto& component : hwComponents)
+    {
+        if (component->active)
+            component.get()->LateUpdate();
     }
 }
 

@@ -17,7 +17,12 @@ void HWAnimator::AnimPlay()
 	if (playIndex1 != -1)
 	{
 		// 再生時間を進める
-		playTime += animInfoVec[playIndex1]->playSpeed * Time::DeltaTime();
+		playTime += animInfoVec[playIndex1]->playSpeed;
+
+		// コールバック関数が登録されている場合は再生時間に応じて呼び出す
+		auto& callBacks = animInfoVec[playIndex1]->GetCallBack();
+		if (!callBacks.empty() && callBacks.find(playTime) != callBacks.end())
+			callBacks[playTime]();
 
 		// アニメーションの再生が終了した
 		if (playTime >= animInfoVec[playIndex1]->totalTime)
@@ -46,7 +51,7 @@ void HWAnimator::AnimPlay()
 		// ブレンド率が1未満の場合は1に近づける
 		if (animBlendRate < 1.0f)
 		{
-			animBlendRate += blendSpeed * Time::DeltaTime();
+			animBlendRate += blendSpeed;
 			// ブレンド率が1以上の場合、アニメーション1を削除し、
 			// アニメーション2の情報をアニメーション1に渡す
 			if (animBlendRate >= 1.0f)
@@ -77,7 +82,7 @@ HWAnimator::~HWAnimator()
 		MV1DeleteModel((*it)->animHandle);
 }
 
-AnimInfo& HWAnimator::AnimLoad(const std::string& _filePath, const int _animId)
+AnimInfo* HWAnimator::AnimLoad(const std::string& _filePath, const int _animId)
 {
 	//! アニメーション情報をまとめたクラスのインスタンスを生成
 	std::unique_ptr<AnimInfo> animInfo = std::make_unique<AnimInfo>();
@@ -100,7 +105,7 @@ AnimInfo& HWAnimator::AnimLoad(const std::string& _filePath, const int _animId)
 	// 所有権をvectorに移す
 	animInfoVec.push_back(std::move(animInfo));
 
-	return *animInfoVec.back();
+	return animInfoVec.back().get();
 }
 
 void HWAnimator::AnimChange(const int _animId)

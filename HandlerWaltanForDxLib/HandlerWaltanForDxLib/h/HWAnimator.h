@@ -75,6 +75,14 @@ public:
 	 */
 	float totalTime;
 
+private:
+
+	/**
+	 * @brief		特定の再生時間に達したときに呼ばれるコールバック関数
+	 * @History		24/10/12 作成(Suzuki N)
+	 */
+	std::unordered_map<float, std::function<void()>> callBacks;
+
 
 public:
 	/*     メソッド     */
@@ -87,6 +95,30 @@ public:
 	AnimInfo() : modelHandle(-1), animHandle(-1), animIndex(-1), attachIndex(-1),
 		filePath(""), isLoop(false), interruption(true), playSpeed(-1.f), totalTime(-1.f)
 	{}
+
+	/**
+	 * @brief		特定の再生時間になったときに呼ばれるコールバックを登録する
+	 * @param[in]	float コールバック関数を呼び出したい再生時間
+	 * @param[in]	std::function<void()> 登録するコールバック関数
+	 * @author		Suzuki N
+	 * @date		24/10/12
+	 */
+	void AddCallBack(float _callTime, std::function<void()> _callback)
+	{
+		callBacks[_callTime] = _callback;
+	}
+
+	/**
+	 * @brief		登録されているコールバック関数を取得する
+	 * @return		std::unordered_map<float, std::function<void()>>& 
+	 * @author		Suzuki N
+	 * @date		24/10/12
+	 */
+	std::unordered_map<float, std::function<void()>>& GetCallBack()
+	{
+		return callBacks;
+	}
+
 };
 
 
@@ -186,7 +218,7 @@ public:
 	 * @author		Suzuki N
 	 * @date		24/09/24
 	 */
-	AnimInfo& AnimLoad(const std::string& _filePath, const int _animId = 0);
+	AnimInfo* AnimLoad(const std::string& _filePath, const int _animId = 0);
 
 	/**
 	 * @brief		再生するアニメーションを指定

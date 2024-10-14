@@ -98,6 +98,7 @@ public:
 
 	/**
 	 * @brief		Ä¶ó‹µ‚ğæ“¾‚·‚é
+	 * @return		bool Ä¶’†‚©
 	 * @author		Suzuki N
 	 * @date		24/10/07
 	 */

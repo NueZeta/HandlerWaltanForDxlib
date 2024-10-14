@@ -41,7 +41,7 @@ void HWCamera::Awake()
 	target = VGet(320.0f, 240.0f, 1.0f);
 }
 
-void HWCamera::Update()
+void HWCamera::LateUpdate()
 {
 	SetCameraPositionAndTarget_UpVecY(transform->position, target);
 }

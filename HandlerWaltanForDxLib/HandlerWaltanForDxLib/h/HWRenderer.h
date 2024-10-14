@@ -97,12 +97,20 @@ protected:
 #pragma region オーバーライドメソッド
 
 	/**
+	 * @brief		最初のUpdateメソッドの直前に働く
+	 * @detail		仮想関数
+	 * @author		Suzuki N
+	 * @date		24/06/17
+	 */
+	void Start() override;
+
+	/**
 	 * @brief		毎フレーム呼ばれる
 	 * @detail		オーバーライド関数
 	 * @author		Suzuki N
 	 * @date		24/09/01
 	 */
-	void Update() override;
+	void LateUpdate() override;
 
 #pragma endregion
 };

@@ -54,7 +54,7 @@ public:
 	 * @author		Suzuki N
 	 * @date		24/09/01
 	 */
-	void Update() override;
+	void LateUpdate() override;
 
 #pragma endregion
 };

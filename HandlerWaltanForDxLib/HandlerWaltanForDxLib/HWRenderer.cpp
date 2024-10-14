@@ -52,7 +52,17 @@ HWRenderer::~HWRenderer()
 #pragma region オーバーライドメソッド
 
 
-void HWRenderer::Update()
+void HWRenderer::Start()
+{
+	if (gameObject->name == "Map" || gameObject->name == "map" ||
+		gameObject->name == "Stage" || gameObject->name == "stage")
+	{
+		// モデル全体のコリジョン情報のセットアップ
+		MV1SetupCollInfo(modelHandle, -1);
+	}
+}
+
+void HWRenderer::LateUpdate()
 {
 	if (modelHandle == -1)
 	{

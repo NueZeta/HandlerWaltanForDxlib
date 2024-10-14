@@ -125,11 +125,25 @@ private:
 	void ShallowCopy(const HWGameObject& _other);
 
 	/**
+	 * @brief       TransformコンポーネントのUpdateメソッドを呼びだす
+	 * @author      Suzuki N
+	 * @date        24/08/22
+	 */
+	void CallTransformUpdate();
+
+	/**
 	 * @brief       全てのコンポーネントのUpdateメソッドを呼びだす
 	 * @author      Suzuki N
 	 * @date        24/08/22
 	 */
 	void CallAllUpdates();
+
+	/**
+	 * @brief       全てのコンポーネントのLateUpdateメソッドを呼びだす
+	 * @author      Suzuki N
+	 * @date        24/08/22
+	 */
+	void CallAllLateUpdates();
 
 	/**
 	 * @brief       全てのコンポーネントのOnCollisionEnterCallBackメソッドを呼びだす

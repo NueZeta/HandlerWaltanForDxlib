@@ -63,7 +63,7 @@ void HWTransform::LookAt(const VECTOR& _target)
 
 HWTransform::HWTransform() : position({ 0.0f, 0.0f, 0.0f }), rotate({ 0.0f, 0.0f, 0.0f }),
 scale({ 1.0f, 1.0f, 1.0f }), localPosition({ 0.0f, 0.0f, 0.0f }), localRotate({ 0.0f, 0.0f, 0.0f }),
-localScale({ 1.0f, 1.0f, 1.0f })
+localScale({ 1.0f, 1.0f, 1.0f }), previousPosition(position)
 {
 	priority = 20;
 	globalMat = MGetIdent();
@@ -77,8 +77,11 @@ localScale({ 1.0f, 1.0f, 1.0f })
 
 void HWTransform::Update()
 {
+	// positionを操作した場合の移動量をvelocityに足す
+	velocity = VAdd(velocity, VSub(position, previousPosition));
+
 	// 座標に移動ベクトルを足す
-	position = VAdd(position, velocity);
+	position = VAdd(previousPosition, velocity);
 
 	// 親オブジェクトが存在する場合、親の行列を子に適用
 	if (gameObject->Parent() != nullptr) 
@@ -97,6 +100,8 @@ void HWTransform::Update()
 
 	// 移動ベクトルの初期化
 	velocity = VGet(0, 0, 0);
+	// 前Fの座標を更新
+	previousPosition = position;
 
 	SetMatrix();
 }

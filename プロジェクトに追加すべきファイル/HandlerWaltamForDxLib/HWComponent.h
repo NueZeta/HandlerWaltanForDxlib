@@ -155,6 +155,15 @@ protected:
 	 */
 	virtual void Update() {}
 
+
+	/**
+	 * @brief		毎フレーム呼ばれるメソッド(Updateよりも後に呼ばれる)
+	 * @detail		仮想関数
+	 * @author		Suzuki N
+	 * @date		24/10/12
+	 */
+	virtual void LateUpdate() {}
+
 #pragma region コリジョン関係
 
 	/**

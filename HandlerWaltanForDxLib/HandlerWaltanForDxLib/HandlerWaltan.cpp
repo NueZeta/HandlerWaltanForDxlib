@@ -35,12 +35,12 @@ void HandlerWaltan::Update()
 {
     Time::Update();
 
-    // インスタンス化された全てのHWGameObjectのUpdateメソッドを呼び出す
-    for (auto obj : HWGameObject::GetGameObjects())
-        obj->CallAllUpdates();
+    //! インスタンス化された全てのGameObject
+    auto gameObjects = HWGameObject::GetGameObjects();
 
-    // あたり判定を確認
-    CollisionWaltan::Instance().Update();
+    // TransformのUpdateメソッドを呼び出す
+    for (auto obj : gameObjects)
+        obj->CallTransformUpdate();
 
     // インスタンス化されたInputSystemのUpdateメソッドを呼ぶ
     for (auto it = InputSystem::inputSystemVec.begin(); it != InputSystem::inputSystemVec.end(); ++it)
@@ -48,6 +48,18 @@ void HandlerWaltan::Update()
         if ((*it)->active)
             (*it)->Update();
     }
+
+    // インスタンス化された全てのHWGameObjectのUpdateメソッドを呼び出す
+    for (auto obj : gameObjects)
+        obj->CallAllUpdates();
+
+    // インスタンス化された全てのHWGameObjectのLateUpdateメソッドを呼び出す
+    for (auto obj : gameObjects)
+        obj->CallAllLateUpdates();
+
+    // あたり判定を確認
+    CollisionWaltan::Instance().Update();
+
 
     // Effekseerにより再生中のエフェクトを更新する。
     UpdateEffekseer3D();

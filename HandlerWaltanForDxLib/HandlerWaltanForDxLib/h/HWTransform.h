@@ -89,11 +89,17 @@ public:
 	 */
 	VECTOR forward;
 
+private:
 
-	/*     メソッド     */
+	/**
+	 * @brief		前Fの座標
+	 * @History		24/10/12 作成(Suzuki N)
+	 */
+	VECTOR previousPosition;
 
 
 private:
+	/*     メソッド     */
 
 	/**
 	 * @brief		平行移動、回転、拡縮を設定する
@@ -101,6 +107,8 @@ private:
 	 * @date		24/09/15
 	 */
 	void SetMatrix();
+
+
 
 public:
 
