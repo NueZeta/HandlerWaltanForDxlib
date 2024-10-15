@@ -33,15 +33,15 @@ enum class InputType
 	//! キーボード(0)
 	Key,
 	//! キーボード or Pad1(1)
-	Key_Pad1,
+	Key_Pad1 = DX_INPUT_KEY_PAD1,
 	//! Pad1(2)
-	Pad1,
+	Pad1 = DX_INPUT_PAD1,
 	//! Pad2(3)
-	Pad2,
+	Pad2 = DX_INPUT_PAD2,
 	//! Pad3(4)
-	Pad3,
+	Pad3 = DX_INPUT_PAD3,
 	//! Pad4(5)
-	Pad4,
+	Pad4 = DX_INPUT_PAD4,
 };
 
 /**
@@ -81,6 +81,14 @@ public:
 		const unsigned int inputTime;
 		//! 登録されているキー
 		const std::vector<KeyInfo> key;
+		//! XBoxコントローラの左スティックの入力(X)
+		const short lX;
+		//! XBoxコントローラの左スティックの入力(Y)
+		const short lY;
+		//! XBoxコントローラの右スティックの入力(X)
+		const short rX;
+		//! XBoxコントローラの右スティックの入力(Y)
+		const short rY;
 	};
 
 private:
@@ -563,11 +571,7 @@ private:
 			{
 				// 登録されたキーの入力状態を確認
 				if ((it2->inputType == InputType::Key && CheckHitKey(it2->keyCode)) ||
-					(it2->inputType == InputType::Key_Pad1 && GetJoypadInputState(DX_INPUT_KEY_PAD1) & it2->keyCode) ||
-					(it2->inputType == InputType::Pad1 && GetJoypadInputState(DX_INPUT_PAD1) & it2->keyCode) ||
-					(it2->inputType == InputType::Pad2 && GetJoypadInputState(DX_INPUT_PAD2) & it2->keyCode) ||
-					(it2->inputType == InputType::Pad3 && GetJoypadInputState(DX_INPUT_PAD3) & it2->keyCode) ||
-					(it2->inputType == InputType::Pad4 && GetJoypadInputState(DX_INPUT_PAD4) & it2->keyCode))
+					(GetJoypadInputState((int)it2->inputType) & it2->keyCode))
 				{
 					// 入力があった
 					isInput = true;
@@ -651,7 +655,7 @@ private:
 					break;
 				}
 				// 登録されたコールバック関数をすべて呼び出す
-				it->second->CallCallbacks({ it->second->GetInputState(),inputTime, it->second->GetKeyInfoVec(),});
+				it->second->CallCallbacks({ it->second->GetInputState(),inputTime, it->second->GetKeyInfoVec(), });
 			}
 			// 入力がなかった場合
 			else

@@ -23,6 +23,9 @@ constexpr float PLAYER_ANIM_BLEND_SPEED = 0.0166f;
 constexpr float NEARLY_THRESHOLD = 0.000001f;			// 2つの数値が近いと判断する差の許容値
 // コリジョン関係.
 constexpr float HIT_SLIDE_LENGTH = 5.0f;				// 一度の壁押し出し処理でスライドさせる距離
+// Pad
+#define PAD_INPUT_LEFT_STICK								(0x100000000)
+#define PAD_INPUT_RIGHT_STICK								(0x200000000)
 
 
 /**
