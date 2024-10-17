@@ -22,6 +22,8 @@ enum class ColliderType
 	Sphere,
 	//! カプセル型(2)
 	Capsule,
+	//! ポリゴン型(3)
+	Model,
 };
 
 

@@ -63,13 +63,6 @@ void CollisionWaltan::Update()
 
 				// カプセル型コライダーの場合
 			case ColliderType::Capsule:
-				if (!(*it1)->isTrigger && ((*it2)->gameObject->name == "Map" ||
-					(*it2)->gameObject->name == "map" || (*it2)->gameObject->name == "Stage" ||
-					(*it2)->gameObject->name == "stage"))
-					// コライダーがtriggerではない場合、壁とのあたり判定を取る
-					CollCheck_Capsule_Model(dynamic_cast<HWCapsuleCollider*>(*it1),
-						(*it2)->gameObject->GetComponent<HWRenderer>()->GetModelHandle());
-
 				if (CollCheck_Capsule(dynamic_cast<HWCapsuleCollider*>(*it1), *it2))
 					// Hit時のコールバック関数を呼び出す
 					ColliderHitCallBacks(collisionIt, *it1, *it2, (*it1)->isTrigger);
@@ -80,7 +73,22 @@ void CollisionWaltan::Update()
 
 				// 球体型コライダーの場合
 			case ColliderType::Sphere:
-				CollCheck_Sphere(dynamic_cast<HWSphereCollider*>(*it1), *it2);
+				if (CollCheck_Sphere(dynamic_cast<HWSphereCollider*>(*it1), *it2))
+					// Hit時のコールバック関数を呼び出す
+					ColliderHitCallBacks(collisionIt, *it1, *it2, (*it1)->isTrigger);
+				else
+					// 未接触時の処理
+					ColliderAvoidCallBacks(collisionIt, *it1, *it2, (*it1)->isTrigger);
+				break;
+
+				// モデルコライダーの場合
+			case ColliderType::Model:
+				if (CollCheck_Model(dynamic_cast<HWModelCollider*>(*it1), *it2))
+					// Hit時のコールバック関数を呼び出す
+					ColliderHitCallBacks(collisionIt, *it1, *it2, (*it1)->isTrigger);
+				else
+					// 未接触時の処理
+					ColliderAvoidCallBacks(collisionIt, *it1, *it2, (*it1)->isTrigger);
 				break;
 			}
 		}
@@ -112,6 +120,11 @@ bool CollisionWaltan::CollCheck_Box(HWBoxCollider* boxCol1, HWCollider* _col2)
 	// ボックス to スフィア の場合
 	case ColliderType::Sphere:
 		return CollCheck_Box_Sphere(boxCol1, static_cast<HWSphereCollider*>(_col2));
+
+	// ボックス to モデル の場合
+	case ColliderType::Model:
+		return CollCheck_Box_Model(boxCol1, static_cast<HWModelCollider*>(_col2));
+
 	}
 
 	return false;
@@ -133,6 +146,10 @@ bool CollisionWaltan::CollCheck_Capsule(HWCapsuleCollider* _col1, HWCollider* _c
 		// カプセル to スフィア の場合
 	case ColliderType::Sphere:
 		return CollCheck_Capsule_Sphere(_col1, static_cast<HWSphereCollider*>(_col2));
+
+		// カプセル to モデル の場合
+	case ColliderType::Model:
+		return CollCheck_Capsule_Model(_col1, static_cast<HWModelCollider*>(_col2));
 	}
 
 	return false;
@@ -154,6 +171,35 @@ bool CollisionWaltan::CollCheck_Sphere(HWSphereCollider* _col1, HWCollider* _col
 		// スフィア to スフィア の場合
 	case ColliderType::Sphere:
 		return CollCheck_Sphere_Sphere(_col1, static_cast<HWSphereCollider*>(_col2));
+
+		// カプセル to モデル の場合
+	case ColliderType::Model:
+		return CollCheck_Sphere_Model(_col1, static_cast<HWModelCollider*>(_col2));
+	}
+
+	return false;
+}
+
+bool CollisionWaltan::CollCheck_Model(HWModelCollider* _col1, HWCollider* _col2)
+{
+	// _col2のコライダータイプによって処理を変える
+	switch (_col2->GetColliderType())
+	{
+		// モデル to ボックス の場合
+	case ColliderType::Box:
+		return CollCheck_Model_Box(_col1, static_cast<HWBoxCollider*>(_col2));
+
+		// モデル to カプセル の場合
+	case ColliderType::Capsule:
+		return CollCheck_Model_Capsule(_col1, static_cast<HWCapsuleCollider*>(_col2));
+
+		// モデル to スフィア の場合
+	case ColliderType::Sphere:
+		return CollCheck_Model_Sphere(_col1, static_cast<HWSphereCollider*>(_col2));
+
+		// モデル to モデル の場合
+	case ColliderType::Model:
+		return CollCheck_Model_Model(_col1, static_cast<HWModelCollider*>(_col2));
 	}
 
 	return false;
@@ -162,11 +208,6 @@ bool CollisionWaltan::CollCheck_Sphere(HWSphereCollider* _col1, HWCollider* _col
 
 #pragma region BOXタイプの衝突判定
 
-
-bool CollisionWaltan::CollCheck_BOX_Model(HWBoxCollider* _boxCol, const int _modelHandle)
-{
-	return false;
-}
 
 bool CollisionWaltan::CollCheck_Box_Box(HWBoxCollider* _boxCol, HWBoxCollider* _boxCol2)
 {
@@ -218,204 +259,16 @@ bool CollisionWaltan::CollCheck_Box_Sphere(HWBoxCollider* _boxCol, HWSphereColli
 	return false;
 }
 
+bool CollisionWaltan::CollCheck_Box_Model(HWBoxCollider* _boxCol, HWModelCollider* _modelCol)
+{
+	return false;
+}
+
 
 #pragma endregion
 
 #pragma region CAPSULEタイプの衝突判定
 
-
-bool CollisionWaltan::CollCheck_Capsule_Model(HWCapsuleCollider* _capsuleCol, const int _modelHandle)
-{
-	MV1_COLL_RESULT_POLY* Poly;			// ポリゴンの構造体にアクセスするために使用するポインタ( 使わなくても済ませられますがプログラムが長くなるので・・・ )
-
-	// 移動前の座標を保存
-	const VECTOR OldPos = _capsuleCol->transform->position;
-	// 移動量
-	VECTOR velocity = _capsuleCol->transform->velocity;
-	// 移動後の座標を算出
-	VECTOR NewPos = VAdd(OldPos, velocity);
-
-	std::vector<MV1_COLL_RESULT_POLY*> Walls;	// 壁ポリゴンと判断されたポリゴンの構造体のアドレスを保存しておくためのポインタ配列
-	std::vector<MV1_COLL_RESULT_POLY*> Floors;	// 床ポリゴンと判断されたポリゴンの構造体のアドレスを保存しておくためのポインタ配列
-
-	int MaxHitCol = 0;
-	int HitTryNum = 0;
-
-	bool isWallHit;
-
-	// プレイヤーの周囲にあるステージポリゴンを取得する
-	// ( 検出する範囲は移動距離も考慮する )
-	MV1_COLL_RESULT_POLY_DIM HitDim = MV1CollCheck_Sphere(_modelHandle, -1, OldPos, _capsuleCol->radius);
-
-	// x軸かy軸方向に 0.01f 以上移動した場合は「移動した」扱い
-	const bool IsMove = fabs(velocity.x) > 0.01f || fabs(velocity.z) > 0.01f;
-
-	// 検出されたポリゴンが壁ポリゴン( ＸＺ平面に垂直なポリゴン )か床ポリゴン( ＸＺ平面に垂直ではないポリゴン )かを判断する
-	Walls.clear();
-	Floors.clear();
-
-	// 検出されたポリゴンの数だけ繰り返し
-	for (int i = 0; i < HitDim.HitNum; i++)
-	{
-		// ＸＺ平面に垂直かどうかはポリゴンの法線のＹ成分が０に限りなく近いかどうかで判断する
-		if (IsNearlyZero(HitDim.Dim[i].Normal.y))
-		{
-			// 壁ポリゴンと判断された場合でも、プレイヤーのＹ座標＋１．０ｆより高いポリゴンのみ当たり判定を行う
-			if (HitDim.Dim[i].Position[0].y > OldPos.y + 1.0f ||
-				HitDim.Dim[i].Position[1].y > OldPos.y + 1.0f ||
-				HitDim.Dim[i].Position[2].y > OldPos.y + 1.0f)
-			{
-				// ポリゴンの数が列挙できる限界数に達していなかったらポリゴンを配列に追加
-				if (Walls.size() < MaxHitCol)
-				{
-					// ポリゴンの構造体のアドレスを壁ポリゴンポインタ配列に保存する
-					Walls.push_back(&HitDim.Dim[i]);
-				}
-			}
-		}
-		else
-		{
-			// ポリゴンの数が列挙できる限界数に達していなかったらポリゴンを配列に追加
-			if (Floors.size() < MaxHitCol)
-			{
-				// ポリゴンの構造体のアドレスを床ポリゴンポインタ配列に保存する
-				Floors.push_back(&HitDim.Dim[i]);
-			}
-		}
-	}
-
-	// 壁ポリゴンとの当たり判定処理
-	if (Walls.size() != 0)
-	{
-		// 移動したかどうかで処理を分岐
-		if (IsMove)
-		{
-			// 壁ポリゴンの数だけ繰り返し
-			for (int i = 0; i < Walls.size(); i++)
-			{
-				// i番目の壁ポリゴンのアドレスを壁ポリゴンポインタ配列から取得
-				Poly = Walls[i];
-
-				// ポリゴンとプレイヤーが当たっていなかったら次のカウントへ
-				if (HitCheck_Capsule_Triangle(NewPos, VAdd(NewPos, VGet(0.0f, _capsuleCol->height, 0.0f)), _capsuleCol->radius,
-					Poly->Position[0], Poly->Position[1], Poly->Position[2]) == FALSE) { continue; }
-
-				// ここにきたらポリゴンとプレイヤーが当たっているということなので、ポリゴンに当たったフラグを立てる
-				isWallHit = true;
-
-				// 壁に当たったら壁に遮られない移動成分分だけ移動する
-				{
-					VECTOR SlideVec;	// プレイヤーをスライドさせるベクトル
-
-					// 進行方向ベクトルと壁ポリゴンの法線ベクトルに垂直なベクトルを算出
-					SlideVec = VCross(velocity, Poly->Normal);
-
-					// 算出したベクトルと壁ポリゴンの法線ベクトルに垂直なベクトルを算出、これが
-					// 元の移動成分から壁方向の移動成分を抜いたベクトル
-					SlideVec = VCross(Poly->Normal, SlideVec);
-
-					// それを移動前の座標に足したものを新たな座標とする
-					NewPos = VAdd(OldPos, SlideVec);
-				}
-
-				// 新たな移動座標で壁ポリゴンと当たっていないかどうかを判定する
-				bool isCollisionNewPos = false;
-				for (int j = 0; j < Walls.size(); j++)
-				{
-					// j番目の壁ポリゴンのアドレスを壁ポリゴンポインタ配列から取得
-					Poly = Walls[j];
-
-					// 当たっていたらループから抜ける
-					if (HitCheck_Capsule_Triangle(NewPos, VAdd(NewPos, VGet(0.0f, _capsuleCol->height, 0.0f)), _capsuleCol->radius,
-						Poly->Position[0], Poly->Position[1], Poly->Position[2]))
-					{
-						isCollisionNewPos = true;
-						break;
-					}
-				}
-
-				// どのポリゴンとも当たらなかったので
-				// 壁に当たったフラグを倒した上でループから抜ける
-				if (!isCollisionNewPos)
-				{
-					isWallHit = false;
-					break;
-				}
-			}
-		}
-		else
-		{
-			// 移動していない場合の処理
-
-			// 壁ポリゴンの数だけ繰り返し
-			for (int i = 0; i < Walls.size(); i++)
-			{
-				// i番目の壁ポリゴンのアドレスを壁ポリゴンポインタ配列から取得
-				Poly = Walls[i];
-
-				// ポリゴンに当たっていたら当たったフラグを立てた上でループから抜ける
-				if (HitCheck_Capsule_Triangle(NewPos, VAdd(NewPos, VGet(0.0f, _capsuleCol->height, 0.0f)), _capsuleCol->radius,
-					Poly->Position[0], Poly->Position[1], Poly->Position[2]) == TRUE)
-				{
-					isWallHit = true;
-					break;
-				}
-			}
-		}
-
-		// 壁に当たっていたら壁から押し出す処理を行う
-		if (isWallHit)
-		{
-			// 壁からの押し出し処理を試みる最大数だけ繰り返し
-			for (int k = 0; k < HitTryNum; k++)
-			{
-				bool IsNeedHitTry = true;
-				// 壁ポリゴンの数だけ繰り返し
-				for (int i = 0; i < Walls.size(); i++)
-				{
-					// i番目の壁ポリゴンのアドレスを壁ポリゴンポインタ配列から取得
-					Poly = Walls[i];
-
-					// プレイヤーと当たっているかを判定
-					if (HitCheck_Capsule_Triangle(NewPos, VAdd(NewPos, VGet(0.0f, _capsuleCol->height, 0.0f)), _capsuleCol->radius,
-						Poly->Position[0], Poly->Position[1], Poly->Position[2]) == FALSE) { continue; }
-
-					// 当たっていたら規定距離分プレイヤーを壁の法線方向に移動させる
-					NewPos = VAdd(NewPos, VScale(Poly->Normal, HIT_SLIDE_LENGTH));
-
-					// 移動した上で壁ポリゴンと接触しているかどうかを判定
-					bool isCollisionNewPos = false;
-					for (int j = 0; j < Walls.size(); j++)
-					{
-						// 当たっていたらループを抜ける
-						Poly = Walls[j];
-						if (HitCheck_Capsule_Triangle(NewPos, VAdd(NewPos, VGet(0.0f, _capsuleCol->height, 0.0f)), _capsuleCol->radius,
-							Poly->Position[0], Poly->Position[1], Poly->Position[2]) == TRUE)
-						{
-							isCollisionNewPos = true;
-							break;
-						}
-					}
-
-					// 全てのポリゴンと当たっていなかったらここでループ終了
-					if (!isCollisionNewPos)
-					{
-						// 全部のポリゴンで押し出しを試みる前に全ての壁ポリゴンと接触しなくなったということなので押し出しチェックはもうしなくていい.
-						IsNeedHitTry = false;
-						break;
-					}
-				}
-
-				if (!IsNeedHitTry)
-				{
-					break;
-				}
-			}
-		}
-	}
-
-	return isWallHit;
-}
 
 bool CollisionWaltan::CollCheck_Capsule_Box(HWCapsuleCollider* _capsuleCol, HWBoxCollider* _boxCol)
 {
@@ -450,15 +303,16 @@ bool CollisionWaltan::CollCheck_Capsule_Sphere(HWCapsuleCollider* _capsuleCol, H
 }
 
 
+bool CollisionWaltan::CollCheck_Capsule_Model(HWCapsuleCollider* _capsuleCol, HWModelCollider* _modelCol)
+{
+	return false;
+}
+
+
 #pragma endregion
 
 #pragma region SPHEREタイプの衝突判定
 
-
-bool CollisionWaltan::CollCheck_Sphere_Model(HWSphereCollider* _sphereCol, const int _modelHandle)
-{
-	return false;
-}
 
 bool CollisionWaltan::CollCheck_Sphere_Box(HWSphereCollider* _sphereCol, HWBoxCollider* _boxCol)
 {
@@ -475,8 +329,40 @@ bool CollisionWaltan::CollCheck_Sphere_Sphere(HWSphereCollider* _sphereCol, HWSp
 	return false;
 }
 
+bool CollisionWaltan::CollCheck_Sphere_Model(HWSphereCollider* _sphereCol, HWModelCollider* _modelCol)
+{
+	return false;
+}
+
 
 #pragma endregion
+
+#pragma region MODELタイプの衝突判定
+
+
+bool CollisionWaltan::CollCheck_Model_Box(HWModelCollider* _modelCol, HWBoxCollider* _boxCol)
+{
+	return false;
+}
+
+bool CollisionWaltan::CollCheck_Model_Capsule(HWModelCollider* _modelCol, HWCapsuleCollider* _capsuleCol)
+{
+	return false;
+}
+
+bool CollisionWaltan::CollCheck_Model_Sphere(HWModelCollider* _modelCol, HWSphereCollider* _sphereCol2)
+{
+	return false;
+}
+
+bool CollisionWaltan::CollCheck_Model_Model(HWModelCollider* _modelCol, HWModelCollider* _modelCol2)
+{
+	return false;
+}
+
+
+#pragma endregion
+
 
 
 void CollisionWaltan::ColliderHitCallBacks(std::vector<HWCollider*>::iterator colIt, HWCollider* _col1, HWCollider* _col2, bool _isTrigger)

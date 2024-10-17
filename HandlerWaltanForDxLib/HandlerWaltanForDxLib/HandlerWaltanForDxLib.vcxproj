@@ -29,6 +29,7 @@
     <ClCompile Include="HWComponent.cpp" />
     <ClCompile Include="HWEffect.cpp" />
     <ClCompile Include="HWGameObject.cpp" />
+    <ClCompile Include="HWModelCollider.cpp" />
     <ClCompile Include="HWQuaternion.cpp" />
     <ClCompile Include="HWRenderer.cpp" />
     <ClCompile Include="HWSphereCollider.cpp" />
@@ -47,6 +48,7 @@
     <ClInclude Include="h\HWComponent.h" />
     <ClInclude Include="h\HWEffect.h" />
     <ClInclude Include="h\HWGameObject.h" />
+    <ClInclude Include="h\HWModelCollider.h" />
     <ClInclude Include="h\HWQuaternion.h" />
     <ClInclude Include="h\HWRenderer.h" />
     <ClInclude Include="h\HWSphereCollider.h" />
