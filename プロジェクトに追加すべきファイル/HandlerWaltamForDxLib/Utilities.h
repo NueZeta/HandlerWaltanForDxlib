@@ -458,3 +458,18 @@ inline double Rad2Deg(const double _radian)
 {
 	return _radian * 180 / DX_PI;
 }
+
+/**
+ * @brief		‚Q“_ŠÔ‚Ì‹——£‚ğæ“¾‚·‚é
+ * @param[in]	VECTOR À•W1
+ * @param[in]	VECTOR À•W2
+ * @return		float ‹——£
+ * @author		Suzuki N
+ * @date		24/10/21
+ */
+inline float Distance(VECTOR v1, VECTOR v2)
+{
+	return sqrt((v2.x - v1.x) * (v2.x - v1.x) +
+		(v2.y - v1.y) * (v2.y - v1.y) +
+		(v2.z - v1.z) * (v2.z - v1.z));
+}

@@ -81,7 +81,7 @@ private:
 	 * @brief		特定の再生時間に達したときに呼ばれるコールバック関数
 	 * @History		24/10/12 作成(Suzuki N)
 	 */
-	std::unordered_map<float, std::function<void()>> callBacks;
+	std::unordered_map<double, std::function<void()>> callBacks;
 
 
 public:
@@ -114,7 +114,7 @@ public:
 	 * @author		Suzuki N
 	 * @date		24/10/12
 	 */
-	std::unordered_map<float, std::function<void()>>& GetCallBack()
+	std::unordered_map<double, std::function<void()>>& GetCallBack()
 	{
 		return callBacks;
 	}
