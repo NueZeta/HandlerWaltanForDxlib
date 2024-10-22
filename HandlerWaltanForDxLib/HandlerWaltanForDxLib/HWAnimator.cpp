@@ -13,6 +13,8 @@
 
 void HWAnimator::AnimPlay()
 {
+	if (isStop)return;
+
 	// アニメーション1の処理
 	if (playIndex1 != -1)
 	{
@@ -117,8 +119,6 @@ void HWAnimator::AnimChange(const int _animId)
 	// パラメータを参照せずに指示の来たアニメーションをセット
 	if (playIndex1 == -1 && playIndex2 == -1)
 	{
-		// 各パラメータを上書き
-		isStop = false;
 		// 新しいアニメーションをアタッチ
 		animInfoVec[_animId]->attachIndex = MV1AttachAnim(modelHandle,
 			animInfoVec[_animId]->animIndex, animInfoVec[_animId]->animHandle);

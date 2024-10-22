@@ -36,13 +36,35 @@ void CollisionWaltan::Update()
 	// 当たり判定をチェックする
 	for (auto it1 = ColVec.begin(); it1 != ColVec.end() - 1; ++it1)
 	{
+		// 参照中のコライダーが非アクティブの場合は無視
+		if (!(*it1)->active || !(*it1)->gameObject->active) continue;
+
 		// すでにチェックした組み合わせを省く
 		for (auto it2 = it1 + 1; it2 != ColVec.end(); ++it2)
 		{
+			// 参照中のコライダーが非アクティブの場合は無視
+			if (!(*it2)->active || !(*it2)->gameObject->active) continue;
 			// アタッチされているGameObjectが同じ場合は無視
-			if ((*it1)->gameObject == (*it2)->gameObject) continue;	
+			if ((*it1)->gameObject == (*it2)->gameObject) continue;
 			// triggerと非triggerの場合はその組み合わせは無視
 			if ((*it1)->isTrigger != (*it2)->isTrigger) continue;
+
+			// 衝突の無効リストをチェック
+			bool ignore = false;
+			{
+				if ((*it1)->ignoreTag.size() != 0)
+					for (auto ignoreIt = (*it1)->ignoreTag.begin(); ignoreIt != (*it1)->ignoreTag.end(); ++ignoreIt)
+						if (*ignoreIt == (*it2)->gameObject->tag)
+							ignore = true;
+				if ((*it2)->ignoreTag.size() != 0)
+					for (auto ignoreIt = (*it2)->ignoreTag.begin(); ignoreIt != (*it2)->ignoreTag.end(); ++ignoreIt)
+						if (*ignoreIt == (*it1)->gameObject->tag)
+							ignore = true;
+			}
+			if (ignore)
+				continue;
+
+
 
 			// 衝突中のコライダーのリストに登録されているか調べる
 			auto collisionIt = std::find((*it1)->CollidersInCollision.begin(),

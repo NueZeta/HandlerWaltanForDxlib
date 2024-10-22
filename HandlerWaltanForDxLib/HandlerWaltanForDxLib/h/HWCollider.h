@@ -65,6 +65,12 @@ public:
 	 */
 	VECTOR worldPosition;
 
+	/**
+	 * @brief		
+	 * @History		24/10/22 çÏê¨(Suzuki N)
+	 */
+	std::vector<int> ignoreTag;
+
 protected:
 
 	/**
