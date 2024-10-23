@@ -47,18 +47,35 @@ void HWTransform::SetMatrix()
 
 void HWTransform::LookAt(const VECTOR& _target)
 {
-	//! ENEMY -> Player への方向ベクトル
+	// ENEMY -> Player への方向ベクトルを計算
 	VECTOR dir = VNorm(VSub(_target, position));
-	//! 内積を使ってベクトル間の角度を計算
+
+	// 内積を使ってベクトル間の角度を計算
 	float dot = VDot(forward, dir);
-	//! なす角
+
+	// acosf を使う前にクリッピング（誤差対策）
+	if (dot < -1.0f) dot = -1.0f;
+	if (dot > 1.0f) dot = 1.0f;
+
+	// なす角を計算
 	float angle = acosf(dot);
-	//! 外積を用いて回転軸を求める
-	VECTOR axis = VNorm(VCross(forward, dir));
-	// 回転に適用
-	rotate.x += (float)Rad2Deg(axis.x * angle);
-	rotate.y += (float)Rad2Deg(axis.y * angle);
-	rotate.z += (float)Rad2Deg(axis.z * angle);
+
+	// 外積を用いて回転軸を求める
+	VECTOR axis = VCross(forward, dir);
+
+	// 外積がゼロベクトルでないかをチェック（ほぼ同じ方向の場合、外積はゼロになる）
+	if (VSize(axis) > 0.0001f) {
+		axis = VNorm(axis);
+
+		// 回転に適用
+		rotate.x += (float)Rad2Deg(axis.x * angle);
+		rotate.y += (float)Rad2Deg(axis.y * angle);
+		rotate.z += (float)Rad2Deg(axis.z * angle);
+	}
+	else {
+		// 回転軸が無効な場合、処理をスキップまたは代替処理
+		// 例：ほぼ同じ方向に向いているので、回転は必要ない
+	}
 }
 
 HWTransform::HWTransform() : position({ 0.0f, 0.0f, 0.0f }), rotate({ 0.0f, 0.0f, 0.0f }),

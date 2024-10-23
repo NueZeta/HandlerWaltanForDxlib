@@ -67,13 +67,13 @@ public:
 	 * @brief		再生速度
 	 * @History		24/09/24 作成(Suzuki N)
 	 */
-	float playSpeed;
+	double playSpeed;
 
 	/**
 	 * @brief		総再生時間
 	 * @History		24/09/24 作成(Suzuki N)
 	 */
-	float totalTime;
+	double totalTime;
 
 private:
 
@@ -103,7 +103,7 @@ public:
 	 * @author		Suzuki N
 	 * @date		24/10/12
 	 */
-	void AddCallBack(float _callTime, std::function<void()> _callback)
+	void AddCallBack(double _callTime, std::function<void()> _callback)
 	{
 		callBacks[_callTime] = _callback;
 	}
@@ -140,12 +140,6 @@ private:
 	 * @History		24/09/24 作成(Suzuki N)
 	 */
 	std::vector<std::unique_ptr<AnimInfo>> animInfoVec;
-
-	/**
-	 * @brief		アニメーションの現在の再生時間
-	 * @History		24/09/24 作成(Suzuki N)
-	 */
-	float playTime;
 
 	/**
 	 * @brief		モデルハンドル
@@ -191,6 +185,12 @@ public:
 	 * @History		24/09/29 作成(Suzuki N)
 	 */
 	float blendSpeed;
+
+	/**
+	 * @brief		アニメーションの現在の再生時間
+	 * @History		24/09/24 作成(Suzuki N)
+	 */
+	double playTime;
 
 
 public:

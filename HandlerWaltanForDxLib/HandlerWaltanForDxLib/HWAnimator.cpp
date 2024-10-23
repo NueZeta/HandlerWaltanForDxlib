@@ -32,7 +32,7 @@ void HWAnimator::AnimPlay()
 			// 再生時間が総時間を超過している且つ、アニメーションのループフラグが立っているなら
 			// アニメーションをループさせる
 			if (animInfoVec[playIndex1]->isLoop)
-				playTime = fmodf(playTime, animInfoVec[playIndex1]->totalTime);
+				playTime = fmod(playTime, animInfoVec[playIndex1]->totalTime);
 			// ルール再生のアニメーションではない場合、デフォルトアニメーションに戻す
 			else
 				AnimChange(defaultAnimId);
@@ -61,7 +61,7 @@ void HWAnimator::AnimPlay()
 				MV1DetachAnim(modelHandle, animInfoVec[playIndex1]->attachIndex);
 				playIndex1 = playIndex2;
 				playIndex2 = -1;
-				playTime = 0.0f;
+				playTime = 0.0;
 			}
 		}
 	}
@@ -69,7 +69,7 @@ void HWAnimator::AnimPlay()
 	// 変更した再生時間をモデルに反映させる
 	if (playIndex1 != -1 && playIndex2 == -1)
 		MV1SetAttachAnimTime(modelHandle,
-			animInfoVec[playIndex1]->attachIndex, playTime);
+			animInfoVec[playIndex1]->attachIndex, (float)playTime);
 }
 
 
