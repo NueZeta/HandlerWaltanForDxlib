@@ -110,7 +110,7 @@ AnimInfo* HWAnimator::AnimLoad(const std::string& _filePath, const int _animId)
 	return animInfoVec.back().get();
 }
 
-void HWAnimator::AnimChange(const int _animId)
+void HWAnimator::AnimChange(const int _animId, bool forcedSwitchover)
 {
 	// 指示の来たアニメーション番号が無効な場合は変更指示を無視
 	if (_animId >= animInfoVec.size() || _animId < 0) return;
@@ -133,7 +133,7 @@ void HWAnimator::AnimChange(const int _animId)
 
 	// 再生中のアニメーションが再生中且つ、中断不可の場合は変更指示を無視
 	if (playTime < animInfoVec[playIndex1]->totalTime &&
-		!animInfoVec[playIndex1]->interruption) return;
+		(!animInfoVec[playIndex1]->interruption && !forcedSwitchover)) return;
 
 
 	// モーションブレンド中ではない
@@ -158,7 +158,7 @@ void HWAnimator::AnimChange(const int _animId)
 		if (_animId == playIndex2) return;
 		// ブレンド中のアニメーションが再生中且つ、中断不可の場合は変更指示を無視
 		if (playTime < animInfoVec[playIndex2]->totalTime &&
-			!animInfoVec[playIndex2]->interruption) return;
+			(!animInfoVec[playIndex2]->interruption && !forcedSwitchover)) return;
 
 
 		// 現在のアニメーション1をデタッチ

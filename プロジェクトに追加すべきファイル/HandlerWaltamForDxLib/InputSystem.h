@@ -51,7 +51,7 @@ enum class InputType
 struct KeyInfo
 {
 	//! キーコード
-	int keyCode;
+	unsigned int keyCode;
 	//! コンソールの種類
 	InputType inputType;
 	//! 入力時間
@@ -81,14 +81,8 @@ public:
 		const unsigned int inputTime;
 		//! 登録されているキー
 		const std::vector<KeyInfo> key;
-		//! XBoxコントローラの左スティックの入力(X)
-		const short lX;
-		//! XBoxコントローラの左スティックの入力(Y)
-		const short lY;
-		//! XBoxコントローラの右スティックの入力(X)
-		const short rX;
-		//! XBoxコントローラの右スティックの入力(Y)
-		const short rY;
+		//! DInputの入力
+		DINPUT_JOYSTATE dInput;
 	};
 
 private:
@@ -136,7 +130,7 @@ private:
 	 * @author		Suzuki N
 	 * @date		24/09/10
 	 */
-	InputAction(const int _keyCode, const InputType& _inputType) : inputState(InputState::Waiting), nextId(0)
+	InputAction(const unsigned int _keyCode, const InputType& _inputType) : inputState(InputState::Waiting), nextId(0)
 	{
 		AddKeyCode(_keyCode, _inputType);
 	}
@@ -146,7 +140,7 @@ private:
 	 * @author		Suzuki N
 	 * @date		24/09/10
 	 */
-	InputAction(const std::vector<int> _keyCodeVec, const InputType& _inputType) : inputState(InputState::Waiting), nextId(0)
+	InputAction(const std::vector<unsigned int> _keyCodeVec, const InputType& _inputType) : inputState(InputState::Waiting), nextId(0)
 	{
 		AddKeyCode(_keyCodeVec, _inputType);
 	}
@@ -207,7 +201,7 @@ private:
 	 * @author		Suzuki N
 	 * @date		24/09/10
 	 */
-	void AddKeyCode(const int _keyCode, const InputType& _inputType)
+	void AddKeyCode(const unsigned int _keyCode, const InputType& _inputType)
 	{
 		//! 登録するキー情報の初期化宣言
 		KeyInfo keyInfo =
@@ -230,7 +224,7 @@ private:
 	 * @author		Suzuki N
 	 * @date		24/09/10
 	 */
-	void AddKeyCode(const std::vector<int> _keyCodeVec, const InputType& _inputType)
+	void AddKeyCode(const std::vector<unsigned int> _keyCodeVec, const InputType& _inputType)
 	{
 		for (auto it = _keyCodeVec.begin(); it != _keyCodeVec.end(); ++it)
 		{
@@ -363,7 +357,7 @@ public:
 	 * @author		Suzuki N
 	 * @date		24/09/07
 	 */
-	void AddKeyCode(const std::string& _key, const int _inputKey, const InputType& _inputType = InputType::Key)
+	void AddKeyCode(const std::string& _key, const unsigned int _inputKey, const InputType& _inputType = InputType::Key)
 	{
 		// キーが既に存在している場合は要素を追加する
 		auto it = keyMap.find(_key);
@@ -392,7 +386,7 @@ public:
 	 * @author		Suzuki N
 	 * @date		24/09/07
 	 */
-	void AddKeyCode(const std::string& _key, const std::vector<int>& _inputKey, const InputType& _inputType = InputType::Key)
+	void AddKeyCode(const std::string& _key, const std::vector<unsigned int>& _inputKey, const InputType& _inputType = InputType::Key)
 	{
 		// キーが既に存在している場合は要素を追加する
 		auto it = keyMap.find(_key);
@@ -426,7 +420,7 @@ public:
 	 * @author		Suzuki N
 	 * @date		24/09/07
 	 */
-	void DeleteKeyCode(const std::string& _key, const int _inputKey, const InputType& _inputType)
+	void DeleteKeyCode(const std::string& _key, const unsigned int _inputKey, const InputType& _inputType)
 	{
 		// キーマップが存在しない場合はそのまま終了
 		auto keyMapIt = keyMap.find(_key);
@@ -451,7 +445,7 @@ public:
 	 * @author		Suzuki N
 	 * @date		24/09/07
 	 */
-	void DeleteKeyCode(const std::string& _key, const std::vector<int> _inputKey, const InputType& _inputType)
+	void DeleteKeyCode(const std::string& _key, const std::vector<unsigned int> _inputKey, const InputType& _inputType)
 	{
 		// キーマップが存在しない場合はそのまま終了
 		auto keyMapIt = keyMap.find(_key);
@@ -565,13 +559,40 @@ private:
 			//! このアクションマップ内で入力があったか
 			bool isInput = false;
 			//! 入力時間
-			unsigned int inputTime = 0;
+			unsigned int inputTime = 0;			
+			//! DInputの入力
+			DINPUT_JOYSTATE dInput;
+			// 初期化
+			memset(&dInput, NULL, sizeof(DINPUT_JOYSTATE));
 
 			for (auto it2 = it->second->GetKeyInfoRef().begin(); it2 != it->second->GetKeyInfoRef().end(); ++it2)
 			{
+				//! DInputの入力があった場合、入力があったことにする
+				bool isDInput = false;
+				// DInputの入力を取得する
+				// 入力タイプが KEY or Pad1 の場合はPad1の入力を取得する 
+				if(it2->inputType != InputType::Key && it2->keyCode == PAD_INPUT_DINPUT)
+				{
+					GetJoypadDirectInputState(it2->inputType == InputType::Key_Pad1 ? (int)InputType::Pad1 : (int)it2->inputType, &dInput);					
+
+					//
+					// パッドの入力があったかを調べる
+					// 
+					if (dInput.X != NULL || dInput.Y != NULL || dInput.Z != NULL || dInput.Rx != NULL || dInput.Ry != NULL || dInput.Rz != NULL ||
+						dInput.Slider[0] != NULL || dInput.Slider[1] != NULL)
+						isDInput = true;
+					if(!isDInput)
+						for (int i = 0; i < 4; ++i)
+							if (dInput.POV[i] != 0xffffffff) isDInput = true;
+					if (!isDInput)
+						for (int i = 0; i < 32; ++i)
+							if (dInput.Buttons[i] != 0) isDInput = true;
+				}
+
 				// 登録されたキーの入力状態を確認
 				if ((it2->inputType == InputType::Key && CheckHitKey(it2->keyCode)) ||
-					(GetJoypadInputState((int)it2->inputType) & it2->keyCode))
+					(GetJoypadInputState((int)it2->inputType) & it2->keyCode) ||
+					(it2->keyCode == PAD_INPUT_DINPUT && isDInput))
 				{
 					// 入力があった
 					isInput = true;
@@ -655,7 +676,7 @@ private:
 					break;
 				}
 				// 登録されたコールバック関数をすべて呼び出す
-				it->second->CallCallbacks({ it->second->GetInputState(),inputTime, it->second->GetKeyInfoVec(), });
+				it->second->CallCallbacks({ it->second->GetInputState(),inputTime, it->second->GetKeyInfoVec(), dInput});
 			}
 			// 入力がなかった場合
 			else
@@ -669,12 +690,12 @@ private:
 				case InputState::Started:
 					it->second->SetInputState(InputState::Canceled);
 					// 登録されたコールバック関数をすべて呼び出す
-					it->second->CallCallbacks({ it->second->GetInputState(),inputTime, it->second->GetKeyInfoVec(), });
+					it->second->CallCallbacks({ it->second->GetInputState(),inputTime, it->second->GetKeyInfoVec(), dInput });
 					break;
 				case InputState::Performed:
 					it->second->SetInputState(InputState::Canceled);
 					// 登録されたコールバック関数をすべて呼び出す
-					it->second->CallCallbacks({ it->second->GetInputState(),inputTime, it->second->GetKeyInfoVec(), });
+					it->second->CallCallbacks({ it->second->GetInputState(),inputTime, it->second->GetKeyInfoVec(),dInput });
 					break;
 				case InputState::Canceled:
 					it->second->SetInputState(InputState::Waiting);

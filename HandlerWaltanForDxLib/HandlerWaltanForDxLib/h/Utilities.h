@@ -24,8 +24,20 @@ constexpr float NEARLY_THRESHOLD = 0.000001f;			// 2つの数値が近いと判断する差の
 // コリジョン関係.
 constexpr float HIT_SLIDE_LENGTH = 5.0f;				// 一度の壁押し出し処理でスライドさせる距離
 // Pad
-#define PAD_INPUT_LEFT_STICK								(0x100000000)
-#define PAD_INPUT_RIGHT_STICK								(0x200000000)
+#define PAD_INPUT_DINPUT								(0x70000000)
+
+
+
+//--------------------------------------------------------
+// オペレーター
+//--------------------------------------------------------
+
+inline VECTOR operator+(VECTOR a, VECTOR b) { return VAdd(a,b); }
+inline VECTOR operator-(VECTOR a, VECTOR b) { return VSub(a,b); }
+inline VECTOR operator*(VECTOR a, float b) { return VScale(a,b); }
+inline VECTOR operator+=(VECTOR& a, VECTOR b) { return a = VAdd(a,b); }
+inline VECTOR operator-=(VECTOR& a, VECTOR b) { return a = VSub(a,b); }
+inline VECTOR operator*=(VECTOR a, float b) { return a = VScale(a,b); }
 
 
 /**

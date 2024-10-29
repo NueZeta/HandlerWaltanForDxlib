@@ -223,10 +223,11 @@ public:
 	/**
 	 * @brief		再生するアニメーションを指定
 	 * @param[in]	const int 再生するアニメーションID
+	 * @param[in]	bool	  強制的に切り替えるか
 	 * @author		Suzuki N
 	 * @date		24/09/24
 	 */
-	void AnimChange(const int _animId);
+	void AnimChange(const int _animId, bool forcedSwitchover = false);
 
 #pragma region Setter関数
 

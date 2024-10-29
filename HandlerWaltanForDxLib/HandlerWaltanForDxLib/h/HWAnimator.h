@@ -223,10 +223,11 @@ public:
 	/**
 	 * @brief		再生するアニメーションを指定
 	 * @param[in]	const int 再生するアニメーションID
+	 * @param[in]	bool	  強制的に切り替えるか
 	 * @author		Suzuki N
 	 * @date		24/09/24
 	 */
-	void AnimChange(const int _animId);
+	void AnimChange(const int _animId, bool forcedSwitchover = false);
 
 #pragma region Setter関数
 
@@ -249,6 +250,14 @@ public:
 	 * @date		24/09/29
 	 */
 	const std::vector<std::unique_ptr<AnimInfo>>& GetAnimInfoVec() { return animInfoVec; }
+
+	/**
+	 * @brief		再生中のアニメーション情報を取得する
+	 * @return		AnimInfo*	アニメーション情報
+	 * @author		Suzuki N
+	 * @date		24/09/29
+	 */
+	AnimInfo* GetPlayAnimInfo() { return animInfoVec[playIndex1].get(); }
 
 	/**
 	 * @brief		再生しているアニメーション1のインデックスを取得する
