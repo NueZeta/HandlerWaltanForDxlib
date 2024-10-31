@@ -27,6 +27,19 @@ constexpr float HIT_SLIDE_LENGTH = 5.0f;				// ˆê“x‚Ì•Ç‰Ÿ‚µo‚µˆ—‚ÅƒXƒ‰ƒCƒh‚³‚
 #define PAD_INPUT_DINPUT								(0x70000000)
 
 
+
+//--------------------------------------------------------
+// ƒIƒyƒŒ[ƒ^[
+//--------------------------------------------------------
+
+inline VECTOR operator+(VECTOR a, VECTOR b) { return VAdd(a,b); }
+inline VECTOR operator-(VECTOR a, VECTOR b) { return VSub(a,b); }
+inline VECTOR operator*(VECTOR a, float b) { return VScale(a,b); }
+inline VECTOR operator+=(VECTOR& a, VECTOR b) { return a = VAdd(a,b); }
+inline VECTOR operator-=(VECTOR& a, VECTOR b) { return a = VSub(a,b); }
+inline VECTOR operator*=(VECTOR a, float b) { return a = VScale(a,b); }
+
+
 /**
  * @class	Utility
  * @brief	

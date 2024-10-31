@@ -346,6 +346,17 @@ public:
 	void SetActive(const bool _active) { active = _active; }
 
 
+	/**
+	 * @brief		特定のキーマップを取得する
+	 * @param[in]	const string& キー
+	 * @return		const InputAction& キー入力 
+	 * @author		Suzuki N
+	 * @date		24/10/30
+	 */
+	const InputAction& GetKeyMap(const std::string& _key) { return *keyMap[_key]; }
+
+
+
 #pragma region キーコード追加
 
 	/**

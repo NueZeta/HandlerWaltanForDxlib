@@ -17,6 +17,8 @@
  */
 class AnimInfo
 {
+	friend class HWAnimator;
+
 public:
 
 	/*     メンバ変数     */
@@ -81,7 +83,19 @@ private:
 	 * @brief		特定の再生時間に達したときに呼ばれるコールバック関数
 	 * @History		24/10/12 作成(Suzuki N)
 	 */
-	std::unordered_map<double, std::function<void()>> callBacks;
+	std::unordered_map<double, std::function<void()>> callbacks;
+
+	/**
+	 * @brief		再生開始時に呼ばれるコールバック関数
+	 * @History		24/10/12 作成(Suzuki N)
+	 */
+	std::function<void()> startPlaybackCallback;
+
+	/**
+	 * @brief		再生終了時に呼ばれるコールバック関数
+	 * @History		24/10/12 作成(Suzuki N)
+	 */
+	std::function<void()> endPlaybackCallback;
 
 
 public:
@@ -105,7 +119,31 @@ public:
 	 */
 	void AddCallBack(double _callTime, std::function<void()> _callback)
 	{
-		callBacks[_callTime] = _callback;
+		callbacks[_callTime] = _callback;
+	}
+
+	/**
+	 * @brief		特定の再生時間になったときに呼ばれるコールバックを登録する
+	 * @param[in]	float コールバック関数を呼び出したい再生時間
+	 * @param[in]	std::function<void()> 登録するコールバック関数
+	 * @author		Suzuki N
+	 * @date		24/10/12
+	 */
+	void SubscribeStartPlaybackCallBack(std::function<void()> _callback)
+	{
+		startPlaybackCallback = _callback;
+	}
+
+	/**
+	 * @brief		特定の再生時間になったときに呼ばれるコールバックを登録する
+	 * @param[in]	float コールバック関数を呼び出したい再生時間
+	 * @param[in]	std::function<void()> 登録するコールバック関数
+	 * @author		Suzuki N
+	 * @date		24/10/12
+	 */
+	void SubscribeEndPlaybackCallBack(std::function<void()> _callback)
+	{
+		endPlaybackCallback = _callback;
 	}
 
 	/**
@@ -116,7 +154,7 @@ public:
 	 */
 	std::unordered_map<double, std::function<void()>>& GetCallBack()
 	{
-		return callBacks;
+		return callbacks;
 	}
 
 };
@@ -250,6 +288,14 @@ public:
 	 * @date		24/09/29
 	 */
 	const std::vector<std::unique_ptr<AnimInfo>>& GetAnimInfoVec() { return animInfoVec; }
+
+	/**
+	 * @brief		再生中のアニメーション情報を取得する
+	 * @return		AnimInfo*	アニメーション情報
+	 * @author		Suzuki N
+	 * @date		24/09/29
+	 */
+	AnimInfo* GetPlayAnimInfo() { return animInfoVec[playIndex1].get(); }
 
 	/**
 	 * @brief		再生しているアニメーション1のインデックスを取得する

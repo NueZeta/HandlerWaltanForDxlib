@@ -18,6 +18,10 @@ void HWAnimator::AnimPlay()
 	// アニメーション1の処理
 	if (playIndex1 != -1)
 	{
+		// 再生時間が0 の場合、再生開始時のコールバックを呼ぶ
+		if (playTime == 0.0f && animInfoVec[playIndex1]->startPlaybackCallback)
+			animInfoVec[playIndex1]->startPlaybackCallback();
+
 		// 再生時間を進める
 		playTime += animInfoVec[playIndex1]->playSpeed;
 
@@ -35,7 +39,13 @@ void HWAnimator::AnimPlay()
 				playTime = fmod(playTime, animInfoVec[playIndex1]->totalTime);
 			// ルール再生のアニメーションではない場合、デフォルトアニメーションに戻す
 			else
+			{
+				// アニメーション再生終了時のコールバックを呼ぶ
+				if (animInfoVec[playIndex1]->endPlaybackCallback)
+					animInfoVec[playIndex1]->endPlaybackCallback();
+				// 登録されているデフォルトのアニメーションを再生する
 				AnimChange(defaultAnimId);
+			}
 		}
 	}
 
