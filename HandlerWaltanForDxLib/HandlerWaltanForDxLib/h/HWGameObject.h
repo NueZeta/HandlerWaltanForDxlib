@@ -91,6 +91,14 @@ public:
 	int priority;
 
 	/**
+	 * @brief		座標が親オブジェクトの影響を受けるか
+	 * @History		24/11/01 作成(Suzuki N)
+	 */
+	bool isAffect;
+
+
+
+	/**
 	 * @brief		Transformコンポーネント
 	 * @History		24/09/26 作成(Suzuki N)
 	 */
@@ -288,11 +296,12 @@ public:
 	/**
 	 * @brief		親オブジェクトを設定する
 	 * @param[in]	const int 取得する子オブジェクトのインデックス
+	 * @param[in]	const bool 座標が親の影響を受けるか
 	 * @return		const std::vector<HWGameObject*>& 全ての子オブジェクトを取得する
 	 * @author		Suzuki N
 	 * @date		24/10/02
 	 */
-	void SetParent(HWGameObject* _parent);
+	void SetParent(HWGameObject* _parent, const bool _isAffect = true);
 
 #pragma endregion
 

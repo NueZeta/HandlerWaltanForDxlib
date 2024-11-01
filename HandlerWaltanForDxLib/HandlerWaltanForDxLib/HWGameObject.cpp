@@ -310,7 +310,7 @@ HWGameObject* HWGameObject::GetChild(const int _index)
     return nullptr;
 }
 
-void HWGameObject::SetParent(HWGameObject* _parent)
+void HWGameObject::SetParent(HWGameObject* _parent, const bool _isAffect)
 {
     // すでに親オブジェクトが存在する場合、親子関係を解消する
     if (parent != nullptr)
@@ -326,6 +326,7 @@ void HWGameObject::SetParent(HWGameObject* _parent)
     parent = _parent;
     // 親オブジェクトの子オブジェクトとして登録
     parent->children.push_back(this);
+    isAffect = _isAffect;
 }
 
 
