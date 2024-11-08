@@ -1,6 +1,7 @@
 #pragma once
 #include <stdarg.h>
 #include <algorithm>
+#include <unordered_set>
 #include "HWComponent.h"
 #include "HWTransform.h"
 #include "HWRenderer.h"
@@ -45,6 +46,19 @@ private:
 	 * @History 24/07/19 作成(Suzuki N)
 	 */
 	static std::vector<HWGameObject*> gameObjects;
+
+
+	// 削除待ちオブジェクトの構造体
+	struct PendingDestroy {
+		HWGameObject* object;
+		int time;  // 削除までの残り時間（ms単位）
+	};
+
+	/**
+	 * @brief   削除予定のオブジェクトを保管するコンテナ
+	 * @History 24/11/07 作成(Suzuki N)
+	 */
+	static std::vector<PendingDestroy> destroyList;
 
 	/**
 	 * @brief		アタッチされている全てのコンポーネント
@@ -359,4 +373,14 @@ public:
 
 		return nullptr;
 	}
+
+	/**
+	 * @brief		指定のコンポーネントを返す
+	 * @param[in]	HWGameObject* 削除するオブジェクト
+	 * @param[in]	int			  何秒後に削除するか 
+	 * @author		Suzuki N
+	 * @date		24/06/17
+	 */
+	static void Destroy(HWGameObject* _obj, float delay = 0.0f);
+
 };

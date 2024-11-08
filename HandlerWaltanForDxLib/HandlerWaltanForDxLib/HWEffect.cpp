@@ -6,10 +6,16 @@ HWEffect::HWEffect(const std::string& _path, const float _size)
 {
 }
 
+HWEffect::HWEffect(const int _handle, const float _size)
+	: effectResourceHandle(_handle), playingEffectHandle(-1),
+	playSpeed(-1), isPlay(false), stopAction(StopAction::None), color{ 0,0,0,0 }
+{
+}
+
 HWEffect::~HWEffect()
 {
 	// エフェクトリソースを削除する
-	DeleteEffekseerEffect(effectResourceHandle);
+	//DeleteEffekseerEffect(effectResourceHandle);
 }
 
 void HWEffect::Play()

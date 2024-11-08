@@ -35,6 +35,18 @@ void HandlerWaltan::Update()
 {
     Time::Update();
 
+    // 削除リストを参照し、カウントが0になったオブジェクトは削除する
+    for (auto it = HWGameObject::destroyList.begin(); it != HWGameObject::destroyList.end(); )
+    {
+        if (it->time <= GetNowCount()) 
+        {
+            delete it->object;  
+            it = HWGameObject::destroyList.erase(it);  
+        }
+        else 
+            ++it;
+    }
+
     //! インスタンス化された全てのGameObject
     auto gameObjects = HWGameObject::GetGameObjects();
 

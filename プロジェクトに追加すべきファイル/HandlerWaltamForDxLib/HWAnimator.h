@@ -283,11 +283,11 @@ public:
 
 	/**
 	 * @brief		アニメーション情報を格納しているコンテナを取得する
-	 * @return		const std::vector<std::unique_ptr<AnimInfo>>&	アニメーション情報を格納しているコンテナ
+	 * @return		std::vector<std::unique_ptr<AnimInfo>>&	アニメーション情報を格納しているコンテナ
 	 * @author		Suzuki N
 	 * @date		24/09/29
 	 */
-	const std::vector<std::unique_ptr<AnimInfo>>& GetAnimInfoVec() { return animInfoVec; }
+	std::vector<std::unique_ptr<AnimInfo>>& GetAnimInfoVec() { return animInfoVec; }
 
 	/**
 	 * @brief		再生中のアニメーション情報を取得する

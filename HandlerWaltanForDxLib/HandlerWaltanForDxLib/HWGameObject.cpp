@@ -10,6 +10,7 @@
 
 // 静的メンバ変数の初期化
 std::vector<HWGameObject*> HWGameObject::gameObjects;
+std::vector<HWGameObject::PendingDestroy> HWGameObject::destroyList;
 
 
 #pragma region コンストラクタ
@@ -95,6 +96,9 @@ HWGameObject::HWGameObject(const HWGameObject& _other, const CopyType copyType) 
 
 HWGameObject::~HWGameObject()
 {
+    for (const auto& cp : hwComponents)
+        cp->OnDestroy();
+
     auto it = std::find(gameObjects.begin(), gameObjects.end(), this);
     if (it != gameObjects.end())
         gameObjects.erase(it);
@@ -327,6 +331,21 @@ void HWGameObject::SetParent(HWGameObject* _parent, const bool _isAffect)
     // 親オブジェクトの子オブジェクトとして登録
     parent->children.push_back(this);
     isAffect = _isAffect;
+}
+
+void HWGameObject::Destroy(HWGameObject* _obj, float delay)
+{
+    // 既に削除リストに登録されているかを調べる
+    auto it = std::find_if(destroyList.begin(), destroyList.end(), [_obj](const PendingDestroy& item) {
+        return item.object == _obj;
+        });
+
+    // 登録されていない場合は要素を追加する
+    if(it == destroyList.end())
+        destroyList.push_back({ _obj, GetNowCount() + static_cast<int>(delay * 1000) });
+    // 既に登録されている場合は、削除時間を上書き
+    else if (it != destroyList.end())
+        it->time = GetNowCount() + static_cast<int>(delay * 1000);
 }
 
 

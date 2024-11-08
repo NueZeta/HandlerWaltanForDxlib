@@ -91,8 +91,13 @@ public:
 public:
 	// メソッド
 
+	// コンストラクタ
 	HWEffect(const std::string& _path, const float _size = 1.0f);
+	// コピーコンストラクタ
+	HWEffect(const int _handle, const float _size = 1.0f);
+	// デストラクタ
 	~HWEffect();
+
 
 #pragma region Getter関数
 

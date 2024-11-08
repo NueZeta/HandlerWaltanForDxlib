@@ -164,6 +164,15 @@ protected:
 	 */
 	virtual void LateUpdate() {}
 
+
+	/**
+	 * @brief		íœ‚³‚ê‚éuŠÔ‚É“­‚­
+	 * @detail		‰¼‘zŠÖ”
+	 * @author		Suzuki N
+	 * @date		24/06/17
+	 */
+	virtual void OnDestroy() {}
+
 #pragma region ƒRƒŠƒWƒ‡ƒ“ŠÖŒW
 
 	/**
