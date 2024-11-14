@@ -236,6 +236,9 @@
 
 	@brief		ハンドラーやUpdateメソッドの優先順位(降順)
 	int priority
+
+	@brief		座標が親オブジェクトの影響を受けるか
+	bool isAffect; 
 	
 	@brief		Transformコンポーネント
 	HWTransform* transform
@@ -308,8 +311,15 @@
 
 	@brief		親オブジェクトを設定する
 	@param[in]	const int 取得する子オブジェクトのインデックス
-	@return		const std::vector<HWGameObject*>& 全ての子オブジェクトを取得する
-	void SetParent(HWGameObject* _parent)
+	@param[in]	const bool 座標が親の影響を受けるか
+	void SetParent(HWGameObject* _parent, const bool _isAffect = true);
+
+
+  <b> <Static関数> </b>
+
+	@param[in]	HWGameObject* 削除するオブジェクト
+	@param[in]	int	      何秒後に削除するか 
+	static void Destroy(HWGameObject* _obj, float delay = 0.0f);
  
 </body>
 
