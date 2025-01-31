@@ -4,7 +4,7 @@
 
 
 /**
-* @author   Suzuki N
+* @author   NZ
 * @date     24/09/15
 * @note		エフェクトコンポーネントの定義
 */
@@ -40,31 +40,31 @@ private:
 
 	/**
 	 * @brief		エフェクトハンドル
-	 * @History		24/10/07 作成(Suzuki N)
+	 * @History		24/10/07 作成(NZ)
 	 */
 	int effectResourceHandle;
 
 	/**
 	 * @brief		再生中のエフェクトハンドル
-	 * @History		24/10/07 作成(Suzuki N)
+	 * @History		24/10/07 作成(NZ)
 	 */
 	int playingEffectHandle;
 
 	/**
 	 * @brief		再生速度
-	 * @History		24/10/07 作成(Suzuki N)
+	 * @History		24/10/07 作成(NZ)
 	 */
 	float playSpeed;
 
 	/**
 	 * @brief		再生中か
-	 * @History		24/10/07 作成(Suzuki N)
+	 * @History		24/10/07 作成(NZ)
 	 */
 	bool isPlay;
 
 	/**
 	 * @brief		再生終了時のコールバック関数
-	 * @History		24/10/07 作成(Suzuki N)
+	 * @History		24/10/07 作成(NZ)
 	 */
 	std::function<void()> CallBack;
 
@@ -75,7 +75,7 @@ private:
 
 	/**
 	 * @brief		カラー
-	 * @History		24/10/07 作成(Suzuki N)
+	 * @History		24/10/07 作成(NZ)
 	 */
 	Color color;
 
@@ -83,7 +83,7 @@ public:
 
 	/**
 	 * @brief		再生終了時のアクション
-	 * @History		24/10/07 作成(Suzuki N)
+	 * @History		24/10/07 作成(NZ)
 	 */
 	StopAction stopAction;
 
@@ -104,7 +104,7 @@ public:
 	/**
 	 * @brief		再生状況を取得する
 	 * @return		bool 再生中か
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/10/07
 	 */
 	bool IsPlay() { return isPlay; }
@@ -112,7 +112,7 @@ public:
 	/**
 	 * @brief		エフェクトの再生速度を取得する
 	 * @return		float 再生速度
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/10/07
 	 */
 	float GetPlaySpeed()
@@ -123,7 +123,7 @@ public:
 	/**
 	 * @brief		再生中のエフェクトハンドル
 	 * @return		int エフェクトハンドル
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/10/07
 	 */
 	int GetPlayEffectHandle() { return playingEffectHandle; }
@@ -134,14 +134,14 @@ public:
 
 	/**
 	 * @brief		エフェクトを再生する
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/10/07
 	 */
 	void Play();
 
 	/**
 	 * @brief		再生を停止する
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/10/07
 	 */
 	void Stop();
@@ -149,7 +149,7 @@ public:
 	/**
 	 * @brief		エフェクトの再生速度を設定する
 	 * @rparam[in]	const float 再生速度
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/10/07
 	 */
 	void SetPlaySpeed(float _speed)
@@ -161,7 +161,7 @@ public:
 	/**
 	 * @brief		エフェクト再生終了時に呼ばれるコールバック関数を登録する
 	 * @rparam[in]	std::function<void()> 登録するコールバック関数
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/10/07
 	 */
 	void SetCallBack(std::function<void()> _callBack)
@@ -172,7 +172,7 @@ public:
 	/**
 	 * @brief		エフェクトのカラーを設定する
 	 * @rparam[in]	const Color& カラー
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/10/07
 	 */
 	void SetColor(const int r, const int g, const int b, const int a)

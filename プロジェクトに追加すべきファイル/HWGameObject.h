@@ -8,7 +8,7 @@
 
 
 /**
-* @author   Suzuki N
+* @author   NZ
 * @date     24/07/16
 * @note		コンポーネントを管理する、すべてのオブジェクトが持つクラスの定義
 */
@@ -43,7 +43,7 @@ private:
 
 	/**
 	 * @brief   インスタンス化されたオブジェクト全てを保管しておくコンテナ
-	 * @History 24/07/19 作成(Suzuki N)
+	 * @History 24/07/19 作成(NZ)
 	 */
 	static std::vector<HWGameObject*> gameObjects;
 
@@ -56,25 +56,25 @@ private:
 
 	/**
 	 * @brief   削除予定のオブジェクトを保管するコンテナ
-	 * @History 24/11/07 作成(Suzuki N)
+	 * @History 24/11/07 作成(NZ)
 	 */
 	static std::vector<PendingDestroy> destroyList;
 
 	/**
 	 * @brief		アタッチされている全てのコンポーネント
-	 * @History		24/06/17 作成(Suzuki N)
+	 * @History		24/06/17 作成(NZ)
 	 */
 	std::vector<std::unique_ptr<HWComponent>> hwComponents;
 
 	/**
 	 * @brief		子オブジェクト
-	 * @History		24/09/26 作成(Suzuki N)
+	 * @History		24/09/26 作成(NZ)
 	 */
 	std::vector<HWGameObject*> children;
 
 	/**
 	 * @brief		親オブジェクト
-	 * @History		24/09/26 作成(Suzuki N)
+	 * @History		24/09/26 作成(NZ)
 	 */
 	HWGameObject* parent;
 
@@ -82,31 +82,31 @@ public:
 
 	/**
 	 * @brief		アクティブ
-	 * @History		24/10/03 作成(Suzuki N)
+	 * @History		24/10/03 作成(NZ)
 	 */
 	bool active;
 
 	/**
 	 * @brief		オブジェクトの名前
-	 * @History		24/07/29 作成(Suzuki N)
+	 * @History		24/07/29 作成(NZ)
 	 */
 	std::string name;
 
 	/**
 	 * @brief		オブジェクトのタグ(enumなどで別個定義してください)
-	 * @History		24/10/04 作成(Suzuki N)
+	 * @History		24/10/04 作成(NZ)
 	 */
 	int tag;
 
 	/**
 	 * @brief		ハンドラーやUpdateメソッドの優先順位(降順)
-	 * @History		24/07/21 作成(Suzuki N)
+	 * @History		24/07/21 作成(NZ)
 	 */
 	int priority;
 
 	/**
 	 * @brief		座標が親オブジェクトの影響を受けるか
-	 * @History		24/11/01 作成(Suzuki N)
+	 * @History		24/11/01 作成(NZ)
 	 */
 	bool isAffect;
 
@@ -114,7 +114,7 @@ public:
 
 	/**
 	 * @brief		Transformコンポーネント
-	 * @History		24/09/26 作成(Suzuki N)
+	 * @History		24/09/26 作成(NZ)
 	 */
 	HWTransform* transform;
 
@@ -125,7 +125,7 @@ private:
 
 	/**
 	 * @brief       プライオリティを参照してソートする(降順)
-	 * @author      Suzuki N
+	 * @author      NZ
 	 * @date        24/07/19
 	 */
 	void BubbleSort();
@@ -133,7 +133,7 @@ private:
 	/**
 	 * @brief       オブジェクトをコピーする(オブジェクトとメモリ上のデータのコピー)
 	 * @param[in]	HWGameObject& コピー元になるオブジェクト
-	 * @author      Suzuki N
+	 * @author      NZ
 	 * @date        24/10/03
 	 */
 	void DeepCopy(const HWGameObject& _other);
@@ -141,70 +141,70 @@ private:
 	/**
 	 * @brief       オブジェクトをコピーする(参照のコピー)
 	 * @param[in]	HWGameObject& コピー元になるオブジェクト
-	 * @author      Suzuki N
+	 * @author      NZ
 	 * @date        24/10/03
 	 */
 	void ShallowCopy(const HWGameObject& _other);
 
 	/**
 	 * @brief       TransformコンポーネントのUpdateメソッドを呼びだす
-	 * @author      Suzuki N
+	 * @author      NZ
 	 * @date        24/08/22
 	 */
 	void CallTransformUpdate();
 
 	/**
 	 * @brief       全てのコンポーネントのUpdateメソッドを呼びだす
-	 * @author      Suzuki N
+	 * @author      NZ
 	 * @date        24/08/22
 	 */
 	void CallAllUpdates();
 
 	/**
 	 * @brief       全てのコンポーネントのLateUpdateメソッドを呼びだす
-	 * @author      Suzuki N
+	 * @author      NZ
 	 * @date        24/08/22
 	 */
 	void CallAllLateUpdates();
 
 	/**
 	 * @brief       全てのコンポーネントのOnCollisionEnterCallBackメソッドを呼びだす
-	 * @author      Suzuki N
+	 * @author      NZ
 	 * @date        24/08/22
 	 */
 	void CallAllOnCollisionEnters(HWCollider& _collider);
 
 	/**
 	 * @brief       全てのコンポーネントのOnCollisionStayCallBackメソッドを呼びだす
-	 * @author      Suzuki N
+	 * @author      NZ
 	 * @date        24/08/22
 	 */
 	void CallAllOnCollisionStays(HWCollider& _collider);
 
 	/**
 	 * @brief       全てのコンポーネントのOnCollisionExitCallBackメソッドを呼びだす
-	 * @author      Suzuki N
+	 * @author      NZ
 	 * @date        24/08/22
 	 */
 	void CallAllOnCollisionExits(HWCollider& _collider);
 	
 	/**
 	 * @brief       全てのコンポーネントのOnTriggerEnterCallBackメソッドを呼びだす
-	 * @author      Suzuki N
+	 * @author      NZ
 	 * @date        24/08/22
 	 */
 	void CallAllOnTriggerEnters(HWCollider& _collider);
 
 	/**
 	 * @brief       全てのコンポーネントのOnTriggerStayCallBackメソッドを呼びだす
-	 * @author      Suzuki N
+	 * @author      NZ
 	 * @date        24/08/22
 	 */
 	void CallAllOnTriggerStays(HWCollider& _collider);
 
 	/**
 	 * @brief       全てのコンポーネントのOnTriggerExitCallBackメソッドを呼びだす
-	 * @author      Suzuki N
+	 * @author      NZ
 	 * @date        24/08/22
 	 */
 	void CallAllOnTriggerExits(HWCollider& _collider);
@@ -216,7 +216,7 @@ public:
 
 	/**
 	 * @brief		コンストラクタ
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/07/21
 	 */
 	HWGameObject();
@@ -224,7 +224,7 @@ public:
 	/**
 	 * @brief		コンストラクタ(名前の初期化宣言)
 	 * @param[in]	std::string オブジェクト名
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/07/21
 	 */
 	HWGameObject(const std::string& _name);
@@ -232,7 +232,7 @@ public:
 	/**
 	 * @brief		コンストラクタ(プライオリティの初期化宣言)
 	 * @param[in]	int プライオリティ
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/07/21
 	 */
 	HWGameObject(const int _priority);
@@ -241,7 +241,7 @@ public:
 	 * @brief		コンストラクタ(名前とプライオリティの初期化宣言)
 	 * @param[in]	std::string オブジェクト名
 	 * @param[in]	int	プライオリティ
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/07/21
 	 */
 	HWGameObject(const std::string& _name, const int _priority);
@@ -250,7 +250,7 @@ public:
 	 * @brief		コピーコンストラクタ
 	 * @param[in]	HWGameObject& コピー元のHWGameObject
 	 * @param[in]	const CopyType コピーの種類
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/07/21
 	 */
 	HWGameObject(const HWGameObject& _other, const CopyType copyType = CopyType::Deep);
@@ -260,7 +260,7 @@ public:
 
 	/**
 	 * @brief		デストラクタ
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/07/21
 	 */
 	~HWGameObject();
@@ -271,7 +271,7 @@ public:
 	/**
 	 * @brief		コンポーネントを追加する
 	 * @return		std::vector<HWGameObject*> World上の全てのGameObjectを取得する
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/06/17
 	 */
 	static std::vector<HWGameObject*> GetGameObjects(){ return gameObjects; }
@@ -280,7 +280,7 @@ public:
 	 * @brief		全ての子オブジェクトを取得する
 	 * @detail		引数で特定のインデックスの子オブジェクトを取得できる
 	 * @return		const std::vector<HWGameObject*>& 全ての子オブジェクトを取得する
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/10/02
 	 */
 	std::vector<HWGameObject*>& GetChildren() { return children; }
@@ -289,7 +289,7 @@ public:
 	 * @brief		子オブジェクトを取得する
 	 * @detail		引数で特定のインデックスの子オブジェクトを取得できる
 	 * @return		const std::vector<HWGameObject*>& 全ての子オブジェクトを取得する
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/10/02
 	 */
 	HWGameObject* GetChild(const int _index);
@@ -297,7 +297,7 @@ public:
 	/**
 	 * @brief		親オブジェクトを取得する
 	 * @return		HWGameObject* 親オブジェクト 
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/10/02
 	 */
 	HWGameObject* Parent() { return parent; }
@@ -312,7 +312,7 @@ public:
 	 * @param[in]	const int 取得する子オブジェクトのインデックス
 	 * @param[in]	const bool 座標が親の影響を受けるか
 	 * @return		const std::vector<HWGameObject*>& 全ての子オブジェクトを取得する
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/10/02
 	 */
 	void SetParent(HWGameObject* _parent, const bool _isAffect = true);
@@ -323,7 +323,7 @@ public:
 	/**
 	 * @brief		コンポーネントを追加する
 	 * @param[in]	std::unique_ptr<HWComponent> アタッチするコンポーネント
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/06/17
 	 */
 	template<class T, typename... Args>
@@ -355,7 +355,7 @@ public:
 	/**
 	 * @brief		指定のコンポーネントを返す
 	 * @return		アタッチされていた場合はインスタンスを返し、それ以外ならnullPtrを返す
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/06/17
 	 */
 	template<class T >
@@ -378,7 +378,7 @@ public:
 	 * @brief		指定のコンポーネントを返す
 	 * @param[in]	HWGameObject* 削除するオブジェクト
 	 * @param[in]	int			  何秒後に削除するか 
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/06/17
 	 */
 	static void Destroy(HWGameObject* _obj, float delay = 0.0f);

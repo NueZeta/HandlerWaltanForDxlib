@@ -8,7 +8,7 @@
 
 
 /**
-* @author   Suzuki N
+* @author   NZ
 * @date     24/08/09
 * @note		ColliderWaltanの定義ファイル
 */
@@ -48,7 +48,7 @@ private:
 
     /**
      * @brief		インスタンス化されているコライダー
-     * @History		24/09/17 作成(Suzuki N)
+     * @History		24/09/17 作成(NZ)
      */
     std::vector<HWCollider*> ColVec;
 
@@ -61,7 +61,7 @@ private:
      * @brief       インスタンスを取得する静的メソッド
      * @detail      初めの一回だけインスタンスを生成する
      * @return      CollisionWaltan& シングルトンインスタンス
-     * @author      Suzuki N
+     * @author      NZ
      * @date        24/07/19
      */
     static CollisionWaltan& Instance()
@@ -79,21 +79,21 @@ private:
 
     /**
      * @brief       コンストラクタ
-     * @author      Suzuki N
+     * @author      NZ
      * @date        24/07/19
      */
     CollisionWaltan();
 
     /**
      * @brief       デストラクタ
-     * @author      Suzuki N
+     * @author      NZ
      * @date        24/07/19
      */
     ~CollisionWaltan();
 
     /**
       * @brief       各コンポーネントのUpdateメソッドを全て呼び出す
-      * @author      Suzuki N
+      * @author      NZ
       * @date        24/08/22
       */
     void Update();
@@ -101,7 +101,7 @@ private:
     /**
      * @brief       登録されているコライダー情報を削除する
      * @param[in]   HWCollider* 削除するコライダー情報
-     * @author      Suzuki N
+     * @author      NZ
      * @date        24/09/17
      */
     void UnRegister(HWCollider* _collider);
@@ -110,7 +110,7 @@ private:
       * @brief       要素1 がBoxColliderの場合のコリジョンチェック
       * @param[in]   HWBoxCollider* あたり判定の重なりを見る立方体型Collider情報1
       * @param[in]   HWCollider*    あたり判定の重なりを見るCollider情報2
-      * @author      Suzuki N
+      * @author      NZ
       * @date        24/09/17
       */
     bool CollCheck_Box(HWBoxCollider* _boxCol1, HWCollider* _col2);
@@ -119,7 +119,7 @@ private:
       * @brief       要素1 がCapsuleColliderの場合のコリジョンチェック
       * @param[in]   HWCapsuleCollider*  あたり判定の重なりを見るカプセル型Collider情報1
       * @param[in]   HWCollider*         あたり判定の重なりを見るCollider情報2
-      * @author      Suzuki N
+      * @author      NZ
       * @date        24/09/17
       */
     bool CollCheck_Capsule(HWCapsuleCollider* _col1, HWCollider* _col2);
@@ -128,7 +128,7 @@ private:
       * @brief       要素1 がSphereColliderの場合のコリジョンチェック
       * @param[in]   HWSphereCollider*   あたり判定の重なりを見る球体型Collider情報1
       * @param[in]   HWCollider*         あたり判定の重なりを見るCollider情報2
-      * @author      Suzuki N
+      * @author      NZ
       * @date        24/09/17
       */
     bool CollCheck_Sphere(HWSphereCollider* _col1, HWCollider* _col2);
@@ -137,7 +137,7 @@ private:
       * @brief       要素1 がModelColliderの場合のコリジョンチェック
       * @param[in]   HWModelCollider*    あたり判定の重なりを見るモデルCollider情報1
       * @param[in]   HWCollider*         あたり判定の重なりを見るCollider情報2
-      * @author      Suzuki N
+      * @author      NZ
       * @date        24/10/17
       */
     bool CollCheck_Model(HWModelCollider* _col1, HWCollider* _col2);
@@ -149,7 +149,7 @@ private:
       * @brief       カプセルとポリゴンのあたり判定
       * @param[in]   HWBoxCollider*      あたり判定の重なりを見るCollider情報1
       * @param[in]   HWModelCollider*    あたり判定の重なりを見るモデルハンドル
-      * @author      Suzuki N
+      * @author      NZ
       * @date        24/09/30
       */
     bool CollCheck_Box_Model(HWBoxCollider* _boxCol, HWModelCollider* _modelCol);
@@ -158,7 +158,7 @@ private:
       * @brief       ボックスとボックスのあたり判定
       * @param[in]   HWBoxCollider*      あたり判定の重なりを見るCollider情報1
       * @param[in]   HWBoxCollider*      あたり判定の重なりを見るCollider情報2
-      * @author      Suzuki N
+      * @author      NZ
       * @date        24/09/17
       */
     bool CollCheck_Box_Box(HWBoxCollider* _boxCol, HWBoxCollider* _boxCol2);
@@ -167,7 +167,7 @@ private:
       * @brief       ボックスとカプセルのあたり判定
       * @param[in]   HWBoxCollider*      あたり判定の重なりを見るCollider情報1
       * @param[in]   HWCapsuleCollider*  あたり判定の重なりを見るCollider情報2
-      * @author      Suzuki N
+      * @author      NZ
       * @date        24/09/17
       */
     bool CollCheck_Box_Capsule(HWBoxCollider* _boxCol, HWCapsuleCollider* _capsuleCol);
@@ -176,7 +176,7 @@ private:
       * @brief       ボックスとスフィアのあたり判定
       * @param[in]   HWBoxCollider*      あたり判定の重なりを見るCollider情報1
       * @param[in]   HWSphereCollider*   あたり判定の重なりを見るCollider情報2
-      * @author      Suzuki N
+      * @author      NZ
       * @date        24/09/17
       */
     bool CollCheck_Box_Sphere(HWBoxCollider* _boxCol, HWSphereCollider* _sphereCol);
@@ -189,7 +189,7 @@ private:
       * @brief       カプセルとポリゴンのあたり判定
       * @param[in]   HWCapsuleCollider*  あたり判定の重なりを見るCollider情報1
       * @param[in]   HWModelCollider*    あたり判定の重なりを見るモデルハンドル
-      * @author      Suzuki N
+      * @author      NZ
       * @date        24/09/30
       */
     bool CollCheck_Capsule_Model(HWCapsuleCollider* _capsuleCol, HWModelCollider* _modelCol);
@@ -198,7 +198,7 @@ private:
       * @brief       カプセルとボックスのあたり判定
       * @param[in]   HWCapsuleCollider*  あたり判定の重なりを見るCollider情報1
       * @param[in]   HWBoxCollider*      あたり判定の重なりを見るCollider情報2
-      * @author      Suzuki N
+      * @author      NZ
       * @date        24/09/17
       */
     bool CollCheck_Capsule_Box(HWCapsuleCollider* _capsuleCol, HWBoxCollider* _boxCol);
@@ -207,7 +207,7 @@ private:
       * @brief       カプセルとカプセルのあたり判定
       * @param[in]   HWCapsuleCollider*  あたり判定の重なりを見るCollider情報1
       * @param[in]   HWCapsuleCollider*  あたり判定の重なりを見るCollider情報2
-      * @author      Suzuki N
+      * @author      NZ
       * @date        24/09/17
       */
     bool CollCheck_Capsule_Capsule(HWCapsuleCollider* _capsuleCol, HWCapsuleCollider* _capsuleCol2);
@@ -216,7 +216,7 @@ private:
       * @brief       カプセルとスフィアのあたり判定
       * @param[in]   HWCapsuleCollider*  あたり判定の重なりを見るCollider情報1
       * @param[in]   HWSphereCollider*   あたり判定の重なりを見るCollider情報2
-      * @author      Suzuki N
+      * @author      NZ
       * @date        24/09/17
       */
     bool CollCheck_Capsule_Sphere(HWCapsuleCollider* _capsuleCol, HWSphereCollider* _sphereCol);
@@ -229,7 +229,7 @@ private:
       * @brief       スフィアとポリゴンのあたり判定
       * @param[in]   HWSphereCollider*   あたり判定の重なりを見るCollider情報1
       * @param[in]   HWModelCollider*    あたり判定の重なりを見るモデルハンドル
-      * @author      Suzuki N
+      * @author      NZ
       * @date        24/09/30
       */
     bool CollCheck_Sphere_Model(HWSphereCollider* _sphereCol, HWModelCollider* _modelCol);
@@ -239,7 +239,7 @@ private:
       * @brief       スフィアとボックスのあたり判定
       * @param[in]   HWSphereCollider*   あたり判定の重なりを見るCollider情報1
       * @param[in]   HWBoxCollider*      あたり判定の重なりを見るCollider情報2
-      * @author      Suzuki N
+      * @author      NZ
       * @date        24/09/17
       */
     bool CollCheck_Sphere_Box(HWSphereCollider* _sphereCol, HWBoxCollider* _boxCol);
@@ -248,7 +248,7 @@ private:
       * @brief       スフィアとカプセルのあたり判定
       * @param[in]   HWSphereCollider*   あたり判定の重なりを見るCollider情報1
       * @param[in]   HWCapsuleCollider*  あたり判定の重なりを見るCollider情報2
-      * @author      Suzuki N
+      * @author      NZ
       * @date        24/09/17
       */
     bool CollCheck_Sphere_Capsule(HWSphereCollider* _sphereCol, HWCapsuleCollider* _capsuleCol);
@@ -257,7 +257,7 @@ private:
       * @brief       スフィアとスフィアのあたり判定
       * @param[in]   HWSphereCollider*   あたり判定の重なりを見るCollider情報1
       * @param[in]   HWSphereCollider*   あたり判定の重なりを見るCollider情報2
-      * @author      Suzuki N
+      * @author      NZ
       * @date        24/09/17
       */
     bool CollCheck_Sphere_Sphere(HWSphereCollider* _sphereCol, HWSphereCollider* _sphereCol2);
@@ -270,7 +270,7 @@ private:
       * @brief       ポリゴンとポリゴンのあたり判定
       * @param[in]   HWModelCollider*    あたり判定の重なりを見るCollider情報1
       * @param[in]   HWModelCollider*    あたり判定の重なりを見るモデルハンドル
-      * @author      Suzuki N
+      * @author      NZ
       * @date        24/09/30
       */
     bool CollCheck_Model_Model(HWModelCollider* _modelCol, HWModelCollider* _modelCol2);
@@ -280,7 +280,7 @@ private:
       * @brief       ポリゴンとボックスのあたり判定
       * @param[in]   HWModelCollider*    あたり判定の重なりを見るCollider情報1
       * @param[in]   HWBoxCollider*      あたり判定の重なりを見るCollider情報2
-      * @author      Suzuki N
+      * @author      NZ
       * @date        24/09/17
       */
     bool CollCheck_Model_Box(HWModelCollider* _modelCol, HWBoxCollider* _boxCol);
@@ -289,7 +289,7 @@ private:
       * @brief       ポリゴンとカプセルのあたり判定
       * @param[in]   HWModelCollider*    あたり判定の重なりを見るCollider情報1
       * @param[in]   HWCapsuleCollider*  あたり判定の重なりを見るCollider情報2
-      * @author      Suzuki N
+      * @author      NZ
       * @date        24/09/17
       */
     bool CollCheck_Model_Capsule(HWModelCollider* _modelCol, HWCapsuleCollider* _capsuleCol);
@@ -298,7 +298,7 @@ private:
       * @brief       ポリゴンとスフィアのあたり判定
       * @param[in]   HWModelCollider*    あたり判定の重なりを見るCollider情報1
       * @param[in]   HWSphereCollider*   あたり判定の重なりを見るCollider情報2
-      * @author      Suzuki N
+      * @author      NZ
       * @date        24/09/17
       */
     bool CollCheck_Model_Sphere(HWModelCollider* _modelCol, HWSphereCollider* _sphereCol2);
@@ -308,21 +308,21 @@ private:
 
     /**
       * @brief       コリジョンHit時のコールバック関数を呼び出す
-      * @author      Suzuki N
+      * @author      NZ
       * @date        24/09/17
       */
     void ColliderHitCallBacks(std::vector<HWCollider*>::iterator colIt, HWCollider* _col1, HWCollider* _col2, bool _isTrigger);
 
     /**
       * @brief       コリジョン接触がない場合の処理
-      * @author      Suzuki N
+      * @author      NZ
       * @date        24/09/17
       */
     void ColliderAvoidCallBacks(std::vector<HWCollider*>::iterator colIt, HWCollider* _col1, HWCollider* _col2, bool _isTrigger);
 
     /**
       * @brief       OBB同士の当たり判定
-      * @author      Suzuki N
+      * @author      NZ
       * @date        24/09/24
       */
     int TestOBBOBB(OBB* a, OBB* b);

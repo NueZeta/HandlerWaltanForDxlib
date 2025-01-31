@@ -2,7 +2,7 @@
 
 
 /**
-* @author   Suzuki N
+* @author   NZ
 * @date     24/08/09
 * @note		HWAnimator‚ÌŽÀ‘•ƒtƒ@ƒCƒ‹
 */

@@ -3,7 +3,7 @@
 
 
 /**
-* @author   Suzuki N
+* @author   NZ
 * @date     24/09/15
 * @note		球体型のコライダーコンポーネントの定義
 */
@@ -25,7 +25,7 @@ public:
 
 	/**
 	 * @brief
-	 * @History		24/09/16 作成(Suzuki N)
+	 * @History		24/09/16 作成(NZ)
 	 */
 
 
@@ -36,7 +36,7 @@ public:
 
 	/**
 	 * @brief		コンストラクタ
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/16
 	 */
 };

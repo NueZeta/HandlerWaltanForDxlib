@@ -2,7 +2,7 @@
 
 
 /**
-* @author   Suzuki N
+* @author   NZ
 * @date     24/08/25
 * @note		HWRenderer‚ÌŽÀ‘•ƒtƒ@ƒCƒ‹
 */

@@ -2,7 +2,7 @@
 
 
 /**
-* @author   Suzuki N
+* @author   NZ
 * @date     24/10/17
 * @note		HWModelCollider‚ÌŽÀ‘•ƒtƒ@ƒCƒ‹
 */

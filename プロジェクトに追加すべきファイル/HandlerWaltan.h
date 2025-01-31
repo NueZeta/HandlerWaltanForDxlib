@@ -13,7 +13,7 @@
 
 
 /**
-* @author   Suzuki N
+* @author   NZ
 * @date     24/07/18
 * @note		原則、ハンドラーはすべてHandlerWaltanで呼び出す
 */
@@ -31,7 +31,7 @@ public:
 
     /**
      * @brief		デバッグモードで実行するか
-     * @History		24/08/23 作成(Suzuki N)
+     * @History		24/08/23 作成(NZ)
      */
     static bool debugMode;
 
@@ -44,14 +44,14 @@ private:
 
     /**
      * @brief       コンストラクタ
-     * @author      Suzuki N
+     * @author      NZ
      * @date        24/07/19
      */
     HandlerWaltan();
 
     /**
      * @brief       デストラクタ
-     * @author      Suzuki N
+     * @author      NZ
      * @date        24/07/19
      */
     ~HandlerWaltan();
@@ -61,7 +61,7 @@ public:
 
     /**
       * @brief       全てのUpdateメソッドを全て呼び出す
-      * @author      Suzuki N
+      * @author      NZ
       * @date        24/08/22
       */
     void Update();
@@ -69,7 +69,7 @@ public:
     /**
      * @brief       インスタンスを取得する静的メソッド
      * @detail      初めの一回だけインスタンスを生成する
-     * @author      Suzuki N
+     * @author      NZ
      * @date        24/07/19
      */
     static HandlerWaltan& Instance();
@@ -86,14 +86,14 @@ public:
      * @brief       イニシャライズ用のメソッド
      * @detail      インスタンスを生成したときに呼ぶ
      * @return      int 初期化成功の成否
-     * @author      Suzuki N
+     * @author      NZ
      * @date        24/07/29
      */
     static int Init(int _particle = 8000);
 
     /**
      * @brief       終了時用のメソッド
-     * @author      Suzuki N
+     * @author      NZ
      * @date        24/07/29
      */
     static void End();

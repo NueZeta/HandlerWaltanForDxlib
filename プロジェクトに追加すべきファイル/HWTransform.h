@@ -5,7 +5,7 @@
 class HWGameObject;
 
 /**
-* @author   Suzuki N
+* @author   NZ
 * @date     24/07/16
 * @note		座標系の情報を保持するコンポーネントの定義
 */
@@ -29,26 +29,26 @@ public:
 
 	/**
 	 * @brief		グローバル座標
-	 * @History		24/06/17 作成(Suzuki N)
+	 * @History		24/06/17 作成(NZ)
 	 */
 	VECTOR position;
 
 	/**
 	 * @brief		グローバル回転
-	 * @History		24/06/17 作成(Suzuki N)
+	 * @History		24/06/17 作成(NZ)
 	 */
 
 	VECTOR rotate;
 
 	/**
 	 * @brief		グローバル拡縮
-	 * @History		24/06/17 作成(Suzuki N)
+	 * @History		24/06/17 作成(NZ)
 	 */
 	VECTOR scale;
 
 	/**
 	 * @brief		グローバル変換行列
-	 * @History		24/09/15 作成(Suzuki N)
+	 * @History		24/09/15 作成(NZ)
 	 */
 	MATRIX globalMat;
 
@@ -58,20 +58,20 @@ public:
 
 	/**
 	 * @brief		ローカル座標
-	 * @History		24/06/17 作成(Suzuki N)
+	 * @History		24/06/17 作成(NZ)
 	 */
 	VECTOR localPosition;
 
 	/**
 	 * @brief		ローカル回転
-	 * @History		24/06/17 作成(Suzuki N)
+	 * @History		24/06/17 作成(NZ)
 	 */
 
 	VECTOR localRotate;
 
 	/**
 	 * @brief		ローカル拡縮
-	 * @History		24/06/17 作成(Suzuki N)
+	 * @History		24/06/17 作成(NZ)
 	 */
 	VECTOR localScale;
 
@@ -79,13 +79,13 @@ public:
 
 	/**
 	 * @brief		移動ベクトル
-	 * @History		24/09/26 作成(Suzuki N)
+	 * @History		24/09/26 作成(NZ)
 	 */
 	VECTOR velocity;
 
 	/**
 	 * @brief		正面方向のベクトル
-	 * @History		24/09/26 作成(Suzuki N)
+	 * @History		24/09/26 作成(NZ)
 	 */
 	VECTOR forward;
 
@@ -93,7 +93,7 @@ private:
 
 	/**
 	 * @brief		前Fの座標
-	 * @History		24/10/12 作成(Suzuki N)
+	 * @History		24/10/12 作成(NZ)
 	 */
 	VECTOR previousPosition;
 
@@ -103,7 +103,7 @@ private:
 
 	/**
 	 * @brief		平行移動、回転、拡縮を設定する
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/15
 	 */
 	void SetMatrix();
@@ -115,7 +115,7 @@ public:
 	/**
 	 * @brief		ターゲットのほうへ向く
 	 * @param[in]	const VECTOR&	ターゲットの座標
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/10/09
 	 */
 	void LookAt(const VECTOR& _target);
@@ -124,7 +124,7 @@ public:
 
 	/**
 	 * @brief		コンストラクタ
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/06/17
 	 */
 	HWTransform();
@@ -132,7 +132,7 @@ public:
 	/**
 	 * @brief		デストラクタ
 	 * @detail		オーバーライド関数
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/17
 	 */
 	~HWTransform(){}
@@ -146,7 +146,7 @@ protected:
 	/**
 	 * @brief		毎フレーム呼ばれる
 	 * @detail		オーバーライド関数
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/06/17
 	 */
 	void Update() override;

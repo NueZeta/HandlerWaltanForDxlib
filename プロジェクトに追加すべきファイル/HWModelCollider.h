@@ -3,7 +3,7 @@
 
 
 /**
-* @author   Suzuki N
+* @author   NZ
 * @date     24/09/15
 * @note		モデルのコライダーコンポーネントの定義
 */
@@ -25,13 +25,13 @@ public:
 
 	/**
 	 * @brief		モデルハンドル
-	 * @History		24/10/17 作成(Suzuki N)
+	 * @History		24/10/17 作成(NZ)
 	 */
 	int modelHandle;
 
 	/**
 	 * @brief		コリジョンの情報を更新するフレームの番号
-	 * @History		24/10/17 作成(Suzuki N)
+	 * @History		24/10/17 作成(NZ)
 	 */
 	int frameIndex;
 
@@ -42,14 +42,14 @@ public:
 
 	/**
 	 * @brief		コンストラクタ
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/10/17
 	 */
 	HWModelCollider();
 
 	/**
 	 * @brief		デストラクタ
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/10/17
 	 */
 	~HWModelCollider();
@@ -61,7 +61,7 @@ private:
 	/**
 	 * @brief		モデルのコライダーを描画する
 	 * @detail		オーバライドメソッド
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/10/17
 	 */
 	void DrawCollider() override;
@@ -69,7 +69,7 @@ private:
 	/**
 	 * @brief		モデルのコライダーを構成する
 	 * @detail		オーバライドメソッド
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/10/17
 	 */
 	void SetCollider() override;
@@ -77,7 +77,7 @@ private:
 	/**
 	 * @brief		HWGameObjectにアタッチされた瞬間に働く
 	 * @detail		オーバライドメソッド
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/10/17
 	 */
 	void Awake()override;
@@ -85,7 +85,7 @@ private:
 	/**
 	 * @brief		毎フレーム呼ばれる
 	 * @detail		オーバーライドメソッド
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/10/17
 	 */
 	void Update() override;

@@ -5,7 +5,7 @@
 
 
 /**
-* @author   Suzuki N
+* @author   NZ
 * @date     24/09/15
 * @note		立方型のコライダーコンポーネントの定義
 */
@@ -27,19 +27,19 @@ public:
 
 	/**
 	 * @brief		コライダーのサイズ
-	 * @History		24/09/16 作成(Suzuki N)
+	 * @History		24/09/16 作成(NZ)
 	 */
 	VECTOR size;
 
 	/**
 	 * @brief		回転行列
-	 * @History		24/09/16 作成(Suzuki N)
+	 * @History		24/09/16 作成(NZ)
 	 */
 	MATRIX mRotate;
 
 	/**
 	 * @brief		コライダーの各頂点座標
-	 * @History		24/09/18 作成(Suzuki N)
+	 * @History		24/09/18 作成(NZ)
 	 */
 	VECTOR vertex[2][4];
 
@@ -50,7 +50,7 @@ public:
 	/**
 	 * @brief		コンストラクタ
 	 * @detail		引数でコライダーのサイズを指定可
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/16
 	 */
 	HWBoxCollider();
@@ -58,7 +58,7 @@ public:
 	/**
 	 * @brief		コンストラクタ
 	 * @detail		引数でコライダーのサイズを指定可
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/16
 	 */
 	HWBoxCollider(const VECTOR& _size);
@@ -66,14 +66,14 @@ public:
 	/**
 	 * @brief		コンストラクタ
 	 * @detail		引数でコライダーのサイズを指定可
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/16
 	 */
 	HWBoxCollider(const float& _sizeX, const float& _sizeY, const float& _sizeZ);
 
 	/**
 	 * @brief		デストラクタ
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/16
 	 */
 	~HWBoxCollider();
@@ -86,7 +86,7 @@ protected:
 	/**
 	 * @brief		立方体のコライダーを描画する
 	 * @detail		オーバライドメソッド
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/16
 	 */
 	void DrawCollider() override;
@@ -94,7 +94,7 @@ protected:
 	/**
 	 * @brief		立方体のコライダーを構成する
 	 * @detail		オーバライドメソッド
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/16
 	 */
 	void SetCollider() override;
@@ -102,7 +102,7 @@ protected:
 	/**
 	 * @brief		HWGameObjectにアタッチされた瞬間に働く
 	 * @detail		オーバライドメソッド
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/15
 	 */
 	void Awake()override;
@@ -110,7 +110,7 @@ protected:
 	/**
 	 * @brief		毎フレーム呼ばれる
 	 * @detail		オーバーライドメソッド
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/16
 	 */
 	void Update() override;
@@ -118,7 +118,7 @@ protected:
 	/**
 	 * @brief		コライダー衝突時に働くメソッド
 	 * @detail		オーバーライドメソッド
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/26
 	 */
 	void OnCollisionEnter(HWCollider& _collider)override;

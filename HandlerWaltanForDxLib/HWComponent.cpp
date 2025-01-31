@@ -2,7 +2,7 @@
 
 
 /**
-* @author   Suzuki N
+* @author   NZ
 * @date     24/07/29
 * @note		HWComponent‚ÌŽÀ‘•ƒtƒ@ƒCƒ‹
 */

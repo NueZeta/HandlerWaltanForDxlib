@@ -4,7 +4,7 @@
 
 
 /**
-* @author   Suzuki N
+* @author   NZ
 * @date     24/06/17
 * @note     すべてのコンポーネントの基底クラスの定義ファイル
 */
@@ -31,31 +31,31 @@ public:
 
 	/**
 	 * @brief		このコンポーネントがアタッチされているHWGameObject
-	 * @History		24/06/17 作成(Suzuki N)
+	 * @History		24/06/17 作成(NZ)
 	 */
 	HWGameObject* gameObject;
 
 	/**
 	 * @brief		HWGameObjectにアタッチされているHWTransform
-	 * @History		24/06/17 作成(Suzuki N)
+	 * @History		24/06/17 作成(NZ)
 	 */
 	HWTransform* transform;
 
 	/**
 	 * @brief		複数アタッチ可能なコンポーネントか
-	 * @History		24/08/03 作成(Suzuki N)
+	 * @History		24/08/03 作成(NZ)
 	 */
 	bool isMultiplePossession;
 
 	/**
 	 * @brief		コンポーネントのアクティブ
-	 * @History		24/08/03 作成(Suzuki N)
+	 * @History		24/08/03 作成(NZ)
 	 */
 	bool active;
 
 	/**
 	 * @brief		ハンドラーやUpdateメソッドの優先順位(降順)
-	 * @History		24/09/29 作成(Suzuki N)
+	 * @History		24/09/29 作成(NZ)
 	 */
 	int priority;
 
@@ -63,7 +63,7 @@ private:
 
 	/**
 	 * @brief		既にStartメソッドが実行済みか
-	 * @History		24/10/03 作成(Suzuki N)
+	 * @History		24/10/03 作成(NZ)
 	 */
 	bool completedStartMethod;
 
@@ -72,37 +72,37 @@ private:
 
 	/**
 	 * @brief		衝突判定を取った時に呼ばれるコールバック関数
-	 * @History		24/07/19 作成(Suzuki N)
+	 * @History		24/07/19 作成(NZ)
 	 */
 	std::function<void(HWCollider&)> OnCollisionEnterCallBack;
 
 	/**
 	 * @brief		衝突判定を取っている間に呼ばれるコールバック関数
-	 * @History		24/07/19 作成(Suzuki N)
+	 * @History		24/07/19 作成(NZ)
 	 */
 	std::function<void(HWCollider&)> OnCollisionStayCallBack;
 
 	/**
 	 * @brief		衝突判定が解かれた時に呼ばれるコールバック関数
-	 * @History		24/07/19 作成(Suzuki N)
+	 * @History		24/07/19 作成(NZ)
 	 */
 	std::function<void(HWCollider&)> OnCollisionExitCallBack;
 
 	/**
 	 * @brief		衝突判定を取った時に呼ばれるコールバック関数
-	 * @History		24/07/19 作成(Suzuki N)
+	 * @History		24/07/19 作成(NZ)
 	 */
 	std::function<void(HWCollider&)> OnTriggerEnterCallBack;
 
 	/**
 	 * @brief		衝突判定を取っている間に呼ばれるコールバック関数
-	 * @History		24/07/19 作成(Suzuki N)
+	 * @History		24/07/19 作成(NZ)
 	 */
 	std::function<void(HWCollider&)> OnTriggerStayCallBack;
 
 	/**
 	 * @brief		衝突判定が解かれた時に呼ばれるコールバック関数
-	 * @History		24/07/19 作成(Suzuki N)
+	 * @History		24/07/19 作成(NZ)
 	 */
 	std::function<void(HWCollider&)> OnTriggerExitCallBack;
 
@@ -113,7 +113,7 @@ public:
 
 	/**
 	 * @brief		デストラクタ
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/07/19
 	 */
 	virtual ~HWComponent() {}
@@ -122,7 +122,7 @@ protected:
 
 	/**
 	 * @brief		コンストラクタ
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/07/19
 	 */
 	HWComponent();
@@ -132,7 +132,7 @@ protected:
 	/**
 	 * @brief		HWGameObjectにアタッチされた瞬間に働く
 	 * @detail		仮想関数
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/06/17
 	 */
 	virtual void Awake() {}
@@ -141,7 +141,7 @@ protected:
 	/**
 	 * @brief		最初のUpdateメソッドの直前に働く
 	 * @detail		仮想関数
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/06/17
 	 */
 	virtual void Start() {}
@@ -150,7 +150,7 @@ protected:
 	/**
 	 * @brief		毎フレーム呼ばれるメソッド
 	 * @detail		仮想関数
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/06/17
 	 */
 	virtual void Update() {}
@@ -159,7 +159,7 @@ protected:
 	/**
 	 * @brief		毎フレーム呼ばれるメソッド(Updateよりも後に呼ばれる)
 	 * @detail		仮想関数
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/10/12
 	 */
 	virtual void LateUpdate() {}
@@ -168,7 +168,7 @@ protected:
 	/**
 	 * @brief		削除される瞬間に働く
 	 * @detail		仮想関数
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/06/17
 	 */
 	virtual void OnDestroy() {}
@@ -179,7 +179,7 @@ protected:
 	 * @brief		コライダー衝突時に働くメソッド
 	 * @detail		仮想関数
 	 * @param[out]	HWCollider& 衝突した相手のコライダー情報
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/07/19
 	 */
 	virtual void OnCollisionEnter(HWCollider& _collider) {}
@@ -189,7 +189,7 @@ protected:
 	 * @brief		コライダー衝突中に働くメソッド
 	 * @detail		仮想関数
 	 * @param[out]	HWCollider& 衝突した相手のコライダー情報
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/07/19
 	 */
 	virtual void OnCollisionStay(HWCollider& _collider) {}
@@ -199,7 +199,7 @@ protected:
 	 * @brief		コライダー衝突が解除時に働くメソッド
 	 * @detail		仮想関数
 	 * @param[out]	HWCollider& 衝突した相手のコライダー情報
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/07/19
 	 */
 	virtual void OnCollisionExit(HWCollider& _collider) {}
@@ -208,7 +208,7 @@ protected:
 	 * @brief		コライダー衝突時に働くメソッド
 	 * @detail		仮想関数
 	 * @param[out]	HWCollider& 衝突した相手のコライダー情報
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/07/19
 	 */
 	virtual void OnTriggerEnter(HWCollider& _collider) {}
@@ -218,7 +218,7 @@ protected:
 	 * @brief		コライダー衝突中に働くメソッド
 	 * @detail		仮想関数
 	 * @param[out]	HWCollider& 衝突した相手のコライダー情報
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/07/19
 	 */
 	virtual void OnTriggerStay(HWCollider& _collider) {}
@@ -228,7 +228,7 @@ protected:
 	 * @brief		コライダー衝突が解除時に働くメソッド
 	 * @detail		仮想関数
 	 * @param[out]	HWCollider& 衝突した相手のコライダー情報
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/07/19
 	 */
 	virtual void OnTriggerExit(HWCollider& _collider) {}
@@ -242,42 +242,42 @@ protected:
 
 	/**
 	 * @brief		登録された衝突時に働くメソッドを働かせる
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/07/19
 	 */
 	void OnCollisionEnterHandler(HWCollider& _collider);
 
 	/**
 	 * @brief		登録された衝突時に働くメソッドを働かせる
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/07/19
 	 */
 	void OnCollisionStayHandler(HWCollider& _collider);
 
 	/**
 	 * @brief		登録された衝突時に働くメソッドを働かせる
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/07/19
 	 */
 	void OnCollisionExsitHandler(HWCollider& _collider);
 
 	/**
 	 * @brief		登録された衝突時に働くメソッドを働かせる
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/07/19
 	*/
 	void OnTriggerEnterHandler(HWCollider& _collider);
 
 	/**
 	 * @brief		登録された衝突時に働くメソッドを働かせる
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/07/19
 	 */
 	void OnTriggerStayHandler(HWCollider& _collider);
 
 	/**
 	 * @brief		登録された衝突時に働くメソッドを働かせる
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/07/19
 	 */
 	void OnTriggerExsitHandler(HWCollider& _collider);

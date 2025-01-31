@@ -3,7 +3,7 @@
 
 
 /**
-* @author   Suzuki N
+* @author   NZ
 * @date     24/08/25
 * @note     ログを出力するクラスの定義
 */
@@ -75,19 +75,19 @@ private:
 
     /**
      * @brief		ログメッセージのコンテナ
-     * @History		24/08/25 作成(Suzuki N)
+     * @History		24/08/25 作成(NZ)
      */
     static std::vector<LogInfo> logInfoVec;
 
     /**
      * @brief		スレッドセーフでテキストファイルに書き込むため
-     * @History		24/09/11 作成(Suzuki N)
+     * @History		24/09/11 作成(NZ)
      */
     static std::mutex mtx;
 
     /**
      * @brief		スレッドセーフでテキストファイルに書き込むため
-     * @History		24/09/11 作成(Suzuki N)
+     * @History		24/09/11 作成(NZ)
      */
     std::thread syslogThread;
 
@@ -101,7 +101,7 @@ private:
 
     /**
      * @brief       コンストラクタは削除
-     * @author      Suzuki N
+     * @author      NZ
      * @date        24/08/25
      */
     Syslog() = delete;
@@ -109,7 +109,7 @@ private:
 
     /**
      * @brief       ログ情報を追加する
-     * @author      Suzuki N
+     * @author      NZ
      * @date        24/08/25
      */
     static void AddLogInfoAsymc(const LogLevel _loglevel, const std::string& _logMessage);

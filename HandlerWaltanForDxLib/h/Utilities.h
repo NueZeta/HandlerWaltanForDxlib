@@ -53,7 +53,7 @@ public:
 
 
 /**
-* @author   Suzuki N
+* @author   NZ
 * @date     24/07/20
 * @note		汎用的なクラスの定義をまとめたヘッダーファイル
 */
@@ -72,7 +72,7 @@ private:
 
 	/**
 	 * @brief		値を保管するオブジェクト
-	 * @History		24/09/14 作成(Suzuki N)
+	 * @History		24/09/14 作成(NZ)
 	 */
 	T obj;
 
@@ -84,7 +84,7 @@ public:
 	/**
 	 * @brief		コンストラクタ
 	 * @param[in]	T 初期値
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/14
 	 */
 	ReadOnly(T _obj) : obj(_obj) {}
@@ -92,7 +92,7 @@ public:
 	/**
 	 * @brief		関数呼び出しoperatorの定義
 	 * @param[in]	T 初期値
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/14
 	 */
 	operator T() const { return obj; }
@@ -121,13 +121,13 @@ private:
 
 	/**
 	 * @brief		メモリプール
-	 * @History		24/09/01 作成(Suzuki N)
+	 * @History		24/09/01 作成(NZ)
 	 */
 	Block block[MAXSIZE];
 
 	/**
 	 * @brief		空きメモリブロックの戦闘
-	 * @History		24/09/01 作成(Suzuki N)
+	 * @History		24/09/01 作成(NZ)
 	 */
 	Block* freeBlockHead;
 
@@ -138,7 +138,7 @@ public:
 
 	/**
 	 * @brief		コンストラクタ
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/01
 	 */
 	PoolAllocator()
@@ -155,7 +155,7 @@ public:
 
 	/**
 	 * @brief		デストラクタ
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/01
 	 */
 	~PoolAllocator() {}
@@ -163,7 +163,7 @@ public:
 	/**
 	 * @brief		メモリを確保する
 	 * @return		確保したメモリ
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/01
 	 */
 	T* Alloc()
@@ -184,7 +184,7 @@ public:
 	/**
 	 * @brief		メモリを確保する
 	 * @return		確保したメモリ
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/01
 	 */
 	template<typename... Args>
@@ -207,7 +207,7 @@ public:
 	/**
 	 * @brief		メモリを解放する
 	 * @param[in]	T* Allocで確保したメモリ
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/01
 	 */
 	void Free(T* _addr)
@@ -335,7 +335,7 @@ public:
 	 * @brief		csvファイルを読み込み、行区切り、カンマ区切りで文字列を返す
 	 * @param[in]	std::string	読み込むcsvファイルのパス
 	 * @return		std::vector<std::vector<std::string>> 読み込んだ文字列を返す(1次元 = 行, 2次元 = カンマ区切り)
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/14
 	 */
 	static std::vector<std::vector<std::string>> Load(const std::string _filePath)
@@ -451,7 +451,7 @@ private:
  * @brief		度数法 -> 弧度法 に変換
  * @param[in]	double 角度
  * @return		double 変換したラジアン値
- * @author		Suzuki N
+ * @author		NZ
  * @date		24/09/23
  */
 inline double Deg2Rad(const double _angle)
@@ -463,7 +463,7 @@ inline double Deg2Rad(const double _angle)
  * @brief		弧度法 -> 度数法 に変換
  * @param[in]	double ラジアン値
  * @return		double 変換した角度
- * @author		Suzuki N
+ * @author		NZ
  * @date		24/09/23
  */
 inline double Rad2Deg(const double _radian)
@@ -476,7 +476,7 @@ inline double Rad2Deg(const double _radian)
  * @param[in]	VECTOR 座標1
  * @param[in]	VECTOR 座標2
  * @return		float 距離
- * @author		Suzuki N
+ * @author		NZ
  * @date		24/10/21
  */
 inline float Distance(VECTOR v1, VECTOR v2)

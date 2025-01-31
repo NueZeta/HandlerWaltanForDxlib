@@ -2,7 +2,7 @@
 
 
 /**
-* @author   Suzuki N
+* @author   NZ
 * @date     24/09/20
 * @note		HWCamera‚ÌŽÀ‘•ƒtƒ@ƒCƒ‹
 */

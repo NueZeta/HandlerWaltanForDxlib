@@ -5,7 +5,7 @@
 
 
 /**
-* @author   Suzuki N
+* @author   NZ
 * @date     24/09/15
 * @note		カプセル型のコライダーコンポーネントの定義
 */
@@ -28,25 +28,25 @@ public:
 
 	/**
 	 * @brief		コライダーの高さ (自身で始点と終点を設定した場合、無効化される)
-	 * @History		24/09/16 作成(Suzuki N)
+	 * @History		24/09/16 作成(NZ)
 	 */
 	float height;
 
 	/**
 	 * @brief		コライダーの半径
-	 * @History		24/09/16 作成(Suzuki N)
+	 * @History		24/09/16 作成(NZ)
 	 */
 	float radius;
 
 	/**
 	 * @brief		コライダーの始点
-	 * @History		24/09/16 作成(Suzuki N)
+	 * @History		24/09/16 作成(NZ)
 	 */
 	VECTOR UsStartPos;
 
 	/**
 	 * @brief		コライダーの終点
-	 * @History		24/09/16 作成(Suzuki N)
+	 * @History		24/09/16 作成(NZ)
 	 */
 	VECTOR UsEndPos;
 
@@ -55,13 +55,13 @@ private:
 
 	/**
 	 * @brief		コライダーの始点
-	 * @History		24/09/16 作成(Suzuki N)
+	 * @History		24/09/16 作成(NZ)
 	 */
 	VECTOR startPos;
 
 	/**
 	 * @brief		コライダーの終点
-	 * @History		24/09/16 作成(Suzuki N)
+	 * @History		24/09/16 作成(NZ)
 	 */
 	VECTOR endPos;
 
@@ -72,14 +72,14 @@ public:
 
 	/**
 	 * @brief		コンストラクタ
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/16
 	 */
 	HWCapsuleCollider();
 
 	/**
 	 * @brief		デストラクタ
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/16
 	 */
 	~HWCapsuleCollider();
@@ -92,21 +92,21 @@ private:
 
 	/**
 	 * @brief		ボックスタイプのオブジェクトと衝突した際にめり込まなくする処理
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/26
 	 */
 	void PushOut_Capsule_Box(HWCollider& other);
 
 	/**
 	 * @brief		カプセルタイプのオブジェクトと衝突した際にめり込まなくする処理
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/26
 	 */
 	void PushOut_Capsule_Capsule(HWCapsuleCollider& other);
 
 	/**
 	 * @brief		スフィアタイプのオブジェクトと衝突した際にめり込まなくする処理
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/26
 	 */
 	void PushOut_Capsule_Sphere(HWCollider& other);
@@ -118,7 +118,7 @@ private:
 	/**
 	 * @brief		立方体のコライダーを描画する
 	 * @detail		オーバライドメソッド
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/16
 	 */
 	void DrawCollider() override;
@@ -126,7 +126,7 @@ private:
 	/**
 	 * @brief		立方体のコライダーを構成する
 	 * @detail		オーバライドメソッド
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/16
 	 */
 	void SetCollider() override;
@@ -134,7 +134,7 @@ private:
 	/**
 	 * @brief		HWGameObjectにアタッチされた瞬間に働く
 	 * @detail		オーバライドメソッド
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/15
 	 */
 	void Awake()override;
@@ -142,7 +142,7 @@ private:
 	/**
 	 * @brief		毎フレーム呼ばれる
 	 * @detail		オーバーライドメソッド
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/16
 	 */
 	void Update() override;
@@ -150,7 +150,7 @@ private:
 	/**
 	 * @brief		コライダー衝突時に働くメソッド
 	 * @detail		オーバーライドメソッド
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/26
 	 */
 	void OnCollisionEnter(HWCollider& _collider)override;

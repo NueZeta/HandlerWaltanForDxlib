@@ -4,7 +4,7 @@
 
 
 /**
-* @author   Suzuki N
+* @author   NZ
 * @date     24/08/25
 * @note		モデル描画コンポーネントの定義
 */
@@ -25,7 +25,7 @@ private:
 
 	/**
 	 * @brief		モデルハンドル
-	 * @History		24/08/25 作成(Suzuki N)
+	 * @History		24/08/25 作成(NZ)
 	 */
 	int modelHandle;
 
@@ -37,7 +37,7 @@ public:
 	/**
 	 * @brief		HWRendererのコンストラクタ
 	 * @detail		引数でモデルファイルのパスか、モデルハンドルを指定可
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/08/25
 	 */
 	HWRenderer() : modelHandle(-1) {}
@@ -46,7 +46,7 @@ public:
 	 * @brief		HWRendererのコンストラクタ
 	 * @detail		モデルファイルのパスでも可
 	 * @param[in]	int モデルハンドル
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/08/25
 	 */
 	HWRenderer(const int _modelHandle);
@@ -55,14 +55,14 @@ public:
 	 * @brief		HWRendererのコンストラクタ
 	 * @detail		モデルファイルのパスでも可
 	 * @param[in]	std::string 読み込むモデルのMV1ファイルのパス
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/08/25
 	 */
 	HWRenderer(const std::string& _pass);
 
 	/**
 	 * @brief		デストラクタ
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/07/19
 	 */
 	virtual ~HWRenderer();
@@ -73,7 +73,7 @@ public:
 	/**
 	 * @brief		モデルハンドルを取得する
 	 * @return		int モデルハンドル
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/08/25
 	 */
 	int GetModelHandle() { return modelHandle; }
@@ -85,7 +85,7 @@ public:
 	 /**
 	  * @brief		モデルハンドルを変更する(モデルの外見を変更する時など)
 	  * @param[in]	int 新たなモデルハンドル 
-	  * @author		Suzuki N
+	  * @author		NZ
 	  * @date		24/08/25
 	  */
 	void SetModelHandle(const int _modelHandle) { modelHandle = _modelHandle; }
@@ -99,7 +99,7 @@ protected:
 	/**
 	 * @brief		最初のUpdateメソッドの直前に働く
 	 * @detail		仮想関数
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/06/17
 	 */
 	void Start() override;
@@ -107,7 +107,7 @@ protected:
 	/**
 	 * @brief		毎フレーム呼ばれる
 	 * @detail		オーバーライド関数
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/01
 	 */
 	void LateUpdate() override;

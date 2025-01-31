@@ -4,7 +4,7 @@
 
 
 /**
-* @author   Suzuki N
+* @author   NZ
 * @date     24/09/20
 * @note		
 */
@@ -22,7 +22,7 @@ public:
 
 	/**
 	 * @brief		注視点
-	 * @History		24/09/20 作成(Suzuki N)
+	 * @History		24/09/20 作成(NZ)
 	 */
 	VECTOR target;	
 
@@ -32,7 +32,7 @@ public:
 
 	/**
 	 * @brief		コンストラクタ
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/20
 	 */
 	HWCamera();
@@ -43,7 +43,7 @@ public:
 	/**
 	 * @brief		HWGameObjectにアタッチされた瞬間に働く
 	 * @detail		オーバーライド関数
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/06/17
 	 */
 	void Awake() override;
@@ -51,7 +51,7 @@ public:
 	/**
 	 * @brief		毎フレーム呼ばれる
 	 * @detail		オーバーライド関数
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/01
 	 */
 	void LateUpdate() override;

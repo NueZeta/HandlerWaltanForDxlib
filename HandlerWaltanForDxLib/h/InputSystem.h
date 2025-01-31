@@ -3,7 +3,7 @@
 
 
 /**
-* @author   Suzuki N
+* @author   NZ
 * @date     24/09/11
 * @note		InputSystem関係をまとめたヘッダーファイル
 */
@@ -90,25 +90,25 @@ private:
 
 	/**
 	 * @brief		キー情報
-	 * @History		24/09/10 作成(Suzuki N)
+	 * @History		24/09/10 作成(NZ)
 	 */
 	std::vector<KeyInfo> keyInfoVec;
 
 	/**
 	 * @brief		登録されたコールバック関数
-	 * @History		24/09/10 作成(Suzuki N)
+	 * @History		24/09/10 作成(NZ)
 	 */
 	std::unordered_map<int, std::function<void(const CallBackContext&)>> callBacks;
 
 	/**
 	 * @brief		InputActionのパラメーター
-	 * @History		24/09/10 作成(Suzuki N)
+	 * @History		24/09/10 作成(NZ)
 	 */
 	InputState inputState;
 
 	/**
 	 * @brief		登録したコールバック関数のID
-	 * @History		24/10/02 作成(Suzuki N)
+	 * @History		24/10/02 作成(NZ)
 	 */
 	int nextId;
 
@@ -118,7 +118,7 @@ private:
 
 	/**
 	 * @brief		コンストラクタ
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/10
 	 */
 	InputAction() : inputState(InputState::Waiting), nextId(0)
@@ -127,7 +127,7 @@ private:
 
 	/**
 	 * @brief		コンストラクタ
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/10
 	 */
 	InputAction(const unsigned int _keyCode, const InputType& _inputType) : inputState(InputState::Waiting), nextId(0)
@@ -137,7 +137,7 @@ private:
 
 	/**
 	 * @brief		コンストラクタ
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/10
 	 */
 	InputAction(const std::vector<unsigned int> _keyCodeVec, const InputType& _inputType) : inputState(InputState::Waiting), nextId(0)
@@ -150,7 +150,7 @@ public:
 	/**
 	 * @brief		アクションマップのステータスを返す
 	 * return		InputStatus	アクションマップのステータス
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/10
 	 */
 	InputState GetInputState() { return inputState; }
@@ -158,7 +158,7 @@ public:
 	/**
 	 * @brief		キー情報を返す
 	 * return		std::vector<KeyInfo>	登録されたキー情報
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/10
 	 */
 	std::vector<KeyInfo> GetKeyInfoVec() { return keyInfoVec; }
@@ -168,7 +168,7 @@ private:
 	/**
 	 * @brief		キー情報を返す
 	 * return		std::vector<KeyInfo>	登録されたキー情報
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/10
 	 */
 	std::vector<KeyInfo>& GetKeyInfoRef() { return keyInfoVec; }
@@ -176,14 +176,14 @@ private:
 	/**
 	 * @brief		アクションマップのステータスを変更する
 	 * param[in]	InputStatus	アクションマップのステータス
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/10
 	 */
 	void SetInputState(const InputState _state) { inputState = _state; }
 
 	/**
 	 * @brief		登録されたコールバック関数をすべて呼び出す
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/10
 	 */
 	void CallCallbacks(const InputAction::CallBackContext& _context)
@@ -198,7 +198,7 @@ private:
 	 * @detail		{} で複数選択可能
 	 * @param[in]	int 追加するキーコード
 	 * @param[in]	const InputType& 入力を見るコンソールの種類
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/10
 	 */
 	void AddKeyCode(const unsigned int _keyCode, const InputType& _inputType)
@@ -221,7 +221,7 @@ private:
 	 * @detail		{} で複数選択可能
 	 * @param[in]	std::vector<int> 追加するキーコード
 	 * @param[in]	const InputType& 入力を見るコンソールの種類
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/10
 	 */
 	void AddKeyCode(const std::vector<unsigned int> _keyCodeVec, const InputType& _inputType)
@@ -246,7 +246,7 @@ private:
 	 * @brief		コールバック関数を追加する
 	 * @param[in]	std::function<void(InputAction::CallBackContext&>)> 追加するコールバック関数
 	 * @return		const int	登録したコールバック関数のID
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/10
 	 */
 	int AddCallBack(const std::function<void(const InputAction::CallBackContext&)> _callBack)
@@ -259,7 +259,7 @@ private:
 	 * @brief		コールバック関数を削除する
 	 * @param[in]	std::string	削除するキーの存在するキーマップ
 	 * @param[in]	const int	削除するコールバック関数のID
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/08
 	 */
 	void DeleteCallBack(const int _id)
@@ -288,19 +288,19 @@ private:
 
 	/**
 	 * @brief		アクティブ
-	 * @History		24/09/07 作成(Suzuki N)
+	 * @History		24/09/07 作成(NZ)
 	 */
 	bool active;
 
 	/**
 	 * @brief		キーマップ
-	 * @History		24/09/07 作成(Suzuki N)
+	 * @History		24/09/07 作成(NZ)
 	 */
 	std::unordered_map<std::string, InputAction*> keyMap;
 
 	/**
 	 * @brief		生成されたInputSystemのインスタンス
-	 * @History		24/09/10 作成(Suzuki N)
+	 * @History		24/09/10 作成(NZ)
 	 */
 	static std::vector<InputSystem*> inputSystemVec;
 
@@ -311,7 +311,7 @@ public:
 
 	/**
 	 * @brief		コンストラクタ
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/07
 	 */
 	InputSystem() : active(true)
@@ -321,7 +321,7 @@ public:
 
 	/**
 	 * @brief		デストラクタ
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/07
 	 */
 	~InputSystem()
@@ -340,7 +340,7 @@ public:
 	/**
 	 * @brief		Activeを変更する
 	 * @param[in]	bool 変更後のbool値
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/07
 	 */
 	void SetActive(const bool _active) { active = _active; }
@@ -350,7 +350,7 @@ public:
 	 * @brief		特定のキーマップを取得する
 	 * @param[in]	const string& キー
 	 * @return		const InputAction& キー入力 
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/10/30
 	 */
 	const InputAction& GetKeyMap(const std::string& _key) { return *keyMap[_key]; }
@@ -365,7 +365,7 @@ public:
 	 * @param[in]	std::string&	登録するキー
 	 * @param[in]	const int		キーコード
 	 * @param[in]	const InputType& 入力を見るコンソールの種類
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/07
 	 */
 	void AddKeyCode(const std::string& _key, const unsigned int _inputKey, const InputType& _inputType = InputType::Key)
@@ -394,7 +394,7 @@ public:
 	 * @param[in]	const std::string&		 登録するキー
 	 * @param[in]	const std::vector<int>&  キーコード
 	 * @param[in]	const InputType& 入力を見るコンソールの種類
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/07
 	 */
 	void AddKeyCode(const std::string& _key, const std::vector<unsigned int>& _inputKey, const InputType& _inputType = InputType::Key)
@@ -428,7 +428,7 @@ public:
 	 * @param[in]	const std::string&	削除するキーの存在するキーマップ
 	 * @param[in]	const int			削除するキーコード
 	 * @param[in]	const InputType&	削除するコンソールの種類
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/07
 	 */
 	void DeleteKeyCode(const std::string& _key, const unsigned int _inputKey, const InputType& _inputType)
@@ -453,7 +453,7 @@ public:
 	 * @param[in]	const std::string&			削除するキーの存在するキーマップ
 	 * @param[in]	const std::vector<int>&		削除するキーコード
 	 * @param[in]	const InputType&			削除するコンソールの種類
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/07
 	 */
 	void DeleteKeyCode(const std::string& _key, const std::vector<unsigned int> _inputKey, const InputType& _inputType)
@@ -484,7 +484,7 @@ public:
 	 * @param[in]	std::string&	登録するキー
 	 * @param[in]	std::function<void(InputAction::CallBackContext&)> 登録するコールバック関数
 	 * @return		int	登録したコールバック関数のID
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/08
 	 */
 	int AddCallBack(const std::string& _key, const std::function<void(const InputAction::CallBackContext&)> _callBack)
@@ -516,7 +516,7 @@ public:
 	 * @brief		InputActionにコールバック関数を登録する
 	 * @param[in]	std::string	削除するキーの存在するキーマップ
 	 * @param[in]	const int	削除するコールバック関数のID
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/08
 	 */
 	void DeleteCallBack(const std::string& _key, const int _id)
@@ -537,7 +537,7 @@ public:
 	/**
 	 * @brief		登録されているキーマップを削除する
 	 * @param[in]	std::string& _key 削除するキーマップのキー
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/10/02
 	 */
 	void DeleteKeyMap(const std::string& _key)
@@ -559,7 +559,7 @@ private:
 
 	/**
 	 * @brief		アクションマップに登録されているキーを監視する
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/08
 	 */
 	void KeyCheck()
@@ -718,7 +718,7 @@ private:
 
 	/**
 	 * @brief		毎F呼ばれるメソッド
-	 * @author		Suzuki N
+	 * @author		NZ
 	 * @date		24/09/10
 	 */
 	void Update()
