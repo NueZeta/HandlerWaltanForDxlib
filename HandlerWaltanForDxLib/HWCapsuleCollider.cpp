@@ -131,6 +131,7 @@ void HWCapsuleCollider::Update()
 	{
 		startPos = UsStartPos;
 		endPos = UsEndPos;
+		center = (startPos + endPos) * 0.5f;
 	}
 
 	// デバッグモード、もしくはコライダーの可視化フラグが立っているなら、コライダーを描画する

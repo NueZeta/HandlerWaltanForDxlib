@@ -72,6 +72,12 @@ public:
 	VECTOR worldPosition;
 
 	/**
+	 * @brief		Õ“Ë‚µ‚½À•W
+	 * @History		25/2/3 ì¬(NZ)
+	 */
+	VECTOR contact = {-1,-1,-1};
+
+	/**
 	 * @brief		
 	 * @History		24/10/22 ì¬(NZ)
 	 */

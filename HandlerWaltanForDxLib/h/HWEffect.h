@@ -155,7 +155,7 @@ public:
 	void SetPlaySpeed(float _speed)
 	{
 		SetSpeedPlayingEffekseer3DEffect(playingEffectHandle, _speed);
-		_speed = _speed;
+		playSpeed = _speed;
 	}
 
 	/**

@@ -38,6 +38,9 @@ inline VECTOR operator*(VECTOR a, float b) { return VScale(a,b); }
 inline VECTOR operator+=(VECTOR& a, VECTOR b) { return a = VAdd(a,b); }
 inline VECTOR operator-=(VECTOR& a, VECTOR b) { return a = VSub(a,b); }
 inline VECTOR operator*=(VECTOR a, float b) { return a = VScale(a,b); }
+inline bool operator==(VECTOR a, VECTOR b) { return (a.x == b.x && a.y == b.y && a.z == b.z); }
+inline bool operator==(VECTOR a, float b) { return (a.x == b && a.y == b && a.z == b); }
+
 
 
 /**
