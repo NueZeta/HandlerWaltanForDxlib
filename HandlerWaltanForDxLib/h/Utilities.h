@@ -488,3 +488,33 @@ inline float Distance(VECTOR v1, VECTOR v2)
 		(v2.y - v1.y) * (v2.y - v1.y) +
 		(v2.z - v1.z) * (v2.z - v1.z));
 }
+
+
+// 線形補間関数
+inline float Lerp(float start, float end, float t)
+{
+	return start + t * (end - start);
+}
+
+/**
+ * @brief		線形補間関数
+ * @param[in]	VECTOR 座標1
+ * @param[in]	VECTOR 座標2
+ * @return		float 
+ * @author		NZ
+ * @date		24/10/21
+ */
+inline VECTOR Lerp(VECTOR start, VECTOR end, float t)
+{
+	VECTOR result;
+	result.x = Lerp(start.x, end.x, t);
+	result.y = Lerp(start.y, end.y, t);
+	result.z = Lerp(start.z, end.z, t);
+	return result;
+}
+
+
+// 値Aを0から1の間に調整する関数
+inline float Normalize(float A, float min, float max) {
+	return (A - min) / (max - min);
+}
