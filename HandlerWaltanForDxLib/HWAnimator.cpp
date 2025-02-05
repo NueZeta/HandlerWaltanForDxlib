@@ -49,7 +49,7 @@ void HWAnimator::AnimPlay()
 		}
 	}
 
-	// アニメーション1の処理
+	// アニメーション2の処理
 	if (playIndex2 != -1)
 	{
 		// アニメーション1のブレンド率を設定
@@ -162,6 +162,7 @@ void HWAnimator::AnimChange(const int _animId, bool forcedSwitchover)
 		animBlendRate = 0.0f;
 	}
 
+	// モーションブレンド中
 	else if (playIndex1 != -1 && playIndex2 != -1)
 	{
 		// ブレンド中のアニメーションと同じアニメーションへの変更指示も無視
