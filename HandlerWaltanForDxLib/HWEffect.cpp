@@ -36,6 +36,7 @@ void HWEffect::Stop()
 	if (!isPlay || playingEffectHandle == -1) return;
 	// エフェクトの再生を中止する
 	StopEffekseer3DEffect(playingEffectHandle);
+	playingEffectHandle = -1;
 	isPlay = false;
 }
 
