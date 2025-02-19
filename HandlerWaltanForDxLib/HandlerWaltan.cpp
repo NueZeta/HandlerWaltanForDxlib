@@ -40,12 +40,17 @@ void HandlerWaltan::Update()
     {
         if (it->time <= GetNowCount()) 
         {
+
             delete it->object;  
+            it->object = nullptr;
             it = HWGameObject::destroyList.erase(it);  
         }
         else 
             ++it;
     }
+
+    //! DotweenのUpdateを呼び出す
+    HWDotween::Update();
 
     //! インスタンス化された全てのGameObject
     auto gameObjects = HWGameObject::GetGameObjects();

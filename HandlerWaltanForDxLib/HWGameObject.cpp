@@ -79,6 +79,7 @@ HWGameObject::HWGameObject(const HWGameObject& _other, const CopyType copyType) 
     switch (copyType)
     {
     case CopyType::Shallow:
+        // –¢À‘•(DeepCopy‚Ìˆ—‚Æˆê)
         ShallowCopy(_other);
         break;
 

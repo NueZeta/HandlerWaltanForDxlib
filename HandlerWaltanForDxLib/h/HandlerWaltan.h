@@ -10,6 +10,7 @@
 #include "HWRenderer.h"
 #include "HWTransform.h"
 #include "InputSystem.h"
+#include "HWDoTween.h"
 
 
 /**
