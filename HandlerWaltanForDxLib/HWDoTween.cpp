@@ -30,6 +30,7 @@ void HWDotween::Update()
 	}
 }
 
+
 HWDotween::TweenCallback* HWDotween::DoMove(HWTransform* _transform, const VECTOR& _targetPos, int _duration)
 {
 	//! 戻り値
@@ -51,6 +52,56 @@ HWDotween::TweenCallback* HWDotween::DoMove(HWTransform* _transform, const VECTO
 			if (_tweenEvent->elapsedTime >= _tweenEvent->duration)
 				_tweenEvent->complete = true;
 		}, _transform, _targetPos, _duration);
+
+	return tweenCallback;
+}
+
+HWDotween::TweenCallback* HWDotween::DoRotate(HWTransform* _transform, const VECTOR& _targetRot, int _duration)
+{
+	//! 戻り値
+	TweenCallback* tweenCallback = new TweenCallback();
+	//! Tweenイベント
+	TweenEvent* tweenEvent = new TweenEvent();
+
+	//
+	// Tweenの登録
+	//
+
+	tweens[tweenEvent] = tweenCallback;
+	tweenEvent->Subscribe_Rot([&](TweenEvent* _tweenEvent, int _frame)
+		{
+			float rate = (float)_tweenEvent->elapsedTime / (float)_tweenEvent->duration;
+			// 移動処理
+			_tweenEvent->transform->position = Lerp(_tweenEvent->prev, _tweenEvent->target, rate);
+			// 完了判定
+			if (_tweenEvent->elapsedTime >= _tweenEvent->duration)
+				_tweenEvent->complete = true;
+		}, _transform, _targetRot, _duration);
+
+	return tweenCallback;
+}
+
+HWDotween::TweenCallback* HWDotween::DoScale(HWTransform* _transform, const VECTOR& _targetScale, int _duration)
+{
+	//! 戻り値
+	TweenCallback* tweenCallback = new TweenCallback();
+	//! Tweenイベント
+	TweenEvent* tweenEvent = new TweenEvent();
+
+	//
+	// Tweenの登録
+	//
+
+	tweens[tweenEvent] = tweenCallback;
+	tweenEvent->Subscribe_Scale([&](TweenEvent* _tweenEvent, int _frame)
+		{
+			float rate = (float)_tweenEvent->elapsedTime / (float)_tweenEvent->duration;
+			// 移動処理
+			_tweenEvent->transform->position = Lerp(_tweenEvent->prev, _tweenEvent->target, rate);
+			// 完了判定
+			if (_tweenEvent->elapsedTime >= _tweenEvent->duration)
+				_tweenEvent->complete = true;
+		}, _transform, _targetScale, _duration);
 
 	return tweenCallback;
 }
