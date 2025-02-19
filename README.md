@@ -25,8 +25,9 @@
 6. [HWAnimator](#hwanimator)
 7. [HWEffect](#hweffect)
 8. [InputSystem](#inputsystem)
-9. [PoolAllocator](#poolallocator)
-10. [CsvLoader](#csvloader)
+9. [HWDoTween](#hwdotween)
+10. [PoolAllocator](#poolallocator)
+11. [CsvLoader](#csvloader)
 
 
 
@@ -921,6 +922,58 @@ InputActionクラスのメンバクラスのため、記述するときは　Inp
 
 
 <!------------------------------------------------------------------------------------------------------------------>
+
+
+
+## HWDoTween
+
+<b> <説明> </b>
+
+HWGameObjectにアニメーションをさせる
+
+
+<br />
+<br />
+
+<b> <メソッド> </b>
+
+	@brief		オブジェクトを移動させる
+	@param[in]	移動させるオブジェクト
+	@param[in]	移動先の座標
+	@param[in]	移動にかける時間(フレーム)
+	@return		TweenEventのヘルパークラス
+	static TweenCallback* DoMove(HWTransform* _transform, const VECTOR& _targetPos, int _duration)
+
+	@brief		オブジェクトを回転させる
+	@param[in]	回転させるオブジェクト
+	@param[in]	回転先の座標
+	@param[in]	回転にかける時間(フレーム)
+	@return		TweenEventのヘルパークラス
+	static TweenCallback* DoRotate(HWTransform* _transform, const VECTOR& _targetRot, int _duration)
+
+	@brief		オブジェクトを拡縮させる
+	@param[in]	拡縮させるオブジェクト
+	@param[in]	拡縮先の座標
+	@param[in]	拡縮にかける時間(フレーム)
+	 @return		TweenEventのヘルパークラス
+	static TweenCallback* DoScale(HWTransform* _transform, const VECTOR& _targetScale, int _duration);
+
+	@brief		一定時間待機
+	@param[in]	移動にかかる時間(フレーム)
+	@return		TweenEventのヘルパークラス
+	static TweenCallback* DoDelay(int _duration)
+
+<br />
+<br />
+
+ <b> <Tweenイベントの戻り値のヘルパークラス> </b>
+
+	@brief		Tweenイベント完了時に呼ばれるコールバック
+	@param[in]	実行するイベント
+	void OnComplete(std::function<void()> _onComplete)
+
+
+<p align="right">(<a href="#top">トップへ</a>)</p> 
 
 
 
