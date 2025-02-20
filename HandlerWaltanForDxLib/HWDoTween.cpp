@@ -13,9 +13,10 @@ void HWDotween::Update()
 		it->first->Execute();
 
 		// Tween完了時のコールバックを呼び出す
-		if(it->first->complete && it->second->onComplete)
+		if(it->first->complete)
 		{
-			it->second->onComplete();
+			if(it->second->onComplete)
+				it->second->onComplete();
 
 			//
 			// 登録を解除
