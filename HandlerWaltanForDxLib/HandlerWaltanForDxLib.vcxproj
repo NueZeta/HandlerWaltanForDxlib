@@ -30,6 +30,7 @@
     <ClCompile Include="HWDoTween.cpp" />
     <ClCompile Include="HWEffect.cpp" />
     <ClCompile Include="HWGameObject.cpp" />
+    <ClCompile Include="HWImage.cpp" />
     <ClCompile Include="HWModelCollider.cpp" />
     <ClCompile Include="HWQuaternion.cpp" />
     <ClCompile Include="HWRenderer.cpp" />
@@ -50,6 +51,7 @@
     <ClInclude Include="h\HWDoTween.h" />
     <ClInclude Include="h\HWEffect.h" />
     <ClInclude Include="h\HWGameObject.h" />
+    <ClInclude Include="h\HWImage.h" />
     <ClInclude Include="h\HWModelCollider.h" />
     <ClInclude Include="h\HWQuaternion.h" />
     <ClInclude Include="h\HWRenderer.h" />
