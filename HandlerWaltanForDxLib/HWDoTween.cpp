@@ -73,7 +73,7 @@ HWDotween::TweenCallback* HWDotween::DoRotate(HWTransform* _transform, const VEC
 		{
 			float rate = (float)_tweenEvent->elapsedTime / (float)_tweenEvent->duration;
 			// ˆÚ“®ˆ—
-			_tweenEvent->transform->position = Lerp(_tweenEvent->prev, _tweenEvent->target, rate);
+			_tweenEvent->transform->rotate = Lerp(_tweenEvent->prev, _tweenEvent->target, rate);
 			// Š®—¹”»’è
 			if (_tweenEvent->elapsedTime >= _tweenEvent->duration)
 				_tweenEvent->complete = true;
@@ -98,7 +98,7 @@ HWDotween::TweenCallback* HWDotween::DoScale(HWTransform* _transform, const VECT
 		{
 			float rate = (float)_tweenEvent->elapsedTime / (float)_tweenEvent->duration;
 			// ˆÚ“®ˆ—
-			_tweenEvent->transform->position = Lerp(_tweenEvent->prev, _tweenEvent->target, rate);
+			_tweenEvent->transform->scale = Lerp(_tweenEvent->prev, _tweenEvent->target, rate);
 			// Š®—¹”»’è
 			if (_tweenEvent->elapsedTime >= _tweenEvent->duration)
 				_tweenEvent->complete = true;
