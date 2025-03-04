@@ -21,8 +21,16 @@ HWEffect::~HWEffect()
 void HWEffect::Play()
 {
 	if (isPlay || playingEffectHandle != -1) return;
+
 	// エフェクトを再生する。
 	playingEffectHandle = PlayEffekseer3DEffect(effectResourceHandle);
+	// 再生位置
+	SetPosPlayingEffekseer3DEffect(playingEffectHandle, transform->position.x, transform->position.y, transform->position.z);
+	// 回転
+	SetRotationPlayingEffekseer3DEffect(playingEffectHandle, (float)Deg2Rad(transform->rotate.x),
+		(float)Deg2Rad(transform->rotate.y), (float)Deg2Rad(transform->rotate.z));
+	// スケール
+	SetScalePlayingEffekseer3DEffect(playingEffectHandle, transform->scale.x, transform->scale.y, transform->scale.z);
 
 	// カラーの設定をしていた場合は、再度設定
 	if (!(color.r == 0 && color.g == 0 && color.b == 0 && color.a == 0))
