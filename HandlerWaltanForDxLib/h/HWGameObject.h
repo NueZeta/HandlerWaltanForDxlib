@@ -5,6 +5,7 @@
 #include "HWComponent.h"
 #include "HWTransform.h"
 #include "HWRenderer.h"
+#include "HWImage.h"
 
 
 /**
