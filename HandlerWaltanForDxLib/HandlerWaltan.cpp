@@ -57,7 +57,8 @@ void HandlerWaltan::Update()
 
     // TransformのUpdateメソッドを呼び出す
     for (auto obj : gameObjects)
-        obj->CallTransformUpdate();
+        if(obj->active)
+            obj->CallTransformUpdate();
 
     // インスタンス化されたInputSystemのUpdateメソッドを呼ぶ
     for (auto it = InputSystem::inputSystemVec.begin(); it != InputSystem::inputSystemVec.end(); ++it)

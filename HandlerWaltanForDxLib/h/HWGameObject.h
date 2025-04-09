@@ -85,7 +85,7 @@ public:
 	 * @brief		アクティブ
 	 * @History		24/10/03 作成(NZ)
 	 */
-	bool active;
+	std::atomic<bool> active;
 
 	/**
 	 * @brief		オブジェクトの名前
@@ -255,6 +255,19 @@ public:
 	 * @date		24/07/21
 	 */
 	HWGameObject(const HWGameObject& _other, const CopyType copyType = CopyType::Deep);
+
+	/**
+	 * @brief		非同期読み込みコンストラクタ
+	 * @param[in]	const CopyType コピーの種類
+	 */
+	HWGameObject(bool _active);
+
+	/**
+	 * @brief		非同期読み込みコンストラクタ
+	 * @param[in]	std::string オブジェクト名
+	 * @param[in]	const CopyType コピーの種類
+	 */
+	HWGameObject(const std::string& _name, bool _active);
 
 #pragma endregion
 

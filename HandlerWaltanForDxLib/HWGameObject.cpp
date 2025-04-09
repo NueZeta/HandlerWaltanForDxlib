@@ -72,8 +72,9 @@ HWGameObject::HWGameObject(const std::string& _name, int _priority) : name(_name
 }
 
 HWGameObject::HWGameObject(const HWGameObject& _other, const CopyType copyType) : name(_other.name),
-                           tag(_other.tag), priority(_other.priority), parent(nullptr), active(_other.active)
+                           tag(_other.tag), priority(_other.priority), parent(nullptr)
 {
+    active.store(_other.active.load());
     gameObjects.push_back(this);
 
     switch (copyType)
@@ -87,6 +88,34 @@ HWGameObject::HWGameObject(const HWGameObject& _other, const CopyType copyType) 
         DeepCopy(_other);
         break;
     }
+
+    BubbleSort();
+}
+
+HWGameObject::HWGameObject(bool _active) : priority(0), name("obj"), tag(0), parent(nullptr)
+{
+    active.store(_active);
+    gameObjects.push_back(this);
+
+    std::unique_ptr<HWTransform> transformCp = std::make_unique<HWTransform>();
+    transformCp->gameObject = this;
+    transformCp->Awake();
+    hwComponents.push_back(std::move(transformCp));
+    transform = GetComponent<HWTransform>();
+
+    BubbleSort();
+}
+
+HWGameObject::HWGameObject(const std::string& _name, bool _active) : priority(0), name(_name), tag(0), parent(nullptr)
+{
+    active.store(_active);
+    gameObjects.push_back(this);
+
+    std::unique_ptr<HWTransform> transformCp = std::make_unique<HWTransform>();
+    transformCp->gameObject = this;
+    transformCp->Awake();
+    hwComponents.push_back(std::move(transformCp));
+    transform = GetComponent<HWTransform>();
 
     BubbleSort();
 }
@@ -203,7 +232,7 @@ void HWGameObject::CallTransformUpdate()
 
 void HWGameObject::CallAllUpdates()
 {
-    if (!active) return;
+    if (!active.load()) return;
 
     for (auto& component : hwComponents)
     {
@@ -226,7 +255,7 @@ void HWGameObject::CallAllUpdates()
 
 void HWGameObject::CallAllLateUpdates()
 {
-    if (!active) return;
+    if (!active.load()) return;
 
     for (auto& component : hwComponents)
     {
@@ -237,7 +266,7 @@ void HWGameObject::CallAllLateUpdates()
 
 void HWGameObject::CallAllOnCollisionEnters(HWCollider& _collider)
 {
-    if (!active) return;
+    if (!active.load()) return;
 
     for (auto& component : hwComponents)
     {
@@ -248,7 +277,7 @@ void HWGameObject::CallAllOnCollisionEnters(HWCollider& _collider)
 
 void HWGameObject::CallAllOnCollisionStays(HWCollider& _collider)
 {
-    if (!active) return;
+    if (!active.load()) return;
 
     for (auto& component : hwComponents)
     {
@@ -259,7 +288,7 @@ void HWGameObject::CallAllOnCollisionStays(HWCollider& _collider)
 
 void HWGameObject::CallAllOnCollisionExits(HWCollider& _collider)
 {
-    if (!active) return;
+    if (!active.load()) return;
 
     for (auto& component : hwComponents)
     {
@@ -270,7 +299,7 @@ void HWGameObject::CallAllOnCollisionExits(HWCollider& _collider)
 
 void HWGameObject::CallAllOnTriggerEnters(HWCollider& _collider)
 {
-    if (!active) return;
+    if (!active.load()) return;
 
     for (auto& component : hwComponents)
     {
@@ -281,7 +310,7 @@ void HWGameObject::CallAllOnTriggerEnters(HWCollider& _collider)
 
 void HWGameObject::CallAllOnTriggerStays(HWCollider& _collider)
 {
-    if (!active) return;
+    if (!active.load()) return;
 
     for (auto& component : hwComponents)
     {
@@ -292,7 +321,7 @@ void HWGameObject::CallAllOnTriggerStays(HWCollider& _collider)
 
 void HWGameObject::CallAllOnTriggerExits(HWCollider& _collider)
 {
-    if (!active) return;
+    if (!active.load()) return;
 
     for (auto& component : hwComponents)
     {

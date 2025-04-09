@@ -256,6 +256,19 @@ public:
 	 */
 	HWGameObject(const HWGameObject& _other, const CopyType copyType = CopyType::Deep);
 
+	/**
+	 * @brief		非同期読み込みコンストラクタ
+	 * @param[in]	const CopyType コピーの種類
+	 */
+	HWGameObject(bool _active);
+
+	/**
+	 * @brief		非同期読み込みコンストラクタ
+	 * @param[in]	std::string オブジェクト名
+	 * @param[in]	const CopyType コピーの種類
+	 */
+	HWGameObject(const std::string& _name, bool _active);
+
 #pragma endregion
 
 
