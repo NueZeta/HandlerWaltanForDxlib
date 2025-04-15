@@ -57,7 +57,7 @@ void HandlerWaltan::Update()
 
     // TransformのUpdateメソッドを呼び出す
     for (auto obj : gameObjects)
-        if(obj->active)
+        if(obj->active.load())
             obj->CallTransformUpdate();
 
     // インスタンス化されたInputSystemのUpdateメソッドを呼ぶ
@@ -69,11 +69,13 @@ void HandlerWaltan::Update()
 
     // インスタンス化された全てのHWGameObjectのUpdateメソッドを呼び出す
     for (auto obj : gameObjects)
-        obj->CallAllUpdates();
+        if(obj->active.load())
+            obj->CallAllUpdates();
 
     // インスタンス化された全てのHWGameObjectのLateUpdateメソッドを呼び出す
     for (auto obj : gameObjects)
-        obj->CallAllLateUpdates();
+        if(obj->active.load())
+            obj->CallAllLateUpdates();
 
     // あたり判定を確認
     CollisionWaltan::Instance().Update();

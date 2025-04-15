@@ -85,7 +85,7 @@ public:
 	 * @brief		アクティブ
 	 * @History		24/10/03 作成(NZ)
 	 */
-	bool active;
+	std::atomic<bool> active;
 
 	/**
 	 * @brief		オブジェクトの名前

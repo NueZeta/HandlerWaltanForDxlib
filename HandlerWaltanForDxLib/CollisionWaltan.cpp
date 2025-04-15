@@ -37,17 +37,19 @@ void CollisionWaltan::Update()
 	for (auto it1 = ColVec.begin(); it1 != ColVec.end() - 1; ++it1)
 	{
 		// 参照中のコライダーが非アクティブの場合は無視
-		if (!(*it1)->active || !(*it1)->gameObject->active) continue;
+		if (!(*it1)->gameObject->active.load()) continue;
+		if (!(*it1)->active) continue;
 
 		// すでにチェックした組み合わせを省く
 		for (auto it2 = it1 + 1; it2 != ColVec.end(); ++it2)
 		{
 			// 参照中のコライダーが非アクティブの場合は無視
-			if (!(*it2)->active || !(*it2)->gameObject->active) continue;
+			if (!(*it2)->gameObject->active.load()) continue;
+			if (!(*it2)->active) continue;
 			// アタッチされているGameObjectが同じ場合は無視
 			if ((*it1)->gameObject == (*it2)->gameObject) continue;
 			// triggerと非triggerの場合はその組み合わせは無視
-			if ((*it1)->isTrigger != (*it2)->isTrigger && 
+			if ((*it1)->isTrigger != (*it2)->isTrigger &&
 				((*it1)->isCollisionCheck_onlySameTriggerType || (*it2)->isCollisionCheck_onlySameTriggerType))
 				continue;
 
