@@ -1,0 +1,70 @@
+cmake_minimum_required(VERSION 3.15)
+project(MyGame)
+
+set(CMAKE_CXX_STANDARD 14)
+# MT/MTd（静的リンク）
+set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreadedDebug")
+find_package(Python3 REQUIRED COMPONENTS Interpreter)
+
+
+
+# シーンメタデータの出力ファイルのパス
+set(SCENE_FILE ${CMAKE_SOURCE_DIR}/generated/Scenes/default.scene.json)
+# プレハブの出力ファイルのパス
+set(PREFAB_FILE ${CMAKE_SOURCE_DIR}/generated/Prefabs/default.prefab.json)
+
+# 出力先ディレクトリ作成
+file(MAKE_DIRECTORY ${CMAKE_SOURCE_DIR}/generated/Scenes)
+# 出力先ディレクトリ作成
+file(MAKE_DIRECTORY ${CMAKE_SOURCE_DIR}/generated/Prefabs)
+
+# Pythonスクリプトによるシーンメタデータ生成
+add_custom_command(
+    OUTPUT ${SCENE_FILE}
+    COMMAND ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/tools/scan_scene.py ${SCENE_FILE}
+    DEPENDS ${CMAKE_SOURCE_DIR}/tools/scan_scene.py
+    COMMENT "create Scenes meta data"
+)
+# Pythonスクリプトによるプレハブデータ生成
+add_custom_command(
+    OUTPUT ${PREFAB_FILE}
+    COMMAND ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/tools/create_prefab.py ${PREFAB_FILE}
+    DEPENDS ${CMAKE_SOURCE_DIR}/tools/create_prefab.py
+    COMMENT "create Prefabs data"
+)
+add_custom_target(GenerateJson ALL DEPENDS ${SCENE_FILE} ${PREFAB_FILE})
+
+
+
+# ソースファイルを収集
+file(GLOB_RECURSE SOURCE_FILES "${CMAKE_SOURCE_DIR}/src/*.cpp")
+
+# WinMain を使う Windows GUI アプリケーションとして実行ファイルを作成
+add_executable(MyGame WIN32 ${SOURCE_FILES})
+
+
+target_include_directories(MyGame PRIVATE
+    ${CMAKE_SOURCE_DIR}/Lib)
+
+
+# Debug ビルド時にリンクさせるライブラリ
+file(GLOB LIB_FILES_DEBUG "${CMAKE_SOURCE_DIR}/Lib/MTd_Debug/*.lib")
+# Release ビルド時にリンクさせるライブラリ
+file(GLOB LIB_FILES_RELEASE "${CMAKE_SOURCE_DIR}/Lib/MTd_Release/*.lib")
+
+# ビルド構成でリンクするライブラリを切り替える
+target_link_libraries(MyGame PRIVATE
+    $<$<CONFIG:Debug>:
+        ${LIB_FILES_DEBUG}
+        >
+    $<$<CONFIG:Release>:
+        ${LIB_FILES_RELEASE}
+        > 
+)
+
+
+set_target_properties(MyGame PROPERTIES
+    ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
+    LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
+    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
+)
