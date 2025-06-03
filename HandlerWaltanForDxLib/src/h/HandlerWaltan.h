@@ -11,7 +11,7 @@
 #include "HWTransform.h"
 #include "InputSystem.h"
 #include "HWDoTween.h"
-
+#include "HWSceneManager.h"
 
 /**
 * @author   NZ

@@ -1,4 +1,5 @@
 #pragma once
+#include "HWSceneManager.h"
 
 
 #define REGISTER_SCENE(NAME, TYPE)                                  \

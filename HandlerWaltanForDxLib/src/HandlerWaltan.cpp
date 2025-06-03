@@ -80,6 +80,9 @@ void HandlerWaltan::Update()
     // あたり判定を確認
     CollisionWaltan::Instance().Update();
 
+    // シーンの更新
+	HWSceneManager::Update();
+
 
     // Effekseerにより再生中のエフェクトを更新する。
     UpdateEffekseer3D();
