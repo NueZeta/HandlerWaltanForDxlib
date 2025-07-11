@@ -4,9 +4,6 @@
 #include "HandlerWaltan.h"
 
 
-//#pragma comment(lib, "HandlerWaltanForDxLib.lib")
-
-
 
 //-----------------------------------------------------------
 // ‘O•ûéŒ¾  
@@ -23,6 +20,8 @@
 class CollisionWaltan;
 
 class HandlerWaltan;
+
+class HWSceneManager;
 
 class HWAnimator;
 

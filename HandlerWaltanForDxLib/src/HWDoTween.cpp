@@ -12,8 +12,19 @@ void HWDotween::Update()
 		// Tweenイベントを実行
 		it->first->Execute();
 
+		// Tweenのキャンセル
+		if(it->first->isCancel)
+		{
+			//
+			// 登録を解除
+			//
+
+			delete it->first;
+			delete it->second;
+			it = tweens.erase(it); // 要素を削除し、イテレータを更新
+		}
 		// Tween完了時のコールバックを呼び出す
-		if(it->first->complete)
+		else if(it->first->complete)
 		{
 			if(it->second->onComplete)
 				it->second->onComplete();
@@ -38,6 +49,9 @@ HWDotween::TweenCallback* HWDotween::DoMove(HWTransform* _transform, const VECTO
 	TweenCallback* tweenCallback = new TweenCallback();
 	//! Tweenイベント
 	TweenEvent* tweenEvent = new TweenEvent();
+
+	// 戻り値から紐づいているTweenEventを参照できるようにする
+	tweenCallback->tweenEvent = tweenEvent;
 
 	//
 	// Tweenの登録
@@ -64,6 +78,9 @@ HWDotween::TweenCallback* HWDotween::DoRotate(HWTransform* _transform, const VEC
 	//! Tweenイベント
 	TweenEvent* tweenEvent = new TweenEvent();
 
+	// 戻り値から紐づいているTweenEventを参照できるようにする
+	tweenCallback->tweenEvent = tweenEvent;
+
 	//
 	// Tweenの登録
 	//
@@ -89,6 +106,9 @@ HWDotween::TweenCallback* HWDotween::DoScale(HWTransform* _transform, const VECT
 	//! Tweenイベント
 	TweenEvent* tweenEvent = new TweenEvent();
 
+	// 戻り値から紐づいているTweenEventを参照できるようにする
+	tweenCallback->tweenEvent = tweenEvent;
+
 	//
 	// Tweenの登録
 	//
@@ -107,12 +127,45 @@ HWDotween::TweenCallback* HWDotween::DoScale(HWTransform* _transform, const VECT
 	return tweenCallback;
 }
 
+HWDotween::TweenCallback* HWDotween::DoAction(VECTOR* _posPtr, const VECTOR& _targetPos, int _duration)
+{
+	//! 戻り値
+	TweenCallback* tweenCallback = new TweenCallback();
+	//! Tweenイベント
+	TweenEvent* tweenEvent = new TweenEvent();
+
+	// 戻り値から紐づいているTweenEventを参照できるようにする
+	tweenCallback->tweenEvent = tweenEvent;
+
+	//
+	// Tweenの登録
+	//
+
+	tweens[tweenEvent] = tweenCallback;
+	tweenEvent->Subscribe_Action([&](TweenEvent* _tweenEvent, int _frame)
+		{
+			float rate = (float)_tweenEvent->elapsedTime / (float)_tweenEvent->duration;
+			// 移動処理
+			*_tweenEvent->animPtr = Lerp(_tweenEvent->prev, _tweenEvent->target, rate);
+			// 完了判定
+			if (_tweenEvent->elapsedTime >= _tweenEvent->duration)
+				_tweenEvent->complete = true;
+		}, _posPtr, _targetPos, _duration);
+
+	return tweenCallback;
+}
+
+
+
 HWDotween::TweenCallback* HWDotween::DoDelay(int _duration)
 {
 	//! 戻り値
 	TweenCallback* tweenCallback = new TweenCallback();
 	//! Tweenイベント
 	TweenEvent* tweenEvent = new TweenEvent();
+
+	// 戻り値から紐づいているTweenEventを参照できるようにする
+	tweenCallback->tweenEvent = tweenEvent;
 
 	//
 	// Tweenの登録

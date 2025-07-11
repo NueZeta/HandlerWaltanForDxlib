@@ -110,7 +110,6 @@ void HandlerWaltan::Update()
 
 HandlerWaltan::HandlerWaltan()
 {
-    // 各Waltanオブジェクトにインスタンスを与える
 }
 
 
