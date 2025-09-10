@@ -1,11 +1,11 @@
-// �����C�u�����ŕK�{�ɂȂ�C���N���[�h�t�@�C��
-// "DxLib.h" ��include�����
+﻿// 当ライブラリで必須になるインクルードファイル
+// "DxLib.h" もincludeされる
 #include "HandlerWaltanForDxLib.h"
 
-// �v���O������ WinMain ����n�܂�܂�
+// プログラムは WinMain から始まります
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	// DX���C�u�����̏��������������˂Ă���
+	// DXライブラリの初期化処理も兼ねている
 	if (HandlerWaltan::Instance().Init() == -1)
 	{
 		return 0;
@@ -14,64 +14,66 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 #ifdef _DEBUG
 
-	// ��: 1920, ����: 1080, �r�b�g�[�x: 32
+	// 幅: 1920, 高さ: 1080, ビット深度: 32
 	SetGraphMode(1920, 1080, 32);
 	ChangeWindowMode(TRUE);
-	// �f�o�b�O���[�h�ŋN��
+	// デバッグモードで起動
 	HandlerWaltan::debugMode = true;
 
 #else
 
-	// ��: 1920, ����: 1080, �r�b�g�[�x: 32
+	// 幅: 1920, 高さ: 1080, ビット深度: 32
 	SetGraphMode(1920, 1080, 32);
-	// �E�C���h�E���[�h�ŋN��
+	// ウインドウモードで起動
 	ChangeWindowMode(FALSE);
-	// ��f�o�b�O���[�h�ŋN��
+	// 非デバッグモードで起動
 	HandlerWaltan::debugMode = false;
 
 #endif // DEBUG
 
 
-	SetUseZBuffer3D(TRUE);     // �f�v�X�o�b�t�@�iZ�o�b�t�@�j��L���ɂ���
-	SetWriteZBuffer3D(TRUE);   // Z�o�b�t�@�ւ̏������݂�L���ɂ���
+	SetUseZBuffer3D(TRUE);     // デプスバッファ（Zバッファ）を有効にする
+	SetWriteZBuffer3D(TRUE);   // Zバッファへの書き込みを有効にする
 
-	//! �n���h���[�⃉�C�t�T�C�N���Ɋ�Â����^�C�~���O�Ń��\�b�h�������I�ɌĂяo���I�u�W�F�N�g
-	//! �V���O���g���Ő݌v����Ă��邽�߁A�ȉ��̕��@�ȊO�ŃC���X�^���X���擾���邱�Ƃ͂ł��Ȃ�
+	//! ハンドラーやライフサイクルに基づいたタイミングでメソッドを自動的に呼び出すオブジェクト
+	//! シングルトンで設計されているため、以下の方法以外でインスタンスを取得することはできない
 	HandlerWaltan& HW = HandlerWaltan::Instance();
 
-	//! �I�u�W�F�N�g�̐���(unity�ł����Ƃ����GameObject�̐���)
+	//! オブジェクトの生成(unityでいうところのGameObjectの生成)
 	HWGameObject* obj = new HWGameObject();
 
-	//! �R���X�g���N�^�̈����Ŗ��O��v���C�I���e�B�̏����ݒ���\(�w�肵�Ȃ������ꍇ�͖��O��"hwObj",
-	//! �v���C�I���e�B�� 0 �ɂȂ�)
+	//! コンストラクタの引数で名前やプライオリティの初期設定も可能(指定しなかった場合は名前は"hwObj",
+	//! プライオリティは 0 になる)
 	// HWGameObject* obj = new HWGameObject("obj");
 	// HWGameObject* obj = new HWGameObject(20);
 	// HWGameObject* obj = new HWGameObject("obj", 20);
 
 
-	// ���C�����[�v
+	// メインループ
 	while (ProcessMessage() == 0)
 	{
-		//����ʏ���
+		//裏画面消す
 		ClearDrawScreen();
-		//�`���𗠉�ʂ�
+		//描画先を裏画面に
 		SetDrawScreen(DX_SCREEN_BACK);
 
-		// ESCAPE�L�[�̓��͂ŏI��
+		// ESCAPEキーの入力で終了
 		if (CheckHitKey(KEY_INPUT_ESCAPE))
 			break;
 
 
-		// �S�Ă�Update���\�b�h��S�ČĂяo��
+		// 全てのUpdateメソッドを全て呼び出す
 		HW.Update();
 
-		DrawFormatString(0, 0, GetColor(255, 255, 255), "Escape key to exit");
+		static int a = LoadGraph("a.png");
 
-		//����ʂ�\��ʂɃR�s�[
+		DrawFormatString(0, 0, GetColor(255, 255, 255), "Escape key to exit : %d", a);
+
+		//裏画面を表画面にコピー
 		ScreenFlip();
 	}
 
-	// �\�t�g�̏I�� 
+	// ソフトの終了 
 	HandlerWaltan::End();
 
 	return 0;

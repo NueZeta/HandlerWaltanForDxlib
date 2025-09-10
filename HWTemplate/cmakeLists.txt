@@ -1,31 +1,34 @@
-cmake_minimum_required(VERSION 3.15)
-project(MyGame)
+ï»¿cmake_minimum_required(VERSION 3.15)
+
+# ã‚·ãƒ¼ãƒ³ãƒ¡ã‚¿ãƒ‡ãƒ¼ã‚¿ã®å‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ‘ã‚¹
+set(MY_PROJECT_NAME MyGame2)
+
+project(${MY_PROJECT_NAME})
 
 set(CMAKE_CXX_STANDARD 14)
-# MT/MTdiÃ“IƒŠƒ“ƒNj
+# MT/MTdï¼ˆé™çš„ãƒªãƒ³ã‚¯ï¼‰
 set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreadedDebug")
 find_package(Python3 REQUIRED COMPONENTS Interpreter)
 
 
-
-# ƒV[ƒ“ƒƒ^ƒf[ƒ^‚Ìo—Íƒtƒ@ƒCƒ‹‚ÌƒpƒX
+# ã‚·ãƒ¼ãƒ³ãƒ¡ã‚¿ãƒ‡ãƒ¼ã‚¿ã®å‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ‘ã‚¹
 set(SCENE_FILE ${CMAKE_SOURCE_DIR}/generated/Scenes/default.scene.json)
-# ƒvƒŒƒnƒu‚Ìo—Íƒtƒ@ƒCƒ‹‚ÌƒpƒX
+# ãƒ—ãƒ¬ãƒãƒ–ã®å‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ‘ã‚¹
 set(PREFAB_FILE ${CMAKE_SOURCE_DIR}/generated/Prefabs/default.prefab.json)
 
-# o—ÍæƒfƒBƒŒƒNƒgƒŠì¬
+# å‡ºåŠ›å…ˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªä½œæˆ
 file(MAKE_DIRECTORY ${CMAKE_SOURCE_DIR}/generated/Scenes)
-# o—ÍæƒfƒBƒŒƒNƒgƒŠì¬
+# å‡ºåŠ›å…ˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªä½œæˆ
 file(MAKE_DIRECTORY ${CMAKE_SOURCE_DIR}/generated/Prefabs)
 
-# PythonƒXƒNƒŠƒvƒg‚É‚æ‚éƒV[ƒ“ƒƒ^ƒf[ƒ^¶¬
+# Pythonã‚¹ã‚¯ãƒªãƒ—ãƒˆã«ã‚ˆã‚‹ã‚·ãƒ¼ãƒ³ãƒ¡ã‚¿ãƒ‡ãƒ¼ã‚¿ç”Ÿæˆ
 add_custom_command(
     OUTPUT ${SCENE_FILE}
     COMMAND ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/tools/scan_scene.py ${SCENE_FILE}
     DEPENDS ${CMAKE_SOURCE_DIR}/tools/scan_scene.py
     COMMENT "create Scenes meta data"
 )
-# PythonƒXƒNƒŠƒvƒg‚É‚æ‚éƒvƒŒƒnƒuƒf[ƒ^¶¬
+# Pythonã‚¹ã‚¯ãƒªãƒ—ãƒˆã«ã‚ˆã‚‹ãƒ—ãƒ¬ãƒãƒ–ãƒ‡ãƒ¼ã‚¿ç”Ÿæˆ
 add_custom_command(
     OUTPUT ${PREFAB_FILE}
     COMMAND ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/tools/create_prefab.py ${PREFAB_FILE}
@@ -35,25 +38,28 @@ add_custom_command(
 add_custom_target(GenerateJson ALL DEPENDS ${SCENE_FILE} ${PREFAB_FILE})
 
 
-
-# ƒ\[ƒXƒtƒ@ƒCƒ‹‚ğûW
+# ã‚½ãƒ¼ã‚¹ãƒ•ã‚¡ã‚¤ãƒ«ã‚’åé›†
 file(GLOB_RECURSE SOURCE_FILES "${CMAKE_SOURCE_DIR}/src/*.cpp")
 
-# WinMain ‚ğg‚¤ Windows GUI ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚Æ‚µ‚ÄÀsƒtƒ@ƒCƒ‹‚ğì¬
-add_executable(MyGame WIN32 ${SOURCE_FILES})
+# WinMain ã‚’ä½¿ã† Windows GUI ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã¨ã—ã¦å®Ÿè¡Œãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä½œæˆ
+add_executable(${MY_PROJECT_NAME} WIN32 ${SOURCE_FILES})
 
 
-target_include_directories(MyGame PRIVATE
+set_target_properties(${MY_PROJECT_NAME} PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+#set_property(TARGET ${PROJECT_NAME} PROPERTY VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+
+
+target_include_directories(${MY_PROJECT_NAME} PRIVATE
     ${CMAKE_SOURCE_DIR}/Lib)
 
-
-# Debug ƒrƒ‹ƒh‚ÉƒŠƒ“ƒN‚³‚¹‚éƒ‰ƒCƒuƒ‰ƒŠ
+    
+# Debug ãƒ“ãƒ«ãƒ‰æ™‚ã«ãƒªãƒ³ã‚¯ã•ã›ã‚‹ãƒ©ã‚¤ãƒ–ãƒ©ãƒª
 file(GLOB LIB_FILES_DEBUG "${CMAKE_SOURCE_DIR}/Lib/MTd_Debug/*.lib")
-# Release ƒrƒ‹ƒh‚ÉƒŠƒ“ƒN‚³‚¹‚éƒ‰ƒCƒuƒ‰ƒŠ
+# Release ãƒ“ãƒ«ãƒ‰æ™‚ã«ãƒªãƒ³ã‚¯ã•ã›ã‚‹ãƒ©ã‚¤ãƒ–ãƒ©ãƒª
 file(GLOB LIB_FILES_RELEASE "${CMAKE_SOURCE_DIR}/Lib/MTd_Release/*.lib")
 
-# ƒrƒ‹ƒh\¬‚ÅƒŠƒ“ƒN‚·‚éƒ‰ƒCƒuƒ‰ƒŠ‚ğØ‚è‘Ö‚¦‚é
-target_link_libraries(MyGame PRIVATE
+# ãƒ“ãƒ«ãƒ‰æ§‹æˆã§ãƒªãƒ³ã‚¯ã™ã‚‹ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã‚’åˆ‡ã‚Šæ›¿ãˆã‚‹
+target_link_libraries(${MY_PROJECT_NAME} PRIVATE
     $<$<CONFIG:Debug>:
         ${LIB_FILES_DEBUG}
         >
@@ -63,8 +69,9 @@ target_link_libraries(MyGame PRIVATE
 )
 
 
-set_target_properties(MyGame PROPERTIES
+set_target_properties(${MY_PROJECT_NAME} PROPERTIES
     ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
     LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
 )
+
