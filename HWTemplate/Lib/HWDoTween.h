@@ -25,27 +25,6 @@ public:
 	 * @class	Dotween
 	 * @brief	自作Dotween
 	 */
-	class TweenCallback
-	{
-		friend class HWDotween;
-
-	private:
-		// 完了時のコールバック
-		std::function<void()> onComplete;
-
-	public:
-		TweenCallback() {};
-
-		void OnComplete(std::function<void()> _onComplete)
-		{
-			onComplete = _onComplete;
-		}
-	};
-
-	/**
-	 * @class	Dotween
-	 * @brief	自作Dotween
-	 */
 	class TweenEvent
 	{
 		friend class HWDotween;
@@ -58,6 +37,8 @@ public:
 		int duration;
 		//! アニメーションさせるTransform
 		HWTransform* transform;
+		//! アニメーションさせるVECTOR
+		VECTOR* animPtr;
 		//! アニメーション前のVECTOR
 		VECTOR prev;
 		//! 目標のVECTOR
@@ -65,6 +46,8 @@ public:
 	public:
 		// ステータス
 		bool complete = false;
+		// キャンセル用のフラグ
+		bool isCancel = false;
 
 	public:
 		TweenEvent() {};
@@ -77,7 +60,7 @@ public:
 			target = _target;
 			prev = _transform->position;
 		}
-
+		
 		void Subscribe_Rot(std::function<void(TweenEvent*, int)> _function, HWTransform* _transform, const VECTOR& _target, int _duration)
 		{
 			function = _function;
@@ -96,6 +79,15 @@ public:
 			prev = _transform->scale;
 		}
 
+		void Subscribe_Action(std::function<void(TweenEvent*, int)> _function, VECTOR* _scalePtr, const VECTOR& _target, int _duration)
+		{
+			function = _function;
+			duration = _duration;
+			animPtr = _scalePtr;
+			target = _target;
+			prev = *_scalePtr;
+		}
+
 		void Subscribe_Delay(std::function<void(TweenEvent*, int)> _function, int _duration)
 		{
 			function = _function;
@@ -105,6 +97,31 @@ public:
 		void Execute()
 		{
 			function(this, elapsedTime++);
+		}
+	};
+
+	/**
+	 * @class	Dotween
+	 * @brief	自作Dotween
+	 */
+	class TweenCallback
+	{
+		friend class HWDotween;
+
+	public:
+		// 紐づいているTweenEvent
+		TweenEvent* tweenEvent = nullptr;
+
+	private:
+		// 完了時のコールバック
+		std::function<void()> onComplete;
+
+	public:
+		TweenCallback() {};
+
+		void OnComplete(std::function<void()> _onComplete)
+		{
+			onComplete = _onComplete;
 		}
 	};
 
@@ -158,6 +175,15 @@ public:
 	 * @return		TweenEventのヘルパークラス
 	 */
 	static TweenCallback* DoScale(HWTransform* _transform, const VECTOR& _targetScale, int _duration);
+
+	/**
+	 * @brief		オブジェクトを拡縮させる
+	 * @param[in]	拡縮させるVEVTOR変数
+	 * @param[in]	拡縮先の座標
+	 * @param[in]	拡縮にかける時間(フレーム)
+	 * @return		TweenEventのヘルパークラス
+	 */
+	static TweenCallback* DoAction(VECTOR* _scalePtr, const VECTOR& _targetScale, int _duration);
 
 	/**
 	 * @brief		一定時間待機

@@ -1,14 +1,14 @@
-#include "h/HandlerWaltan.h"
+ï»¿#include "h/HandlerWaltan.h"
 
 
 /**
 * @author   NZ
 * @date     24/07/29
-* @note		HandlerWaltan‚ÌÀ‘•ƒtƒ@ƒCƒ‹
+* @note		HandlerWaltanã®å®Ÿè£…ãƒ•ã‚¡ã‚¤ãƒ«
 */
 
 
-// Ã“Iƒƒ“ƒo•Ï”‚Ì‰Šú‰» ------------------------------------------------------------------------------------------------
+// é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°ã®åˆæœŸåŒ– ------------------------------------------------------------------------------------------------
 
 bool HandlerWaltan::debugMode = false;
 std::vector<InputSystem*> InputSystem::inputSystemVec;
@@ -18,24 +18,24 @@ int HWUtility::ScreenSizeY = -1;
 
 float Time::deltaTime = 0.0f;
 float Time::lastTime = 0.0f;
-int Time::targetFPS = -1;  // ƒfƒtƒHƒ‹ƒg‚Í-1
-float Time::targetFrameTime = 1.0f / 60.0f;  // 60FPS‚È‚ç1ƒtƒŒ[ƒ€‚ ‚½‚è–ñ0.01666•b
+int Time::targetFPS = -1;  // ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯-1
+float Time::targetFrameTime = 1.0f / 60.0f;  // 60FPSãªã‚‰1ãƒ•ãƒ¬ãƒ¼ãƒ ã‚ãŸã‚Šç´„0.01666ç§’
 bool Time::debugMode = false;
-int Time::frameCount = 0;  // ƒtƒŒ[ƒ€”‚Ì‰Šú‰»
-float Time::elapsedTime = 0.0f;  // Œo‰ßŠÔ‚Ì‰Šú‰»
+int Time::frameCount = 0;  // ãƒ•ãƒ¬ãƒ¼ãƒ æ•°ã®åˆæœŸåŒ–
+float Time::elapsedTime = 0.0f;  // çµŒéæ™‚é–“ã®åˆæœŸåŒ–
 unsigned int Time::color = GetColor(255,0,255);
 
 //------------------------------------------------------------------------------------------------------------------------
 
 
-#pragma region publucƒƒ\ƒbƒh
+#pragma region publucãƒ¡ã‚½ãƒƒãƒ‰
 
 
 void HandlerWaltan::Update()
 {
     Time::Update();
 
-    // íœƒŠƒXƒg‚ğQÆ‚µAƒJƒEƒ“ƒg‚ª0‚É‚È‚Á‚½ƒIƒuƒWƒFƒNƒg‚Ííœ‚·‚é
+    // å‰Šé™¤ãƒªã‚¹ãƒˆã‚’å‚ç…§ã—ã€ã‚«ã‚¦ãƒ³ãƒˆãŒ0ã«ãªã£ãŸã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¯å‰Šé™¤ã™ã‚‹
     for (auto it = HWGameObject::destroyList.begin(); it != HWGameObject::destroyList.end(); )
     {
         if (it->time <= GetNowCount()) 
@@ -49,51 +49,54 @@ void HandlerWaltan::Update()
             ++it;
     }
 
-    //! Dotween‚ÌUpdate‚ğŒÄ‚Ño‚·
+    //! Dotweenã®Updateã‚’å‘¼ã³å‡ºã™
     HWDotween::Update();
 
-    //! ƒCƒ“ƒXƒ^ƒ“ƒX‰»‚³‚ê‚½‘S‚Ä‚ÌGameObject
+    //! ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹åŒ–ã•ã‚ŒãŸå…¨ã¦ã®GameObject
     auto gameObjects = HWGameObject::GetGameObjects();
 
-    // Transform‚ÌUpdateƒƒ\ƒbƒh‚ğŒÄ‚Ño‚·
+    // Transformã®Updateãƒ¡ã‚½ãƒƒãƒ‰ã‚’å‘¼ã³å‡ºã™
     for (auto obj : gameObjects)
         if(obj->active.load())
             obj->CallTransformUpdate();
 
-    // ƒCƒ“ƒXƒ^ƒ“ƒX‰»‚³‚ê‚½InputSystem‚ÌUpdateƒƒ\ƒbƒh‚ğŒÄ‚Ô
+    // ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹åŒ–ã•ã‚ŒãŸInputSystemã®Updateãƒ¡ã‚½ãƒƒãƒ‰ã‚’å‘¼ã¶
     for (auto it = InputSystem::inputSystemVec.begin(); it != InputSystem::inputSystemVec.end(); ++it)
     {
         if ((*it)->active)
             (*it)->Update();
     }
 
-    // ƒCƒ“ƒXƒ^ƒ“ƒX‰»‚³‚ê‚½‘S‚Ä‚ÌHWGameObject‚ÌUpdateƒƒ\ƒbƒh‚ğŒÄ‚Ño‚·
+    // ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹åŒ–ã•ã‚ŒãŸå…¨ã¦ã®HWGameObjectã®Updateãƒ¡ã‚½ãƒƒãƒ‰ã‚’å‘¼ã³å‡ºã™
     for (auto obj : gameObjects)
         if(obj->active.load())
             obj->CallAllUpdates();
 
-    // ƒCƒ“ƒXƒ^ƒ“ƒX‰»‚³‚ê‚½‘S‚Ä‚ÌHWGameObject‚ÌLateUpdateƒƒ\ƒbƒh‚ğŒÄ‚Ño‚·
+    // ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹åŒ–ã•ã‚ŒãŸå…¨ã¦ã®HWGameObjectã®LateUpdateãƒ¡ã‚½ãƒƒãƒ‰ã‚’å‘¼ã³å‡ºã™
     for (auto obj : gameObjects)
         if(obj->active.load())
             obj->CallAllLateUpdates();
 
-    // ‚ ‚½‚è”»’è‚ğŠm”F
+    // ã‚ãŸã‚Šåˆ¤å®šã‚’ç¢ºèª
     CollisionWaltan::Instance().Update();
 
-    // ƒV[ƒ“‚ÌXV
+    // ã‚·ãƒ¼ãƒ³ã®æ›´æ–°
 	HWSceneManager::Update();
 
 
-    // Effekseer‚É‚æ‚èÄ¶’†‚ÌƒGƒtƒFƒNƒg‚ğXV‚·‚éB
+    // Effekseerã«ã‚ˆã‚Šå†ç”Ÿä¸­ã®ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚’æ›´æ–°ã™ã‚‹ã€‚
     UpdateEffekseer3D();
 
-    // Effekseer‚É‚æ‚èÄ¶’†‚ÌƒGƒtƒFƒNƒg‚ğ•`‰æ‚·‚éB
+    // Effekseerã«ã‚ˆã‚Šå†ç”Ÿä¸­ã®ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚’æç”»ã™ã‚‹ã€‚
     DrawEffekseer3D();
 
-    // DXƒ‰ƒCƒuƒ‰ƒŠ‚ÌƒJƒƒ‰‚ÆEffekseer‚ÌƒJƒƒ‰‚ğ“¯Šú‚·‚éB
+    // DXãƒ©ã‚¤ãƒ–ãƒ©ãƒªã®ã‚«ãƒ¡ãƒ©ã¨Effekseerã®ã‚«ãƒ¡ãƒ©ã‚’åŒæœŸã™ã‚‹ã€‚
     Effekseer_Sync3DSetting();
 
-    // ƒtƒŒ[ƒ€I—¹‚ÉŸ‚ÌƒtƒŒ[ƒ€‚Ü‚Å‘Ò‹@iFPSŒÅ’èj
+	// ã‚¤ãƒ³ã‚¹ãƒšã‚¯ã‚¿ãƒ¼ã®æ›´æ–°
+	HWInspector::Update();
+
+    // ãƒ•ãƒ¬ãƒ¼ãƒ çµ‚äº†æ™‚ã«æ¬¡ã®ãƒ•ãƒ¬ãƒ¼ãƒ ã¾ã§å¾…æ©Ÿï¼ˆFPSå›ºå®šï¼‰
     if(Time::targetFPS != -1)
     {
         Time::WaitForNextFrame();
@@ -105,7 +108,7 @@ void HandlerWaltan::Update()
 
 #pragma endregion
 
-#pragma region privateƒƒ\ƒbƒh
+#pragma region privateãƒ¡ã‚½ãƒƒãƒ‰
 
 
 HandlerWaltan::HandlerWaltan()
@@ -121,51 +124,54 @@ HandlerWaltan::~HandlerWaltan()
 
 #pragma endregion
 
-#pragma region staticƒƒ\ƒbƒh
+#pragma region staticãƒ¡ã‚½ãƒƒãƒ‰
 
 
 HandlerWaltan& HandlerWaltan::Instance()
 {
-    // ƒVƒ“ƒOƒ‹ƒgƒ“ƒCƒ“ƒXƒ^ƒ“ƒX‚ğ¶¬
+    // ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ç”Ÿæˆ
     static HandlerWaltan instance;
     return instance;
 }
 
 int HandlerWaltan::Init(int _particle)
 {
-    // DXƒ‰ƒCƒuƒ‰ƒŠ‚ÆEffekseer‚Ì‰Šú‰»
+    // DXãƒ©ã‚¤ãƒ–ãƒ©ãƒªã¨Effekseerã®åˆæœŸåŒ–
 
-    // DirectX11‚ğg—p‚·‚é‚æ‚¤‚É‚·‚éB(DirectX9‚à‰ÂAˆê•”‹@”\•s‰Â)
-    // Effekseer‚ğg—p‚·‚é‚É‚Í•K‚¸İ’è‚·‚éB
+    // DirectX11ã‚’ä½¿ç”¨ã™ã‚‹ã‚ˆã†ã«ã™ã‚‹ã€‚(DirectX9ã‚‚å¯ã€ä¸€éƒ¨æ©Ÿèƒ½ä¸å¯)
+    // Effekseerã‚’ä½¿ç”¨ã™ã‚‹ã«ã¯å¿…ãšè¨­å®šã™ã‚‹ã€‚
     SetUseDirect3DVersion(DX_DIRECT3D_11);
 
-    if (DxLib_Init() == -1)		// ‚c‚wƒ‰ƒCƒuƒ‰ƒŠ‰Šú‰»ˆ—
-        // ƒGƒ‰[ƒR[ƒh‚ğ•Ô‚·
+    if (DxLib_Init() == -1)		// ï¼¤ï¼¸ãƒ©ã‚¤ãƒ–ãƒ©ãƒªåˆæœŸåŒ–å‡¦ç†
+        // ã‚¨ãƒ©ãƒ¼ã‚³ãƒ¼ãƒ‰ã‚’è¿”ã™
         return -1;
 
-    // Effekseer‚ğ‰Šú‰»‚·‚éB
-    // ˆø”‚É‚Í‰æ–Ê‚É•\¦‚·‚éÅ‘åƒp[ƒeƒBƒNƒ‹”‚ğİ’è‚·‚éB
+    // Effekseerã‚’åˆæœŸåŒ–ã™ã‚‹ã€‚
+    // å¼•æ•°ã«ã¯ç”»é¢ã«è¡¨ç¤ºã™ã‚‹æœ€å¤§ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«æ•°ã‚’è¨­å®šã™ã‚‹ã€‚
     if (Effekseer_Init(8000) == -1)
     {
         DxLib_End();
         return -1;
     }
 
-    // ƒtƒ‹ƒXƒNƒŠ[ƒ“ƒEƒCƒ“ƒhƒE‚ÌØ‚è‘Ö‚¦‚ÅƒŠƒ\[ƒX‚ªÁ‚¦‚é‚Ì‚ğ–h‚®B
-    // Effekseer‚ğg—p‚·‚éê‡‚Í•K‚¸İ’è‚·‚éB
+    // ã‚«ãƒ¼ã‚½ãƒ«ã®è¡¨ç¤º
+    SetMouseDispFlag(TRUE);
+
+    // ãƒ•ãƒ«ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ã®åˆ‡ã‚Šæ›¿ãˆã§ãƒªã‚½ãƒ¼ã‚¹ãŒæ¶ˆãˆã‚‹ã®ã‚’é˜²ãã€‚
+    // Effekseerã‚’ä½¿ç”¨ã™ã‚‹å ´åˆã¯å¿…ãšè¨­å®šã™ã‚‹ã€‚
     SetChangeScreenModeGraphicsSystemResetFlag(FALSE);
 
-    // DXƒ‰ƒCƒuƒ‰ƒŠ‚ÌƒfƒoƒCƒXƒƒXƒg‚µ‚½‚ÌƒR[ƒ‹ƒoƒbƒN‚ğİ’è‚·‚éB
-    // ƒEƒCƒ“ƒhƒE‚Æƒtƒ‹ƒXƒNƒŠ[ƒ“‚ÌØ‚è‘Ö‚¦‚ª”­¶‚·‚éê‡‚Í•K‚¸Às‚·‚éB
-    // ‚½‚¾‚µADirectX11‚ğg—p‚·‚éê‡‚ÍÀs‚·‚é•K—v‚Í‚È‚¢B
+    // DXãƒ©ã‚¤ãƒ–ãƒ©ãƒªã®ãƒ‡ãƒã‚¤ã‚¹ãƒ­ã‚¹ãƒˆã—ãŸæ™‚ã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ã‚’è¨­å®šã™ã‚‹ã€‚
+    // ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ã¨ãƒ•ãƒ«ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ã®åˆ‡ã‚Šæ›¿ãˆãŒç™ºç”Ÿã™ã‚‹å ´åˆã¯å¿…ãšå®Ÿè¡Œã™ã‚‹ã€‚
+    // ãŸã ã—ã€DirectX11ã‚’ä½¿ç”¨ã™ã‚‹å ´åˆã¯å®Ÿè¡Œã™ã‚‹å¿…è¦ã¯ãªã„ã€‚
     Effekseer_SetGraphicsDeviceLostCallbackFunctions();
 
-    // Zƒoƒbƒtƒ@‚ğ—LŒø‚É‚·‚éB
-    // Effekseer‚ğg—p‚·‚éê‡A2DƒQ[ƒ€‚Å‚àZƒoƒbƒtƒ@‚ğg—p‚·‚éB
+    // Zãƒãƒƒãƒ•ã‚¡ã‚’æœ‰åŠ¹ã«ã™ã‚‹ã€‚
+    // Effekseerã‚’ä½¿ç”¨ã™ã‚‹å ´åˆã€2Dã‚²ãƒ¼ãƒ ã§ã‚‚Zãƒãƒƒãƒ•ã‚¡ã‚’ä½¿ç”¨ã™ã‚‹ã€‚
     SetUseZBuffer3D(TRUE);
 
-    // Zƒoƒbƒtƒ@‚Ö‚Ì‘‚«‚İ‚ğ—LŒø‚É‚·‚éB
-    // Effekseer‚ğg—p‚·‚éê‡A2DƒQ[ƒ€‚Å‚àZƒoƒbƒtƒ@‚ğg—p‚·‚éB
+    // Zãƒãƒƒãƒ•ã‚¡ã¸ã®æ›¸ãè¾¼ã¿ã‚’æœ‰åŠ¹ã«ã™ã‚‹ã€‚
+    // Effekseerã‚’ä½¿ç”¨ã™ã‚‹å ´åˆã€2Dã‚²ãƒ¼ãƒ ã§ã‚‚Zãƒãƒƒãƒ•ã‚¡ã‚’ä½¿ç”¨ã™ã‚‹ã€‚
     SetWriteZBuffer3D(TRUE);
 
     GetWindowSize(&HWUtility::ScreenSizeX, &HWUtility::ScreenSizeY);
@@ -175,10 +181,10 @@ int HandlerWaltan::Init(int _particle)
 
 void HandlerWaltan::End()
 {
-    // Effekseer‚ğI—¹‚·‚éB
+    // Effekseerã‚’çµ‚äº†ã™ã‚‹ã€‚
     Effkseer_End();
 
-    DxLib_End();				// ‚c‚wƒ‰ƒCƒuƒ‰ƒŠg—p‚ÌI—¹ˆ—
+    DxLib_End();				// ï¼¤ï¼¸ãƒ©ã‚¤ãƒ–ãƒ©ãƒªä½¿ç”¨ã®çµ‚äº†å‡¦ç†
 }
 
 #pragma endregion

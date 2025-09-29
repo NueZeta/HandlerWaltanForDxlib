@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "CollisionWaltan.h"
 #include "HWAnimator.h"
 #include "HWBoxCollider.h"
@@ -11,28 +11,29 @@
 #include "HWTransform.h"
 #include "InputSystem.h"
 #include "HWDoTween.h"
-
+#include "HWSceneManager.h"
+#include "HWInspector.h"
 
 /**
 * @author   NZ
 * @date     24/07/18
-* @note		Œ´‘¥Aƒnƒ“ƒhƒ‰[‚Í‚·‚×‚ÄHandlerWaltan‚ÅŒÄ‚Ño‚·
+* @note		åŸå‰‡ã€ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ã¯ã™ã¹ã¦HandlerWaltanã§å‘¼ã³å‡ºã™
 */
 
 
 /**
  * @class	HandlerWaltan
- * @brief   ‚·‚×‚Ä‚Ìƒnƒ“ƒhƒ‰[‚ğŠÇ—AÀs‚·‚éƒNƒ‰ƒX
+ * @brief   ã™ã¹ã¦ã®ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ã‚’ç®¡ç†ã€å®Ÿè¡Œã™ã‚‹ã‚¯ãƒ©ã‚¹
  */
 class HandlerWaltan
 {
 public:
 
-    /*     ƒƒ“ƒo•Ï”     */
+    /*     ãƒ¡ãƒ³ãƒå¤‰æ•°     */
 
     /**
-     * @brief		ƒfƒoƒbƒOƒ‚[ƒh‚ÅÀs‚·‚é‚©
-     * @History		24/08/23 ì¬(NZ)
+     * @brief		ãƒ‡ãƒãƒƒã‚°ãƒ¢ãƒ¼ãƒ‰ã§å®Ÿè¡Œã™ã‚‹ã‹
+     * @History		24/08/23 ä½œæˆ(NZ)
      */
     static bool debugMode;
 
@@ -41,17 +42,17 @@ private:
 
 private:
 
-    /*     ƒƒ\ƒbƒh     */
+    /*     ãƒ¡ã‚½ãƒƒãƒ‰     */
 
     /**
-     * @brief       ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+     * @brief       ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
      * @author      NZ
      * @date        24/07/19
      */
     HandlerWaltan();
 
     /**
-     * @brief       ƒfƒXƒgƒ‰ƒNƒ^
+     * @brief       ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
      * @author      NZ
      * @date        24/07/19
      */
@@ -61,39 +62,39 @@ private:
 public:
 
     /**
-      * @brief       ‘S‚Ä‚ÌUpdateƒƒ\ƒbƒh‚ğ‘S‚ÄŒÄ‚Ño‚·
+      * @brief       å…¨ã¦ã®Updateãƒ¡ã‚½ãƒƒãƒ‰ã‚’å…¨ã¦å‘¼ã³å‡ºã™
       * @author      NZ
       * @date        24/08/22
       */
     void Update();
 
     /**
-     * @brief       ƒCƒ“ƒXƒ^ƒ“ƒX‚ğæ“¾‚·‚éÃ“Iƒƒ\ƒbƒh
-     * @detail      ‰‚ß‚Ìˆê‰ñ‚¾‚¯ƒCƒ“ƒXƒ^ƒ“ƒX‚ğ¶¬‚·‚é
+     * @brief       ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’å–å¾—ã™ã‚‹é™çš„ãƒ¡ã‚½ãƒƒãƒ‰
+     * @detail      åˆã‚ã®ä¸€å›ã ã‘ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ç”Ÿæˆã™ã‚‹
      * @author      NZ
      * @date        24/07/19
      */
     static HandlerWaltan& Instance();
 
 
-    //ƒCƒ“ƒXƒ^ƒ“ƒX‚ÌƒRƒs[‹Ö~
-    //ƒfƒtƒHƒ‹ƒg‚ÌƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğíœ
+    //ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®ã‚³ãƒ”ãƒ¼ç¦æ­¢
+    //ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®ã‚³ãƒ”ãƒ¼ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’å‰Šé™¤
     HandlerWaltan(const HandlerWaltan&) = delete;
-    //ƒfƒtƒHƒ‹ƒg‚ÌƒRƒs[‘ã“ü‰‰Zq‚àíœ
+    //ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®ã‚³ãƒ”ãƒ¼ä»£å…¥æ¼”ç®—å­ã‚‚å‰Šé™¤
     HandlerWaltan& operator=(const HandlerWaltan&) = delete;
 
 
     /**
-     * @brief       ƒCƒjƒVƒƒƒ‰ƒCƒY—p‚Ìƒƒ\ƒbƒh
-     * @detail      ƒCƒ“ƒXƒ^ƒ“ƒX‚ğ¶¬‚µ‚½‚Æ‚«‚ÉŒÄ‚Ô
-     * @return      int ‰Šú‰»¬Œ÷‚Ì¬”Û
+     * @brief       ã‚¤ãƒ‹ã‚·ãƒ£ãƒ©ã‚¤ã‚ºç”¨ã®ãƒ¡ã‚½ãƒƒãƒ‰
+     * @detail      ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ç”Ÿæˆã—ãŸã¨ãã«å‘¼ã¶
+     * @return      int åˆæœŸåŒ–æˆåŠŸã®æˆå¦
      * @author      NZ
      * @date        24/07/29
      */
     static int Init(int _particle = 8000);
 
     /**
-     * @brief       I—¹—p‚Ìƒƒ\ƒbƒh
+     * @brief       çµ‚äº†æ™‚ç”¨ã®ãƒ¡ã‚½ãƒƒãƒ‰
      * @author      NZ
      * @date        24/07/29
      */

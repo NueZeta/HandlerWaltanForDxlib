@@ -81,7 +81,7 @@ public:
 	 * @brief		移動ベクトル
 	 * @History		24/09/26 作成(NZ)
 	 */
-	VECTOR velocity = { 1,1,1 };
+	VECTOR velocity = { 0,0,0 };
 
 	/**
 	 * @brief		正面方向のベクトル
