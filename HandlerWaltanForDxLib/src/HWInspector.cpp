@@ -1,5 +1,6 @@
 ﻿#include "h/HWInspector.h"
 
+bool HWInspector::active = false;
 std::map <std::string,Window> HWInspector::window;
 Window* HWInspector::clickedWindow = nullptr;
 
@@ -39,6 +40,8 @@ void HWInspector::Register(const std::string& inspectorName, const std::string& 
 
 void HWInspector::Update()
 {
+	if (!active) return;
+
 	static int prevMouse = GetMouseInput();
 	int mouse = GetMouseInput();
 

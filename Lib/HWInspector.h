@@ -247,6 +247,8 @@ public:
 
 	/*     メンバ変数     */
 
+	//! ウィンドウ全ての描画の有効/無効
+	static bool active;
 	//! 作成されたウィンドウ
 	static std::map<std::string,Window> window;
 	

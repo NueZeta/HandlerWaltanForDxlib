@@ -1,71 +1,71 @@
-#include "h/HWAnimator.h"
+ï»¿#include "h/HWAnimator.h"
 
 
 /**
 * @author   NZ
 * @date     24/08/09
-* @note		HWAnimator‚ÌÀ‘•ƒtƒ@ƒCƒ‹
+* @note		HWAnimatorã®å®Ÿè£…ãƒ•ã‚¡ã‚¤ãƒ«
 */
 
 
-#pragma region privateƒƒ\ƒbƒh
+#pragma region privateãƒ¡ã‚½ãƒƒãƒ‰
 
 
 void HWAnimator::AnimPlay()
 {
 	if (isStop)return;
 
-	// ƒAƒjƒ[ƒVƒ‡ƒ“1‚Ìˆ—
+	// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³1ã®å‡¦ç†
 	if (playIndex1 != -1)
 	{
-		// Ä¶ŠÔ‚ª0 ‚Ìê‡AÄ¶ŠJn‚ÌƒR[ƒ‹ƒoƒbƒN‚ğŒÄ‚Ô
+		// å†ç”Ÿæ™‚é–“ãŒ0 ã®å ´åˆã€å†ç”Ÿé–‹å§‹æ™‚ã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ã‚’å‘¼ã¶
 		if (playTime == 0.0f && animInfoVec[playIndex1]->startPlaybackCallback)
 			animInfoVec[playIndex1]->startPlaybackCallback();
 
-		// Ä¶ŠÔ‚ği‚ß‚é
+		// å†ç”Ÿæ™‚é–“ã‚’é€²ã‚ã‚‹
 		playTime += animInfoVec[playIndex1]->playSpeed;
 
-		// ƒR[ƒ‹ƒoƒbƒNŠÖ”‚ª“o˜^‚³‚ê‚Ä‚¢‚éê‡‚ÍÄ¶ŠÔ‚É‰‚¶‚ÄŒÄ‚Ño‚·
+		// ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ãŒç™»éŒ²ã•ã‚Œã¦ã„ã‚‹å ´åˆã¯å†ç”Ÿæ™‚é–“ã«å¿œã˜ã¦å‘¼ã³å‡ºã™
 		auto& callBacks = animInfoVec[playIndex1]->GetCallBack();
 		if (!callBacks.empty() && callBacks.find(playTime) != callBacks.end())
 			callBacks[playTime]();
 
-		// ƒAƒjƒ[ƒVƒ‡ƒ“‚ÌÄ¶‚ªI—¹‚µ‚½
+		// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®å†ç”ŸãŒçµ‚äº†ã—ãŸ
 		if (playTime >= animInfoVec[playIndex1]->totalTime)
 		{
-			// Ä¶ŠÔ‚ª‘ŠÔ‚ğ’´‰ß‚µ‚Ä‚¢‚éŠ‚ÂAƒAƒjƒ[ƒVƒ‡ƒ“‚Ìƒ‹[ƒvƒtƒ‰ƒO‚ª—§‚Á‚Ä‚¢‚é‚È‚ç
-			// ƒAƒjƒ[ƒVƒ‡ƒ“‚ğƒ‹[ƒv‚³‚¹‚é
+			// å†ç”Ÿæ™‚é–“ãŒç·æ™‚é–“ã‚’è¶…éã—ã¦ã„ã‚‹ä¸”ã¤ã€ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®ãƒ«ãƒ¼ãƒ—ãƒ•ãƒ©ã‚°ãŒç«‹ã£ã¦ã„ã‚‹ãªã‚‰
+			// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’ãƒ«ãƒ¼ãƒ—ã•ã›ã‚‹
 			if (animInfoVec[playIndex1]->isLoop)
 				playTime = fmod(playTime, animInfoVec[playIndex1]->totalTime);
-			// ƒ‹[ƒ‹Ä¶‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚Å‚Í‚È‚¢ê‡AƒfƒtƒHƒ‹ƒgƒAƒjƒ[ƒVƒ‡ƒ“‚É–ß‚·
+			// ãƒ«ãƒ¼ãƒ«å†ç”Ÿã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã§ã¯ãªã„å ´åˆã€ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã«æˆ»ã™
 			else
 			{
-				// ƒAƒjƒ[ƒVƒ‡ƒ“Ä¶I—¹‚ÌƒR[ƒ‹ƒoƒbƒN‚ğŒÄ‚Ô
+				// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³å†ç”Ÿçµ‚äº†æ™‚ã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ã‚’å‘¼ã¶
 				if (animInfoVec[playIndex1]->endPlaybackCallback)
 					animInfoVec[playIndex1]->endPlaybackCallback();
-				// “o˜^‚³‚ê‚Ä‚¢‚éƒfƒtƒHƒ‹ƒg‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚ğÄ¶‚·‚é
+				// ç™»éŒ²ã•ã‚Œã¦ã„ã‚‹ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’å†ç”Ÿã™ã‚‹
 				AnimChange(defaultAnimId);
 			}
 		}
 	}
 
-	// ƒAƒjƒ[ƒVƒ‡ƒ“2‚Ìˆ—
+	// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³2ã®å‡¦ç†
 	if (playIndex2 != -1)
 	{
-		// ƒAƒjƒ[ƒVƒ‡ƒ“1‚ÌƒuƒŒƒ“ƒh—¦‚ğİ’è
+		// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³1ã®ãƒ–ãƒ¬ãƒ³ãƒ‰ç‡ã‚’è¨­å®š
 		MV1SetAttachAnimBlendRate(modelHandle,
 			animInfoVec[playIndex1]->attachIndex, 1.0f - animBlendRate);
 
-		// ƒAƒjƒ[ƒVƒ‡ƒ“2‚ÌƒuƒŒƒ“ƒh—¦‚ğİ’è
+		// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³2ã®ãƒ–ãƒ¬ãƒ³ãƒ‰ç‡ã‚’è¨­å®š
 		MV1SetAttachAnimBlendRate(modelHandle,
 			animInfoVec[playIndex2]->attachIndex, animBlendRate);
 
-		// ƒuƒŒƒ“ƒh—¦‚ª1–¢–‚Ìê‡‚Í1‚É‹ß‚Ã‚¯‚é
+		// ãƒ–ãƒ¬ãƒ³ãƒ‰ç‡ãŒ1æœªæº€ã®å ´åˆã¯1ã«è¿‘ã¥ã‘ã‚‹
 		if (animBlendRate < 1.0f)
 		{
 			animBlendRate += blendSpeed;
-			// ƒuƒŒƒ“ƒh—¦‚ª1ˆÈã‚Ìê‡AƒAƒjƒ[ƒVƒ‡ƒ“1‚ğíœ‚µA
-			// ƒAƒjƒ[ƒVƒ‡ƒ“2‚Ìî•ñ‚ğƒAƒjƒ[ƒVƒ‡ƒ“1‚É“n‚·
+			// ãƒ–ãƒ¬ãƒ³ãƒ‰ç‡ãŒ1ä»¥ä¸Šã®å ´åˆã€ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³1ã‚’å‰Šé™¤ã—ã€
+			// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³2ã®æƒ…å ±ã‚’ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³1ã«æ¸¡ã™
 			if (animBlendRate >= 1.0f)
 			{
 				MV1DetachAnim(modelHandle, animInfoVec[playIndex1]->attachIndex);
@@ -76,7 +76,7 @@ void HWAnimator::AnimPlay()
 		}
 	}
 
-	// •ÏX‚µ‚½Ä¶ŠÔ‚ğƒ‚ƒfƒ‹‚É”½‰f‚³‚¹‚é
+	// å¤‰æ›´ã—ãŸå†ç”Ÿæ™‚é–“ã‚’ãƒ¢ãƒ‡ãƒ«ã«åæ˜ ã•ã›ã‚‹
 	if (playIndex1 != -1 && playIndex2 == -1)
 		MV1SetAttachAnimTime(modelHandle,
 			animInfoVec[playIndex1]->attachIndex, (float)playTime);
@@ -85,7 +85,7 @@ void HWAnimator::AnimPlay()
 
 #pragma endregion
 
-#pragma region publicƒƒ\ƒbƒh
+#pragma region publicãƒ¡ã‚½ãƒƒãƒ‰
 
 
 HWAnimator::~HWAnimator()
@@ -96,14 +96,18 @@ HWAnimator::~HWAnimator()
 
 AnimInfo* HWAnimator::AnimLoad(const std::string& _filePath, const int _animId)
 {
-	//! ƒAƒjƒ[ƒVƒ‡ƒ“î•ñ‚ğ‚Ü‚Æ‚ß‚½ƒNƒ‰ƒX‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ğ¶¬
+	// ãƒ¢ãƒ‡ãƒ«ã®ãƒ­ãƒ¼ãƒ‰ãŒçµ‚äº†ã™ã‚‹ã¾ã§å¾…æ©Ÿ
+	while (CheckHandleASyncLoad(modelHandle)) {}
+
+
+	//! ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³æƒ…å ±ã‚’ã¾ã¨ã‚ãŸã‚¯ãƒ©ã‚¹ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ç”Ÿæˆ
 	std::unique_ptr<AnimInfo> animInfo = std::make_unique<AnimInfo>();
 
-	// ‰Šú‰»ˆ—‚ğs‚¤
+	// åˆæœŸåŒ–å‡¦ç†ã‚’è¡Œã†
 	animInfo->filePath = _filePath;
 	animInfo->animHandle = MV1LoadModel(_filePath.c_str());
 
-	// ƒ‚ƒfƒ‹ƒ[ƒh¸”s‚Ì—áŠOerror
+	// ãƒ¢ãƒ‡ãƒ«ãƒ­ãƒ¼ãƒ‰å¤±æ•—æ™‚ã®ä¾‹å¤–error
 	if (animInfo->animHandle == -1)
 		throw std::runtime_error("Failed to load model: " + animInfo->filePath);
 
@@ -114,7 +118,7 @@ AnimInfo* HWAnimator::AnimLoad(const std::string& _filePath, const int _animId)
 	animInfo->totalTime = MV1GetAnimTotalTime(animInfo->animHandle, _animId);
 	animInfo->animIndex = _animId;
 
-	// Š—LŒ ‚ğvector‚ÉˆÚ‚·
+	// æ‰€æœ‰æ¨©ã‚’vectorã«ç§»ã™
 	animInfoVec.push_back(std::move(animInfo));
 
 	return animInfoVec.back().get();
@@ -122,70 +126,70 @@ AnimInfo* HWAnimator::AnimLoad(const std::string& _filePath, const int _animId)
 
 void HWAnimator::AnimChange(const int _animId, bool forcedSwitchover)
 {
-	// w¦‚Ì—ˆ‚½ƒAƒjƒ[ƒVƒ‡ƒ“”Ô†‚ª–³Œø‚Èê‡‚Í•ÏXw¦‚ğ–³‹
+	// æŒ‡ç¤ºã®æ¥ãŸã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ç•ªå·ãŒç„¡åŠ¹ãªå ´åˆã¯å¤‰æ›´æŒ‡ç¤ºã‚’ç„¡è¦–
 	if (_animId >= animInfoVec.size() || _animId < 0) return;
 
-	// Ä¶ƒAƒjƒ[ƒVƒ‡ƒ“ID‚ª‰Šú’l‚¾‚Á‚½ê‡‚Í
-	// ƒpƒ‰ƒ[ƒ^‚ğQÆ‚¹‚¸‚Éw¦‚Ì—ˆ‚½ƒAƒjƒ[ƒVƒ‡ƒ“‚ğƒZƒbƒg
+	// å†ç”Ÿã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³IDãŒåˆæœŸå€¤ã ã£ãŸå ´åˆã¯
+	// ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’å‚ç…§ã›ãšã«æŒ‡ç¤ºã®æ¥ãŸã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’ã‚»ãƒƒãƒˆ
 	if (playIndex1 == -1 && playIndex2 == -1)
 	{
-		// V‚µ‚¢ƒAƒjƒ[ƒVƒ‡ƒ“‚ğƒAƒ^ƒbƒ`
+		// æ–°ã—ã„ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’ã‚¢ã‚¿ãƒƒãƒ
 		animInfoVec[_animId]->attachIndex = MV1AttachAnim(modelHandle,
 			animInfoVec[_animId]->animIndex, animInfoVec[_animId]->animHandle);
 
-		// Ä¶ŠÔ‚ğ‰Šú‰»
+		// å†ç”Ÿæ™‚é–“ã‚’åˆæœŸåŒ–
 		playTime = 0.0f;
-		// Ä¶ƒAƒjƒ[ƒVƒ‡ƒ“‚Æ‚µ‚Ä•Û‘¶
+		// å†ç”Ÿã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã¨ã—ã¦ä¿å­˜
 		playIndex1 = _animId;
 
 		return;
 	}
 
-	// Ä¶’†‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚ªÄ¶’†Š‚ÂA’†’f•s‰Â‚Ìê‡‚Í•ÏXw¦‚ğ–³‹
+	// å†ç”Ÿä¸­ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãŒå†ç”Ÿä¸­ä¸”ã¤ã€ä¸­æ–­ä¸å¯ã®å ´åˆã¯å¤‰æ›´æŒ‡ç¤ºã‚’ç„¡è¦–
 	if (playTime < animInfoVec[playIndex1]->totalTime &&
 		(!animInfoVec[playIndex1]->interruption && !forcedSwitchover)) return;
 
 
-	// ƒ‚[ƒVƒ‡ƒ“ƒuƒŒƒ“ƒh’†‚Å‚Í‚È‚¢
+	// ãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³ãƒ–ãƒ¬ãƒ³ãƒ‰ä¸­ã§ã¯ãªã„
 	else if (playIndex1 != -1 && playIndex2 == -1)
 	{
-		// Ä¶ƒAƒjƒ[ƒVƒ‡ƒ“‚Æ“¯‚¶ƒAƒjƒ[ƒVƒ‡ƒ“‚Ö‚Ì•ÏXw¦‚à–³‹
+		// å†ç”Ÿã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã¨åŒã˜ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã¸ã®å¤‰æ›´æŒ‡ç¤ºã‚‚ç„¡è¦–
 		if (_animId == playIndex1) return;
 
-		// V‚µ‚¢ƒAƒjƒ[ƒVƒ‡ƒ“‚ğƒAƒ^ƒbƒ`
+		// æ–°ã—ã„ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’ã‚¢ã‚¿ãƒƒãƒ
 		animInfoVec[_animId]->attachIndex = MV1AttachAnim(modelHandle,
 			animInfoVec[_animId]->animIndex, animInfoVec[_animId]->animHandle);
 
-		// ƒuƒŒƒ“ƒh’†‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚Æ‚µ‚Ä•Û‘¶
+		// ãƒ–ãƒ¬ãƒ³ãƒ‰ä¸­ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã¨ã—ã¦ä¿å­˜
 		playIndex2 = _animId;
-		// ƒuƒŒƒ“ƒh—¦‚ğİ’è
+		// ãƒ–ãƒ¬ãƒ³ãƒ‰ç‡ã‚’è¨­å®š
 		animBlendRate = 0.0f;
 	}
 
-	// ƒ‚[ƒVƒ‡ƒ“ƒuƒŒƒ“ƒh’†
+	// ãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³ãƒ–ãƒ¬ãƒ³ãƒ‰ä¸­
 	else if (playIndex1 != -1 && playIndex2 != -1)
 	{
-		// ƒuƒŒƒ“ƒh’†‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚Æ“¯‚¶ƒAƒjƒ[ƒVƒ‡ƒ“‚Ö‚Ì•ÏXw¦‚à–³‹
+		// ãƒ–ãƒ¬ãƒ³ãƒ‰ä¸­ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã¨åŒã˜ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã¸ã®å¤‰æ›´æŒ‡ç¤ºã‚‚ç„¡è¦–
 		if (_animId == playIndex2) return;
-		// ƒuƒŒƒ“ƒh’†‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚ªÄ¶’†Š‚ÂA’†’f•s‰Â‚Ìê‡‚Í•ÏXw¦‚ğ–³‹
+		// ãƒ–ãƒ¬ãƒ³ãƒ‰ä¸­ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãŒå†ç”Ÿä¸­ä¸”ã¤ã€ä¸­æ–­ä¸å¯ã®å ´åˆã¯å¤‰æ›´æŒ‡ç¤ºã‚’ç„¡è¦–
 		if (playTime < animInfoVec[playIndex2]->totalTime &&
 			(!animInfoVec[playIndex2]->interruption && !forcedSwitchover)) return;
 
 
-		// Œ»İ‚ÌƒAƒjƒ[ƒVƒ‡ƒ“1‚ğƒfƒ^ƒbƒ`
+		// ç¾åœ¨ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³1ã‚’ãƒ‡ã‚¿ãƒƒãƒ
 		MV1DetachAnim(modelHandle, animInfoVec[playIndex1]->attachIndex);
 
-		// Œ»İ‚ÌƒAƒjƒ[ƒVƒ‡ƒ“2‚ğƒAƒjƒ[ƒVƒ‡ƒ“1‚ÉˆÚ“®
+		// ç¾åœ¨ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³2ã‚’ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³1ã«ç§»å‹•
 		playIndex1 = playIndex2;
 
-		// V‚µ‚¢ƒAƒjƒ[ƒVƒ‡ƒ“‚ğƒAƒ^ƒbƒ`
+		// æ–°ã—ã„ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’ã‚¢ã‚¿ãƒƒãƒ
 		animInfoVec[_animId]->attachIndex = MV1AttachAnim(modelHandle,
 			animInfoVec[_animId]->animIndex, animInfoVec[_animId]->animHandle);
 
-		// V‚µ‚¢ƒAƒjƒ[ƒVƒ‡ƒ“‚ğƒAƒjƒ[ƒVƒ‡ƒ“2‚Æ‚µ‚Äİ’è
+		// æ–°ã—ã„ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³2ã¨ã—ã¦è¨­å®š
 		playIndex2 = _animId;
 
-		// ƒuƒŒƒ“ƒh—¦‚ğƒŠƒZƒbƒg
+		// ãƒ–ãƒ¬ãƒ³ãƒ‰ç‡ã‚’ãƒªã‚»ãƒƒãƒˆ
 		animBlendRate = 0.0f;
 	}
 }
@@ -193,25 +197,25 @@ void HWAnimator::AnimChange(const int _animId, bool forcedSwitchover)
 
 #pragma endregion
 
-#pragma region protectedƒƒ\ƒbƒh
+#pragma region protectedãƒ¡ã‚½ãƒƒãƒ‰
 
 
 
 
 #pragma endregion
 
-#pragma region ƒI[ƒo[ƒ‰ƒCƒhƒƒ\ƒbƒh
+#pragma region ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰ãƒ¡ã‚½ãƒƒãƒ‰
 
 
 void HWAnimator::Awake()
 {
-	// ‰Šú’l‚ğ“ü‚ê‚Ä‚¨‚­
+	// åˆæœŸå€¤ã‚’å…¥ã‚Œã¦ãŠã
 	playTime = 0.0f;
 	playIndex1 = -1;
 	playIndex2 = -1;
 	isStop = false;
 
-	// ƒ‚ƒfƒ‹ƒ[ƒh¸”s‚Ì—áŠOerror
+	// ãƒ¢ãƒ‡ãƒ«ãƒ­ãƒ¼ãƒ‰å¤±æ•—æ™‚ã®ä¾‹å¤–error
 	if (gameObject->GetComponent<HWRenderer>() == nullptr)
 		throw std::runtime_error("HWRenderer is not attached");
 

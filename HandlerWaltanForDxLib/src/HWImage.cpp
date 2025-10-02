@@ -1,4 +1,4 @@
-#include "h/HWImage.h"
+ï»¿#include "h/HWImage.h"
 
 HWImage::HWImage(const std::string& _path, ImageRenderType _renderType)
 	: graphHandle(LoadGraph(_path.c_str())), renderType(_renderType), isTrans(false)
@@ -12,7 +12,9 @@ HWImage::~HWImage()
 
 void HWImage::LateUpdate()
 {
-	// ’Êí•`‰æ
+	if (CheckHandleASyncLoad(graphHandle)) return;
+
+	// é€šå¸¸æç”»
 	switch (renderType)
 	{
 	case ImageRenderType::Default:

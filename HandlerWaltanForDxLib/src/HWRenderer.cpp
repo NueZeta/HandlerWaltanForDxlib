@@ -1,21 +1,24 @@
-#include "h/HWRenderer.h"
+ï»¿#include "h/HWRenderer.h"
 
 
 /**
 * @author   NZ
 * @date     24/08/25
-* @note		HWRenderer‚ÌÀ‘•ƒtƒ@ƒCƒ‹
+* @note		HWRendererã®å®Ÿè£…ãƒ•ã‚¡ã‚¤ãƒ«
 */
 
 
-#pragma region ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+#pragma region ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 
 
 HWRenderer::HWRenderer(const int _modelHandle)
 {
 	priority = -20;
 
-	// Šù‘¶‚Ìƒ‚ƒfƒ‹ƒnƒ“ƒhƒ‹‚©‚ç•¡»‚µ‚½ƒ‚ƒfƒ‹‚ğg‚¤
+	// ã‚³ãƒ”ãƒ¼å…ƒã®ãƒ­ãƒ¼ãƒ‰ãŒçµ‚äº†ã™ã‚‹ã¾ã§å¾…æ©Ÿ
+	while(CheckHandleASyncLoad(_modelHandle)){}
+
+	// æ—¢å­˜ã®ãƒ¢ãƒ‡ãƒ«ãƒãƒ³ãƒ‰ãƒ«ã‹ã‚‰è¤‡è£½ã—ãŸãƒ¢ãƒ‡ãƒ«ã‚’ä½¿ã†
 	modelHandle = MV1DuplicateModel(_modelHandle);
 }
 
@@ -33,14 +36,14 @@ HWRenderer::~HWRenderer()
 
 #pragma endregion
 
-#pragma region privateƒƒ\ƒbƒh
+#pragma region privateãƒ¡ã‚½ãƒƒãƒ‰
 
 
 
 
 #pragma endregion
 
-#pragma region publicƒƒ\ƒbƒh
+#pragma region publicãƒ¡ã‚½ãƒƒãƒ‰
 
 
 
@@ -49,29 +52,23 @@ HWRenderer::~HWRenderer()
 #pragma endregion
 
 
-#pragma region ƒI[ƒo[ƒ‰ƒCƒhƒƒ\ƒbƒh
+#pragma region ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰ãƒ¡ã‚½ãƒƒãƒ‰
 
 
 void HWRenderer::Start()
 {
-	if (gameObject->name == "Map" || gameObject->name == "map" ||
-		gameObject->name == "Stage" || gameObject->name == "stage")
-	{
-		// ƒ‚ƒfƒ‹‘S‘Ì‚ÌƒRƒŠƒWƒ‡ƒ“î•ñ‚ÌƒZƒbƒgƒAƒbƒv
-		MV1SetupCollInfo(modelHandle, -1);
-	}
 }
 
 void HWRenderer::LateUpdate()
 {
-	if (modelHandle == -1)
+	if (modelHandle == -1 || CheckHandleASyncLoad(modelHandle))
 	{
 		return;
 	}
 
-	// HWTransform‚ÌƒOƒ[ƒoƒ‹•ÏŠ·s—ñ‚ğQÆ‚µ‚Äƒ‚ƒfƒ‹‚É“K—p
+	// HWTransformã®ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ›è¡Œåˆ—ã‚’å‚ç…§ã—ã¦ãƒ¢ãƒ‡ãƒ«ã«é©ç”¨
 	MV1SetMatrix(modelHandle, transform->globalMat);
-	// ƒ‚ƒfƒ‹‚ğ•`‰æ
+	// ãƒ¢ãƒ‡ãƒ«ã‚’æç”»
 	MV1DrawModel(modelHandle);
 }
 

@@ -1,4 +1,4 @@
-#include "h/HWSceneManager.h"
+ï»¿#include "h/HWSceneManager.h"
 
 
 HWSceneBase* HWSceneManager::crrScene = nullptr;
@@ -10,7 +10,7 @@ std::mutex HWSceneManager::loadMutex;
 
 std::unordered_map<std::string, std::function<HWSceneBase*()>>& HWSceneManager::GetRegistry()
 {
-    //! ƒV[ƒ“ƒNƒ‰ƒX‚Ì“o˜^(–¼‘O : ƒNƒ‰ƒX‚ğƒCƒ“ƒXƒ^ƒ“ƒX‰»‚·‚éƒR[ƒ‹ƒoƒbƒNŠÖ”)
+    //! ã‚·ãƒ¼ãƒ³ã‚¯ãƒ©ã‚¹ã®ç™»éŒ²(åå‰ : ã‚¯ãƒ©ã‚¹ã‚’ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹åŒ–ã™ã‚‹ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°)
     static std::unordered_map<std::string, std::function<HWSceneBase* ()>> registry;
     return registry;
 }
@@ -22,78 +22,86 @@ void HWSceneManager::RegisterScene(const std::string& name, std::function<HWScen
 
 void HWSceneManager::Update()
 {
-	// ”ñ“¯Šúƒ[ƒh‚ªŠ®—¹‚µ‚Ä‚¢‚é‚©Šm”F
+	// éåŒæœŸãƒ­ãƒ¼ãƒ‰ãŒå®Œäº†ã—ã¦ã„ã‚‹ã‹ç¢ºèª
 	if (loadParam.load() == LoadParameter::complete)
 	{
-		// ƒXƒŒƒbƒh‚ÌI—¹‚ğ‘Ò‚Â
+		// ã‚¹ãƒ¬ãƒƒãƒ‰ã®çµ‚äº†ã‚’å¾…ã¤
 		if (loadThread.joinable())
 			loadThread.join();
 
-		// loadScene‚ÌƒAƒNƒZƒX‚É”r‘¼§Œä
+		// loadSceneã®ã‚¢ã‚¯ã‚»ã‚¹ã«æ’ä»–åˆ¶å¾¡
 		std::lock_guard<std::mutex> lock(loadMutex);
-		// Às’†‚ÌƒV[ƒ“‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚Æƒ[ƒh‚µ‚½ƒV[ƒ“‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ğŒğŠ·
+		// å®Ÿè¡Œä¸­ã®ã‚·ãƒ¼ãƒ³ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã¨ãƒ­ãƒ¼ãƒ‰ã—ãŸã‚·ãƒ¼ãƒ³ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’äº¤æ›
 		std::swap(crrScene, loadScene);
-		// ‘JˆÚ‘O‚ÌƒV[ƒ“‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ğíœ
+		// é·ç§»å‰ã®ã‚·ãƒ¼ãƒ³ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’å‰Šé™¤
 		delete loadScene;
 		loadScene = nullptr;
-
-		// ƒ[ƒhƒpƒ‰ƒ[ƒ^‚ğ‘Ò‹@’†‚ÉXV
+		crrScene->OnLoadComplete();
+		// ãƒ­ãƒ¼ãƒ‰ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’å¾…æ©Ÿä¸­ã«æ›´æ–°
 		loadParam.store(LoadParameter::None);
+	}
+
+	// å®Ÿè¡Œä¸­ã®ã‚·ãƒ¼ãƒ³ãŒå­˜åœ¨ã™ã‚‹å ´åˆã€æ›´æ–°
+	if (crrScene)
+	{
+		crrScene->OnUpdate();
 	}
 }
 
 HWSceneBase* HWSceneManager::SceneChangeSync(const std::string& name)
 {
-	// ƒ[ƒhƒpƒ‰ƒ[ƒ^‚ª‘Ò‹@’†‚Å‚È‚¢ê‡‚Í‚»‚Ì‚Ü‚ÜI—¹
+	// ãƒ­ãƒ¼ãƒ‰ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãŒå¾…æ©Ÿä¸­ã§ãªã„å ´åˆã¯ãã®ã¾ã¾çµ‚äº†
 	if (loadParam.load() != LoadParameter::None)
 		return nullptr;
 
-	// ƒV[ƒ“‚ª‘¶İ‚·‚é‚©’²‚×‚é
+	// ã‚·ãƒ¼ãƒ³ãŒå­˜åœ¨ã™ã‚‹ã‹èª¿ã¹ã‚‹
     auto it = GetRegistry().find(name);
 
-	// ‘¶İ‚·‚éê‡AƒCƒ“ƒXƒ^ƒ“ƒX¶¬‚ÌƒR[ƒ‹ƒoƒbƒN‚ğÀs
+	// å­˜åœ¨ã™ã‚‹å ´åˆã€ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç”Ÿæˆã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ã‚’å®Ÿè¡Œ
     if (it != GetRegistry().end())
     {
 		crrScene = it->second();
+		crrScene->OnEnter();
         return crrScene;
     }
 
-    // ‘¶İ‚µ‚È‚¢ê‡A‚»‚Ì‚Ü‚ÜI—¹
+    // å­˜åœ¨ã—ãªã„å ´åˆã€ãã®ã¾ã¾çµ‚äº†
     return nullptr;
 }
 
 void HWSceneManager::SceneChangeAsync(const std::string& name)
 {
-	// ƒ[ƒhƒpƒ‰ƒ[ƒ^‚ª‘Ò‹@’†‚Å‚È‚¢ê‡A
+	// ãƒ­ãƒ¼ãƒ‰ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãŒå¾…æ©Ÿä¸­ã§ãªã„å ´åˆã€
 	if (loadParam.load() != LoadParameter::None)
 		return;
 
-	// ƒV[ƒ“‚ª‘¶İ‚·‚é‚©’²‚×‚é
+	// ã‚·ãƒ¼ãƒ³ãŒå­˜åœ¨ã™ã‚‹ã‹èª¿ã¹ã‚‹
 	auto it = GetRegistry().find(name);
 
-	// ‘¶İ‚µ‚È‚¢ê‡A‚»‚Ì‚Ü‚ÜI—¹
+	// å­˜åœ¨ã—ãªã„å ´åˆã€ãã®ã¾ã¾çµ‚äº†
 	if (it == GetRegistry().end())
 		return;
 
 	//
-	// ‚±‚±‚Ü‚Å‚«‚½‚çAƒV[ƒ“ƒ[ƒhŠm’è
+	// ã“ã“ã¾ã§ããŸã‚‰ã€ã‚·ãƒ¼ãƒ³ãƒ­ãƒ¼ãƒ‰ç¢ºå®š
 	//
 
-	// ƒ[ƒhƒpƒ‰ƒ[ƒ^‚ğƒ[ƒh’†‚ÉXV
+	// ãƒ­ãƒ¼ãƒ‰ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’ãƒ­ãƒ¼ãƒ‰ä¸­ã«æ›´æ–°
 	loadParam.store(LoadParameter::Loading);
 
-	//! ƒ[ƒh—p‚ÌƒXƒŒƒbƒh‚É’l“n‚µ‚·‚é‚½‚ß‚ÌƒRƒs[
+	//! ãƒ­ãƒ¼ãƒ‰ç”¨ã®ã‚¹ãƒ¬ãƒƒãƒ‰ã«å€¤æ¸¡ã—ã™ã‚‹ãŸã‚ã®ã‚³ãƒ”ãƒ¼
 	std::string sceneName = name;
 
-	// ƒV[ƒ“‚ª‘¶İ‚·‚éê‡Aƒ[ƒh—p‚ÌƒXƒŒƒbƒh‚ğì¬‚µA
-	// ”ñ“¯Šú‚ÅƒV[ƒ“‚ğƒ[ƒh‚·‚é 
+	// ã‚·ãƒ¼ãƒ³ãŒå­˜åœ¨ã™ã‚‹å ´åˆã€ãƒ­ãƒ¼ãƒ‰ç”¨ã®ã‚¹ãƒ¬ãƒƒãƒ‰ã‚’ä½œæˆã—ã€
+	// éåŒæœŸã§ã‚·ãƒ¼ãƒ³ã‚’ãƒ­ãƒ¼ãƒ‰ã™ã‚‹ 
 	loadThread = std::thread([sceneName]()
 		{
-			// loadScene‚ÌƒAƒNƒZƒX‚É”r‘¼§Œä
+			// loadSceneã®ã‚¢ã‚¯ã‚»ã‚¹ã«æ’ä»–åˆ¶å¾¡
 			std::lock_guard<std::mutex> lock(loadMutex);
-			// ƒV[ƒ“‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ğ¶¬
+			// ã‚·ãƒ¼ãƒ³ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ç”Ÿæˆ
 			loadScene = GetRegistry().find(sceneName)->second();
-			// ƒ[ƒhƒpƒ‰ƒ[ƒ^‚ğŠ®—¹‚ÉXV
+			loadScene->OnEnter();
+			// ãƒ­ãƒ¼ãƒ‰ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’å®Œäº†ã«æ›´æ–°
 			loadParam.store(LoadParameter::complete);
 		});
 }
