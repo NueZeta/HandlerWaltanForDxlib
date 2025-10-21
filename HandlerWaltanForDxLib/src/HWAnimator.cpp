@@ -1,4 +1,4 @@
-﻿#include "h/HWAnimator.h"
+#include "h/HWAnimator.h"
 
 
 /**
@@ -43,8 +43,16 @@ void HWAnimator::AnimPlay()
 				// アニメーション再生終了時のコールバックを呼ぶ
 				if (animInfoVec[playIndex1]->endPlaybackCallback)
 					animInfoVec[playIndex1]->endPlaybackCallback();
+
+				// トランジションの自動遷移が設定されている場合
+				Transition* transition = animInfoVec[playIndex1]->GetHasExitTimeTransition();
+				if (transition != nullptr)
+				{
+					AnimChange(transition->toAnimId);
+				}
+
 				// 登録されているデフォルトのアニメーションを再生する
-				AnimChange(defaultAnimId);
+				//AnimChange(defaultAnimId);
 			}
 		}
 	}
@@ -52,6 +60,8 @@ void HWAnimator::AnimPlay()
 	// アニメーション2の処理
 	if (playIndex2 != -1)
 	{
+		float blendSpeed = FindTransition(playIndex1, playIndex2)->blendSpeed;
+
 		// アニメーション1のブレンド率を設定
 		MV1SetAttachAnimBlendRate(modelHandle,
 			animInfoVec[playIndex1]->attachIndex, 1.0f - animBlendRate);
@@ -92,6 +102,9 @@ HWAnimator::~HWAnimator()
 {
 	for (auto it = animInfoVec.begin(); it != animInfoVec.end(); ++it)
 		MV1DeleteModel((*it)->animHandle);
+
+	for (auto& transition : transitions)
+		delete transition;
 }
 
 AnimInfo* HWAnimator::AnimLoad(const std::string& _filePath, const int _animId)
@@ -117,6 +130,7 @@ AnimInfo* HWAnimator::AnimLoad(const std::string& _filePath, const int _animId)
 	animInfo->playSpeed = 1.0f;
 	animInfo->totalTime = MV1GetAnimTotalTime(animInfo->animHandle, _animId);
 	animInfo->animIndex = _animId;
+	animInfo->registerIndex = animInfoVec.size();
 
 	// 所有権をvectorに移す
 	animInfoVec.push_back(std::move(animInfo));
@@ -194,6 +208,71 @@ void HWAnimator::AnimChange(const int _animId, bool forcedSwitchover)
 	}
 }
 
+Transition::Condition* HWAnimator::RegisterCondition(const std::string _name, bool* _ptr, Transition::ConditionType type)
+{
+	Transition::Condition condition;
+
+	condition.name = _name;
+	condition.value = _ptr;
+	condition.type = type;
+
+	conditions.push_back(condition);
+
+	return &conditions[conditions.size() - 1];
+}
+
+Transition::Condition* HWAnimator::GetCondition(const std::string& _name)
+{
+	for (auto& condition : conditions)
+	{
+		if (condition.name == _name)
+		{
+			return &condition;
+		}
+	}
+
+	return nullptr;
+}
+
+Transition* HWAnimator::CreateTransition(int _fromAnimId, int _toAnimId)
+{
+	Transition* transition = new Transition();
+
+	// 作成した遷移情報を各アニメーションに紐づける
+	animInfoVec[_fromAnimId]->RegisterTransition_from(transition);
+	animInfoVec[_toAnimId]->RegisterTransition_to(transition);
+
+	transitions.push_back(transition);
+
+	return transition;
+}
+
+void HWAnimator::SetCondition_for_Transition(const std::string& _conditionName, Transition* _transition)
+{
+	for (auto& condition : conditions)
+	{
+		if (condition.name == _conditionName)
+		{
+			_transition->condition = &condition;
+			return;
+		}
+	}
+}
+
+Transition* HWAnimator::FindTransition(int _fromAnimId, int _toAnimId)
+{
+	for (auto& transition : transitions)
+	{
+		if (transition->fromAnimId == _fromAnimId &&
+			transition->toAnimId == _toAnimId)
+		{
+			return transition;
+		}
+	}
+
+	return nullptr;
+}
+
 
 #pragma endregion
 
@@ -221,12 +300,49 @@ void HWAnimator::Awake()
 
 	modelHandle = gameObject->GetComponent<HWRenderer>()->GetModelHandle();
 
-	blendSpeed = PLAYER_ANIM_BLEND_SPEED;
+	//blendSpeed = PLAYER_ANIM_BLEND_SPEED;
 }
 
 void HWAnimator::Update()
 {
 	AnimPlay();
+
+	//
+	// 遷移条件を満たしている場合、アニメーションの遷移を行う
+	//
+
+	for (auto& transition : transitions)
+	{
+		// 遷移元アニメーションが現在再生中のアニメーションであるか
+		if (transition->fromAnimId != playIndex1) continue;
+		// 遷移条件が設定されていない場合はスルー
+		if (transition->condition == nullptr) continue;
+
+		// 条件なしの場合
+		if (transition->condition->type == Transition::ConditionType::NONE)
+		{
+		}
+		// トリガー条件の場合
+		else if (transition->condition->type == Transition::ConditionType::TRIGGER)
+		{
+			// 条件がtrueの場合、アニメーションを遷移させる
+			if (*(transition->condition->value))
+			{
+				AnimChange(transition->toAnimId);
+				// トリガー条件は一度発動したらfalseに戻す
+				*(transition->condition->value) = false;
+			}
+		}
+		// bool条件の場合
+		else if (transition->condition->type == Transition::ConditionType::BOOL)
+		{
+			// 条件がtrueの場合、アニメーションを遷移させる
+			if (*(transition->condition->value))
+			{
+				AnimChange(transition->toAnimId);
+			}
+		}
+	}
 }
 
 

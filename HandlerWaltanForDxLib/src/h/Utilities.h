@@ -17,19 +17,19 @@
 #include "EffekseerForDXLib.h"
 
 
-//! ƒAƒjƒ[ƒVƒ‡ƒ“‚ÌƒuƒŒƒ“ƒh—¦•Ï‰»‘¬“x
+//! ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®ãƒ–ãƒ¬ãƒ³ãƒ‰ç‡å¤‰åŒ–é€Ÿåº¦
 constexpr float PLAYER_ANIM_BLEND_SPEED = 0.0166f;
-// ”ŠwŠÖŒW.
-constexpr float NEARLY_THRESHOLD = 0.000001f;			// 2‚Â‚Ì”’l‚ª‹ß‚¢‚Æ”»’f‚·‚é·‚Ì‹–—e’l
-// ƒRƒŠƒWƒ‡ƒ“ŠÖŒW.
-constexpr float HIT_SLIDE_LENGTH = 5.0f;				// ˆê“x‚Ì•Ç‰Ÿ‚µo‚µˆ—‚ÅƒXƒ‰ƒCƒh‚³‚¹‚é‹——£
+// æ•°å­¦é–¢ä¿‚.
+constexpr float NEARLY_THRESHOLD = 0.000001f;			// 2ã¤ã®æ•°å€¤ãŒè¿‘ã„ã¨åˆ¤æ–­ã™ã‚‹å·®ã®è¨±å®¹å€¤
+// ã‚³ãƒªã‚¸ãƒ§ãƒ³é–¢ä¿‚.
+constexpr float HIT_SLIDE_LENGTH = 5.0f;				// ä¸€åº¦ã®å£æŠ¼ã—å‡ºã—å‡¦ç†ã§ã‚¹ãƒ©ã‚¤ãƒ‰ã•ã›ã‚‹è·é›¢
 // Pad
 #define PAD_INPUT_DINPUT								(0x70000000)
 
 
 
 //--------------------------------------------------------
-// ƒIƒyƒŒ[ƒ^[
+// ã‚ªãƒšãƒ¬ãƒ¼ã‚¿ãƒ¼
 //--------------------------------------------------------
 
 inline VECTOR operator+(VECTOR a, VECTOR b) { return VAdd(a,b); }
@@ -58,63 +58,63 @@ public:
 /**
 * @author   NZ
 * @date     24/07/20
-* @note		”Ä—p“I‚ÈƒNƒ‰ƒX‚Ì’è‹`‚ğ‚Ü‚Æ‚ß‚½ƒwƒbƒ_[ƒtƒ@ƒCƒ‹
+* @note		æ±ç”¨çš„ãªã‚¯ãƒ©ã‚¹ã®å®šç¾©ã‚’ã¾ã¨ã‚ãŸãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«
 */
 
 
 /**
  * @class	ReadOnly
- * @brief	“Ç‚İæ‚èê—p‚É‚·‚éƒ‰ƒbƒp[ƒNƒ‰ƒX	
+ * @brief	èª­ã¿å–ã‚Šå°‚ç”¨ã«ã™ã‚‹ãƒ©ãƒƒãƒ‘ãƒ¼ã‚¯ãƒ©ã‚¹	
  */
 template<class T>
 class ReadOnly
 {
 private:
 
-	/*     ƒƒ“ƒo•Ï”     */
+	/*     ãƒ¡ãƒ³ãƒå¤‰æ•°     */
 
 	/**
-	 * @brief		’l‚ğ•ÛŠÇ‚·‚éƒIƒuƒWƒFƒNƒg
-	 * @History		24/09/14 ì¬(NZ)
+	 * @brief		å€¤ã‚’ä¿ç®¡ã™ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	 * @History		24/09/14 ä½œæˆ(NZ)
 	 */
 	T obj;
 
 
 public:
 
-	/*     ƒƒ\ƒbƒh     */
+	/*     ãƒ¡ã‚½ãƒƒãƒ‰     */
 
 	/**
-	 * @brief		ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-	 * @param[in]	T ‰Šú’l
+	 * @brief		ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+	 * @param[in]	T åˆæœŸå€¤
 	 * @author		NZ
 	 * @date		24/09/14
 	 */
 	ReadOnly(T _obj) : obj(_obj) {}
 
 	/**
-	 * @brief		ŠÖ”ŒÄ‚Ño‚µoperator‚Ì’è‹`
-	 * @param[in]	T ‰Šú’l
+	 * @brief		é–¢æ•°å‘¼ã³å‡ºã—operatorã®å®šç¾©
+	 * @param[in]	T åˆæœŸå€¤
 	 * @author		NZ
 	 * @date		24/09/14
 	 */
 	operator T() const { return obj; }
 
-	// ’l‚Ì•ÏX‚ğ‹Ö~‚·‚é‚½‚ßA‘ã“üoperator‚Ííœ
+	// å€¤ã®å¤‰æ›´ã‚’ç¦æ­¢ã™ã‚‹ãŸã‚ã€ä»£å…¥operatorã¯å‰Šé™¤
 	ReadOnly& operator=(const T&) = delete;
 };
 
 
 /**
  * @class	PoolAllocator
- * @brief	ƒƒ‚ƒŠŠÇ—‚ğ‚‘¬‰»‚·‚é‚½‚ß‚Ìƒƒ‚ƒŠƒAƒƒP[ƒ^[
+ * @brief	ãƒ¡ãƒ¢ãƒªç®¡ç†ã‚’é«˜é€ŸåŒ–ã™ã‚‹ãŸã‚ã®ãƒ¡ãƒ¢ãƒªã‚¢ãƒ­ã‚±ãƒ¼ã‚¿ãƒ¼
  */
 template<class T, size_t MAXSIZE>
 class PoolAllocator
 {
 private:
 
-	/*     ƒƒ“ƒo•Ï”     */
+	/*     ãƒ¡ãƒ³ãƒå¤‰æ•°     */
 
 	union Block
 	{
@@ -123,93 +123,93 @@ private:
 	};
 
 	/**
-	 * @brief		ƒƒ‚ƒŠƒv[ƒ‹
-	 * @History		24/09/01 ì¬(NZ)
+	 * @brief		ãƒ¡ãƒ¢ãƒªãƒ—ãƒ¼ãƒ«
+	 * @History		24/09/01 ä½œæˆ(NZ)
 	 */
 	Block block[MAXSIZE];
 
 	/**
-	 * @brief		‹ó‚«ƒƒ‚ƒŠƒuƒƒbƒN‚Ìí“¬
-	 * @History		24/09/01 ì¬(NZ)
+	 * @brief		ç©ºããƒ¡ãƒ¢ãƒªãƒ–ãƒ­ãƒƒã‚¯ã®æˆ¦é—˜
+	 * @History		24/09/01 ä½œæˆ(NZ)
 	 */
 	Block* freeBlockHead;
 
 
 public:
 
-	/*     ƒƒ\ƒbƒh     */
+	/*     ãƒ¡ã‚½ãƒƒãƒ‰     */
 
 	/**
-	 * @brief		ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	 * @brief		ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	 * @author		NZ
 	 * @date		24/09/01
 	 */
 	PoolAllocator()
 	{
-		// ƒƒ‚ƒŠƒuƒƒbƒN“¯m‚ğ˜AŒ‹‚·‚é
+		// ãƒ¡ãƒ¢ãƒªãƒ–ãƒ­ãƒƒã‚¯åŒå£«ã‚’é€£çµã™ã‚‹
 		for (size_t i = 0; i < MAXSIZE - 1; ++i)
 			block[i].nextBlock = &block[i + 1];
-		// ––”ö‚Í nullptr
+		// æœ«å°¾ã¯ nullptr
 		block[MAXSIZE - 1].nextBlock = nullptr;
 
-		// ‹ó‚«ƒƒ‚ƒŠ‚Ìæ“ª‚Ì‰Šú’l‚Í block ‚Ìæ“ª
+		// ç©ºããƒ¡ãƒ¢ãƒªã®å…ˆé ­ã®åˆæœŸå€¤ã¯ block ã®å…ˆé ­
 		freeBlockHead = block;
 	}
 
 	/**
-	 * @brief		ƒfƒXƒgƒ‰ƒNƒ^
+	 * @brief		ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	 * @author		NZ
 	 * @date		24/09/01
 	 */
 	~PoolAllocator() {}
 
 	/**
-	 * @brief		ƒƒ‚ƒŠ‚ğŠm•Û‚·‚é
-	 * @return		Šm•Û‚µ‚½ƒƒ‚ƒŠ
+	 * @brief		ãƒ¡ãƒ¢ãƒªã‚’ç¢ºä¿ã™ã‚‹
+	 * @return		ç¢ºä¿ã—ãŸãƒ¡ãƒ¢ãƒª
 	 * @author		NZ
 	 * @date		24/09/01
 	 */
 	T* Alloc()
 	{
-		// ‹ó‚«ƒƒ‚ƒŠƒuƒƒbƒN‚ª‚È‚¢ê‡Anullptr ‚ğ•Ô‚·
+		// ç©ºããƒ¡ãƒ¢ãƒªãƒ–ãƒ­ãƒƒã‚¯ãŒãªã„å ´åˆã€nullptr ã‚’è¿”ã™
 		if (freeBlockHead == nullptr)
 			return nullptr;
 
-		//! Šm•Û‚µ‚½ƒƒ‚ƒŠ
+		//! ç¢ºä¿ã—ãŸãƒ¡ãƒ¢ãƒª
 		T* ret = reinterpret_cast<T*>(freeBlockHead);
-		// ‹ó‚«ƒƒ‚ƒŠƒuƒƒbƒN‚ğXV
+		// ç©ºããƒ¡ãƒ¢ãƒªãƒ–ãƒ­ãƒƒã‚¯ã‚’æ›´æ–°
 		freeBlockHead = freeBlockHead->nextBlock;
 
-		// “®“I‚ÉƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğŒÄ‚Ô
+		// å‹•çš„ã«ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’å‘¼ã¶
 		return new(ret) T();
 	}
 
 	/**
-	 * @brief		ƒƒ‚ƒŠ‚ğŠm•Û‚·‚é
-	 * @return		Šm•Û‚µ‚½ƒƒ‚ƒŠ
+	 * @brief		ãƒ¡ãƒ¢ãƒªã‚’ç¢ºä¿ã™ã‚‹
+	 * @return		ç¢ºä¿ã—ãŸãƒ¡ãƒ¢ãƒª
 	 * @author		NZ
 	 * @date		24/09/01
 	 */
 	template<typename... Args>
 	T* Alloc(Args&&... args)
 	{
-		// ‹ó‚«ƒƒ‚ƒŠƒuƒƒbƒN‚ª‚È‚¢ê‡Anullptr ‚ğ•Ô‚·
+		// ç©ºããƒ¡ãƒ¢ãƒªãƒ–ãƒ­ãƒƒã‚¯ãŒãªã„å ´åˆã€nullptr ã‚’è¿”ã™
 		if (freeBlockHead == nullptr)
 			return nullptr;
 
-		// ƒƒ‚ƒŠƒuƒƒbƒN‚ğŠm•Û
+		// ãƒ¡ãƒ¢ãƒªãƒ–ãƒ­ãƒƒã‚¯ã‚’ç¢ºä¿
 		T* ret = reinterpret_cast<T*>(freeBlockHead);
 
-		// ‹ó‚«ƒƒ‚ƒŠƒuƒƒbƒN‚ğXV
+		// ç©ºããƒ¡ãƒ¢ãƒªãƒ–ãƒ­ãƒƒã‚¯ã‚’æ›´æ–°
 		freeBlockHead = freeBlockHead->nextBlock;
 
-		// ˆø”•t‚«ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğŒÄ‚Ño‚·
+		// å¼•æ•°ä»˜ãã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’å‘¼ã³å‡ºã™
 		return new(ret) T(std::forward<Args>(args)...);
 	}
 
 	/**
-	 * @brief		ƒƒ‚ƒŠ‚ğ‰ğ•ú‚·‚é
-	 * @param[in]	T* Alloc‚ÅŠm•Û‚µ‚½ƒƒ‚ƒŠ
+	 * @brief		ãƒ¡ãƒ¢ãƒªã‚’è§£æ”¾ã™ã‚‹
+	 * @param[in]	T* Allocã§ç¢ºä¿ã—ãŸãƒ¡ãƒ¢ãƒª
 	 * @author		NZ
 	 * @date		24/09/01
 	 */
@@ -218,19 +218,19 @@ public:
 		if (_addr == nullptr)
 			return;
 
-		// –¾¦“I‚ÉƒfƒXƒgƒ‰ƒNƒ^‚ğŒÄ‚Ô
+		// æ˜ç¤ºçš„ã«ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’å‘¼ã¶
 		_addr->~T();
 
-		//! ‰ğ•ú‚·‚éƒAƒhƒŒƒX
+		//! è§£æ”¾ã™ã‚‹ã‚¢ãƒ‰ãƒ¬ã‚¹
 		Block* freeBlock = reinterpret_cast<Block*>(_addr);
 
-		// freeBlockHead‚ªnullptr‚Ìê‡‚É‘Î‰
+		// freeBlockHeadãŒnullptrã®å ´åˆã«å¯¾å¿œ
 		if (freeBlockHead == nullptr) {
 			freeBlock->nextBlock = nullptr;
 			freeBlockHead = freeBlock;
 		}
 		else {
-			// ‰ğ•ú‚µ‚½ƒuƒƒbƒN‚ğƒŠƒXƒg‚Ìæ“ª‚É’Ç‰Á
+			// è§£æ”¾ã—ãŸãƒ–ãƒ­ãƒƒã‚¯ã‚’ãƒªã‚¹ãƒˆã®å…ˆé ­ã«è¿½åŠ 
 			freeBlock->nextBlock = freeBlockHead;
 			freeBlockHead = freeBlock;
 		}
@@ -240,45 +240,45 @@ public:
 
 /**
  * @class	Time
- * @brief	ŠÔŠÖŒW
+ * @brief	æ™‚é–“é–¢ä¿‚
  */
 class Time 
 {
 	friend class HandlerWaltan;
 
 public:
-	// deltaTime‚ğ•Ô‚·ŠÖ”
+	// deltaTimeã‚’è¿”ã™é–¢æ•°
 	static float DeltaTime() { return deltaTime; }
 
-	// 1•bŒo‰ß‚µ‚½ê‡‚ÍƒtƒŒ[ƒ€”‚ğ•Ô‚·
+	// 1ç§’çµŒéã—ãŸå ´åˆã¯ãƒ•ãƒ¬ãƒ¼ãƒ æ•°ã‚’è¿”ã™
 	int GetCurrentFPS() { return frameCount; }
 
-	// n•bŒã‚ÌƒtƒŒ[ƒ€”‚ğŒvZ
+	// nç§’å¾Œã®ãƒ•ãƒ¬ãƒ¼ãƒ æ•°ã‚’è¨ˆç®—
 	int GetFrameCountInFuture(float seconds) { return static_cast<int>(seconds * Time::targetFPS); }
 
-	// ƒQ[ƒ€ƒ‹[ƒv‚Å–ˆƒtƒŒ[ƒ€ŒÄ‚Ño‚³‚ê‚éŠÖ”
+	// ã‚²ãƒ¼ãƒ ãƒ«ãƒ¼ãƒ—ã§æ¯ãƒ•ãƒ¬ãƒ¼ãƒ å‘¼ã³å‡ºã•ã‚Œã‚‹é–¢æ•°
 	static void Update()
 	{
-		float currentTime = GetNowCount() / 1000.0f;  // •b‚É•ÏŠ·
+		float currentTime = GetNowCount() / 1000.0f;  // ç§’ã«å¤‰æ›
 		deltaTime = currentTime - lastTime;
 		lastTime = currentTime;
 
-		// ƒtƒŒ[ƒ€”‚ÆŒo‰ßŠÔ‚ğXV
+		// ãƒ•ãƒ¬ãƒ¼ãƒ æ•°ã¨çµŒéæ™‚é–“ã‚’æ›´æ–°
 		frameCount++;
 		elapsedTime += deltaTime;
 
-		// 1•bŒo‰ß‚µ‚½‚çFPS‚ğƒŠƒZƒbƒg
+		// 1ç§’çµŒéã—ãŸã‚‰FPSã‚’ãƒªã‚»ãƒƒãƒˆ
 		if (elapsedTime >= 1.0f) {
 			elapsedTime = 0.0f;
-			frameCount = 0;  // ƒtƒŒ[ƒ€”‚ÌƒŠƒZƒbƒg
+			frameCount = 0;  // ãƒ•ãƒ¬ãƒ¼ãƒ æ•°ã®ãƒªã‚»ãƒƒãƒˆ
 		}
 	}
 
-	// FPSŒÅ’è‰»‚Ì‚½‚ß‚ÌŠÖ”
+	// FPSå›ºå®šåŒ–ã®ãŸã‚ã®é–¢æ•°
 	static void SetTargetFPS(int fps)
 	{
 		targetFPS = fps;
-		targetFrameTime = 1.0f / static_cast<float>(fps);  // 1ƒtƒŒ[ƒ€‚ ‚½‚è‚ÌŠÔ‚ğŒvZ
+		targetFrameTime = 1.0f / static_cast<float>(fps);  // 1ãƒ•ãƒ¬ãƒ¼ãƒ ã‚ãŸã‚Šã®æ™‚é–“ã‚’è¨ˆç®—
 	}
 
 	static void WaitForNextFrame()
@@ -299,12 +299,12 @@ public:
 	}
 
 private:
-	static float deltaTime;    // ‘OƒtƒŒ[ƒ€‚Æ‚ÌŠÔ·
-	static float lastTime;     // ‘OƒtƒŒ[ƒ€‚ÌŠÔ
-	static int targetFPS;      // ƒ^[ƒQƒbƒgFPS
-	static float targetFrameTime;  // ƒ^[ƒQƒbƒg‚ÌƒtƒŒ[ƒ€ŠÔ (•b)    
-	static int frameCount;      // ƒtƒŒ[ƒ€”‚ğƒJƒEƒ“ƒg‚·‚é•Ï”
-	static float elapsedTime;    // Œo‰ßŠÔ‚ğ•Û‚·‚é•Ï”
+	static float deltaTime;    // å‰ãƒ•ãƒ¬ãƒ¼ãƒ ã¨ã®æ™‚é–“å·®
+	static float lastTime;     // å‰ãƒ•ãƒ¬ãƒ¼ãƒ ã®æ™‚é–“
+	static int targetFPS;      // ã‚¿ãƒ¼ã‚²ãƒƒãƒˆFPS
+	static float targetFrameTime;  // ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®ãƒ•ãƒ¬ãƒ¼ãƒ æ™‚é–“ (ç§’)    
+	static int frameCount;      // ãƒ•ãƒ¬ãƒ¼ãƒ æ•°ã‚’ã‚«ã‚¦ãƒ³ãƒˆã™ã‚‹å¤‰æ•°
+	static float elapsedTime;    // çµŒéæ™‚é–“ã‚’ä¿æŒã™ã‚‹å¤‰æ•°
 
 public:
 	static bool debugMode;
@@ -315,77 +315,77 @@ public:
 
 /**
  * @class	CsvLoader
- * @brief	csvƒtƒ@ƒCƒ‹‚ğƒJƒ“ƒ}‹æØ‚è‚Å“Ç‚İ‚Ş
- * @detail	Ã“IƒNƒ‰ƒX
+ * @brief	csvãƒ•ã‚¡ã‚¤ãƒ«ã‚’ã‚«ãƒ³ãƒåŒºåˆ‡ã‚Šã§èª­ã¿è¾¼ã‚€
+ * @detail	é™çš„ã‚¯ãƒ©ã‚¹
  */
 class CsvLoader final
 {
 private:
 
-	/*     ƒƒ“ƒo•Ï”     */
+	/*     ãƒ¡ãƒ³ãƒå¤‰æ•°     */
 
 
 public:
 
-	/*     ƒƒ\ƒbƒh     */
+	/*     ãƒ¡ã‚½ãƒƒãƒ‰     */
 
-	// Ã“IƒNƒ‰ƒX‚Ì‚½‚ßAƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ÆƒfƒXƒgƒ‰ƒNƒ^‚ğíœ
+	// é™çš„ã‚¯ãƒ©ã‚¹ã®ãŸã‚ã€ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã¨ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’å‰Šé™¤
 	CsvLoader() = delete;
 	~CsvLoader() = delete;
 
 
 	/**
-	 * @brief		csvƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚İAs‹æØ‚èAƒJƒ“ƒ}‹æØ‚è‚Å•¶š—ñ‚ğ•Ô‚·
-	 * @param[in]	std::string	“Ç‚İ‚Şcsvƒtƒ@ƒCƒ‹‚ÌƒpƒX
-	 * @return		std::vector<std::vector<std::string>> “Ç‚İ‚ñ‚¾•¶š—ñ‚ğ•Ô‚·(1ŸŒ³ = s, 2ŸŒ³ = ƒJƒ“ƒ}‹æØ‚è)
+	 * @brief		csvãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã¿ã€è¡ŒåŒºåˆ‡ã‚Šã€ã‚«ãƒ³ãƒåŒºåˆ‡ã‚Šã§æ–‡å­—åˆ—ã‚’è¿”ã™
+	 * @param[in]	std::string	èª­ã¿è¾¼ã‚€csvãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ‘ã‚¹
+	 * @return		std::vector<std::vector<std::string>> èª­ã¿è¾¼ã‚“ã æ–‡å­—åˆ—ã‚’è¿”ã™(1æ¬¡å…ƒ = è¡Œ, 2æ¬¡å…ƒ = ã‚«ãƒ³ãƒåŒºåˆ‡ã‚Š)
 	 * @author		NZ
 	 * @date		24/09/14
 	 */
 	static std::vector<std::vector<std::string>> Load(const std::string _filePath)
 	{
-		//! –ß‚è’l
+		//! æˆ»ã‚Šå€¤
 		std::vector<std::vector<std::string>> ret;
 
-		// ƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚Ş
+		// ãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã‚€
 		std::ifstream file(_filePath);
-		// ƒtƒ@ƒCƒ‹“Ç‚İ‚İ‚É¸”s‚µ‚½ê‡A‚»‚Ì‚Ü‚ÜI—¹
+		// ãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿ã«å¤±æ•—ã—ãŸå ´åˆã€ãã®ã¾ã¾çµ‚äº†
 		if (!file)
 			return ret;
 
-		//! s‹æØ‚è‚Å“Ç‚İ‚ñ‚¾•¶š—ñ
+		//! è¡ŒåŒºåˆ‡ã‚Šã§èª­ã¿è¾¼ã‚“ã æ–‡å­—åˆ—
 		std::string line;
 
-		// 1s‚¸‚Â“Ç‚İ‚Ş
+		// 1è¡Œãšã¤èª­ã¿è¾¼ã‚€
 		while (std::getline(file, line))
 		{
-			//! ƒJƒ“ƒ}‹æØ‚è‚Å“Ç‚İ‚ñ‚¾•¶š—ñ
+			//! ã‚«ãƒ³ãƒåŒºåˆ‡ã‚Šã§èª­ã¿è¾¼ã‚“ã æ–‡å­—åˆ—
 			std::vector<std::string> comma;
-			//! Šm”FÏ‚İ‚Ì•¶š—ñ‚Ìindex
+			//! ç¢ºèªæ¸ˆã¿ã®æ–‡å­—åˆ—ã®index
 			size_t confirmed = 0;
-			//! ƒJƒ“ƒ}‚ğŒ©‚Â‚¯‚½index
+			//! ã‚«ãƒ³ãƒã‚’è¦‹ã¤ã‘ãŸindex
 			size_t commaPos = 0;
 			
-			// ƒJƒ“ƒ}‹æØ‚è‚Å“Ç‚İ‚Ş
+			// ã‚«ãƒ³ãƒåŒºåˆ‡ã‚Šã§èª­ã¿è¾¼ã‚€
 			do
 			{
-				// ‘O‰ñƒJƒ“ƒ}‚ğŒ©‚Â‚¯‚½index‚©‚çƒJƒ“ƒ}‚ğŒ©‚Â‚¯‚é
+				// å‰å›ã‚«ãƒ³ãƒã‚’è¦‹ã¤ã‘ãŸindexã‹ã‚‰ã‚«ãƒ³ãƒã‚’è¦‹ã¤ã‘ã‚‹
 				commaPos = line.find_first_of(',', confirmed);
-				// ƒJƒ“ƒ}‚ªŒ©‚Â‚©‚ç‚È‚©‚Á‚½ê‡‚Í‚»‚Ì‚Ü‚ÜI—¹
+				// ã‚«ãƒ³ãƒãŒè¦‹ã¤ã‹ã‚‰ãªã‹ã£ãŸå ´åˆã¯ãã®ã¾ã¾çµ‚äº†
 				if (commaPos == std::string::npos)
 				{
-					// ‘O‰ñ‚ÌƒRƒ“ƒ}‚ÌˆÊ’u‚©‚çƒRƒs[
+					// å‰å›ã®ã‚³ãƒ³ãƒã®ä½ç½®ã‹ã‚‰ã‚³ãƒ”ãƒ¼
 					comma.push_back(line.substr(confirmed));
 					break;
 				}
 
-				// ‘O‰ñ‚ÌƒRƒ“ƒ}‚ÌˆÊ’u‚©‚çŸ‚ÌƒRƒ“ƒ}‚ÌˆÊ’u‚Ü‚Å‚Ì•¶š—ñ‚ğƒRƒs[
+				// å‰å›ã®ã‚³ãƒ³ãƒã®ä½ç½®ã‹ã‚‰æ¬¡ã®ã‚³ãƒ³ãƒã®ä½ç½®ã¾ã§ã®æ–‡å­—åˆ—ã‚’ã‚³ãƒ”ãƒ¼
 				comma.push_back(line.substr(confirmed, commaPos - confirmed));
 
-				// Šm”FÏ‚İ‚Ì•¶š—ñ‚ğXV
+				// ç¢ºèªæ¸ˆã¿ã®æ–‡å­—åˆ—ã‚’æ›´æ–°
 				confirmed = commaPos + 1;
 			} while (commaPos != std::string::npos);
 
-			// ƒJƒ“ƒ}‚ª‚È‚­‚È‚Á‚½‚çŒ‹‰Ê‚ğ’Ç‰Á
+			// ã‚«ãƒ³ãƒãŒãªããªã£ãŸã‚‰çµæœã‚’è¿½åŠ 
 			ret.push_back(comma);
 		}
 
@@ -396,64 +396,64 @@ public:
 
 /**
  * @class	Random
- * @brief	—”ŠÖŒW
- * @detail	Ã“IƒNƒ‰ƒX
+ * @brief	ä¹±æ•°é–¢ä¿‚
+ * @detail	é™çš„ã‚¯ãƒ©ã‚¹
  */
 class Random
 {
 public:
-	// ®”‚Ìƒ‰ƒ“ƒ_ƒ€‚È’l‚ğ¶¬‚·‚éƒƒ\ƒbƒh
+	// æ•´æ•°ã®ãƒ©ãƒ³ãƒ€ãƒ ãªå€¤ã‚’ç”Ÿæˆã™ã‚‹ãƒ¡ã‚½ãƒƒãƒ‰
 	static int GetRandomInt(int min, int max) {
 		std::uniform_int_distribution<> dist(min, max);
 		return dist(GetGenerator());
 	}
 
-	// floatŒ^‚Ìƒ‰ƒ“ƒ_ƒ€‚È’l‚ğ¶¬‚·‚éƒƒ\ƒbƒh
+	// floatå‹ã®ãƒ©ãƒ³ãƒ€ãƒ ãªå€¤ã‚’ç”Ÿæˆã™ã‚‹ãƒ¡ã‚½ãƒƒãƒ‰
 	static float GetRandomFloat(float min, float max) {
 		std::uniform_real_distribution<float> dist(min, max);
 		return dist(GetGenerator());
 	}
 
-	// ƒV[ƒh‚ğİ’è‚·‚éƒƒ\ƒbƒhi‚±‚ê‚ÅŒˆ’è“I‚È—”‚ğ¶¬‚Å‚«‚éj
+	// ã‚·ãƒ¼ãƒ‰ã‚’è¨­å®šã™ã‚‹ãƒ¡ã‚½ãƒƒãƒ‰ï¼ˆã“ã‚Œã§æ±ºå®šçš„ãªä¹±æ•°ã‚’ç”Ÿæˆã§ãã‚‹ï¼‰
 	static void SetSeed(unsigned int seed) {
 		GetGenerator(seed);
 	}
 
 private:
-	// —”¶¬Ší‚ğ•Ô‚·ƒƒ\ƒbƒhiƒV[ƒh•t‚«ƒo[ƒWƒ‡ƒ“j
+	// ä¹±æ•°ç”Ÿæˆå™¨ã‚’è¿”ã™ãƒ¡ã‚½ãƒƒãƒ‰ï¼ˆã‚·ãƒ¼ãƒ‰ä»˜ããƒãƒ¼ã‚¸ãƒ§ãƒ³ï¼‰
 	static std::mt19937& GetGenerator(unsigned int seed = 0) {
-		static std::mt19937 gen;  // —”¶¬ŠíiÃ“I‚É•Ûj
-		static bool seeded = false; // ƒV[ƒh‚ªİ’è‚³‚ê‚½‚©‚Ç‚¤‚©‚Ìƒtƒ‰ƒO
+		static std::mt19937 gen;  // ä¹±æ•°ç”Ÿæˆå™¨ï¼ˆé™çš„ã«ä¿æŒï¼‰
+		static bool seeded = false; // ã‚·ãƒ¼ãƒ‰ãŒè¨­å®šã•ã‚ŒãŸã‹ã©ã†ã‹ã®ãƒ•ãƒ©ã‚°
 
-		// ƒV[ƒh‚ª0‚Å‚È‚­A‚©‚Â‚Ü‚¾ƒV[ƒh‚³‚ê‚Ä‚¢‚È‚¢ê‡‚Ì‚İİ’è
+		// ã‚·ãƒ¼ãƒ‰ãŒ0ã§ãªãã€ã‹ã¤ã¾ã ã‚·ãƒ¼ãƒ‰ã•ã‚Œã¦ã„ãªã„å ´åˆã®ã¿è¨­å®š
 		if (seed != 0 || !seeded) {
 			if (seed == 0) {
-				// ”ñŒˆ’è“I‚ÈƒV[ƒhiƒfƒtƒHƒ‹ƒg“®ìj
+				// éæ±ºå®šçš„ãªã‚·ãƒ¼ãƒ‰ï¼ˆãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå‹•ä½œï¼‰
 				std::random_device rd;
 				gen.seed(rd());
 			}
 			else {
-				// Œˆ’è“I‚ÈƒV[ƒh‚ğİ’è
+				// æ±ºå®šçš„ãªã‚·ãƒ¼ãƒ‰ã‚’è¨­å®š
 				gen.seed(seed);
 			}
-			seeded = true; // ƒV[ƒh‚ªİ’è‚³‚ê‚½‚±‚Æ‚ğ‹L˜^
+			seeded = true; // ã‚·ãƒ¼ãƒ‰ãŒè¨­å®šã•ã‚ŒãŸã“ã¨ã‚’è¨˜éŒ²
 		}
 		return gen;
 	}
 
-	// ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚Ííœ
+	// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã¯å‰Šé™¤
 	Random() = delete;
 };
 
 
 //--------------------------------------------------------
-// ŠÖ”
+// é–¢æ•°
 //--------------------------------------------------------
 
 /**
- * @brief		“x”–@ -> ŒÊ“x–@ ‚É•ÏŠ·
- * @param[in]	double Šp“x
- * @return		double •ÏŠ·‚µ‚½ƒ‰ƒWƒAƒ“’l
+ * @brief		åº¦æ•°æ³• -> å¼§åº¦æ³• ã«å¤‰æ›
+ * @param[in]	double è§’åº¦
+ * @return		double å¤‰æ›ã—ãŸãƒ©ã‚¸ã‚¢ãƒ³å€¤
  * @author		NZ
  * @date		24/09/23
  */
@@ -463,9 +463,9 @@ inline double Deg2Rad(const double _angle)
 }
 
 /**
- * @brief		ŒÊ“x–@ -> “x”–@ ‚É•ÏŠ·
- * @param[in]	double ƒ‰ƒWƒAƒ“’l
- * @return		double •ÏŠ·‚µ‚½Šp“x
+ * @brief		å¼§åº¦æ³• -> åº¦æ•°æ³• ã«å¤‰æ›
+ * @param[in]	double ãƒ©ã‚¸ã‚¢ãƒ³å€¤
+ * @return		double å¤‰æ›ã—ãŸè§’åº¦
  * @author		NZ
  * @date		24/09/23
  */
@@ -475,10 +475,10 @@ inline double Rad2Deg(const double _radian)
 }
 
 /**
- * @brief		‚Q“_ŠÔ‚Ì‹——£‚ğæ“¾‚·‚é
- * @param[in]	VECTOR À•W1
- * @param[in]	VECTOR À•W2
- * @return		float ‹——£
+ * @brief		ï¼’ç‚¹é–“ã®è·é›¢ã‚’å–å¾—ã™ã‚‹
+ * @param[in]	VECTOR åº§æ¨™1
+ * @param[in]	VECTOR åº§æ¨™2
+ * @return		float è·é›¢
  * @author		NZ
  * @date		24/10/21
  */
@@ -490,16 +490,16 @@ inline float Distance(VECTOR v1, VECTOR v2)
 }
 
 
-// üŒ`•âŠÔŠÖ”
+// ç·šå½¢è£œé–“é–¢æ•°
 inline float Lerp(float start, float end, float t)
 {
 	return start + t * (end - start);
 }
 
 /**
- * @brief		üŒ`•âŠÔŠÖ”
- * @param[in]	VECTOR À•W1
- * @param[in]	VECTOR À•W2
+ * @brief		ç·šå½¢è£œé–“é–¢æ•°
+ * @param[in]	VECTOR åº§æ¨™1
+ * @param[in]	VECTOR åº§æ¨™2
  * @return		float 
  * @author		NZ
  * @date		24/10/21
@@ -514,7 +514,7 @@ inline VECTOR Lerp(VECTOR start, VECTOR end, float t)
 }
 
 
-// ’lA‚ğ0‚©‚ç1‚ÌŠÔ‚É’²®‚·‚éŠÖ”
+// å€¤Aã‚’0ã‹ã‚‰1ã®é–“ã«èª¿æ•´ã™ã‚‹é–¢æ•°
 inline float Normalize(float A, float min, float max) {
 	return (A - min) / (max - min);
 }

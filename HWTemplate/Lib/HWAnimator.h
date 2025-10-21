@@ -7,13 +7,58 @@
 /**
 * @author   NZ
 * @date     24/08/09
-* @note		ƒAƒjƒ[ƒVƒ‡ƒ“§ŒäƒRƒ“ƒ|[ƒlƒ“ƒg‚Ì’è‹`
+* @note		ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³åˆ¶å¾¡ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®å®šç¾©
 */
 
 
 /**
+ * @class	Transition
+ * @brief	ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®é·ç§»æƒ…å ±
+ */
+class Transition
+{
+public:
+
+	enum class ConditionType
+	{
+		NONE,
+		BOOL,
+		TRIGGER,
+	};
+
+	struct Condition
+	{
+		std::string name;
+		bool* value;
+		ConditionType type;
+	};
+
+	//! é·ç§»å…ƒã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ID
+	int fromAnimId;
+	//! é·ç§»å…ˆã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ID
+	int toAnimId;
+	//! é·ç§»æ™‚é–“
+	int blendSpeed;
+	//! é·ç§»å…ƒã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³çµ‚äº†æ™‚ã«è‡ªå‹•ã§é·ç§»ã•ã›ã‚‹ã‹
+	bool hasExitTime;
+	//! é·ç§»ãƒ•ãƒ©ã‚°
+	Condition* condition;
+
+
+	/**
+	 * @brief		ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+	 * @History		25/10/20 ä½œæˆ(NZ)
+	 */
+	Transition() : fromAnimId(-1), toAnimId(-1), blendSpeed(PLAYER_ANIM_BLEND_SPEED),
+		hasExitTime(false), condition(nullptr)
+	{
+	}
+};
+
+
+/**
  * @class	AnimInfo
- * @brief	ƒAƒjƒ[ƒVƒ‡ƒ“î•ñ
+ * @brief	ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³æƒ…å ±
  */
 class AnimInfo
 {
@@ -21,88 +66,100 @@ class AnimInfo
 
 public:
 
-	/*     ƒƒ“ƒo•Ï”     */
+	/*     ãƒ¡ãƒ³ãƒå¤‰æ•°     */
 
 	/**
-	 * @brief		ƒAƒjƒ[ƒVƒ‡ƒ“‚ğƒAƒ^ƒbƒ`‚·‚éƒ‚ƒfƒ‹
-	 * @History		24/09/24 ì¬(NZ)
+	 * @brief		é·ç§»æƒ…å ±
+	 * @History		25/10/20 ä½œæˆ(NZ)
+	 */
+	std::vector<Transition*> transitions;
+
+	/**
+	 * @brief		ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’ã‚¢ã‚¿ãƒƒãƒã™ã‚‹ãƒ¢ãƒ‡ãƒ«
+	 * @History		24/09/24 ä½œæˆ(NZ)
 	 */
 	int modelHandle;
 
 	/**
-	 * @brief		ƒAƒjƒ[ƒVƒ‡ƒ“‚Ìƒnƒ“ƒhƒ‹
-	 * @History		24/09/24 ì¬(NZ)
+	 * @brief		ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®ãƒãƒ³ãƒ‰ãƒ«
+	 * @History		24/09/24 ä½œæˆ(NZ)
 	 */
 	int animHandle;
 
 	/**
-	 * @brief		animModel‚Ì“o˜^‚µ‚½ƒAƒjƒ[ƒVƒ‡ƒ“‚ÌƒCƒ“ƒfƒbƒNƒX
-	 * @History		24/09/24 ì¬(NZ)
+	 * @brief		ä½•ç•ªç›®ã«ç™»éŒ²ã•ã‚ŒãŸã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‹
+	 * @History		25/10/20 ä½œæˆ(NZ)
+	 */
+	int registerIndex;
+
+	/**
+	 * @brief		animModelã®ç™»éŒ²ã—ãŸã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+	 * @History		24/09/24 ä½œæˆ(NZ)
 	 */
 	int animIndex;
 
 	/**
-	 * @brief		Model‚ÉƒAƒ^ƒbƒ`‚µ‚½‚ÌƒCƒ“ƒfƒbƒNƒX
-	 * @History		24/09/24 ì¬(NZ)
+	 * @brief		Modelã«ã‚¢ã‚¿ãƒƒãƒã—ãŸæ™‚ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+	 * @History		24/09/24 ä½œæˆ(NZ)
 	 */
 	int attachIndex;
 
 	/**
-	 * @brief		ƒAƒjƒ[ƒVƒ‡ƒ“ƒtƒ@ƒCƒ‹
-	 * @History		24/09/24 ì¬(NZ)
+	 * @brief		ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãƒ•ã‚¡ã‚¤ãƒ«
+	 * @History		24/09/24 ä½œæˆ(NZ)
 	 */
 	std::string filePath;
 
 	/**
-	 * @brief		ƒ‹[ƒv‚·‚é‚©
-	 * @History		24/09/24 ì¬(NZ)
+	 * @brief		ãƒ«ãƒ¼ãƒ—ã™ã‚‹ã‹
+	 * @History		24/09/24 ä½œæˆ(NZ)
 	 */
 	bool isLoop;
 
 	/**
-	 * @brief		’†’f‰Â”\‚©
-	 * @History		24/09/24 ì¬(NZ)
+	 * @brief		ä¸­æ–­å¯èƒ½ã‹
+	 * @History		24/09/24 ä½œæˆ(NZ)
 	 */
 	bool interruption;
 
 	/**
-	 * @brief		Ä¶‘¬“x
-	 * @History		24/09/24 ì¬(NZ)
+	 * @brief		å†ç”Ÿé€Ÿåº¦
+	 * @History		24/09/24 ä½œæˆ(NZ)
 	 */
 	double playSpeed;
 
 	/**
-	 * @brief		‘Ä¶ŠÔ
-	 * @History		24/09/24 ì¬(NZ)
+	 * @brief		ç·å†ç”Ÿæ™‚é–“
+	 * @History		24/09/24 ä½œæˆ(NZ)
 	 */
 	double totalTime;
 
 private:
 
 	/**
-	 * @brief		“Á’è‚ÌÄ¶ŠÔ‚É’B‚µ‚½‚Æ‚«‚ÉŒÄ‚Î‚ê‚éƒR[ƒ‹ƒoƒbƒNŠÖ”
-	 * @History		24/10/12 ì¬(NZ)
+	 * @brief		ç‰¹å®šã®å†ç”Ÿæ™‚é–“ã«é”ã—ãŸã¨ãã«å‘¼ã°ã‚Œã‚‹ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°
+	 * @History		24/10/12 ä½œæˆ(NZ)
 	 */
 	std::unordered_map<double, std::function<void()>> callbacks;
 
 	/**
-	 * @brief		Ä¶ŠJn‚ÉŒÄ‚Î‚ê‚éƒR[ƒ‹ƒoƒbƒNŠÖ”
-	 * @History		24/10/12 ì¬(NZ)
+	 * @brief		å†ç”Ÿé–‹å§‹æ™‚ã«å‘¼ã°ã‚Œã‚‹ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°
+	 * @History		24/10/12 ä½œæˆ(NZ)
 	 */
 	std::function<void()> startPlaybackCallback;
 
 	/**
-	 * @brief		Ä¶I—¹‚ÉŒÄ‚Î‚ê‚éƒR[ƒ‹ƒoƒbƒNŠÖ”
-	 * @History		24/10/12 ì¬(NZ)
+	 * @brief		å†ç”Ÿçµ‚äº†æ™‚ã«å‘¼ã°ã‚Œã‚‹ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°
+	 * @History		24/10/12 ä½œæˆ(NZ)
 	 */
 	std::function<void()> endPlaybackCallback;
 
 
 public:
-	/*     ƒƒ\ƒbƒh     */
+	/*     ãƒ¡ã‚½ãƒƒãƒ‰     */
 
 	/**
-	 * @brief		ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	 * @brief		ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	 * @author		NZ
 	 * @date		24/09/24
 	 */
@@ -111,9 +168,9 @@ public:
 	{}
 
 	/**
-	 * @brief		“Á’è‚ÌÄ¶ŠÔ‚É‚È‚Á‚½‚Æ‚«‚ÉŒÄ‚Î‚ê‚éƒR[ƒ‹ƒoƒbƒN‚ğ“o˜^‚·‚é
-	 * @param[in]	float ƒR[ƒ‹ƒoƒbƒNŠÖ”‚ğŒÄ‚Ño‚µ‚½‚¢Ä¶ŠÔ
-	 * @param[in]	std::function<void()> “o˜^‚·‚éƒR[ƒ‹ƒoƒbƒNŠÖ”
+	 * @brief		ç‰¹å®šã®å†ç”Ÿæ™‚é–“ã«ãªã£ãŸã¨ãã«å‘¼ã°ã‚Œã‚‹ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ã‚’ç™»éŒ²ã™ã‚‹
+	 * @param[in]	float ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã‚’å‘¼ã³å‡ºã—ãŸã„å†ç”Ÿæ™‚é–“
+	 * @param[in]	std::function<void()> ç™»éŒ²ã™ã‚‹ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°
 	 * @author		NZ
 	 * @date		24/10/12
 	 */
@@ -123,9 +180,9 @@ public:
 	}
 
 	/**
-	 * @brief		“Á’è‚ÌÄ¶ŠÔ‚É‚È‚Á‚½‚Æ‚«‚ÉŒÄ‚Î‚ê‚éƒR[ƒ‹ƒoƒbƒN‚ğ“o˜^‚·‚é
-	 * @param[in]	float ƒR[ƒ‹ƒoƒbƒNŠÖ”‚ğŒÄ‚Ño‚µ‚½‚¢Ä¶ŠÔ
-	 * @param[in]	std::function<void()> “o˜^‚·‚éƒR[ƒ‹ƒoƒbƒNŠÖ”
+	 * @brief		ç‰¹å®šã®å†ç”Ÿæ™‚é–“ã«ãªã£ãŸã¨ãã«å‘¼ã°ã‚Œã‚‹ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ã‚’ç™»éŒ²ã™ã‚‹
+	 * @param[in]	float ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã‚’å‘¼ã³å‡ºã—ãŸã„å†ç”Ÿæ™‚é–“
+	 * @param[in]	std::function<void()> ç™»éŒ²ã™ã‚‹ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°
 	 * @author		NZ
 	 * @date		24/10/12
 	 */
@@ -135,9 +192,9 @@ public:
 	}
 
 	/**
-	 * @brief		“Á’è‚ÌÄ¶ŠÔ‚É‚È‚Á‚½‚Æ‚«‚ÉŒÄ‚Î‚ê‚éƒR[ƒ‹ƒoƒbƒN‚ğ“o˜^‚·‚é
-	 * @param[in]	float ƒR[ƒ‹ƒoƒbƒNŠÖ”‚ğŒÄ‚Ño‚µ‚½‚¢Ä¶ŠÔ
-	 * @param[in]	std::function<void()> “o˜^‚·‚éƒR[ƒ‹ƒoƒbƒNŠÖ”
+	 * @brief		ç‰¹å®šã®å†ç”Ÿæ™‚é–“ã«ãªã£ãŸã¨ãã«å‘¼ã°ã‚Œã‚‹ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ã‚’ç™»éŒ²ã™ã‚‹
+	 * @param[in]	float ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã‚’å‘¼ã³å‡ºã—ãŸã„å†ç”Ÿæ™‚é–“
+	 * @param[in]	std::function<void()> ç™»éŒ²ã™ã‚‹ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°
 	 * @author		NZ
 	 * @date		24/10/12
 	 */
@@ -147,7 +204,7 @@ public:
 	}
 
 	/**
-	 * @brief		“o˜^‚³‚ê‚Ä‚¢‚éƒR[ƒ‹ƒoƒbƒNŠÖ”‚ğæ“¾‚·‚é
+	 * @brief		ç™»éŒ²ã•ã‚Œã¦ã„ã‚‹ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã‚’å–å¾—ã™ã‚‹
 	 * @return		std::unordered_map<float, std::function<void()>>& 
 	 * @author		NZ
 	 * @date		24/10/12
@@ -157,121 +214,168 @@ public:
 		return callbacks;
 	}
 
+	/**
+	 * @brief		é·ç§»å…ƒã®ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³ã¨ã—ã¦ç™»éŒ²
+	 * @return		Transition*	ç´ã¥ã‘ã‚‹ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³
+	 * @author		NZ
+	 * @date		25/10/21
+	 */
+	void RegisterTransition_from(Transition* _transition)
+	{
+		transitions.push_back(_transition);
+		_transition->fromAnimId = registerIndex;
+	}
+
+	/**
+	 * @brief		é·ç§»å…ˆã®ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³ã¨ã—ã¦ç™»éŒ²
+	 * @return		Transition*	ç´ã¥ã‘ã‚‹ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³
+	 * @author		NZ
+	 * @date		25/10/21
+	 */
+	void RegisterTransition_to(Transition* _transition)
+	{
+		transitions.push_back(_transition);
+		_transition->toAnimId = registerIndex;
+	}
+
+	/**
+	 * @brief		é·ç§»å…ƒã§ç™»éŒ²ã•ã‚Œã¦ã„ã‚‹ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³ã§ã€è‡ªå‹•é·ç§»ãŒè¨­å®šã•ã‚Œã¦ã„ã‚‹ã‚‚ã®ã‚’å–å¾—
+	 * @return		Transition*	ç´ã¥ã‘ã‚‹ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³
+	 * @author		NZ
+	 * @date		25/10/21
+	 */
+	Transition* GetHasExitTimeTransition()
+	{
+		for (auto& transition : transitions)
+		{
+			if (transition->fromAnimId == registerIndex && transition->hasExitTime)
+			{
+				return transition;
+			}
+		}
+		return nullptr;
+	}
 };
 
 
 /**
  * @class	HWAnimator
- * @brief	ƒAƒjƒ[ƒVƒ‡ƒ“§ŒäŠÇ——p‚ÌƒRƒ“ƒ|[ƒlƒ“ƒg
+ * @brief	ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³åˆ¶å¾¡ç®¡ç†ç”¨ã®ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ
  */
 class HWAnimator : public HWComponent
 {
-	// “Á’è‚ÌƒNƒ‰ƒXˆÈŠO‚©‚ç‚ÌƒAƒNƒZƒX‚ğ–h‚®‚½‚ß‚ÌƒtƒŒƒ“ƒhéŒ¾
+	// ç‰¹å®šã®ã‚¯ãƒ©ã‚¹ä»¥å¤–ã‹ã‚‰ã®ã‚¢ã‚¯ã‚»ã‚¹ã‚’é˜²ããŸã‚ã®ãƒ•ãƒ¬ãƒ³ãƒ‰å®£è¨€
 	friend class HWGameObject;
-
-private:
-
-	/*     ƒƒ“ƒo•Ï”     */
-
-	/**
-	 * @brief		ŠeƒAƒjƒ[ƒVƒ‡ƒ“î•ñ
-	 * @History		24/09/24 ì¬(NZ)
-	 */
-	std::vector<std::unique_ptr<AnimInfo>> animInfoVec;
-
-	/**
-	 * @brief		ƒ‚ƒfƒ‹ƒnƒ“ƒhƒ‹
-	 * @History		24/09/25 ì¬(NZ)
-	 */
-	int modelHandle;
-
-	/**
-	 * @brief		Ä¶’†‚ÌƒAƒjƒ[ƒVƒ‡ƒ“1ƒCƒ“ƒfƒbƒNƒX
-	 * @History		24/09/24 ì¬(NZ)
-	 */
-	int playIndex1;
-
-	/**
-	 * @brief		Ä¶’†‚ÌƒAƒjƒ[ƒVƒ‡ƒ“2ƒCƒ“ƒfƒbƒNƒX
-	 * @History		24/09/25 ì¬(NZ)
-	 */
-	int playIndex2;
-
-	/**
-	 * @brief		playAnimId1 ‚Æ playAnimId2 ‚ÌƒuƒŒƒ“ƒh—¦
-	 * @History		24/09/25 ì¬(NZ)
-	 */
-	float animBlendRate;
-
-	/**
-	 * @brief		ƒAƒjƒ[ƒVƒ‡ƒ“‚ÌÄ¶‚ªI—¹‚µ‚½‚Æ‚«‚ÉÄ¶‚·‚éIdle‚ÌID
-	 * @History		24/09/24 ì¬(NZ)
-	 */
-	int defaultAnimId = 0;
-
 
 public:
 
 	/**
-	 * @brief		Ä¶‚ğ’â~
-	 * @History		24/09/24 ì¬(NZ)
+	 * @brief		å†ç”Ÿã‚’åœæ­¢
+	 * @History		24/09/24 ä½œæˆ(NZ)
 	 */
 	bool isStop;
 
 	/**
-	 * @brief		ƒuƒŒƒ“ƒh‚ÌƒXƒs[ƒh
-	 * @History		24/09/29 ì¬(NZ)
-	 */
-	float blendSpeed;
-
-	/**
-	 * @brief		ƒAƒjƒ[ƒVƒ‡ƒ“‚ÌŒ»İ‚ÌÄ¶ŠÔ
-	 * @History		24/09/24 ì¬(NZ)
+	 * @brief		ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®ç¾åœ¨ã®å†ç”Ÿæ™‚é–“
+	 * @History		24/09/24 ä½œæˆ(NZ)
 	 */
 	double playTime;
 
+	/**
+	 * @brief		é·ç§»æƒ…å ±
+	 * @History		25/10/20 ä½œæˆ(NZ)
+	 */
+	std::vector<Transition*> transitions;
 
 public:
-	/*     ƒƒ\ƒbƒh     */
 
 	/**
-	 * @brief		ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	 * @brief		ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	 * @author		NZ
 	 * @date		24/09/24
 	 */
-	HWAnimator(){}
+	HWAnimator() {}
 
 	/**
-	 * @brief		ƒfƒXƒgƒ‰ƒNƒ^
+	 * @brief		ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	 * @author		NZ
 	 * @date		24/09/24
 	 */
 	~HWAnimator();
 
 	/**
-	 * @brief		ƒAƒjƒ[ƒVƒ‡ƒ“‚ğƒ[ƒh‚·‚é ¦ƒ[ƒh‚·‚éƒAƒjƒ[ƒVƒ‡ƒ“‚ÍƒAƒjƒ[ƒVƒ‡ƒ“‚ªˆê‚Â‚µ‚©‚Â‚¢‚Ä‚¢‚È‚¢‚±‚Æ
-	 * @param[in]	const std::string& ƒAƒjƒ[ƒVƒ‡ƒ“ƒtƒ@ƒCƒ‹‚ÌƒpƒX
-	 * @param[in]	const int		   “Ç‚İ‚ŞƒAƒjƒ[ƒVƒ‡ƒ“ID
-	 * @return		AnimInfo& ƒAƒjƒ[ƒVƒ‡ƒ“î•ñ(–ß‚è’l‚©‚çƒpƒ‰ƒ[ƒ^‚ğ‘€ì‚·‚é)
+	 * @brief		ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’ãƒ­ãƒ¼ãƒ‰ã™ã‚‹ â€»ãƒ­ãƒ¼ãƒ‰ã™ã‚‹ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã¯ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãŒä¸€ã¤ã—ã‹ã¤ã„ã¦ã„ãªã„ã“ã¨
+	 * @param[in]	const std::string& ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ‘ã‚¹
+	 * @param[in]	const int		   èª­ã¿è¾¼ã‚€ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ID
+	 * @return		AnimInfo& ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³æƒ…å ±(æˆ»ã‚Šå€¤ã‹ã‚‰ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’æ“ä½œã™ã‚‹)
 	 * @author		NZ
 	 * @date		24/09/24
 	 */
 	AnimInfo* AnimLoad(const std::string& _filePath, const int _animId = 0);
 
 	/**
-	 * @brief		Ä¶‚·‚éƒAƒjƒ[ƒVƒ‡ƒ“‚ğw’è
-	 * @param[in]	const int Ä¶‚·‚éƒAƒjƒ[ƒVƒ‡ƒ“ID
-	 * @param[in]	bool	  ‹­§“I‚ÉØ‚è‘Ö‚¦‚é‚©
+	 * @brief		å†ç”Ÿã™ã‚‹ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’æŒ‡å®š
+	 * @param[in]	const int å†ç”Ÿã™ã‚‹ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ID
+	 * @param[in]	bool	  å¼·åˆ¶çš„ã«åˆ‡ã‚Šæ›¿ãˆã‚‹ã‹
 	 * @author		NZ
 	 * @date		24/09/24
 	 */
 	void AnimChange(const int _animId, bool forcedSwitchover = false);
 
-#pragma region SetterŠÖ”
+	/**
+	 * @brief		é·ç§»ãƒ•ãƒ©ã‚°ã®ä½œæˆ
+	 * @return		Transition::Condition* é·ç§»ãƒ•ãƒ©ã‚°ã®ãƒã‚¤ãƒ³ã‚¿
+	 * @param[in]	std::string ç™»éŒ²å
+	 * @param[out]	bool é·ç§»ãƒ•ãƒ©ã‚°ã«ãªã‚‹å¤‰æ•°ã®ãƒã‚¤ãƒ³ã‚¿
+	 * @param[in]	Transition::ConditionType é·ç§»ãƒ•ãƒ©ã‚°ã®ã‚¿ã‚¤ãƒ—
+	 * @author		NZ
+	 * @date		25/10/21
+	 */
+	Transition::Condition* RegisterCondition(const std::string _name, bool* _ptr, Transition::ConditionType type);
 
 	/**
-	 * @brief		ƒAƒjƒ[ƒVƒ‡ƒ“‚ÌÄ¶‚ªI—¹‚µ‚½‚É©“®Ä¶‚³‚ê‚édefaultƒAƒjƒ[ƒVƒ‡ƒ“(IdolƒAƒjƒ[ƒVƒ‡ƒ“‚È‚Ç)
-	 * @param[in]	const int ƒfƒtƒHƒ‹ƒg‚ÌƒAƒjƒ[ƒVƒ‡ƒ“ID
+	 * @brief		åå‰æŒ‡å®šã§é·ç§»ãƒ•ãƒ©ã‚°ã‚’å–å¾—
+	 * @return		Transition::Condition* é·ç§»ãƒ•ãƒ©ã‚°ã®ãƒã‚¤ãƒ³ã‚¿
+	 * @param[in]	std::string ç™»éŒ²å
+	 * @author		NZ
+	 * @date		25/10/21
+	 */
+	Transition::Condition* GetCondition(const std::string& _name);
+
+	/**
+	 * @brief		ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³ã®ä½œæˆ
+	 * @return		Transition* ä½œæˆã—ãŸé·ç§»æƒ…å ±
+	 * @param[in]	int é·ç§»å…ƒã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ID
+	 * @param[in]	int é·ç§»å…ˆã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ID
+	 * @author		NZ
+	 * @date		25/10/21
+	 */
+	Transition* CreateTransition(int _fromAnimId, int _toAnimId);
+
+	/**
+	 * @brief		ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³ã«é·ç§»æ¡ä»¶ã‚’ç´ã¥ã‘ã‚‹
+	 * @param[in]	std::string&ã€€é·ç§»æ¡ä»¶å
+	 * @return		Transition* ç´ã¥ã‘ã‚‹é·ç§»æƒ…å ±
+	 * @author		NZ
+	 * @date		25/10/21
+	 */
+	void SetCondition_for_Transition(const std::string& _conditionName, Transition* _transition);
+
+	/**
+	 * @brief		æ¡ä»¶ã‚’æº€ãŸã™ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³ã‚’å–å¾—ã™ã‚‹
+	 * @param[in]	intã€€é·ç§»å…ƒã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ID
+	 * @param[in]	intã€€é·ç§»å…ˆã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ID
+	 * @return		Transition*	ã€€é·ç§»æƒ…å ±
+	 * @author		NZ
+	 * @date		25/10/21
+	 */
+	Transition* FindTransition(int _fromAnimId, int _toAnimId);
+
+#pragma region Setteré–¢æ•°
+
+	/**
+	 * @brief		ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®å†ç”ŸãŒçµ‚äº†ã—ãŸæ™‚ã«è‡ªå‹•å†ç”Ÿã•ã‚Œã‚‹defaultã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³(Idolã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãªã©)
+	 * @param[in]	const int ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ID
 	 * @author		NZ
 	 * @date		24/09/24
 	 */
@@ -279,35 +383,35 @@ public:
 
 #pragma endregion
 
-#pragma region GetterŠÖ”
+#pragma region Getteré–¢æ•°
 
 	/**
-	 * @brief		ƒAƒjƒ[ƒVƒ‡ƒ“î•ñ‚ğŠi”[‚µ‚Ä‚¢‚éƒRƒ“ƒeƒi‚ğæ“¾‚·‚é
-	 * @return		std::vector<std::unique_ptr<AnimInfo>>&	ƒAƒjƒ[ƒVƒ‡ƒ“î•ñ‚ğŠi”[‚µ‚Ä‚¢‚éƒRƒ“ƒeƒi
+	 * @brief		ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³æƒ…å ±ã‚’æ ¼ç´ã—ã¦ã„ã‚‹ã‚³ãƒ³ãƒ†ãƒŠã‚’å–å¾—ã™ã‚‹
+	 * @return		std::vector<std::unique_ptr<AnimInfo>>&	ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³æƒ…å ±ã‚’æ ¼ç´ã—ã¦ã„ã‚‹ã‚³ãƒ³ãƒ†ãƒŠ
 	 * @author		NZ
 	 * @date		24/09/29
 	 */
 	std::vector<std::unique_ptr<AnimInfo>>& GetAnimInfoVec() { return animInfoVec; }
 
 	/**
-	 * @brief		Ä¶’†‚ÌƒAƒjƒ[ƒVƒ‡ƒ“î•ñ‚ğæ“¾‚·‚é
-	 * @return		AnimInfo*	ƒAƒjƒ[ƒVƒ‡ƒ“î•ñ
+	 * @brief		å†ç”Ÿä¸­ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³æƒ…å ±ã‚’å–å¾—ã™ã‚‹
+	 * @return		AnimInfo*	ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³æƒ…å ±
 	 * @author		NZ
 	 * @date		24/09/29
 	 */
 	AnimInfo* GetPlayAnimInfo() { return animInfoVec[playIndex1].get(); }
 
 	/**
-	 * @brief		Ä¶‚µ‚Ä‚¢‚éƒAƒjƒ[ƒVƒ‡ƒ“1‚ÌƒCƒ“ƒfƒbƒNƒX‚ğæ“¾‚·‚é
-	 * @return		const int Ä¶’†‚ÌƒAƒjƒ[ƒVƒ‡ƒ“ƒCƒ“ƒfƒbƒNƒX1
+	 * @brief		å†ç”Ÿã—ã¦ã„ã‚‹ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³1ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’å–å¾—ã™ã‚‹
+	 * @return		const int å†ç”Ÿä¸­ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹1
 	 * @author		NZ
 	 * @date		24/09/30
 	 */
 	const int GetPlayAnimId() { return playIndex1; };
 
 	/**
-	 * @brief		ƒuƒŒƒ“ƒh‚µ‚Ä‚¢‚éƒAƒjƒ[ƒVƒ‡ƒ“1‚ÌƒCƒ“ƒfƒbƒNƒX‚ğæ“¾‚·‚é
-	 * @return		const int ƒuƒŒƒ“ƒh’†‚ÌƒAƒjƒ[ƒVƒ‡ƒ“ƒCƒ“ƒfƒbƒNƒX1
+	 * @brief		ãƒ–ãƒ¬ãƒ³ãƒ‰ã—ã¦ã„ã‚‹ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³1ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’å–å¾—ã™ã‚‹
+	 * @return		const int ãƒ–ãƒ¬ãƒ³ãƒ‰ä¸­ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹1
 	 * @author		NZ
 	 * @date		24/09/30
 	 */
@@ -316,11 +420,55 @@ public:
 #pragma endregion
 
 
+private:
+
+	/**
+	 * @brief		é·ç§»ãƒ•ãƒ©ã‚°
+	 * @History		25/10/21 ä½œæˆ(NZ)
+	 */
+	std::vector<Transition::Condition> conditions;
+
+	/**
+	 * @brief		å„ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³æƒ…å ±
+	 * @History		24/09/24 ä½œæˆ(NZ)
+	 */
+	std::vector<std::unique_ptr<AnimInfo>> animInfoVec;
+
+	/**
+	 * @brief		ãƒ¢ãƒ‡ãƒ«ãƒãƒ³ãƒ‰ãƒ«
+	 * @History		24/09/25 ä½œæˆ(NZ)
+	 */
+	int modelHandle;
+
+	/**
+	 * @brief		å†ç”Ÿä¸­ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³1ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+	 * @History		24/09/24 ä½œæˆ(NZ)
+	 */
+	int playIndex1;
+
+	/**
+	 * @brief		å†ç”Ÿä¸­ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³2ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+	 * @History		24/09/25 ä½œæˆ(NZ)
+	 */
+	int playIndex2;
+
+	/**
+	 * @brief		playAnimId1 ã¨ playAnimId2 ã®ãƒ–ãƒ¬ãƒ³ãƒ‰ç‡
+	 * @History		24/09/25 ä½œæˆ(NZ)
+	 */
+	float animBlendRate;
+
+	/**
+	 * @brief		ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®å†ç”ŸãŒçµ‚äº†ã—ãŸã¨ãã«å†ç”Ÿã™ã‚‹Idleã®ID
+	 * @History		24/09/24 ä½œæˆ(NZ)
+	 */
+	int defaultAnimId = 0;
+
 
 private:
 
 	/**
-	 * @brief		ƒAƒjƒ[ƒVƒ‡ƒ“‚ğÄ¶‚·‚é
+	 * @brief		ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’å†ç”Ÿã™ã‚‹
 	 * @author		NZ
 	 * @date		24/09/24
 	 */
@@ -330,19 +478,19 @@ private:
 
 protected:
 
-#pragma region ƒI[ƒo[ƒ‰ƒCƒhƒƒ\ƒbƒh
+#pragma region ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰ãƒ¡ã‚½ãƒƒãƒ‰
 
 	/**
-	 * @brief		HWGameObject‚ÉƒAƒ^ƒbƒ`‚³‚ê‚½uŠÔ‚É“­‚­
-	 * @detail		ƒI[ƒoƒ‰ƒCƒhƒƒ\ƒbƒh
+	 * @brief		HWGameObjectã«ã‚¢ã‚¿ãƒƒãƒã•ã‚ŒãŸç¬é–“ã«åƒã
+	 * @detail		ã‚ªãƒ¼ãƒãƒ©ã‚¤ãƒ‰ãƒ¡ã‚½ãƒƒãƒ‰
 	 * @author		NZ
 	 * @date		24/09/25
 	 */
 	void Awake()override;
 
 	/**
-	 * @brief		–ˆƒtƒŒ[ƒ€ŒÄ‚Î‚ê‚é
-	 * @detail		ƒI[ƒo[ƒ‰ƒCƒhŠÖ”
+	 * @brief		æ¯ãƒ•ãƒ¬ãƒ¼ãƒ å‘¼ã°ã‚Œã‚‹
+	 * @detail		ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰é–¢æ•°
 	 * @author		NZ
 	 * @date		24/09/25
 	 */
