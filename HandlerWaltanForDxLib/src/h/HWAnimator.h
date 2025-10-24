@@ -38,7 +38,7 @@ public:
 	//! 遷移先のアニメーションID
 	int toAnimId;
 	//! 遷移時間
-	int blendSpeed;
+	float blendSpeed;
 	//! 遷移元アニメーション終了時に自動で遷移させるか
 	bool hasExitTime;
 	//! 遷移フラグ
