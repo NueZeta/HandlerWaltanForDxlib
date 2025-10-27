@@ -60,7 +60,11 @@ void HWAnimator::AnimPlay()
 	// アニメーション2の処理
 	if (playIndex2 != -1)
 	{
-		float blendSpeed = FindTransition(playIndex1, playIndex2)->blendSpeed;
+		float _blendSpeed = blendSpeed;
+		if (FindTransition(playIndex1, playIndex2) != nullptr)
+		{
+			_blendSpeed = FindTransition(playIndex1, playIndex2)->blendSpeed;
+		}
 
 		// アニメーション1のブレンド率を設定
 		MV1SetAttachAnimBlendRate(modelHandle,
@@ -73,7 +77,7 @@ void HWAnimator::AnimPlay()
 		// ブレンド率が1未満の場合は1に近づける
 		if (animBlendRate < 1.0f)
 		{
-			animBlendRate += blendSpeed;
+			animBlendRate += _blendSpeed;
 			// ブレンド率が1以上の場合、アニメーション1を削除し、
 			// アニメーション2の情報をアニメーション1に渡す
 			if (animBlendRate >= 1.0f)
@@ -293,6 +297,7 @@ void HWAnimator::Awake()
 	playIndex1 = -1;
 	playIndex2 = -1;
 	isStop = false;
+	blendSpeed = PLAYER_ANIM_BLEND_SPEED;
 
 	// モデルロード失敗時の例外error
 	if (gameObject->GetComponent<HWRenderer>() == nullptr)
