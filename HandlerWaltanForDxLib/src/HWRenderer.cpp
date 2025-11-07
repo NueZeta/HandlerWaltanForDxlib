@@ -1,4 +1,4 @@
-﻿#include "h/HWRenderer.h"
+#include "h/HWRenderer.h"
 
 
 /**

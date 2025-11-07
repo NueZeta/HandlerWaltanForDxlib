@@ -1,4 +1,4 @@
-﻿#include "h/HWImage.h"
+#include "h/HWImage.h"
 
 HWImage::HWImage(const std::string& _path, ImageRenderType _renderType)
 	: graphHandle(LoadGraph(_path.c_str())), renderType(_renderType), isTrans(false)

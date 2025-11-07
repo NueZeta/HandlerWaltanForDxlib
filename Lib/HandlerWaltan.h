@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "CollisionWaltan.h"
 #include "HWAnimator.h"
 #include "HWBoxCollider.h"

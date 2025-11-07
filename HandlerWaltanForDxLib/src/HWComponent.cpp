@@ -4,18 +4,18 @@
 /**
 * @author   NZ
 * @date     24/07/29
-* @note		HWComponent‚ÌŽÀ‘•ƒtƒ@ƒCƒ‹
+* @note		HWComponentã®å®Ÿè£…ãƒ•ã‚¡ã‚¤ãƒ«
 */
 
 
-#pragma region privateƒƒ\ƒbƒh
+#pragma region privateãƒ¡ã‚½ãƒƒãƒ‰
 
 
 
 
 #pragma endregion
 
-#pragma region publicƒƒ\ƒbƒh
+#pragma region publicãƒ¡ã‚½ãƒƒãƒ‰
 
 
 void HWComponent::OnCollisionEnterHandler(HWCollider& _collider)
@@ -57,13 +57,13 @@ void HWComponent::OnTriggerExsitHandler(HWCollider& _collider)
 
 #pragma endregion
 
-#pragma region protectedƒƒ\ƒbƒh
+#pragma region protectedãƒ¡ã‚½ãƒƒãƒ‰
 
 
 HWComponent::HWComponent() : isMultiplePossession(true), active(true), priority(0), completedStartMethod(false),
 							 gameObject(nullptr), transform(nullptr)
 {
-	//ŠeƒR[ƒ‹ƒoƒbƒNŠÖ”‚ÉƒI[ƒo[ƒ‰ƒCƒh‚³‚ê‚½ƒƒ\ƒbƒh‚ð‘ã“ü‚·‚é
+	//å„ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã«ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰ã•ã‚ŒãŸãƒ¡ã‚½ãƒƒãƒ‰ã‚’ä»£å…¥ã™ã‚‹
 	OnCollisionEnterCallBack = std::bind(&HWComponent::OnCollisionEnter, this, std::placeholders::_1);
 	OnCollisionStayCallBack = std::bind(&HWComponent::OnCollisionStay, this, std::placeholders::_1);
 	OnCollisionExitCallBack = std::bind(&HWComponent::OnCollisionExit, this, std::placeholders::_1);

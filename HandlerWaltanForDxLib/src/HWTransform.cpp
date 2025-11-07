@@ -4,77 +4,77 @@
 /**
 * @author   NZ
 * @date     24/07/29
-* @note		MyTransform�̎����t�@�C��
+* @note		MyTransformの実装ファイル
 */
 
 
-#pragma region private���\�b�h
+#pragma region privateメソッド
 
 
 void HWTransform::SetMatrix()
 {
 	MATRIX pos, rot, scl;
 
-	// ���s�ړ�
+	// 平行移動
 	pos = MGetTranslate(position);
-	// ��]
+	// 回転
 	MATRIX rotX = MGetRotX((float)Deg2Rad(rotate.x));
 	MATRIX rotY = MGetRotY((float)Deg2Rad(rotate.y));
 	MATRIX rotZ = MGetRotZ((float)Deg2Rad(rotate.z));
-	// �O���[�o����]
+	// グローバル回転
 	rot = MMult(rotZ, MMult(rotY, rotX));
-	// ���[�J����]
+	// ローカル回転
 	//rot = MMult(rotX, MMult(rotY, rotZ));
 
-	// �g�k
+	// 拡縮
 	scl = MGetScale(scale);
 
-	// �Ō�ɍs����������킹��
+	// 最後に行列をかけ合わせる
 	globalMat = MMult(scl, MMult(rot, pos));
 
 
-	// ���ʃx�N�g�����X�V
+	// 正面ベクトルを更新
 	forward = VTransform(VGet(0, 0, -1), rot);
-	// �x�N�g���𐳋K��
+	// ベクトルを正規化
 	forward = VNorm(forward);
 }
 
 
 #pragma endregion
 
-#pragma region public���\�b�h
+#pragma region publicメソッド
 
 
 void HWTransform::LookAt(const VECTOR& _target)
 {
-	// ENEMY -> Player �ւ̕����x�N�g�����v�Z
+	// ENEMY -> Player への方向ベクトルを計算
 	VECTOR dir = VNorm(VSub(_target, position));
 
-	// ���ς��g���ăx�N�g���Ԃ̊p�x���v�Z
+	// 内積を使ってベクトル間の角度を計算
 	float dot = VDot(forward, dir);
 
-	// acosf ���g���O�ɃN���b�s���O�i�덷�΍�j
+	// acosf を使う前にクリッピング（誤差対策）
 	if (dot < -1.0f) dot = -1.0f;
 	if (dot > 1.0f) dot = 1.0f;
 
-	// �Ȃ��p���v�Z
+	// なす角を計算
 	float angle = acosf(dot);
 
-	// �O�ς�p���ĉ�]�������߂�
+	// 外積を用いて回転軸を求める
 	VECTOR axis = VCross(forward, dir);
 
-	// �O�ς��[���x�N�g���łȂ������`�F�b�N�i�قړ��������̏ꍇ�A�O�ς̓[���ɂȂ�j
+	// 外積がゼロベクトルでないかをチェック（ほぼ同じ方向の場合、外積はゼロになる）
 	if (VSize(axis) > 0.0001f) {
 		axis = VNorm(axis);
 
-		// ��]�ɓK�p
+		// 回転に適用
 		rotate.x += (float)Rad2Deg(axis.x * angle);
 		rotate.y += (float)Rad2Deg(axis.y * angle);
 		rotate.z += (float)Rad2Deg(axis.z * angle);
 	}
 	else {
-		// ��]���������ȏꍇ�A�������X�L�b�v�܂��͑�֏���
-		// ��F�قړ��������Ɍ����Ă���̂ŁA��]�͕K�v�Ȃ�
+		// 回転軸が無効な場合、処理をスキップまたは代替処理
+		// 例：ほぼ同じ方向に向いているので、回転は必要ない
 	}
 }
 
@@ -89,38 +89,38 @@ localScale({ 1.0f, 1.0f, 1.0f }), previousPosition(position), velocity({ 0.0f, 0
 
 #pragma endregion
 
-#pragma region �I�[�o�[���C�h���\�b�h
+#pragma region オーバーライドメソッド
 
 
 void HWTransform::Update()
 {
-	// position�𑀍삵���ꍇ�̈ړ��ʂ�velocity�ɑ���
+	// positionを操作した場合の移動量をvelocityに足す
 	velocity = VAdd(velocity, VSub(position, previousPosition));
 
-	// ���W�Ɉړ��x�N�g���𑫂�
+	// 座標に移動ベクトルを足す
 	position = VAdd(previousPosition, velocity);
 
-	// �e�I�u�W�F�N�g�̉e�����q�ɗ^����
+	// 親オブジェクトの影響を子に与える
 	if (gameObject->isAffect)
 	{
-		// �e�I�u�W�F�N�g�����݂���ꍇ�A�e�̍s����q�ɓK�p
+		// 親オブジェクトが存在する場合、親の行列を子に適用
 		if (gameObject->Parent() != nullptr)
 		{
-			// �e�̃O���[�o���s����擾
+			// 親のグローバル行列を取得
 			MATRIX parentMatrix = gameObject->Parent()->transform->globalMat;
 
-			// �q�̃��[�J���s��ɐe�̍s����|����
+			// 子のローカル行列に親の行列を掛ける
 			globalMat = MMult(globalMat, parentMatrix);
 		}
 	}
-	// �q�I�u�W�F�N�g�ɐe�̕ϊ���K�p
+	// 子オブジェクトに親の変換を適用
 	if (gameObject->GetChildren().size() > 0)
 		for (auto it = gameObject->GetChildren().begin(); it != gameObject->GetChildren().end(); ++it)
 			if((*it)->isAffect)	(*it)->transform->velocity = VAdd((*it)->transform->velocity, velocity);
 
-	// �ړ��x�N�g���̏�����
+	// 移動ベクトルの初期化
 	velocity = VGet(0, 0, 0);
-	// �OF�̍��W���X�V
+	// 前Fの座標を更新
 	previousPosition = position;
 
 	SetMatrix();

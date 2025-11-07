@@ -4,17 +4,17 @@
 /**
 * @author   NZ
 * @date     24/08/09
-* @note		ColliderWaltan‚ÌÀ‘•ƒtƒ@ƒCƒ‹
+* @note		ColliderWaltanã®å®Ÿè£…ãƒ•ã‚¡ã‚¤ãƒ«
 */
 
 
-#pragma region publucƒƒ\ƒbƒh
+#pragma region publucãƒ¡ã‚½ãƒƒãƒ‰
 
 
 
 #pragma endregion
 
-#pragma region privateƒƒ\ƒbƒh
+#pragma region privateãƒ¡ã‚½ãƒƒãƒ‰
 
 
 CollisionWaltan::CollisionWaltan()
@@ -30,30 +30,30 @@ CollisionWaltan::~CollisionWaltan()
 
 void CollisionWaltan::Update()
 {
-	//! “o˜^‚³‚ê‚Ä‚¢‚éCollider‚Ì”‚ªˆêŒÂˆÈ‰º‚È‚ç‚»‚Ì‚Ü‚ÜI—¹
+	//! ç™»éŒ²ã•ã‚Œã¦ã„ã‚‹Colliderã®æ•°ãŒä¸€å€‹ä»¥ä¸‹ãªã‚‰ãã®ã¾ã¾çµ‚äº†
 	if (ColVec.size() < 2)return;
 
-	// “–‚½‚è”»’è‚ğƒ`ƒFƒbƒN‚·‚é
+	// å½“ãŸã‚Šåˆ¤å®šã‚’ãƒã‚§ãƒƒã‚¯ã™ã‚‹
 	for (auto it1 = ColVec.begin(); it1 != ColVec.end() - 1; ++it1)
 	{
-		// QÆ’†‚ÌƒRƒ‰ƒCƒ_[‚ª”ñƒAƒNƒeƒBƒu‚Ìê‡‚Í–³‹
+		// å‚ç…§ä¸­ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ãŒéã‚¢ã‚¯ãƒ†ã‚£ãƒ–ã®å ´åˆã¯ç„¡è¦–
 		if (!(*it1)->gameObject->active.load()) continue;
 		if (!(*it1)->active) continue;
 
-		// ‚·‚Å‚Éƒ`ƒFƒbƒN‚µ‚½‘g‚İ‡‚í‚¹‚ğÈ‚­
+		// ã™ã§ã«ãƒã‚§ãƒƒã‚¯ã—ãŸçµ„ã¿åˆã‚ã›ã‚’çœã
 		for (auto it2 = it1 + 1; it2 != ColVec.end(); ++it2)
 		{
-			// QÆ’†‚ÌƒRƒ‰ƒCƒ_[‚ª”ñƒAƒNƒeƒBƒu‚Ìê‡‚Í–³‹
+			// å‚ç…§ä¸­ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ãŒéã‚¢ã‚¯ãƒ†ã‚£ãƒ–ã®å ´åˆã¯ç„¡è¦–
 			if (!(*it2)->gameObject->active.load()) continue;
 			if (!(*it2)->active) continue;
-			// ƒAƒ^ƒbƒ`‚³‚ê‚Ä‚¢‚éGameObject‚ª“¯‚¶ê‡‚Í–³‹
+			// ã‚¢ã‚¿ãƒƒãƒã•ã‚Œã¦ã„ã‚‹GameObjectãŒåŒã˜å ´åˆã¯ç„¡è¦–
 			if ((*it1)->gameObject == (*it2)->gameObject) continue;
-			// trigger‚Æ”ñtrigger‚Ìê‡‚Í‚»‚Ì‘g‚İ‡‚í‚¹‚Í–³‹
+			// triggerã¨étriggerã®å ´åˆã¯ãã®çµ„ã¿åˆã‚ã›ã¯ç„¡è¦–
 			if ((*it1)->isTrigger != (*it2)->isTrigger &&
 				((*it1)->isCollisionCheck_onlySameTriggerType || (*it2)->isCollisionCheck_onlySameTriggerType))
 				continue;
 
-			// Õ“Ë‚Ì–³ŒøƒŠƒXƒg‚ğƒ`ƒFƒbƒN
+			// è¡çªã®ç„¡åŠ¹ãƒªã‚¹ãƒˆã‚’ãƒã‚§ãƒƒã‚¯
 			bool ignore = false;
 			{
 				if ((*it1)->ignoreTag.size() != 0)
@@ -70,50 +70,50 @@ void CollisionWaltan::Update()
 
 
 
-			// Õ“Ë’†‚ÌƒRƒ‰ƒCƒ_[‚ÌƒŠƒXƒg‚É“o˜^‚³‚ê‚Ä‚¢‚é‚©’²‚×‚é
+			// è¡çªä¸­ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®ãƒªã‚¹ãƒˆã«ç™»éŒ²ã•ã‚Œã¦ã„ã‚‹ã‹èª¿ã¹ã‚‹
 			auto collisionIt = std::find((*it1)->CollidersInCollision.begin(),
 				(*it1)->CollidersInCollision.end(), *it2);
 
-			// it1 ‚ÌƒRƒ‰ƒCƒ_[ƒ^ƒCƒv‚É‚æ‚Á‚Äˆ—‚ğ•Ï‚¦‚é
+			// it1 ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚¿ã‚¤ãƒ—ã«ã‚ˆã£ã¦å‡¦ç†ã‚’å¤‰ãˆã‚‹
 			switch ((*it1)->GetColliderType())
 			{
-				// —§•û‘ÌŒ^ƒRƒ‰ƒCƒ_[‚Ìê‡
+				// ç«‹æ–¹ä½“å‹ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®å ´åˆ
 			case ColliderType::Box:
 				if (CollCheck_Box(dynamic_cast<HWBoxCollider*>(*it1), *it2))
-					// Hit‚ÌƒR[ƒ‹ƒoƒbƒNŠÖ”‚ğŒÄ‚Ño‚·
+					// Hitæ™‚ã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã‚’å‘¼ã³å‡ºã™
 					ColliderHitCallBacks(collisionIt, *it1, *it2, (*it1)->isTrigger);
 				else
-					// –¢ÚG‚Ìˆ—
+					// æœªæ¥è§¦æ™‚ã®å‡¦ç†
 					ColliderAvoidCallBacks(collisionIt, *it1, *it2, (*it1)->isTrigger);
 				break;
 
-				// ƒJƒvƒZƒ‹Œ^ƒRƒ‰ƒCƒ_[‚Ìê‡
+				// ã‚«ãƒ—ã‚»ãƒ«å‹ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®å ´åˆ
 			case ColliderType::Capsule:
 				if (CollCheck_Capsule(dynamic_cast<HWCapsuleCollider*>(*it1), *it2))
-					// Hit‚ÌƒR[ƒ‹ƒoƒbƒNŠÖ”‚ğŒÄ‚Ño‚·
+					// Hitæ™‚ã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã‚’å‘¼ã³å‡ºã™
 					ColliderHitCallBacks(collisionIt, *it1, *it2, (*it1)->isTrigger);
 				else
-					// –¢ÚG‚Ìˆ—
+					// æœªæ¥è§¦æ™‚ã®å‡¦ç†
 					ColliderAvoidCallBacks(collisionIt, *it1, *it2, (*it1)->isTrigger);
 				break;
 
-				// ‹…‘ÌŒ^ƒRƒ‰ƒCƒ_[‚Ìê‡
+				// çƒä½“å‹ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®å ´åˆ
 			case ColliderType::Sphere:
 				if (CollCheck_Sphere(dynamic_cast<HWSphereCollider*>(*it1), *it2))
-					// Hit‚ÌƒR[ƒ‹ƒoƒbƒNŠÖ”‚ğŒÄ‚Ño‚·
+					// Hitæ™‚ã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã‚’å‘¼ã³å‡ºã™
 					ColliderHitCallBacks(collisionIt, *it1, *it2, (*it1)->isTrigger);
 				else
-					// –¢ÚG‚Ìˆ—
+					// æœªæ¥è§¦æ™‚ã®å‡¦ç†
 					ColliderAvoidCallBacks(collisionIt, *it1, *it2, (*it1)->isTrigger);
 				break;
 
-				// ƒ‚ƒfƒ‹ƒRƒ‰ƒCƒ_[‚Ìê‡
+				// ãƒ¢ãƒ‡ãƒ«ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®å ´åˆ
 			case ColliderType::Model:
 				if (CollCheck_Model(dynamic_cast<HWModelCollider*>(*it1), *it2))
-					// Hit‚ÌƒR[ƒ‹ƒoƒbƒNŠÖ”‚ğŒÄ‚Ño‚·
+					// Hitæ™‚ã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã‚’å‘¼ã³å‡ºã™
 					ColliderHitCallBacks(collisionIt, *it1, *it2, (*it1)->isTrigger);
 				else
-					// –¢ÚG‚Ìˆ—
+					// æœªæ¥è§¦æ™‚ã®å‡¦ç†
 					ColliderAvoidCallBacks(collisionIt, *it1, *it2, (*it1)->isTrigger);
 				break;
 			}
@@ -123,31 +123,31 @@ void CollisionWaltan::Update()
 
 void CollisionWaltan::UnRegister(HWCollider* _collider)
 {
-	// —v‘f‚ğíœ‚·‚é
+	// è¦ç´ ã‚’å‰Šé™¤ã™ã‚‹
 	auto it = std::find(ColVec.begin(), ColVec.end(), _collider);
-	// Œ©‚Â‚©‚Á‚½ê‡‚Ííœ
+	// è¦‹ã¤ã‹ã£ãŸå ´åˆã¯å‰Šé™¤
 	if (it != ColVec.end())
 		ColVec.erase(it);
 }
 
 bool CollisionWaltan::CollCheck_Box(HWBoxCollider* boxCol1, HWCollider* _col2)
 {
-	// _col2‚ÌƒRƒ‰ƒCƒ_[ƒ^ƒCƒv‚É‚æ‚Á‚Äˆ—‚ğ•Ï‚¦‚é
+	// _col2ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚¿ã‚¤ãƒ—ã«ã‚ˆã£ã¦å‡¦ç†ã‚’å¤‰ãˆã‚‹
 	switch (_col2->GetColliderType())
 	{
-	// ƒ{ƒbƒNƒX to ƒ{ƒbƒNƒX ‚Ìê‡
+	// ãƒœãƒƒã‚¯ã‚¹ to ãƒœãƒƒã‚¯ã‚¹ ã®å ´åˆ
 	case ColliderType::Box:
 		return CollCheck_Box_Box(boxCol1, static_cast<HWBoxCollider*>(_col2));
 
-	// ƒ{ƒbƒNƒX to ƒJƒvƒZƒ‹ ‚Ìê‡
+	// ãƒœãƒƒã‚¯ã‚¹ to ã‚«ãƒ—ã‚»ãƒ« ã®å ´åˆ
 	case ColliderType::Capsule:
 		return CollCheck_Box_Capsule(boxCol1, static_cast<HWCapsuleCollider*>(_col2));
 
-	// ƒ{ƒbƒNƒX to ƒXƒtƒBƒA ‚Ìê‡
+	// ãƒœãƒƒã‚¯ã‚¹ to ã‚¹ãƒ•ã‚£ã‚¢ ã®å ´åˆ
 	case ColliderType::Sphere:
 		return CollCheck_Box_Sphere(boxCol1, static_cast<HWSphereCollider*>(_col2));
 
-	// ƒ{ƒbƒNƒX to ƒ‚ƒfƒ‹ ‚Ìê‡
+	// ãƒœãƒƒã‚¯ã‚¹ to ãƒ¢ãƒ‡ãƒ« ã®å ´åˆ
 	case ColliderType::Model:
 		return CollCheck_Box_Model(boxCol1, static_cast<HWModelCollider*>(_col2));
 
@@ -158,22 +158,22 @@ bool CollisionWaltan::CollCheck_Box(HWBoxCollider* boxCol1, HWCollider* _col2)
 
 bool CollisionWaltan::CollCheck_Capsule(HWCapsuleCollider* _col1, HWCollider* _col2)
 {
-	// _col2‚ÌƒRƒ‰ƒCƒ_[ƒ^ƒCƒv‚É‚æ‚Á‚Äˆ—‚ğ•Ï‚¦‚é
+	// _col2ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚¿ã‚¤ãƒ—ã«ã‚ˆã£ã¦å‡¦ç†ã‚’å¤‰ãˆã‚‹
 	switch (_col2->GetColliderType())
 	{
-		// ƒJƒvƒZƒ‹ to ƒ{ƒbƒNƒX ‚Ìê‡
+		// ã‚«ãƒ—ã‚»ãƒ« to ãƒœãƒƒã‚¯ã‚¹ ã®å ´åˆ
 	case ColliderType::Box:
 		return CollCheck_Capsule_Box(_col1, static_cast<HWBoxCollider*>(_col2));
 
-		// ƒJƒvƒZƒ‹ to ƒJƒvƒZƒ‹ ‚Ìê‡
+		// ã‚«ãƒ—ã‚»ãƒ« to ã‚«ãƒ—ã‚»ãƒ« ã®å ´åˆ
 	case ColliderType::Capsule:
 		return CollCheck_Capsule_Capsule(_col1, static_cast<HWCapsuleCollider*>(_col2));
 
-		// ƒJƒvƒZƒ‹ to ƒXƒtƒBƒA ‚Ìê‡
+		// ã‚«ãƒ—ã‚»ãƒ« to ã‚¹ãƒ•ã‚£ã‚¢ ã®å ´åˆ
 	case ColliderType::Sphere:
 		return CollCheck_Capsule_Sphere(_col1, static_cast<HWSphereCollider*>(_col2));
 
-		// ƒJƒvƒZƒ‹ to ƒ‚ƒfƒ‹ ‚Ìê‡
+		// ã‚«ãƒ—ã‚»ãƒ« to ãƒ¢ãƒ‡ãƒ« ã®å ´åˆ
 	case ColliderType::Model:
 		return CollCheck_Capsule_Model(_col1, static_cast<HWModelCollider*>(_col2));
 	}
@@ -183,22 +183,22 @@ bool CollisionWaltan::CollCheck_Capsule(HWCapsuleCollider* _col1, HWCollider* _c
 
 bool CollisionWaltan::CollCheck_Sphere(HWSphereCollider* _col1, HWCollider* _col2)
 {
-	// _col2‚ÌƒRƒ‰ƒCƒ_[ƒ^ƒCƒv‚É‚æ‚Á‚Äˆ—‚ğ•Ï‚¦‚é
+	// _col2ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚¿ã‚¤ãƒ—ã«ã‚ˆã£ã¦å‡¦ç†ã‚’å¤‰ãˆã‚‹
 	switch (_col2->GetColliderType())
 	{
-		// ƒXƒtƒBƒA to ƒ{ƒbƒNƒX ‚Ìê‡
+		// ã‚¹ãƒ•ã‚£ã‚¢ to ãƒœãƒƒã‚¯ã‚¹ ã®å ´åˆ
 	case ColliderType::Box:
 		return CollCheck_Sphere_Box(_col1, static_cast<HWBoxCollider*>(_col2));
 
-		// ƒXƒtƒBƒA to ƒJƒvƒZƒ‹ ‚Ìê‡
+		// ã‚¹ãƒ•ã‚£ã‚¢ to ã‚«ãƒ—ã‚»ãƒ« ã®å ´åˆ
 	case ColliderType::Capsule:
 		return CollCheck_Sphere_Capsule(_col1, static_cast<HWCapsuleCollider*>(_col2));
 
-		// ƒXƒtƒBƒA to ƒXƒtƒBƒA ‚Ìê‡
+		// ã‚¹ãƒ•ã‚£ã‚¢ to ã‚¹ãƒ•ã‚£ã‚¢ ã®å ´åˆ
 	case ColliderType::Sphere:
 		return CollCheck_Sphere_Sphere(_col1, static_cast<HWSphereCollider*>(_col2));
 
-		// ƒJƒvƒZƒ‹ to ƒ‚ƒfƒ‹ ‚Ìê‡
+		// ã‚«ãƒ—ã‚»ãƒ« to ãƒ¢ãƒ‡ãƒ« ã®å ´åˆ
 	case ColliderType::Model:
 		return CollCheck_Sphere_Model(_col1, static_cast<HWModelCollider*>(_col2));
 	}
@@ -208,22 +208,22 @@ bool CollisionWaltan::CollCheck_Sphere(HWSphereCollider* _col1, HWCollider* _col
 
 bool CollisionWaltan::CollCheck_Model(HWModelCollider* _col1, HWCollider* _col2)
 {
-	// _col2‚ÌƒRƒ‰ƒCƒ_[ƒ^ƒCƒv‚É‚æ‚Á‚Äˆ—‚ğ•Ï‚¦‚é
+	// _col2ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚¿ã‚¤ãƒ—ã«ã‚ˆã£ã¦å‡¦ç†ã‚’å¤‰ãˆã‚‹
 	switch (_col2->GetColliderType())
 	{
-		// ƒ‚ƒfƒ‹ to ƒ{ƒbƒNƒX ‚Ìê‡
+		// ãƒ¢ãƒ‡ãƒ« to ãƒœãƒƒã‚¯ã‚¹ ã®å ´åˆ
 	case ColliderType::Box:
 		return CollCheck_Model_Box(_col1, static_cast<HWBoxCollider*>(_col2));
 
-		// ƒ‚ƒfƒ‹ to ƒJƒvƒZƒ‹ ‚Ìê‡
+		// ãƒ¢ãƒ‡ãƒ« to ã‚«ãƒ—ã‚»ãƒ« ã®å ´åˆ
 	case ColliderType::Capsule:
 		return CollCheck_Model_Capsule(_col1, static_cast<HWCapsuleCollider*>(_col2));
 
-		// ƒ‚ƒfƒ‹ to ƒXƒtƒBƒA ‚Ìê‡
+		// ãƒ¢ãƒ‡ãƒ« to ã‚¹ãƒ•ã‚£ã‚¢ ã®å ´åˆ
 	case ColliderType::Sphere:
 		return CollCheck_Model_Sphere(_col1, static_cast<HWSphereCollider*>(_col2));
 
-		// ƒ‚ƒfƒ‹ to ƒ‚ƒfƒ‹ ‚Ìê‡
+		// ãƒ¢ãƒ‡ãƒ« to ãƒ¢ãƒ‡ãƒ« ã®å ´åˆ
 	case ColliderType::Model:
 		return CollCheck_Model_Model(_col1, static_cast<HWModelCollider*>(_col2));
 	}
@@ -232,7 +232,7 @@ bool CollisionWaltan::CollCheck_Model(HWModelCollider* _col1, HWCollider* _col2)
 }
 
 
-#pragma region BOXƒ^ƒCƒv‚ÌÕ“Ë”»’è
+#pragma region BOX
 
 
 bool CollisionWaltan::CollCheck_Box_Box(HWBoxCollider* _boxCol, HWBoxCollider* _boxCol2)
@@ -241,33 +241,33 @@ bool CollisionWaltan::CollCheck_Box_Box(HWBoxCollider* _boxCol, HWBoxCollider* _
 	OBB obb2;
 
 	obb1.c = _boxCol->worldPosition;
-	// ‰ñ“]s—ñ‚Ìì¬iX -> Y -> Z ‚Ì‡j
+	// å›è»¢è¡Œåˆ—ã®ä½œæˆï¼ˆX -> Y -> Z ã®é †ï¼‰
 	MATRIX rotX1 = MGetRotX((float)Deg2Rad(_boxCol->transform->rotate.x));
 	MATRIX rotY1 = MGetRotY((float)Deg2Rad(_boxCol->transform->rotate.y));
 	MATRIX rotZ1 = MGetRotZ((float)Deg2Rad(_boxCol->transform->rotate.z));
 	MATRIX mRotate1 = MMult(rotZ1, MMult(rotY1, rotX1));
 
-	obb1.u[0] = VGet(mRotate1.m[0][0], mRotate1.m[1][0], mRotate1.m[2][0]); // X²
-	obb1.u[1] = VGet(mRotate1.m[0][1], mRotate1.m[1][1], mRotate1.m[2][1]); // Y²
-	obb1.u[2] = VGet(mRotate1.m[0][2], mRotate1.m[1][2], mRotate1.m[2][2]); // Z²
+	obb1.u[0] = VGet(mRotate1.m[0][0], mRotate1.m[1][0], mRotate1.m[2][0]); // Xè»¸
+	obb1.u[1] = VGet(mRotate1.m[0][1], mRotate1.m[1][1], mRotate1.m[2][1]); // Yè»¸
+	obb1.u[2] = VGet(mRotate1.m[0][2], mRotate1.m[1][2], mRotate1.m[2][2]); // Zè»¸
 	obb1.e = VGet(_boxCol->size.x / 2, _boxCol->size.y / 2, _boxCol->size.z / 2);
 
 	obb2.c = _boxCol2->worldPosition;
-	// ‰ñ“]s—ñ‚Ìì¬iX -> Y -> Z ‚Ì‡j
+	// å›è»¢è¡Œåˆ—ã®ä½œæˆï¼ˆX -> Y -> Z ã®é †ï¼‰
 	MATRIX rotX2 = MGetRotX((float)Deg2Rad(_boxCol2->transform->rotate.x));
 	MATRIX rotY2 = MGetRotY((float)Deg2Rad(_boxCol2->transform->rotate.y));
 	MATRIX rotZ2 = MGetRotZ((float)Deg2Rad(_boxCol2->transform->rotate.z));
 	MATRIX mRotate2 = MMult(rotZ2, MMult(rotY2, rotX2));
-	obb2.u[0] = VGet(mRotate2.m[0][0], mRotate2.m[1][0], mRotate2.m[2][0]); // X²
-	obb2.u[1] = VGet(mRotate2.m[0][1], mRotate2.m[1][1], mRotate2.m[2][1]); // Y²
-	obb2.u[2] = VGet(mRotate2.m[0][2], mRotate2.m[1][2], mRotate2.m[2][2]); // Z²
+	obb2.u[0] = VGet(mRotate2.m[0][0], mRotate2.m[1][0], mRotate2.m[2][0]); // Xè»¸
+	obb2.u[1] = VGet(mRotate2.m[0][1], mRotate2.m[1][1], mRotate2.m[2][1]); // Yè»¸
+	obb2.u[2] = VGet(mRotate2.m[0][2], mRotate2.m[1][2], mRotate2.m[2][2]); // Zè»¸
 	obb2.e = VGet(_boxCol2->size.x / 2, _boxCol2->size.y / 2, _boxCol2->size.z / 2);
 
 	if (!TestOBBOBB(&obb1, &obb2))
 		return false;
 
 
-	// ƒRƒ‰ƒCƒ_[‚ªƒgƒŠƒK[‚Å‚È‚¢‚È‚çAƒRƒ‰ƒCƒ_[“¯m‚ª‚ß‚è‚Ü‚È‚¢‚æ‚¤‚É‚·‚é
+	// ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ãŒãƒˆãƒªã‚¬ãƒ¼ã§ãªã„ãªã‚‰ã€ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼åŒå£«ãŒã‚ã‚Šè¾¼ã¾ãªã„ã‚ˆã†ã«ã™ã‚‹
 	if (!_boxCol->isTrigger)
 	{
 	}
@@ -293,7 +293,7 @@ bool CollisionWaltan::CollCheck_Box_Model(HWBoxCollider* _boxCol, HWModelCollide
 
 #pragma endregion
 
-#pragma region CAPSULEƒ^ƒCƒv‚ÌÕ“Ë”»’è
+#pragma region CAPSULE
 
 
 bool CollisionWaltan::CollCheck_Capsule_Box(HWCapsuleCollider* _capsuleCol, HWBoxCollider* _boxCol)
@@ -312,7 +312,7 @@ bool CollisionWaltan::CollCheck_Capsule_Capsule(HWCapsuleCollider* _capsuleCol, 
 		sPos2, ePos2, _capsuleCol2->radius))
 		return false;
 
-	// ƒRƒ‰ƒCƒ_[‚ªƒgƒŠƒK[‚Å‚È‚¢‚È‚çAƒRƒ‰ƒCƒ_[“¯m‚ª‚ß‚è‚Ü‚È‚¢‚æ‚¤‚É‚·‚é
+	// ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ãŒãƒˆãƒªã‚¬ãƒ¼ã§ãªã„ãªã‚‰ã€ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼åŒå£«ãŒã‚ã‚Šè¾¼ã¾ãªã„ã‚ˆã†ã«ã™ã‚‹
 	if (!_capsuleCol->isTrigger && !_capsuleCol2->isTrigger)
 	{
 		_capsuleCol->transform->velocity = VGet(0, 0, 0);
@@ -336,7 +336,7 @@ bool CollisionWaltan::CollCheck_Capsule_Model(HWCapsuleCollider* _capsuleCol, HW
 
 #pragma endregion
 
-#pragma region SPHEREƒ^ƒCƒv‚ÌÕ“Ë”»’è
+#pragma region SPHERE
 
 
 bool CollisionWaltan::CollCheck_Sphere_Box(HWSphereCollider* _sphereCol, HWBoxCollider* _boxCol)
@@ -362,7 +362,7 @@ bool CollisionWaltan::CollCheck_Sphere_Model(HWSphereCollider* _sphereCol, HWMod
 
 #pragma endregion
 
-#pragma region MODELƒ^ƒCƒv‚ÌÕ“Ë”»’è
+#pragma region MODEL
 
 
 bool CollisionWaltan::CollCheck_Model_Box(HWModelCollider* _modelCol, HWBoxCollider* _boxCol)
@@ -392,13 +392,13 @@ bool CollisionWaltan::CollCheck_Model_Model(HWModelCollider* _modelCol, HWModelC
 
 void CollisionWaltan::ColliderHitCallBacks(std::vector<HWCollider*>::iterator colIt, HWCollider* _col1, HWCollider* _col2, bool _isTrigger)
 {
-	// Õ“Ë‚ğŒŸ’m‚µ‚½
-	// ƒRƒ‰ƒCƒ_[‚ªtrigger‚©‚Ç‚¤‚©‚ÅŒÄ‚Ôƒƒ\ƒbƒh‚ğ•Ï‚¦‚é
+	// è¡çªã‚’æ¤œçŸ¥ã—ãŸ
+	// ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ãŒtriggerã‹ã©ã†ã‹ã§å‘¼ã¶ãƒ¡ã‚½ãƒƒãƒ‰ã‚’å¤‰ãˆã‚‹
 	if (_col1->isTrigger)
 	{
 		if (colIt == _col1->CollidersInCollision.end())
 		{
-			// Õ“Ë‚ÌƒR[ƒ‹ƒoƒbƒNŠÖ”‚ÌŒÄ‚Ño‚µ
+			// è¡çªæ™‚ã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã®å‘¼ã³å‡ºã—
 			_col1->gameObject->CallAllOnTriggerEnters(*_col2);
 			if(_col2->isTrigger)
 				_col2->gameObject->CallAllOnTriggerEnters(*_col1);
@@ -407,7 +407,7 @@ void CollisionWaltan::ColliderHitCallBacks(std::vector<HWCollider*>::iterator co
 		}
 		else
 		{
-			// ‚·‚Å‚É“o˜^‚³‚ê‚Ä‚¢‚éê‡‚ÍÕ“Ë’†‚ÌƒR[ƒ‹ƒoƒbƒNŠÖ”‚ğŒÄ‚Ño‚·
+			// ã™ã§ã«ç™»éŒ²ã•ã‚Œã¦ã„ã‚‹å ´åˆã¯è¡çªä¸­ã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã‚’å‘¼ã³å‡ºã™
 			_col1->gameObject->CallAllOnTriggerStays(*_col2);
 			if (_col2->isTrigger)
 				_col2->gameObject->CallAllOnTriggerStays(*_col1);
@@ -417,11 +417,11 @@ void CollisionWaltan::ColliderHitCallBacks(std::vector<HWCollider*>::iterator co
 	}
 	else
 	{
-		// ”ñtrigger‚Ìê‡
+		// étriggerã®å ´åˆ
 		if (colIt == _col1->CollidersInCollision.end())
 		{
 
-			// Õ“Ë‚ÌƒR[ƒ‹ƒoƒbƒNŠÖ”‚ÌŒÄ‚Ño‚µ
+			// è¡çªæ™‚ã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã®å‘¼ã³å‡ºã—
 			_col1->gameObject->CallAllOnCollisionEnters(*_col2);
 			if (_col2->isTrigger)
 				_col2->gameObject->CallAllOnTriggerEnters(*_col1);
@@ -430,7 +430,7 @@ void CollisionWaltan::ColliderHitCallBacks(std::vector<HWCollider*>::iterator co
 		}
 		else
 		{
-			// ‚·‚Å‚É“o˜^‚³‚ê‚Ä‚¢‚éê‡‚ÍÕ“Ë’†‚ÌƒR[ƒ‹ƒoƒbƒNŠÖ”‚ğŒÄ‚Ño‚·
+			// ã™ã§ã«ç™»éŒ²ã•ã‚Œã¦ã„ã‚‹å ´åˆã¯è¡çªä¸­ã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã‚’å‘¼ã³å‡ºã™
 			_col1->gameObject->CallAllOnCollisionStays(*_col2);
 			if (_col2->isTrigger)
 				_col2->gameObject->CallAllOnTriggerStays(*_col1);
@@ -438,7 +438,7 @@ void CollisionWaltan::ColliderHitCallBacks(std::vector<HWCollider*>::iterator co
 				_col2->gameObject->CallAllOnCollisionStays(*_col1);
 		}
 	}
-	// Õ“Ë’†‚ÌƒRƒ‰ƒCƒ_[‚ÌƒŠƒXƒg‚É‚È‚¢ê‡‚ÍV‚½‚É“o˜^
+	// è¡çªä¸­ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®ãƒªã‚¹ãƒˆã«ãªã„å ´åˆã¯æ–°ãŸã«ç™»éŒ²
 	if (colIt == _col1->CollidersInCollision.end())
 	{
 		_col1->CollidersInCollision.push_back(_col2);
@@ -448,14 +448,14 @@ void CollisionWaltan::ColliderHitCallBacks(std::vector<HWCollider*>::iterator co
 
 void CollisionWaltan::ColliderAvoidCallBacks(std::vector<HWCollider*>::iterator colIt, HWCollider* _col1, HWCollider* _col2, bool _isTrigger)
 {
-	// Õ“Ë‚ğŒŸ’m‚µ‚È‚©‚Á‚½
-	// “o˜^‚µ‚Ä‚¢‚éƒRƒ‰ƒCƒ_[‚Ìê‡(‘OƒtƒŒ[ƒ€‚Ü‚ÅÕ“Ë‚µ‚Ä‚¢‚½)
+	// è¡çªã‚’æ¤œçŸ¥ã—ãªã‹ã£ãŸ
+	// ç™»éŒ²ã—ã¦ã„ã‚‹ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®å ´åˆ(å‰ãƒ•ãƒ¬ãƒ¼ãƒ ã¾ã§è¡çªã—ã¦ã„ãŸ)
 	if (colIt != _col1->CollidersInCollision.end())
 	{
-		// ƒRƒ‰ƒCƒ_[‚ªtrigger‚©‚Ç‚¤‚©‚ÅŒÄ‚Ôƒƒ\ƒbƒh‚ğ•Ï‚¦‚é
+		// ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ãŒtriggerã‹ã©ã†ã‹ã§å‘¼ã¶ãƒ¡ã‚½ãƒƒãƒ‰ã‚’å¤‰ãˆã‚‹
 		if (_col1->isTrigger)
 		{
-			// Õ“ËI—¹‚ÌƒR[ƒ‹ƒoƒbƒNŠÖ”‚ÌŒÄ‚Ño‚µ
+			// è¡çªçµ‚äº†æ™‚ã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã®å‘¼ã³å‡ºã—
 			_col1->gameObject->CallAllOnTriggerExits(*_col2);
 			if(_col2->isTrigger)
 				_col2->gameObject->CallAllOnTriggerExits(*_col1);
@@ -464,15 +464,15 @@ void CollisionWaltan::ColliderAvoidCallBacks(std::vector<HWCollider*>::iterator 
 		}
 		else
 		{
-			// ”ñtrigger‚Ìê‡
-			// Õ“ËI—¹‚ÌƒR[ƒ‹ƒoƒbƒNŠÖ”‚ÌŒÄ‚Ño‚µ
+			// étriggerã®å ´åˆ
+			// è¡çªçµ‚äº†æ™‚ã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã®å‘¼ã³å‡ºã—
 			_col1->gameObject->CallAllOnCollisionExits(*_col2);
 			if (_col2->isTrigger)
 				_col2->gameObject->CallAllOnTriggerExits(*_col1);
 			else
 				_col2->gameObject->CallAllOnCollisionExits(*_col1);
 		}
-		// “o˜^î•ñ‚ğíœ‚·‚é
+		// ç™»éŒ²æƒ…å ±ã‚’å‰Šé™¤ã™ã‚‹
 		_col1->CollidersInCollision.erase(colIt);
 		auto collisionIt2 = std::find(_col2->CollidersInCollision.begin(),
 			_col2->CollidersInCollision.end(), _col1);
@@ -498,7 +498,7 @@ int CollisionWaltan::TestOBBOBB(OBB* a, OBB* b)
 	VECTOR t = VSub(b->c, a->c);
 	t = VGet(VDot(t, a->u[0]), VDot(t, a->u[1]), VDot(t, a->u[2]));
 
-	//²L=A0, L=A1, L=A2”»’è
+	//è»¸L=A0, L=A1, L=A2åˆ¤å®š
 	float ra, rb;
 
 	ra = a->e.x;
@@ -513,7 +513,7 @@ int CollisionWaltan::TestOBBOBB(OBB* a, OBB* b)
 	rb = b->e.x * AbsR[2][0] + b->e.y * AbsR[2][1] + b->e.z * AbsR[2][2];
 	if (fabsf(t.z) > ra + rb)return 0;
 
-	//²L=B0, L=B1, L=B2”»’è
+	//è»¸L=B0, L=B1, L=B2åˆ¤å®š
 	ra = a->e.x * AbsR[0][0] + a->e.y * AbsR[1][0] + a->e.z * AbsR[2][0];
 	rb = b->e.x;
 	if (fabsf(t.x * R[0][0] + t.y * R[1][0] + t.z * R[2][0]) > ra + rb)return 0;
@@ -529,47 +529,47 @@ int CollisionWaltan::TestOBBOBB(OBB* a, OBB* b)
 
 
 
-	//²L=A0 X B0”»’è
+	//è»¸L=A0 X B0åˆ¤å®š
 	ra = a->e.y * AbsR[2][0] + a->e.z * AbsR[1][0];
 	rb = b->e.y * AbsR[0][2] + b->e.z * AbsR[0][1];
 	if (fabsf(t.z * R[1][0] - t.y * R[2][0]) > ra + rb)return 0;
 
-	//²L=A0 X B1”»’è
+	//è»¸L=A0 X B1åˆ¤å®š
 	ra = a->e.y * AbsR[2][1] + a->e.z * AbsR[1][1];
 	rb = b->e.x * AbsR[0][2] + b->e.z * AbsR[0][0];
 	if (fabsf(t.z * R[1][1] - t.y * R[2][1]) > ra + rb)return 0;
 
-	//²L=A0 X B2”»’è
+	//è»¸L=A0 X B2åˆ¤å®š
 	ra = a->e.y * AbsR[2][2] + a->e.z * AbsR[1][2];
 	rb = b->e.x * AbsR[0][1] + b->e.y * AbsR[0][0];
 	if (fabsf(t.z * R[1][2] - t.y * R[2][2]) > ra + rb)return 0;
 
-	//²L=A1 X B0”»’è
+	//è»¸L=A1 X B0åˆ¤å®š
 	ra = a->e.x * AbsR[2][0] + a->e.z * AbsR[0][0];
 	rb = b->e.y * AbsR[1][2] + b->e.z * AbsR[1][1];
 	if (fabsf(t.x * R[2][0] - t.z * R[0][0]) > ra + rb)return 0;
 
-	//²L=A1 X B1”»’è
+	//è»¸L=A1 X B1åˆ¤å®š
 	ra = a->e.z * AbsR[2][1] + a->e.z * AbsR[0][1];
 	rb = b->e.z * AbsR[1][2] + b->e.z * AbsR[1][0];
 	if (fabsf(t.x * R[2][1] - t.z * R[0][1]) > ra + rb)return 0;
 
-	//²L=A1 X B2”»’è
+	//è»¸L=A1 X B2åˆ¤å®š
 	ra = a->e.x * AbsR[2][2] + a->e.z * AbsR[0][2];
 	rb = b->e.x * AbsR[1][1] + b->e.y * AbsR[1][0];
 	if (fabsf(t.x * R[2][2] - t.z * R[0][2]) > ra + rb)return 0;
 
-	//²L=A2 X B0”»’è
+	//è»¸L=A2 X B0åˆ¤å®š
 	ra = a->e.x * AbsR[1][0] + a->e.y * AbsR[0][0];
 	rb = b->e.y * AbsR[2][2] + b->e.z * AbsR[2][1];
 	if (fabsf(t.y * R[0][0] - t.x * R[1][0]) > ra + rb)return 0;
 
-	//²L=A2 X B1”»’è
+	//è»¸L=A2 X B1åˆ¤å®š
 	ra = a->e.x * AbsR[1][1] + a->e.y * AbsR[0][1];
 	rb = b->e.x * AbsR[2][2] + b->e.z * AbsR[2][0];
 	if (fabsf(t.y * R[0][1] - t.y * R[1][1]) > ra + rb)return 0;
 
-	//²L=A2 X B2”»’è
+	//è»¸L=A2 X B2åˆ¤å®š
 	ra = a->e.x * AbsR[1][2] + a->e.y * AbsR[0][2];
 	rb = b->e.x * AbsR[2][1] + b->e.y * AbsR[2][0];
 	if (fabsf(t.y * R[0][2] - t.x * R[1][2]) > ra + rb)return 0;

@@ -5,21 +5,21 @@
 /**
 * @author   NZ
 * @date     24/08/25
-* @note     ƒƒO‚ğo—Í‚·‚éƒNƒ‰ƒX‚Ì’è‹`
+* @note     ãƒ­ã‚°ã‚’å‡ºåŠ›ã™ã‚‹ã‚¯ãƒ©ã‚¹ã®å®šç¾©
 */
 
 
 /**
  * @enum	LogLevel	
- * @brief	SyslogƒŒƒxƒ‹
+ * @brief	Syslogãƒ¬ãƒ™ãƒ«
  */
 enum class LogLevel
 {
-    //! ƒfƒoƒbƒO(0)
+    //! ãƒ‡ãƒãƒƒã‚°(0)
     debug,
-    //! î•ñ(1)
+    //! æƒ…å ±(1)
     info,
-    //! ƒGƒ‰[(2)
+    //! ã‚¨ãƒ©ãƒ¼(2)
     err,
 };
 
@@ -30,33 +30,33 @@ enum class LogLevel
  */
 typedef struct
 {
-    //! ”N
+    //! å¹´
     int Year;
-    //! Œ
+    //! æœˆ
     int Mon;
-    //! “ú
+    //! æ—¥
     int Day;
-    //! ŠÔ
+    //! æ™‚é–“
     int Hour;
-    //! •ª
+    //! åˆ†
     int Min;
-    //! •b
+    //! ç§’
     int Sec;
-    //! ƒ~ƒŠ•b
+    //! ãƒŸãƒªç§’
     long long millisec;
 }TimeData;
 
 /**
  * @struct	LogInfo
- * @brief	Syslog‚Ìo—Í‚É•K—v‚Èî•ñ
+ * @brief	Syslogã®å‡ºåŠ›ã«å¿…è¦ãªæƒ…å ±
  */
 typedef struct
 {
-    //! SyslogƒŒƒxƒ‹
+    //! Syslogãƒ¬ãƒ™ãƒ«
     LogLevel loglevel;
-    //! ƒƒOƒƒbƒZ[ƒW
+    //! ãƒ­ã‚°ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸
     std::string logMessage;
-    //! o—Í
+    //! å‡ºåŠ›æ™‚åˆ»
     TimeData timeData;
 
 }LogInfo;
@@ -64,43 +64,43 @@ typedef struct
 
 /**
  * @class  	Syslog
- * @brief  	w’è‚ÌƒƒO‚ğo—Í‚·‚éƒNƒ‰ƒX
- * @detail  Ã“IƒNƒ‰ƒX‚ÅİŒv‚·‚é
+ * @brief  	æŒ‡å®šã®ãƒ­ã‚°ã‚’å‡ºåŠ›ã™ã‚‹ã‚¯ãƒ©ã‚¹
+ * @detail  é™çš„ã‚¯ãƒ©ã‚¹ã§è¨­è¨ˆã™ã‚‹
  */
 class Syslog final
 {
 private:
 
-    /*     ƒƒ“ƒo•Ï”     */
+    /*     ãƒ¡ãƒ³ãƒå¤‰æ•°     */
 
     /**
-     * @brief		ƒƒOƒƒbƒZ[ƒW‚ÌƒRƒ“ƒeƒi
-     * @History		24/08/25 ì¬(NZ)
+     * @brief		ãƒ­ã‚°ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®ã‚³ãƒ³ãƒ†ãƒŠ
+     * @History		24/08/25 ä½œæˆ(NZ)
      */
     static std::vector<LogInfo> logInfoVec;
 
     /**
-     * @brief		ƒXƒŒƒbƒhƒZ[ƒt‚ÅƒeƒLƒXƒgƒtƒ@ƒCƒ‹‚É‘‚«‚Ş‚½‚ß
-     * @History		24/09/11 ì¬(NZ)
+     * @brief		ã‚¹ãƒ¬ãƒƒãƒ‰ã‚»ãƒ¼ãƒ•ã§ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ã«æ›¸ãè¾¼ã‚€ãŸã‚
+     * @History		24/09/11 ä½œæˆ(NZ)
      */
     static std::mutex mtx;
 
     /**
-     * @brief		ƒXƒŒƒbƒhƒZ[ƒt‚ÅƒeƒLƒXƒgƒtƒ@ƒCƒ‹‚É‘‚«‚Ş‚½‚ß
-     * @History		24/09/11 ì¬(NZ)
+     * @brief		ã‚¹ãƒ¬ãƒƒãƒ‰ã‚»ãƒ¼ãƒ•ã§ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ã«æ›¸ãè¾¼ã‚€ãŸã‚
+     * @History		24/09/11 ä½œæˆ(NZ)
      */
     std::thread syslogThread;
 
 public:
 
-    /*     ƒƒ\ƒbƒh     */
+    /*     ãƒ¡ã‚½ãƒƒãƒ‰     */
 
     static void Message(const LogLevel _loglevel, const std::string& _logMessage);
 
 private:
 
     /**
-     * @brief       ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚Ííœ
+     * @brief       ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã¯å‰Šé™¤
      * @author      NZ
      * @date        24/08/25
      */
@@ -108,7 +108,7 @@ private:
 
 
     /**
-     * @brief       ƒƒOî•ñ‚ğ’Ç‰Á‚·‚é
+     * @brief       ãƒ­ã‚°æƒ…å ±ã‚’è¿½åŠ ã™ã‚‹
      * @author      NZ
      * @date        24/08/25
      */

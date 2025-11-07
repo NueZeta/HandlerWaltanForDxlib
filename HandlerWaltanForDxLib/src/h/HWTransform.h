@@ -7,102 +7,102 @@ class HWGameObject;
 /**
 * @author   NZ
 * @date     24/07/16
-* @note		À•WŒn‚Ìî•ñ‚ğ•Û‚·‚éƒRƒ“ƒ|[ƒlƒ“ƒg‚Ì’è‹`
+* @note		åº§æ¨™ç³»ã®æƒ…å ±ã‚’ä¿æŒã™ã‚‹ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®å®šç¾©
 */
 
 
 /**
  * @class	HWTransform
- * @brief	ƒIƒuƒWƒFƒNƒg‚ÌÀ•W‚â‰ñ“]‚È‚Ç‚ğ•Û‚·‚éƒRƒ“ƒ|[ƒlƒ“ƒg
+ * @brief	ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®åº§æ¨™ã‚„å›è»¢ãªã©ã‚’ä¿æŒã™ã‚‹ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ
  */
 class HWTransform : public HWComponent
 {
-	// “Á’è‚ÌƒNƒ‰ƒXˆÈŠO‚©‚ç‚ÌƒAƒNƒZƒX‚ğ–h‚®‚½‚ß‚ÌƒtƒŒƒ“ƒhéŒ¾
+	// ç‰¹å®šã®ã‚¯ãƒ©ã‚¹ä»¥å¤–ã‹ã‚‰ã®ã‚¢ã‚¯ã‚»ã‚¹ã‚’é˜²ããŸã‚ã®ãƒ•ãƒ¬ãƒ³ãƒ‰å®£è¨€
 	friend class HWGameObject;
 	friend class CollisionWaltan;
 
 public:
 
-	/*     ƒƒ“ƒo•Ï”     */
+	/*     ãƒ¡ãƒ³ãƒå¤‰æ•°     */
 
-#pragma region ƒOƒ[ƒoƒ‹
+#pragma region ã‚°ãƒ­ãƒ¼ãƒãƒ«
 
 	/**
-	 * @brief		ƒOƒ[ƒoƒ‹À•W
-	 * @History		24/06/17 ì¬(NZ)
+	 * @brief		ã‚°ãƒ­ãƒ¼ãƒãƒ«åº§æ¨™
+	 * @History		24/06/17 ä½œæˆ(NZ)
 	 */
 	VECTOR position = {0,0,0};
 
 	/**
-	 * @brief		ƒOƒ[ƒoƒ‹‰ñ“]
-	 * @History		24/06/17 ì¬(NZ)
+	 * @brief		ã‚°ãƒ­ãƒ¼ãƒãƒ«å›è»¢
+	 * @History		24/06/17 ä½œæˆ(NZ)
 	 */
 
 	VECTOR rotate = { 0,0,0 };
 
 	/**
-	 * @brief		ƒOƒ[ƒoƒ‹Šgk
-	 * @History		24/06/17 ì¬(NZ)
+	 * @brief		ã‚°ãƒ­ãƒ¼ãƒãƒ«æ‹¡ç¸®
+	 * @History		24/06/17 ä½œæˆ(NZ)
 	 */
 	VECTOR scale = { 1,1,1 };
 
 	/**
-	 * @brief		ƒOƒ[ƒoƒ‹•ÏŠ·s—ñ
-	 * @History		24/09/15 ì¬(NZ)
+	 * @brief		ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ›è¡Œåˆ—
+	 * @History		24/09/15 ä½œæˆ(NZ)
 	 */
 	MATRIX globalMat;
 
 #pragma endregion
 
-#pragma region ƒ[ƒJƒ‹
+#pragma region ãƒ­ãƒ¼ã‚«ãƒ«
 
 	/**
-	 * @brief		ƒ[ƒJƒ‹À•W
-	 * @History		24/06/17 ì¬(NZ)
+	 * @brief		ãƒ­ãƒ¼ã‚«ãƒ«åº§æ¨™
+	 * @History		24/06/17 ä½œæˆ(NZ)
 	 */
 	VECTOR localPosition;
 
 	/**
-	 * @brief		ƒ[ƒJƒ‹‰ñ“]
-	 * @History		24/06/17 ì¬(NZ)
+	 * @brief		ãƒ­ãƒ¼ã‚«ãƒ«å›è»¢
+	 * @History		24/06/17 ä½œæˆ(NZ)
 	 */
 
 	VECTOR localRotate;
 
 	/**
-	 * @brief		ƒ[ƒJƒ‹Šgk
-	 * @History		24/06/17 ì¬(NZ)
+	 * @brief		ãƒ­ãƒ¼ã‚«ãƒ«æ‹¡ç¸®
+	 * @History		24/06/17 ä½œæˆ(NZ)
 	 */
 	VECTOR localScale;
 
 #pragma endregion
 
 	/**
-	 * @brief		ˆÚ“®ƒxƒNƒgƒ‹
-	 * @History		24/09/26 ì¬(NZ)
+	 * @brief		ç§»å‹•ãƒ™ã‚¯ãƒˆãƒ«
+	 * @History		24/09/26 ä½œæˆ(NZ)
 	 */
 	VECTOR velocity = { 0,0,0 };
 
 	/**
-	 * @brief		³–Ê•ûŒü‚ÌƒxƒNƒgƒ‹
-	 * @History		24/09/26 ì¬(NZ)
+	 * @brief		æ­£é¢æ–¹å‘ã®ãƒ™ã‚¯ãƒˆãƒ«
+	 * @History		24/09/26 ä½œæˆ(NZ)
 	 */
 	VECTOR forward;
 
 private:
 
 	/**
-	 * @brief		‘OF‚ÌÀ•W
-	 * @History		24/10/12 ì¬(NZ)
+	 * @brief		å‰Fã®åº§æ¨™
+	 * @History		24/10/12 ä½œæˆ(NZ)
 	 */
 	VECTOR previousPosition;
 
 
 private:
-	/*     ƒƒ\ƒbƒh     */
+	/*     ãƒ¡ã‚½ãƒƒãƒ‰     */
 
 	/**
-	 * @brief		•½sˆÚ“®A‰ñ“]AŠgk‚ğİ’è‚·‚é
+	 * @brief		å¹³è¡Œç§»å‹•ã€å›è»¢ã€æ‹¡ç¸®ã‚’è¨­å®šã™ã‚‹
 	 * @author		NZ
 	 * @date		24/09/15
 	 */
@@ -113,25 +113,25 @@ private:
 public:
 
 	/**
-	 * @brief		ƒ^[ƒQƒbƒg‚Ì‚Ù‚¤‚ÖŒü‚­
-	 * @param[in]	const VECTOR&	ƒ^[ƒQƒbƒg‚ÌÀ•W
+	 * @brief		ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®ã»ã†ã¸å‘ã
+	 * @param[in]	const VECTOR&	ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®åº§æ¨™
 	 * @author		NZ
 	 * @date		24/10/09
 	 */
 	void LookAt(const VECTOR& _target);
 
-#pragma region ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+#pragma region ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 
 	/**
-	 * @brief		ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	 * @brief		ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	 * @author		NZ
 	 * @date		24/06/17
 	 */
 	HWTransform();
 
 	/**
-	 * @brief		ƒfƒXƒgƒ‰ƒNƒ^
-	 * @detail		ƒI[ƒo[ƒ‰ƒCƒhŠÖ”
+	 * @brief		ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+	 * @detail		ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰é–¢æ•°
 	 * @author		NZ
 	 * @date		24/09/17
 	 */
@@ -141,11 +141,11 @@ public:
 
 protected:
 
-#pragma region ƒI[ƒo[ƒ‰ƒCƒhƒƒ\ƒbƒh
+#pragma region ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰ãƒ¡ã‚½ãƒƒãƒ‰
 
 	/**
-	 * @brief		–ˆƒtƒŒ[ƒ€ŒÄ‚Î‚ê‚é
-	 * @detail		ƒI[ƒo[ƒ‰ƒCƒhŠÖ”
+	 * @brief		æ¯ãƒ•ãƒ¬ãƒ¼ãƒ å‘¼ã°ã‚Œã‚‹
+	 * @detail		ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰é–¢æ•°
 	 * @author		NZ
 	 * @date		24/06/17
 	 */

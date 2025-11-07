@@ -7,46 +7,46 @@
 /**
 * @author   NZ
 * @date     24/09/15
-* @note		ƒJƒvƒZƒ‹Œ^‚ÌƒRƒ‰ƒCƒ_[ƒRƒ“ƒ|[ƒlƒ“ƒg‚Ì’è‹`
+* @note		ã‚«ãƒ—ã‚»ãƒ«å‹ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®å®šç¾©
 */
 
 
 /**
  * @class	HWCapsuleCollider
- * @brief	ƒJƒvƒZƒ‹Œ^‚ÌƒRƒ‰ƒCƒ_[ƒRƒ“ƒ|[ƒlƒ“ƒg
+ * @brief	ã‚«ãƒ—ã‚»ãƒ«å‹ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ
  */
 class HWCapsuleCollider : public HWCollider
 {
-	// “Á’è‚ÌƒNƒ‰ƒXˆÈŠO‚©‚ç‚ÌƒAƒNƒZƒX‚ğ–h‚®‚½‚ß‚ÌƒtƒŒƒ“ƒhéŒ¾
+	// ç‰¹å®šã®ã‚¯ãƒ©ã‚¹ä»¥å¤–ã‹ã‚‰ã®ã‚¢ã‚¯ã‚»ã‚¹ã‚’é˜²ããŸã‚ã®ãƒ•ãƒ¬ãƒ³ãƒ‰å®£è¨€
 	friend class HWGameObject;
 	friend class CollisionWaltan;
 
 public:
 
-	/*     ƒƒ“ƒo•Ï”     */
+	/*     ãƒ¡ãƒ³ãƒå¤‰æ•°     */
 
 
 	/**
-	 * @brief		ƒRƒ‰ƒCƒ_[‚Ì‚‚³ (©g‚Ån“_‚ÆI“_‚ğİ’è‚µ‚½ê‡A–³Œø‰»‚³‚ê‚é)
-	 * @History		24/09/16 ì¬(NZ)
+	 * @brief		ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®é«˜ã• (è‡ªèº«ã§å§‹ç‚¹ã¨çµ‚ç‚¹ã‚’è¨­å®šã—ãŸå ´åˆã€ç„¡åŠ¹åŒ–ã•ã‚Œã‚‹)
+	 * @History		24/09/16 ä½œæˆ(NZ)
 	 */
 	float height;
 
 	/**
-	 * @brief		ƒRƒ‰ƒCƒ_[‚Ì”¼Œa
-	 * @History		24/09/16 ì¬(NZ)
+	 * @brief		ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®åŠå¾„
+	 * @History		24/09/16 ä½œæˆ(NZ)
 	 */
 	float radius;
 
 	/**
-	 * @brief		ƒRƒ‰ƒCƒ_[‚Ìn“_
-	 * @History		24/09/16 ì¬(NZ)
+	 * @brief		ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®å§‹ç‚¹
+	 * @History		24/09/16 ä½œæˆ(NZ)
 	 */
 	VECTOR UsStartPos;
 
 	/**
-	 * @brief		ƒRƒ‰ƒCƒ_[‚ÌI“_
-	 * @History		24/09/16 ì¬(NZ)
+	 * @brief		ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®çµ‚ç‚¹
+	 * @History		24/09/16 ä½œæˆ(NZ)
 	 */
 	VECTOR UsEndPos;
 
@@ -54,31 +54,31 @@ public:
 private:
 
 	/**
-	 * @brief		ƒRƒ‰ƒCƒ_[‚Ìn“_
-	 * @History		24/09/16 ì¬(NZ)
+	 * @brief		ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®å§‹ç‚¹
+	 * @History		24/09/16 ä½œæˆ(NZ)
 	 */
 	VECTOR startPos;
 
 	/**
-	 * @brief		ƒRƒ‰ƒCƒ_[‚ÌI“_
-	 * @History		24/09/16 ì¬(NZ)
+	 * @brief		ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®çµ‚ç‚¹
+	 * @History		24/09/16 ä½œæˆ(NZ)
 	 */
 	VECTOR endPos;
 
 
-	 /*     ƒƒ\ƒbƒh     */
+	 /*     ãƒ¡ã‚½ãƒƒãƒ‰     */
 
 public:
 
 	/**
-	 * @brief		ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	 * @brief		ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	 * @author		NZ
 	 * @date		24/09/16
 	 */
 	HWCapsuleCollider();
 
 	/**
-	 * @brief		ƒfƒXƒgƒ‰ƒNƒ^
+	 * @brief		ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	 * @author		NZ
 	 * @date		24/09/16
 	 */
@@ -88,24 +88,24 @@ private:
 
 
 
-#pragma region ‰Ÿ‚µo‚µˆ—
+#pragma region æŠ¼ã—å‡ºã—å‡¦ç†
 
 	/**
-	 * @brief		ƒ{ƒbƒNƒXƒ^ƒCƒv‚ÌƒIƒuƒWƒFƒNƒg‚ÆÕ“Ë‚µ‚½Û‚É‚ß‚è‚Ü‚È‚­‚·‚éˆ—
+	 * @brief		ãƒœãƒƒã‚¯ã‚¹ã‚¿ã‚¤ãƒ—ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¨è¡çªã—ãŸéš›ã«ã‚ã‚Šè¾¼ã¾ãªãã™ã‚‹å‡¦ç†
 	 * @author		NZ
 	 * @date		24/09/26
 	 */
 	void PushOut_Capsule_Box(HWCollider& other);
 
 	/**
-	 * @brief		ƒJƒvƒZƒ‹ƒ^ƒCƒv‚ÌƒIƒuƒWƒFƒNƒg‚ÆÕ“Ë‚µ‚½Û‚É‚ß‚è‚Ü‚È‚­‚·‚éˆ—
+	 * @brief		ã‚«ãƒ—ã‚»ãƒ«ã‚¿ã‚¤ãƒ—ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¨è¡çªã—ãŸéš›ã«ã‚ã‚Šè¾¼ã¾ãªãã™ã‚‹å‡¦ç†
 	 * @author		NZ
 	 * @date		24/09/26
 	 */
 	void PushOut_Capsule_Capsule(HWCapsuleCollider& other);
 
 	/**
-	 * @brief		ƒXƒtƒBƒAƒ^ƒCƒv‚ÌƒIƒuƒWƒFƒNƒg‚ÆÕ“Ë‚µ‚½Û‚É‚ß‚è‚Ü‚È‚­‚·‚éˆ—
+	 * @brief		ã‚¹ãƒ•ã‚£ã‚¢ã‚¿ã‚¤ãƒ—ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¨è¡çªã—ãŸéš›ã«ã‚ã‚Šè¾¼ã¾ãªãã™ã‚‹å‡¦ç†
 	 * @author		NZ
 	 * @date		24/09/26
 	 */
@@ -113,43 +113,51 @@ private:
 
 #pragma endregion
 
-#pragma region ƒI[ƒo[ƒ‰ƒCƒhƒƒ\ƒbƒh
+#pragma region ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰ãƒ¡ã‚½ãƒƒãƒ‰
 
 	/**
-	 * @brief		—§•û‘Ì‚ÌƒRƒ‰ƒCƒ_[‚ğ•`‰æ‚·‚é
-	 * @detail		ƒI[ƒoƒ‰ƒCƒhƒƒ\ƒbƒh
+	 * @brief		ç«‹æ–¹ä½“ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚’æç”»ã™ã‚‹
+	 * @detail		ã‚ªãƒ¼ãƒãƒ©ã‚¤ãƒ‰ãƒ¡ã‚½ãƒƒãƒ‰
 	 * @author		NZ
 	 * @date		24/09/16
 	 */
 	void DrawCollider() override;
 
 	/**
-	 * @brief		—§•û‘Ì‚ÌƒRƒ‰ƒCƒ_[‚ğ\¬‚·‚é
-	 * @detail		ƒI[ƒoƒ‰ƒCƒhƒƒ\ƒbƒh
+	 * @brief		ç«‹æ–¹ä½“ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚’æ§‹æˆã™ã‚‹
+	 * @detail		ã‚ªãƒ¼ãƒãƒ©ã‚¤ãƒ‰ãƒ¡ã‚½ãƒƒãƒ‰
 	 * @author		NZ
 	 * @date		24/09/16
 	 */
 	void SetCollider() override;
 
 	/**
-	 * @brief		HWGameObject‚ÉƒAƒ^ƒbƒ`‚³‚ê‚½uŠÔ‚É“­‚­
-	 * @detail		ƒI[ƒoƒ‰ƒCƒhƒƒ\ƒbƒh
+	 * @brief		HWGameObjectã«ã‚¢ã‚¿ãƒƒãƒã•ã‚ŒãŸç¬é–“ã«åƒã
+	 * @detail		ã‚ªãƒ¼ãƒãƒ©ã‚¤ãƒ‰ãƒ¡ã‚½ãƒƒãƒ‰
 	 * @author		NZ
 	 * @date		24/09/15
 	 */
 	void Awake()override;
 
 	/**
-	 * @brief		–ˆƒtƒŒ[ƒ€ŒÄ‚Î‚ê‚é
-	 * @detail		ƒI[ƒo[ƒ‰ƒCƒhƒƒ\ƒbƒh
+	 * @brief		æ¯ãƒ•ãƒ¬ãƒ¼ãƒ å‘¼ã°ã‚Œã‚‹
+	 * @detail		ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰ãƒ¡ã‚½ãƒƒãƒ‰
 	 * @author		NZ
 	 * @date		24/09/16
 	 */
 	void Update() override;
 
 	/**
-	 * @brief		ƒRƒ‰ƒCƒ_[Õ“Ë‚É“­‚­ƒƒ\ƒbƒh
-	 * @detail		ƒI[ƒo[ƒ‰ƒCƒhƒƒ\ƒbƒh
+	 * @brief		æ¯ãƒ•ãƒ¬ãƒ¼ãƒ å‘¼ã°ã‚Œã‚‹
+	 * @detail		ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰ãƒ¡ã‚½ãƒƒãƒ‰
+	 * @author		NZ
+	 * @date		24/09/16
+	 */
+	void LateUpdate() override;
+
+	/**
+	 * @brief		ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼è¡çªæ™‚ã«åƒããƒ¡ã‚½ãƒƒãƒ‰
+	 * @detail		ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰ãƒ¡ã‚½ãƒƒãƒ‰
 	 * @author		NZ
 	 * @date		24/09/26
 	 */

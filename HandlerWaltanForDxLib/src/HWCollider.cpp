@@ -4,25 +4,25 @@
 /**
 * @author   NZ
 * @date     24/07/29
-* @note		HWCollider‚ÌŽÀ‘•ƒtƒ@ƒCƒ‹
+* @note		HWColliderã®å®Ÿè£…ãƒ•ã‚¡ã‚¤ãƒ«
 */
 
 
-#pragma region privateƒƒ\ƒbƒh
+#pragma region privateãƒ¡ã‚½ãƒƒãƒ‰
 
 
 
 
 #pragma endregion
 
-#pragma region publicƒƒ\ƒbƒh
+#pragma region publicãƒ¡ã‚½ãƒƒãƒ‰
 
 
 
 
 #pragma endregion
 
-#pragma region protectedƒƒ\ƒbƒh
+#pragma region protectedãƒ¡ã‚½ãƒƒãƒ‰
 
 
 HWCollider::HWCollider() : isVisualization(false), isTrigger(false)
@@ -32,7 +32,7 @@ HWCollider::HWCollider() : isVisualization(false), isTrigger(false)
 
 #pragma endregion
 
-#pragma region ƒI[ƒo[ƒ‰ƒCƒhƒƒ\ƒbƒh
+#pragma region ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰ãƒ¡ã‚½ãƒƒãƒ‰
 
 
 

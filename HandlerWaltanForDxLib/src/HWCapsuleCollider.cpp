@@ -4,14 +4,14 @@
 /**
 * @author   NZ
 * @date     24/09/15
-* @note		HWCapsuleCollider‚ÌÀ‘•ƒtƒ@ƒCƒ‹
+* @note		HWCapsuleColliderã®å®Ÿè£…ãƒ•ã‚¡ã‚¤ãƒ«
 */
 
 
-#pragma region privateƒƒ\ƒbƒh
+#pragma region privateãƒ¡ã‚½ãƒƒãƒ‰
 
 
-#pragma region ‰Ÿ‚µo‚µˆ—
+#pragma region æŠ¼ã—å‡ºã—å‡¦ç†
 
 void HWCapsuleCollider::PushOut_Capsule_Box(HWCollider& other)
 {
@@ -30,7 +30,7 @@ void HWCapsuleCollider::PushOut_Capsule_Sphere(HWCollider& other)
 
 #pragma endregion
 
-#pragma region publicƒƒ\ƒbƒh
+#pragma region publicãƒ¡ã‚½ãƒƒãƒ‰
 
 
 HWCapsuleCollider::HWCapsuleCollider()
@@ -41,14 +41,14 @@ HWCapsuleCollider::HWCapsuleCollider()
 
 #pragma endregion
 
-#pragma region protectedƒƒ\ƒbƒh
+#pragma region protectedãƒ¡ã‚½ãƒƒãƒ‰
 
 
 
 
 #pragma endregion
 
-#pragma region ƒI[ƒo[ƒ‰ƒCƒhƒƒ\ƒbƒh
+#pragma region ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰ãƒ¡ã‚½ãƒƒãƒ‰
 
 
 HWCapsuleCollider::~HWCapsuleCollider()
@@ -67,37 +67,37 @@ void HWCapsuleCollider::SetCollider()
 	startPos = VGet(0, 0, 0);
 	endPos = VGet(0, height, 0);
 
-	// ‰ñ“]s—ñ‚Ìì¬iZ -> Y -> X ‚Ì‡j
+	// å›è»¢è¡Œåˆ—ã®ä½œæˆï¼ˆZ -> Y -> X ã®é †ï¼‰
 	MATRIX rotX = MGetRotX((float)Deg2Rad(transform->rotate.x));
 	MATRIX rotY = MGetRotY((float)Deg2Rad(transform->rotate.y));
 	MATRIX rotZ = MGetRotZ((float)Deg2Rad(transform->rotate.z));
 	MATRIX mRotate = MMult(rotZ, MMult(rotY, rotX));
 
-	//! •½sˆÚ“®—p‚Ìs—ñ(Œ´“_‚©‚ç‚ÌˆÚ“®—Ê)
+	//! å¹³è¡Œç§»å‹•ç”¨ã®è¡Œåˆ—(åŸç‚¹ã‹ã‚‰ã®ç§»å‹•é‡)
 	MATRIX trans = MGetTranslate(center);
-	//! trans -> rotate ‚ÅŠ|‚¯‚é‚±‚Æ‚Å‰ñ“]Œã‚É•½sˆÚ“®‚·‚é(ƒ[ƒJƒ‹‚È•½sˆÚ“®)
+	//! trans -> rotate ã§æ›ã‘ã‚‹ã“ã¨ã§å›è»¢å¾Œã«å¹³è¡Œç§»å‹•ã™ã‚‹(ãƒ­ãƒ¼ã‚«ãƒ«ãªå¹³è¡Œç§»å‹•)
 	MATRIX mat = MMult(trans, mRotate);
 
-	// ƒ[ƒJƒ‹À•W‚Å‚Ì‰ñ“]
+	// ãƒ­ãƒ¼ã‚«ãƒ«åº§æ¨™ã§ã®å›è»¢
 	startPos = VTransform(startPos, mat);
-	// ƒ[ƒ‹ƒhÀ•W‚Ö‚Ì•ÏŠ·
+	// ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ã¸ã®å¤‰æ›
 	startPos = VAdd(startPos, transform->position);
-	// ƒ[ƒJƒ‹À•W‚Å‚Ì‰ñ“]
+	// ãƒ­ãƒ¼ã‚«ãƒ«åº§æ¨™ã§ã®å›è»¢
 	endPos = VTransform(endPos, mat);
-	// ƒ[ƒ‹ƒhÀ•W‚Ö‚Ì•ÏŠ·
+	// ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ã¸ã®å¤‰æ›
 	endPos = VAdd(endPos, transform->position);
 
 
-	// ‰ñ“]s—ñ‚Ìì¬iZ -> Y -> X ‚Ì‡j
+	// å›è»¢è¡Œåˆ—ã®ä½œæˆï¼ˆZ -> Y -> X ã®é †ï¼‰
 	rotX = MGetRotX((float)Deg2Rad(transform->rotate.x));
 	rotY = MGetRotY((float)Deg2Rad(transform->rotate.y));
 	rotZ = MGetRotZ((float)Deg2Rad(transform->rotate.z));
 	MATRIX mRotate2 = MMult(rotX, MMult(rotY, rotZ));
-	//! •½sˆÚ“®—p‚Ìs—ñ(Œ´“_‚©‚ç‚ÌˆÚ“®—Ê)
+	//! å¹³è¡Œç§»å‹•ç”¨ã®è¡Œåˆ—(åŸç‚¹ã‹ã‚‰ã®ç§»å‹•é‡)
 	trans = MGetTranslate(center);
-	//! trans -> rotate ‚ÅŠ|‚¯‚é‚±‚Æ‚Å‰ñ“]Œã‚É•½sˆÚ“®‚·‚é(ƒ[ƒJƒ‹‚È•½sˆÚ“®)
+	//! trans -> rotate ã§æ›ã‘ã‚‹ã“ã¨ã§å›è»¢å¾Œã«å¹³è¡Œç§»å‹•ã™ã‚‹(ãƒ­ãƒ¼ã‚«ãƒ«ãªå¹³è¡Œç§»å‹•)
 	mat = MMult(trans, mRotate);
-	// ƒRƒ‰ƒCƒ_[‚Ì’†SÀ•W‚ğXV
+	// ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®ä¸­å¿ƒåº§æ¨™ã‚’æ›´æ–°
 	worldPosition = VTransform(VGet(0, 0, 0), mat);
 	worldPosition = VAdd(worldPosition, transform->position);
 }
@@ -112,36 +112,39 @@ void HWCapsuleCollider::Awake()
 	UsStartPos = VGet(0, 0, 0);
 	UsEndPos = VGet(0, 0, 0);
 
-	// ƒRƒ‰ƒCƒ_[‚ÌŒ`‚ğ\¬‚·‚é
+	// ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®å½¢ã‚’æ§‹æˆã™ã‚‹
 	SetCollider();
 
-	// CollisionWaltan‚É“o˜^
+	// CollisionWaltanã«ç™»éŒ²
 	CollisionWaltan::Instance().ColVec.push_back(dynamic_cast<HWCollider*>(this));
 }
 
 void HWCapsuleCollider::Update()
 {
-	// ƒRƒ‰ƒCƒ_[‚Ìn“_‚©I“_‚ğİ’è‚µ‚Ä‚¢‚È‚¢ê‡‚Í©“®‚ÅƒLƒƒƒ‰ƒNƒ^[‚É’Ç]‚·‚é‚æ‚¤‚É‚·‚é
+	// ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®å§‹ç‚¹ã‹çµ‚ç‚¹ã‚’è¨­å®šã—ã¦ã„ãªã„å ´åˆã¯è‡ªå‹•ã§ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã«è¿½å¾“ã™ã‚‹ã‚ˆã†ã«ã™ã‚‹
 	if ((UsStartPos.x == 0.f && UsStartPos.y == 0.f && UsStartPos.z == 0.f) &&
 		(UsEndPos.x == 0.f && UsEndPos.y == 0.f && UsEndPos.z == 0.f))
-		// ƒRƒ‰ƒCƒ_[‚ÌŒ`‚ğ\¬‚·‚é
+		// ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®å½¢ã‚’æ§‹æˆã™ã‚‹
 		SetCollider();
-	// ‚Ç‚¿‚ç‚©‚ªİ’è‚³‚ê‚Ä‚¢‚éê‡‚Í‚»‚Ì‚Ü‚Üã‘‚«
+	// ã©ã¡ã‚‰ã‹ãŒè¨­å®šã•ã‚Œã¦ã„ã‚‹å ´åˆã¯ãã®ã¾ã¾ä¸Šæ›¸ã
 	else
 	{
 		startPos = UsStartPos;
 		endPos = UsEndPos;
 		center = (startPos + endPos) * 0.5f;
 	}
+}
 
-	// ƒfƒoƒbƒOƒ‚[ƒhA‚à‚µ‚­‚ÍƒRƒ‰ƒCƒ_[‚Ì‰Â‹‰»ƒtƒ‰ƒO‚ª—§‚Á‚Ä‚¢‚é‚È‚çAƒRƒ‰ƒCƒ_[‚ğ•`‰æ‚·‚é
+void HWCapsuleCollider::LateUpdate()
+{
+	// ãƒ‡ãƒãƒƒã‚°ãƒ¢ãƒ¼ãƒ‰ã€ã‚‚ã—ãã¯ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®å¯è¦–åŒ–ãƒ•ãƒ©ã‚°ãŒç«‹ã£ã¦ã„ã‚‹ãªã‚‰ã€ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚’æç”»ã™ã‚‹
 	if (isVisualization || HandlerWaltan::debugMode)
 		DrawCollider();
 }
 
 void HWCapsuleCollider::OnCollisionEnter(HWCollider& _collider)
 {
-	//! ƒRƒ‰ƒCƒ_[‚ğƒJƒvƒZƒ‹‚ÉƒLƒƒƒXƒg
+	//! ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚’ã‚«ãƒ—ã‚»ãƒ«ã«ã‚­ãƒ£ã‚¹ãƒˆ
 	switch (_collider.GetColliderType())
 	{
 	case ColliderType::Box:

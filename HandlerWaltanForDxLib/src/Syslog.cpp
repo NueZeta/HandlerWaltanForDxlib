@@ -4,40 +4,40 @@
 /**
 * @author   NZ
 * @date     24/07/29
-* @note		HWComponent‚ÌÀ‘•ƒtƒ@ƒCƒ‹
+* @note		HWComponentã®å®Ÿè£…ãƒ•ã‚¡ã‚¤ãƒ«
 */
 
 
-// Ã“Iƒƒ“ƒo•Ï”‚Ì‰Šú‰»
+// é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°ã®åˆæœŸåŒ–
 std::vector<LogInfo> Syslog::logInfoVec;
 std::mutex Syslog::mtx;
 
 
-#pragma region privateƒƒ\ƒbƒh
+#pragma region privateãƒ¡ã‚½ãƒƒãƒ‰
 
 
 
 void Syslog::AddLogInfoAsymc(const LogLevel _loglevel, const std::string& _logMessage)
 {
-    // ƒXƒŒƒbƒhƒZ[ƒt‚Å“®‚©‚·
+    // ã‚¹ãƒ¬ãƒƒãƒ‰ã‚»ãƒ¼ãƒ•ã§å‹•ã‹ã™
     std::lock_guard <std::mutex> lock(mtx);
 
-    //! ƒƒO‚É•K—v‚Èî•ñ
+    //! ãƒ­ã‚°ã«å¿…è¦ãªæƒ…å ±
     LogInfo logInfo;
 
-    // ƒƒOî•ñ‚ğİ’è
+    // ãƒ­ã‚°æƒ…å ±ã‚’è¨­å®š
     logInfo.loglevel = _loglevel;
     logInfo.logMessage = _logMessage;
 
-    // Œ»İ‚ğæ“¾
+    // ç¾åœ¨æ™‚åˆ»ã‚’å–å¾—
     auto now = std::chrono::system_clock::now();
-    // ‚ğ•b‚É•ÏŠ·
+    // æ™‚åˆ»ã‚’ç§’ã«å¤‰æ›
     std::time_t now_time_t = std::chrono::system_clock::to_time_t(now);
-    // std::tm\‘¢‘Ì‚ğ€”õ
+    // std::tmæ§‹é€ ä½“ã‚’æº–å‚™
     std::tm now_tm = {};
-    // Œ»İ‚ğstd::tm‚É•ÏŠ·iˆÀ‘S‚È•û–@j
+    // ç¾åœ¨æ™‚åˆ»ã‚’std::tmã«å¤‰æ›ï¼ˆå®‰å…¨ãªæ–¹æ³•ï¼‰
     localtime_s(&now_tm, &now_time_t);
-    // ƒ~ƒŠ•b‚ğæ“¾
+    // ãƒŸãƒªç§’ã‚’å–å¾—
     auto now_ms = std::chrono::time_point_cast<std::chrono::milliseconds>(now);
     auto value = now_ms.time_since_epoch();
 
@@ -49,14 +49,14 @@ void Syslog::AddLogInfoAsymc(const LogLevel _loglevel, const std::string& _logMe
     logInfo.timeData.Sec = now_tm.tm_sec;
     logInfo.timeData.millisec = value.count() % 1000;
 
-    // ‘‚«‚Şƒf[ƒ^‚ğ’Ç‰Á‚·‚é
+    // æ›¸ãè¾¼ã‚€ãƒ‡ãƒ¼ã‚¿ã‚’è¿½åŠ ã™ã‚‹
     logInfoVec.push_back(logInfo);
 }
 
 
 #pragma endregion
 
-#pragma region publicƒƒ\ƒbƒh
+#pragma region publicãƒ¡ã‚½ãƒƒãƒ‰
 
 
 void Syslog::Message(const LogLevel _loglevel, const std::string& _logMessage)

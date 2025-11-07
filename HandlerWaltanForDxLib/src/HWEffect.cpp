@@ -14,7 +14,7 @@ HWEffect::HWEffect(const int _handle, const float _size)
 
 HWEffect::~HWEffect()
 {
-	// ƒGƒtƒFƒNƒgƒŠƒ\[ƒX‚ğíœ‚·‚é
+	// ã‚¨ãƒ•ã‚§ã‚¯ãƒˆãƒªã‚½ãƒ¼ã‚¹ã‚’å‰Šé™¤ã™ã‚‹
 	//DeleteEffekseerEffect(effectResourceHandle);
 }
 
@@ -22,17 +22,17 @@ void HWEffect::Play()
 {
 	if (isPlay || playingEffectHandle != -1) return;
 
-	// ƒGƒtƒFƒNƒg‚ğÄ¶‚·‚éB
+	// ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚’å†ç”Ÿã™ã‚‹ã€‚
 	playingEffectHandle = PlayEffekseer3DEffect(effectResourceHandle);
-	// Ä¶ˆÊ’u
+	// å†ç”Ÿä½ç½®
 	SetPosPlayingEffekseer3DEffect(playingEffectHandle, transform->position.x, transform->position.y, transform->position.z);
-	// ‰ñ“]
+	// å›è»¢
 	SetRotationPlayingEffekseer3DEffect(playingEffectHandle, (float)Deg2Rad(transform->rotate.x),
 		(float)Deg2Rad(transform->rotate.y), (float)Deg2Rad(transform->rotate.z));
-	// ƒXƒP[ƒ‹
+	// ã‚¹ã‚±ãƒ¼ãƒ«
 	SetScalePlayingEffekseer3DEffect(playingEffectHandle, transform->scale.x, transform->scale.y, transform->scale.z);
 
-	// ƒJƒ‰[‚Ìİ’è‚ğ‚µ‚Ä‚¢‚½ê‡‚ÍAÄ“xİ’è
+	// ã‚«ãƒ©ãƒ¼ã®è¨­å®šã‚’ã—ã¦ã„ãŸå ´åˆã¯ã€å†åº¦è¨­å®š
 	if (!(color.r == 0 && color.g == 0 && color.b == 0 && color.a == 0))
 		SetColor(color.r, color.g, color.b, color.a);
 
@@ -42,7 +42,7 @@ void HWEffect::Play()
 void HWEffect::Stop()
 {
 	if (!isPlay || playingEffectHandle == -1) return;
-	// ƒGƒtƒFƒNƒg‚ÌÄ¶‚ğ’†~‚·‚é
+	// ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®å†ç”Ÿã‚’ä¸­æ­¢ã™ã‚‹
 	StopEffekseer3DEffect(playingEffectHandle);
 	playingEffectHandle = -1;
 	isPlay = false;
@@ -60,44 +60,44 @@ void HWEffect::Update()
 {
 	if (!isPlay) return;
 
-	// Ä¶ˆÊ’u
+	// å†ç”Ÿä½ç½®
 	SetPosPlayingEffekseer3DEffect(playingEffectHandle, transform->position.x, transform->position.y, transform->position.z);
-	// ‰ñ“]
+	// å›è»¢
 	SetRotationPlayingEffekseer3DEffect(playingEffectHandle, (float)Deg2Rad(transform->rotate.x),
 		(float)Deg2Rad(transform->rotate.y), (float)Deg2Rad(transform->rotate.z));
-	// ƒXƒP[ƒ‹
+	// ã‚¹ã‚±ãƒ¼ãƒ«
 	SetScalePlayingEffekseer3DEffect(playingEffectHandle, transform->scale.x, transform->scale.y, transform->scale.z);
 
 
-	// Ä¶I—¹
+	// å†ç”Ÿçµ‚äº†
 	if (IsEffekseer3DEffectPlaying(playingEffectHandle))
 	{
 		isPlay = false;
 		playingEffectHandle = -1;
 
-		// Ä¶I—¹‚ÌƒAƒNƒVƒ‡ƒ“
+		// å†ç”Ÿçµ‚äº†æ™‚ã®ã‚¢ã‚¯ã‚·ãƒ§ãƒ³
 		switch (stopAction)
 		{
 		case StopAction::None:
 			break;
 
 		case StopAction::Loop:
-			// Ä“xÄ¶
+			// å†åº¦å†ç”Ÿ
 			Play();
 			break;
 
 		case StopAction::Destroy:
-			// ©g‚ÌGameObject‚ğíœ‚·‚é
+			// è‡ªèº«ã®GameObjectã‚’å‰Šé™¤ã™ã‚‹
 			delete(gameObject);
 			break;
 
 		case StopAction::Disable:
-			// ©g‚ÌGameObject‚ğ”ñƒAƒNƒeƒBƒu‚É‚·‚é
+			// è‡ªèº«ã®GameObjectã‚’éã‚¢ã‚¯ãƒ†ã‚£ãƒ–ã«ã™ã‚‹
 			gameObject->active = false;
 			break;
 
 		case StopAction::Callback:
-			// “o˜^‚³‚ê‚½ƒR[ƒ‹ƒoƒbƒNŠÖ”‚ğŒÄ‚Ô
+			// ç™»éŒ²ã•ã‚ŒãŸã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã‚’å‘¼ã¶
 			if (CallBack)
 				CallBack();
 			break;

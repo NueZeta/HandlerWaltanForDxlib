@@ -4,18 +4,18 @@
 /**
 * @author   NZ
 * @date     24/09/15
-* @note		HWBoxCollider‚ÌÀ‘•ƒtƒ@ƒCƒ‹
+* @note		HWBoxColliderã®å®Ÿè£…ãƒ•ã‚¡ã‚¤ãƒ«
 */
 
 
-#pragma region privateƒƒ\ƒbƒh
+#pragma region privateãƒ¡ã‚½ãƒƒãƒ‰
 
 
 
 
 #pragma endregion
 
-#pragma region publicƒƒ\ƒbƒh
+#pragma region publicãƒ¡ã‚½ãƒƒãƒ‰
 
 
 HWBoxCollider::HWBoxCollider()
@@ -37,14 +37,14 @@ HWBoxCollider::HWBoxCollider(const float& _sizeX, const float& _sizeY, const flo
 
 #pragma endregion
 
-#pragma region protectedƒƒ\ƒbƒh
+#pragma region protectedãƒ¡ã‚½ãƒƒãƒ‰
 
 
 
 
 #pragma endregion
 
-#pragma region ƒI[ƒo[ƒ‰ƒCƒhƒƒ\ƒbƒh
+#pragma region ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰ãƒ¡ã‚½ãƒƒãƒ‰
 
 
 HWBoxCollider::~HWBoxCollider()
@@ -74,7 +74,7 @@ void HWBoxCollider::DrawCollider()
 
 void HWBoxCollider::SetCollider()
 {
-	// ƒ[ƒJƒ‹À•W‚Å‚Ì’¸“_À•Wİ’è
+	// ãƒ­ãƒ¼ã‚«ãƒ«åº§æ¨™ã§ã®é ‚ç‚¹åº§æ¨™è¨­å®š
 	vertex[0][0] = VGet(-size.x / 2, size.y / 2, -size.z / 2);
 	vertex[0][1] = VGet(size.x / 2, size.y / 2, -size.z / 2);
 	vertex[0][2] = VGet(-size.x / 2, size.y / 2, size.z / 2);
@@ -84,39 +84,39 @@ void HWBoxCollider::SetCollider()
 	vertex[1][2] = VGet(-size.x / 2, -size.y / 2, size.z / 2);
 	vertex[1][3] = VGet(size.x / 2, -size.y / 2, size.z / 2);
 
-	// ‰ñ“]s—ñ‚Ìì¬iZ -> Y -> X ‚Ì‡j
+	// å›è»¢è¡Œåˆ—ã®ä½œæˆï¼ˆZ -> Y -> X ã®é †ï¼‰
 	MATRIX rotX = MGetRotX((float)Deg2Rad(transform->rotate.x));
 	MATRIX rotY = MGetRotY((float)Deg2Rad(transform->rotate.y));
 	MATRIX rotZ = MGetRotZ((float)Deg2Rad(transform->rotate.z));
 	mRotate = MMult(rotZ, MMult(rotY, rotX));
 
-	//! •½sˆÚ“®—p‚Ìs—ñ(Œ´“_‚©‚ç‚ÌˆÚ“®—Ê)
+	//! å¹³è¡Œç§»å‹•ç”¨ã®è¡Œåˆ—(åŸç‚¹ã‹ã‚‰ã®ç§»å‹•é‡)
 	MATRIX trans = MGetTranslate(center);
-	//! trans -> rotate ‚ÅŠ|‚¯‚é‚±‚Æ‚Å‰ñ“]Œã‚É•½sˆÚ“®‚·‚é(ƒ[ƒJƒ‹‚È•½sˆÚ“®)
+	//! trans -> rotate ã§æ›ã‘ã‚‹ã“ã¨ã§å›è»¢å¾Œã«å¹³è¡Œç§»å‹•ã™ã‚‹(ãƒ­ãƒ¼ã‚«ãƒ«ãªå¹³è¡Œç§»å‹•)
 	MATRIX mat = MMult(trans, mRotate);
 
-	// Še’¸“_‚É‰ñ“]s—ñ‚ğ“K—p‚µAƒ[ƒ‹ƒhÀ•W‚Ö•ÏŠ·
+	// å„é ‚ç‚¹ã«å›è»¢è¡Œåˆ—ã‚’é©ç”¨ã—ã€ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ã¸å¤‰æ›
 	for (int i = 0; i < 2; ++i)
 	{
 		for (int j = 0; j < 4; ++j)
 		{
-			// ƒ[ƒJƒ‹À•W‚Å‚Ì‰ñ“]
+			// ãƒ­ãƒ¼ã‚«ãƒ«åº§æ¨™ã§ã®å›è»¢
 			vertex[i][j] = VTransform(vertex[i][j], mat);
-			// ƒ[ƒ‹ƒhÀ•W‚Ö‚Ì•ÏŠ·
+			// ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ã¸ã®å¤‰æ›
 			vertex[i][j] = VAdd(vertex[i][j], transform->position);
 		}
 	}
 
-	// ‰ñ“]s—ñ‚Ìì¬iZ -> Y -> X ‚Ì‡j
+	// å›è»¢è¡Œåˆ—ã®ä½œæˆï¼ˆZ -> Y -> X ã®é †ï¼‰
 	rotX = MGetRotX((float)Deg2Rad(transform->rotate.x));
 	rotY = MGetRotY((float)Deg2Rad(transform->rotate.y));
 	rotZ = MGetRotZ((float)Deg2Rad(transform->rotate.z));
 	MATRIX mRotate2 = MMult(rotX, MMult(rotY, rotZ));
-	//! •½sˆÚ“®—p‚Ìs—ñ(Œ´“_‚©‚ç‚ÌˆÚ“®—Ê)
+	//! å¹³è¡Œç§»å‹•ç”¨ã®è¡Œåˆ—(åŸç‚¹ã‹ã‚‰ã®ç§»å‹•é‡)
 	trans = MGetTranslate(center);
-	//! trans -> rotate ‚ÅŠ|‚¯‚é‚±‚Æ‚Å‰ñ“]Œã‚É•½sˆÚ“®‚·‚é(ƒ[ƒJƒ‹‚È•½sˆÚ“®)
+	//! trans -> rotate ã§æ›ã‘ã‚‹ã“ã¨ã§å›è»¢å¾Œã«å¹³è¡Œç§»å‹•ã™ã‚‹(ãƒ­ãƒ¼ã‚«ãƒ«ãªå¹³è¡Œç§»å‹•)
 	mat = MMult(trans, mRotate);
-	// ƒRƒ‰ƒCƒ_[‚Ì’†SÀ•W‚ğXV
+	// ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®ä¸­å¿ƒåº§æ¨™ã‚’æ›´æ–°
 	worldPosition = VTransform(VGet(0,0,0), mat);
 	worldPosition = VAdd(worldPosition, transform->position);
 }
@@ -126,16 +126,16 @@ void HWBoxCollider::Awake()
 {
 	center = VGet(0, 0, 0);
 
-	// CollisionWaltan‚É“o˜^
+	// CollisionWaltanã«ç™»éŒ²
 	CollisionWaltan::Instance().ColVec.push_back(dynamic_cast<HWCollider*>(this));
 }
 
 void HWBoxCollider::Update()
 {
-	// ƒRƒ‰ƒCƒ_[‚ÌŒ`‚ğ\¬‚·‚é
+	// ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®å½¢ã‚’æ§‹æˆã™ã‚‹
 	SetCollider();
 
-	// ƒfƒoƒbƒOƒ‚[ƒhA‚à‚µ‚­‚ÍƒRƒ‰ƒCƒ_[‚Ì‰Â‹‰»ƒtƒ‰ƒO‚ª—§‚Á‚Ä‚¢‚é‚È‚çAƒRƒ‰ƒCƒ_[‚ğ•`‰æ‚·‚é
+	// ãƒ‡ãƒãƒƒã‚°ãƒ¢ãƒ¼ãƒ‰ã€ã‚‚ã—ãã¯ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®å¯è¦–åŒ–ãƒ•ãƒ©ã‚°ãŒç«‹ã£ã¦ã„ã‚‹ãªã‚‰ã€ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚’æç”»ã™ã‚‹
 	if (isVisualization || HandlerWaltan::debugMode)
 		DrawCollider();
 }

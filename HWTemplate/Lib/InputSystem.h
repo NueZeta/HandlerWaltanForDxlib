@@ -5,34 +5,34 @@
 /**
 * @author   NZ
 * @date     24/09/11
-* @note		InputSystemŠÖŒW‚ğ‚Ü‚Æ‚ß‚½ƒwƒbƒ_[ƒtƒ@ƒCƒ‹
+* @note		InputSystemé–¢ä¿‚ã‚’ã¾ã¨ã‚ãŸãƒ˜ãƒƒãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«
 */
 
 /**
 * @enum		InputState
-* @brief	InputSystem‚Ì“ü—Íƒpƒ‰ƒ[ƒ^
+* @brief	InputSystemã®å…¥åŠ›ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿
 */
 enum class InputState
 {
-	//! “ü—Í‘Ò‚¿(0)
+	//! å…¥åŠ›å¾…ã¡(0)
 	Waiting,
-	//! “ü—Í‚µ‚½uŠÔ(1)
+	//! å…¥åŠ›ã—ãŸç¬é–“(1)
 	Started,
-	//! “ü—Í’†(2)
+	//! å…¥åŠ›ä¸­(2)
 	Performed,
-	//! “ü—ÍI—¹(3)
+	//! å…¥åŠ›çµ‚äº†(3)
 	Canceled,
 };
 
 /**
 * @enum		InputType
-* @brief	“ü—Í‚ğæ‚éƒRƒ“ƒ\[ƒ‹
+* @brief	å…¥åŠ›ã‚’å–ã‚‹ã‚³ãƒ³ã‚½ãƒ¼ãƒ«
 */
 enum class InputType
 {
-	//! ƒL[ƒ{[ƒh(0)
+	//! ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰(0)
 	Key,
-	//! ƒL[ƒ{[ƒh or Pad1(1)
+	//! ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ or Pad1(1)
 	Key_Pad1 = DX_INPUT_KEY_PAD1,
 	//! Pad1(2)
 	Pad1 = DX_INPUT_PAD1,
@@ -46,23 +46,23 @@ enum class InputType
 
 /**
 * @struct	KeyInfo
-* @brief	ƒL[î•ñ
+* @brief	ã‚­ãƒ¼æƒ…å ±
 */
 struct KeyInfo
 {
-	//! ƒL[ƒR[ƒh
+	//! ã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰
 	unsigned int keyCode;
-	//! ƒRƒ“ƒ\[ƒ‹‚Ìí—Ş
+	//! ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ã®ç¨®é¡
 	InputType inputType;
-	//! “ü—ÍŠÔ
+	//! å…¥åŠ›æ™‚é–“
 	unsigned int inputTime;
-	//! ƒ{ƒ^ƒ““ü—Í‚Ìƒpƒ‰ƒ[ƒ^
+	//! ãƒœã‚¿ãƒ³å…¥åŠ›ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿
 	InputState inputState;
 };
 
 /**
  * @class	InputAction
- * @brief	ƒAƒNƒVƒ‡ƒ“ƒ}ƒbƒv‚Ìî•ñ
+ * @brief	ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ãƒãƒƒãƒ—ã®æƒ…å ±
  */
 class InputAction
 {
@@ -71,53 +71,53 @@ class InputAction
 public:
 	/**
 	* @struct	CallBackContext
-	* @brief	ƒR[ƒ‹ƒoƒbƒN‚Å“n‚·î•ñ
+	* @brief	ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ã§æ¸¡ã™æƒ…å ±
 	*/
 	struct CallBackContext
 	{
-		//! InputAction‚Ìƒpƒ‰ƒ[ƒ^
+		//! InputActionã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿
 		const InputState state;
-		//! “ü—Í‚µ‚½‚Æ‚«‚ÌŠÔ(ms)
+		//! å…¥åŠ›ã—ãŸã¨ãã®æ™‚é–“(ms)
 		const unsigned int inputTime;
-		//! “o˜^‚³‚ê‚Ä‚¢‚éƒL[
+		//! ç™»éŒ²ã•ã‚Œã¦ã„ã‚‹ã‚­ãƒ¼
 		const std::vector<KeyInfo> key;
-		//! DInput‚Ì“ü—Í
+		//! DInputã®å…¥åŠ›
 		DINPUT_JOYSTATE dInput;
 	};
 
 private:
-	/*     ƒƒ“ƒo•Ï”     */
+	/*     ãƒ¡ãƒ³ãƒå¤‰æ•°     */
 
 	/**
-	 * @brief		ƒL[î•ñ
-	 * @History		24/09/10 ì¬(NZ)
+	 * @brief		ã‚­ãƒ¼æƒ…å ±
+	 * @History		24/09/10 ä½œæˆ(NZ)
 	 */
 	std::vector<KeyInfo> keyInfoVec;
 
 	/**
-	 * @brief		“o˜^‚³‚ê‚½ƒR[ƒ‹ƒoƒbƒNŠÖ”
-	 * @History		24/09/10 ì¬(NZ)
+	 * @brief		ç™»éŒ²ã•ã‚ŒãŸã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°
+	 * @History		24/09/10 ä½œæˆ(NZ)
 	 */
 	std::unordered_map<int, std::function<void(const CallBackContext&)>> callBacks;
 
 	/**
-	 * @brief		InputAction‚Ìƒpƒ‰ƒ[ƒ^[
-	 * @History		24/09/10 ì¬(NZ)
+	 * @brief		InputActionã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ¼
+	 * @History		24/09/10 ä½œæˆ(NZ)
 	 */
 	InputState inputState;
 
 	/**
-	 * @brief		“o˜^‚µ‚½ƒR[ƒ‹ƒoƒbƒNŠÖ”‚ÌID
-	 * @History		24/10/02 ì¬(NZ)
+	 * @brief		ç™»éŒ²ã—ãŸã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã®ID
+	 * @History		24/10/02 ä½œæˆ(NZ)
 	 */
 	int nextId;
 
 
 private:
-	/*     ƒƒ\ƒbƒh     */
+	/*     ãƒ¡ã‚½ãƒƒãƒ‰     */
 
 	/**
-	 * @brief		ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	 * @brief		ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	 * @author		NZ
 	 * @date		24/09/10
 	 */
@@ -126,7 +126,7 @@ private:
 	}
 
 	/**
-	 * @brief		ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	 * @brief		ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	 * @author		NZ
 	 * @date		24/09/10
 	 */
@@ -136,7 +136,7 @@ private:
 	}
 
 	/**
-	 * @brief		ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	 * @brief		ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	 * @author		NZ
 	 * @date		24/09/10
 	 */
@@ -148,16 +148,16 @@ private:
 public:
 
 	/**
-	 * @brief		ƒAƒNƒVƒ‡ƒ“ƒ}ƒbƒv‚ÌƒXƒe[ƒ^ƒX‚ğ•Ô‚·
-	 * return		InputStatus	ƒAƒNƒVƒ‡ƒ“ƒ}ƒbƒv‚ÌƒXƒe[ƒ^ƒX
+	 * @brief		ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ãƒãƒƒãƒ—ã®ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã‚’è¿”ã™
+	 * return		InputStatus	ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ãƒãƒƒãƒ—ã®ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹
 	 * @author		NZ
 	 * @date		24/09/10
 	 */
 	InputState GetInputState() { return inputState; }
 
 	/**
-	 * @brief		ƒL[î•ñ‚ğ•Ô‚·
-	 * return		std::vector<KeyInfo>	“o˜^‚³‚ê‚½ƒL[î•ñ
+	 * @brief		ã‚­ãƒ¼æƒ…å ±ã‚’è¿”ã™
+	 * return		std::vector<KeyInfo>	ç™»éŒ²ã•ã‚ŒãŸã‚­ãƒ¼æƒ…å ±
 	 * @author		NZ
 	 * @date		24/09/10
 	 */
@@ -166,23 +166,23 @@ public:
 private:
 
 	/**
-	 * @brief		ƒL[î•ñ‚ğ•Ô‚·
-	 * return		std::vector<KeyInfo>	“o˜^‚³‚ê‚½ƒL[î•ñ
+	 * @brief		ã‚­ãƒ¼æƒ…å ±ã‚’è¿”ã™
+	 * return		std::vector<KeyInfo>	ç™»éŒ²ã•ã‚ŒãŸã‚­ãƒ¼æƒ…å ±
 	 * @author		NZ
 	 * @date		24/09/10
 	 */
 	std::vector<KeyInfo>& GetKeyInfoRef() { return keyInfoVec; }
 
 	/**
-	 * @brief		ƒAƒNƒVƒ‡ƒ“ƒ}ƒbƒv‚ÌƒXƒe[ƒ^ƒX‚ğ•ÏX‚·‚é
-	 * param[in]	InputStatus	ƒAƒNƒVƒ‡ƒ“ƒ}ƒbƒv‚ÌƒXƒe[ƒ^ƒX
+	 * @brief		ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ãƒãƒƒãƒ—ã®ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã‚’å¤‰æ›´ã™ã‚‹
+	 * param[in]	InputStatus	ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ãƒãƒƒãƒ—ã®ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹
 	 * @author		NZ
 	 * @date		24/09/10
 	 */
 	void SetInputState(const InputState _state) { inputState = _state; }
 
 	/**
-	 * @brief		“o˜^‚³‚ê‚½ƒR[ƒ‹ƒoƒbƒNŠÖ”‚ğ‚·‚×‚ÄŒÄ‚Ño‚·
+	 * @brief		ç™»éŒ²ã•ã‚ŒãŸã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã‚’ã™ã¹ã¦å‘¼ã³å‡ºã™
 	 * @author		NZ
 	 * @date		24/09/10
 	 */
@@ -194,16 +194,16 @@ private:
 	}
 
 	/**
-	 * @brief		ƒL[ƒR[ƒh‚ğ’Ç‰Á‚·‚é
-	 * @detail		{} ‚Å•¡”‘I‘ğ‰Â”\
-	 * @param[in]	int ’Ç‰Á‚·‚éƒL[ƒR[ƒh
-	 * @param[in]	const InputType& “ü—Í‚ğŒ©‚éƒRƒ“ƒ\[ƒ‹‚Ìí—Ş
+	 * @brief		ã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã™ã‚‹
+	 * @detail		{} ã§è¤‡æ•°é¸æŠå¯èƒ½
+	 * @param[in]	int è¿½åŠ ã™ã‚‹ã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰
+	 * @param[in]	const InputType& å…¥åŠ›ã‚’è¦‹ã‚‹ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ã®ç¨®é¡
 	 * @author		NZ
 	 * @date		24/09/10
 	 */
 	void AddKeyCode(const unsigned int _keyCode, const InputType& _inputType)
 	{
-		//! “o˜^‚·‚éƒL[î•ñ‚Ì‰Šú‰»éŒ¾
+		//! ç™»éŒ²ã™ã‚‹ã‚­ãƒ¼æƒ…å ±ã®åˆæœŸåŒ–å®£è¨€
 		KeyInfo keyInfo =
 		{
 			_keyCode,
@@ -212,15 +212,15 @@ private:
 			InputState::Waiting,
 		};
 
-		// ƒL[î•ñ‚ğ“o˜^
+		// ã‚­ãƒ¼æƒ…å ±ã‚’ç™»éŒ²
 		keyInfoVec.push_back(keyInfo);
 	}
 
 	/**
-	 * @brief		ƒL[ƒR[ƒh‚ğ’Ç‰Á‚·‚é
-	 * @detail		{} ‚Å•¡”‘I‘ğ‰Â”\
-	 * @param[in]	std::vector<int> ’Ç‰Á‚·‚éƒL[ƒR[ƒh
-	 * @param[in]	const InputType& “ü—Í‚ğŒ©‚éƒRƒ“ƒ\[ƒ‹‚Ìí—Ş
+	 * @brief		ã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã™ã‚‹
+	 * @detail		{} ã§è¤‡æ•°é¸æŠå¯èƒ½
+	 * @param[in]	std::vector<int> è¿½åŠ ã™ã‚‹ã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰
+	 * @param[in]	const InputType& å…¥åŠ›ã‚’è¦‹ã‚‹ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ã®ç¨®é¡
 	 * @author		NZ
 	 * @date		24/09/10
 	 */
@@ -228,7 +228,7 @@ private:
 	{
 		for (auto it = _keyCodeVec.begin(); it != _keyCodeVec.end(); ++it)
 		{
-			//! “o˜^‚·‚éƒL[î•ñ‚Ì‰Šú‰»éŒ¾
+			//! ç™»éŒ²ã™ã‚‹ã‚­ãƒ¼æƒ…å ±ã®åˆæœŸåŒ–å®£è¨€
 			KeyInfo keyInfo =
 			{
 				*it,
@@ -237,15 +237,15 @@ private:
 				InputState::Waiting,
 			};
 
-			// ƒL[î•ñ‚ğ“o˜^
+			// ã‚­ãƒ¼æƒ…å ±ã‚’ç™»éŒ²
 			keyInfoVec.push_back(keyInfo);
 		}
 	}
 
 	/**
-	 * @brief		ƒR[ƒ‹ƒoƒbƒNŠÖ”‚ğ’Ç‰Á‚·‚é
-	 * @param[in]	std::function<void(InputAction::CallBackContext&>)> ’Ç‰Á‚·‚éƒR[ƒ‹ƒoƒbƒNŠÖ”
-	 * @return		const int	“o˜^‚µ‚½ƒR[ƒ‹ƒoƒbƒNŠÖ”‚ÌID
+	 * @brief		ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã‚’è¿½åŠ ã™ã‚‹
+	 * @param[in]	std::function<void(InputAction::CallBackContext&>)> è¿½åŠ ã™ã‚‹ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°
+	 * @return		const int	ç™»éŒ²ã—ãŸã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã®ID
 	 * @author		NZ
 	 * @date		24/09/10
 	 */
@@ -256,27 +256,27 @@ private:
 	}
 
 	/**
-	 * @brief		ƒR[ƒ‹ƒoƒbƒNŠÖ”‚ğíœ‚·‚é
-	 * @param[in]	std::string	íœ‚·‚éƒL[‚Ì‘¶İ‚·‚éƒL[ƒ}ƒbƒv
-	 * @param[in]	const int	íœ‚·‚éƒR[ƒ‹ƒoƒbƒNŠÖ”‚ÌID
+	 * @brief		ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã‚’å‰Šé™¤ã™ã‚‹
+	 * @param[in]	std::string	å‰Šé™¤ã™ã‚‹ã‚­ãƒ¼ã®å­˜åœ¨ã™ã‚‹ã‚­ãƒ¼ãƒãƒƒãƒ—
+	 * @param[in]	const int	å‰Šé™¤ã™ã‚‹ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã®ID
 	 * @author		NZ
 	 * @date		24/09/08
 	 */
 	void DeleteCallBack(const int _id)
 	{
-		// ƒL[ƒR[ƒh‚ª‘¶İ‚µ‚Ä‚¢‚ê‚Îíœ‚·‚é
+		// ã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰ãŒå­˜åœ¨ã—ã¦ã„ã‚Œã°å‰Šé™¤ã™ã‚‹
 		for (auto& it : callBacks)
 			if(it.first == _id)
 				it.second = nullptr;
 	}
 };
 
-// ‘O•ûéŒ¾
+// å‰æ–¹å®£è¨€
 class HandlerWaltan;
 
 /**
  * @class	InputSystem
- * @brief	“ü—Í‚ÌŒŸ’mA“ü—Í‚ÉƒR[ƒ‹ƒoƒbƒNŠÖ”‚ğŒÄ‚ÔƒNƒ‰ƒX
+ * @brief	å…¥åŠ›ã®æ¤œçŸ¥ã€å…¥åŠ›æ™‚ã«ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã‚’å‘¼ã¶ã‚¯ãƒ©ã‚¹
  */
 class InputSystem
 {
@@ -284,33 +284,33 @@ private:
 
 	friend class HandlerWaltan;
 
-	/*     ƒƒ“ƒo•Ï”     */
+	/*     ãƒ¡ãƒ³ãƒå¤‰æ•°     */
 
 	/**
-	 * @brief		ƒAƒNƒeƒBƒu
-	 * @History		24/09/07 ì¬(NZ)
+	 * @brief		ã‚¢ã‚¯ãƒ†ã‚£ãƒ–
+	 * @History		24/09/07 ä½œæˆ(NZ)
 	 */
 	bool active;
 
 	/**
-	 * @brief		ƒL[ƒ}ƒbƒv
-	 * @History		24/09/07 ì¬(NZ)
+	 * @brief		ã‚­ãƒ¼ãƒãƒƒãƒ—
+	 * @History		24/09/07 ä½œæˆ(NZ)
 	 */
 	std::unordered_map<std::string, InputAction*> keyMap;
 
 	/**
-	 * @brief		¶¬‚³‚ê‚½InputSystem‚ÌƒCƒ“ƒXƒ^ƒ“ƒX
-	 * @History		24/09/10 ì¬(NZ)
+	 * @brief		ç”Ÿæˆã•ã‚ŒãŸInputSystemã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹
+	 * @History		24/09/10 ä½œæˆ(NZ)
 	 */
 	static std::vector<InputSystem*> inputSystemVec;
 
 
 public:
 
-	/*     ƒƒ\ƒbƒh     */
+	/*     ãƒ¡ã‚½ãƒƒãƒ‰     */
 
 	/**
-	 * @brief		ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	 * @brief		ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	 * @author		NZ
 	 * @date		24/09/07
 	 */
@@ -320,26 +320,26 @@ public:
 	}
 
 	/**
-	 * @brief		ƒfƒXƒgƒ‰ƒNƒ^
+	 * @brief		ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	 * @author		NZ
 	 * @date		24/09/07
 	 */
 	~InputSystem()
 	{
-		// keyMap‚ğíœ
+		// keyMapã‚’å‰Šé™¤
 		for (auto ptr : keyMap)
 			delete ptr.second;
 		keyMap.clear();
 
-		// “o˜^‚µ‚Ä‚¢‚½InputSystem‚Ì“o˜^î•ñ‚ğÁ‚·
+		// ç™»éŒ²ã—ã¦ã„ãŸInputSystemã®ç™»éŒ²æƒ…å ±ã‚’æ¶ˆã™
 		auto it = std::find(inputSystemVec.begin(), inputSystemVec.end(), this);
 		if (it != inputSystemVec.end())
 			inputSystemVec.erase(it);
 	}
 
 	/**
-	 * @brief		Active‚ğ•ÏX‚·‚é
-	 * @param[in]	bool •ÏXŒã‚Ìbool’l
+	 * @brief		Activeã‚’å¤‰æ›´ã™ã‚‹
+	 * @param[in]	bool å¤‰æ›´å¾Œã®boolå€¤
 	 * @author		NZ
 	 * @date		24/09/07
 	 */
@@ -347,9 +347,9 @@ public:
 
 
 	/**
-	 * @brief		“Á’è‚ÌƒL[ƒ}ƒbƒv‚ğæ“¾‚·‚é
-	 * @param[in]	const string& ƒL[
-	 * @return		const InputAction& ƒL[“ü—Í 
+	 * @brief		ç‰¹å®šã®ã‚­ãƒ¼ãƒãƒƒãƒ—ã‚’å–å¾—ã™ã‚‹
+	 * @param[in]	const string& ã‚­ãƒ¼
+	 * @return		const InputAction& ã‚­ãƒ¼å…¥åŠ› 
 	 * @author		NZ
 	 * @date		24/10/30
 	 */
@@ -357,55 +357,55 @@ public:
 
 
 
-#pragma region ƒL[ƒR[ƒh’Ç‰Á
+#pragma region Add keyCode
 
 	/**
-	 * @brief		ƒ}ƒbƒv‚ÉƒL[‚ğ“o˜^‚·‚é
-	 * @detail		{} ‚Å•¡”“ü—Í‰Â”\
-	 * @param[in]	std::string&	“o˜^‚·‚éƒL[
-	 * @param[in]	const int		ƒL[ƒR[ƒh
-	 * @param[in]	const InputType& “ü—Í‚ğŒ©‚éƒRƒ“ƒ\[ƒ‹‚Ìí—Ş
+	 * @brief		ãƒãƒƒãƒ—ã«ã‚­ãƒ¼ã‚’ç™»éŒ²ã™ã‚‹
+	 * @detail		{} ã§è¤‡æ•°å…¥åŠ›å¯èƒ½
+	 * @param[in]	std::string&	ç™»éŒ²ã™ã‚‹ã‚­ãƒ¼
+	 * @param[in]	const int		ã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰
+	 * @param[in]	const InputType& å…¥åŠ›ã‚’è¦‹ã‚‹ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ã®ç¨®é¡
 	 * @author		NZ
 	 * @date		24/09/07
 	 */
 	void AddKeyCode(const std::string& _key, const unsigned int _inputKey, const InputType& _inputType = InputType::Key)
 	{
-		// ƒL[‚ªŠù‚É‘¶İ‚µ‚Ä‚¢‚éê‡‚Í—v‘f‚ğ’Ç‰Á‚·‚é
+		// ã‚­ãƒ¼ãŒæ—¢ã«å­˜åœ¨ã—ã¦ã„ã‚‹å ´åˆã¯è¦ç´ ã‚’è¿½åŠ ã™ã‚‹
 		auto it = keyMap.find(_key);
-		// ‘¶İ‚µ‚Ä‚¢‚½ê‡
+		// å­˜åœ¨ã—ã¦ã„ãŸå ´åˆ
 		if (it != keyMap.end())
 		{
 			if (it->second->keyInfoVec.size() > 0)
-				// ƒL[ƒR[ƒh‚ª‚·‚Å‚É“o˜^Ï‚İ‚Å‚È‚¯‚ê‚Î
+				// ã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰ãŒã™ã§ã«ç™»éŒ²æ¸ˆã¿ã§ãªã‘ã‚Œã°
 				for (auto it2 = it->second->keyInfoVec.begin(); it2 != it->second->keyInfoVec.end(); ++it2)
 					if (it2->keyCode == _inputKey)
 						return;
 
 			it->second->AddKeyCode(_inputKey, _inputType);
 		}
-		// ‘¶İ‚µ‚Ä‚¢‚È‚©‚Á‚½ê‡‚ÍAV‚½‚ÉƒAƒNƒVƒ‡ƒ“ƒ}ƒbƒv‚ğì¬‚·‚é
+		// å­˜åœ¨ã—ã¦ã„ãªã‹ã£ãŸå ´åˆã¯ã€æ–°ãŸã«ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ãƒãƒƒãƒ—ã‚’ä½œæˆã™ã‚‹
 		else
 			keyMap[_key] = new InputAction(_inputKey, _inputType);
 	}
 
 	/**
-	 * @brief		ƒ}ƒbƒv‚ÉƒL[‚ğ“o˜^‚·‚é
-	 * @detail		{} ‚Å•¡”“ü—Í‰Â”\
-	 * @param[in]	const std::string&		 “o˜^‚·‚éƒL[
-	 * @param[in]	const std::vector<int>&  ƒL[ƒR[ƒh
-	 * @param[in]	const InputType& “ü—Í‚ğŒ©‚éƒRƒ“ƒ\[ƒ‹‚Ìí—Ş
+	 * @brief		ãƒãƒƒãƒ—ã«ã‚­ãƒ¼ã‚’ç™»éŒ²ã™ã‚‹
+	 * @detail		{} ã§è¤‡æ•°å…¥åŠ›å¯èƒ½
+	 * @param[in]	const std::string&		 ç™»éŒ²ã™ã‚‹ã‚­ãƒ¼
+	 * @param[in]	const std::vector<int>&  ã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰
+	 * @param[in]	const InputType& å…¥åŠ›ã‚’è¦‹ã‚‹ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ã®ç¨®é¡
 	 * @author		NZ
 	 * @date		24/09/07
 	 */
 	void AddKeyCode(const std::string& _key, const std::vector<unsigned int>& _inputKey, const InputType& _inputType = InputType::Key)
 	{
-		// ƒL[‚ªŠù‚É‘¶İ‚µ‚Ä‚¢‚éê‡‚Í—v‘f‚ğ’Ç‰Á‚·‚é
+		// ã‚­ãƒ¼ãŒæ—¢ã«å­˜åœ¨ã—ã¦ã„ã‚‹å ´åˆã¯è¦ç´ ã‚’è¿½åŠ ã™ã‚‹
 		auto it = keyMap.find(_key);
-		// ‘¶İ‚µ‚Ä‚¢‚½ê‡
+		// å­˜åœ¨ã—ã¦ã„ãŸå ´åˆ
 		if (it != keyMap.end())
 		{
 			if (it->second->keyInfoVec.size() > 0)
-				// ƒL[ƒR[ƒh‚ª‚·‚Å‚É“o˜^Ï‚İ‚Å‚È‚¯‚ê‚Î
+				// ã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰ãŒã™ã§ã«ç™»éŒ²æ¸ˆã¿ã§ãªã‘ã‚Œã°
 				for (auto it2 = it->second->keyInfoVec.begin(); it2 != it->second->keyInfoVec.end(); ++it2)
 					for (auto keyIt = _inputKey.begin(); keyIt != _inputKey.end(); ++keyIt)
 						if (it2->keyCode == *keyIt)
@@ -413,32 +413,32 @@ public:
 
 			it->second->AddKeyCode(_inputKey, _inputType);
 		}
-		// ‘¶İ‚µ‚Ä‚¢‚È‚©‚Á‚½ê‡‚ÍAV‚½‚ÉƒAƒNƒVƒ‡ƒ“ƒ}ƒbƒv‚ğì¬‚·‚é
+		// å­˜åœ¨ã—ã¦ã„ãªã‹ã£ãŸå ´åˆã¯ã€æ–°ãŸã«ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ãƒãƒƒãƒ—ã‚’ä½œæˆã™ã‚‹
 		else
 			keyMap[_key] = new InputAction(_inputKey, _inputType);
 	}
 
 #pragma endregion
 
-#pragma region ƒL[ƒR[ƒhíœ
+#pragma region ã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰å‰Šé™¤
 
 	/**
-	 * @brief		ƒ}ƒbƒv‚É“o˜^‚µ‚½ƒL[ƒR[ƒh‚ğíœ‚·‚é
-	 * @detail		{} ‚Å•¡”“ü—Í‰Â”\
-	 * @param[in]	const std::string&	íœ‚·‚éƒL[‚Ì‘¶İ‚·‚éƒL[ƒ}ƒbƒv
-	 * @param[in]	const int			íœ‚·‚éƒL[ƒR[ƒh
-	 * @param[in]	const InputType&	íœ‚·‚éƒRƒ“ƒ\[ƒ‹‚Ìí—Ş
+	 * @brief		ãƒãƒƒãƒ—ã«ç™»éŒ²ã—ãŸã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰ã‚’å‰Šé™¤ã™ã‚‹
+	 * @detail		{} ã§è¤‡æ•°å…¥åŠ›å¯èƒ½
+	 * @param[in]	const std::string&	å‰Šé™¤ã™ã‚‹ã‚­ãƒ¼ã®å­˜åœ¨ã™ã‚‹ã‚­ãƒ¼ãƒãƒƒãƒ—
+	 * @param[in]	const int			å‰Šé™¤ã™ã‚‹ã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰
+	 * @param[in]	const InputType&	å‰Šé™¤ã™ã‚‹ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ã®ç¨®é¡
 	 * @author		NZ
 	 * @date		24/09/07
 	 */
 	void DeleteKeyCode(const std::string& _key, const unsigned int _inputKey, const InputType& _inputType)
 	{
-		// ƒL[ƒ}ƒbƒv‚ª‘¶İ‚µ‚È‚¢ê‡‚Í‚»‚Ì‚Ü‚ÜI—¹
+		// ã‚­ãƒ¼ãƒãƒƒãƒ—ãŒå­˜åœ¨ã—ãªã„å ´åˆã¯ãã®ã¾ã¾çµ‚äº†
 		auto keyMapIt = keyMap.find(_key);
 		if (keyMapIt == keyMap.end())
 			return;
 
-		// ƒL[ƒR[ƒh‚ª‘¶İ‚µ‚Ä‚¢‚ê‚Îíœ‚·‚é
+		// ã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰ãŒå­˜åœ¨ã—ã¦ã„ã‚Œã°å‰Šé™¤ã™ã‚‹
 		for (auto it = keyMapIt->second->keyInfoVec.begin(); it != keyMapIt->second->keyInfoVec.end(); ++it)
 			if (it->keyCode == _inputKey && it->inputType == _inputType)
 			{
@@ -448,24 +448,24 @@ public:
 	}
 
 	/**
-	 * @brief		ƒ}ƒbƒv‚É“o˜^‚µ‚½ƒL[ƒR[ƒh‚ğíœ‚·‚é
-	 * @detail		{} ‚Å•¡”“ü—Í‰Â”\
-	 * @param[in]	const std::string&			íœ‚·‚éƒL[‚Ì‘¶İ‚·‚éƒL[ƒ}ƒbƒv
-	 * @param[in]	const std::vector<int>&		íœ‚·‚éƒL[ƒR[ƒh
-	 * @param[in]	const InputType&			íœ‚·‚éƒRƒ“ƒ\[ƒ‹‚Ìí—Ş
+	 * @brief		ãƒãƒƒãƒ—ã«ç™»éŒ²ã—ãŸã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰ã‚’å‰Šé™¤ã™ã‚‹
+	 * @detail		{} ã§è¤‡æ•°å…¥åŠ›å¯èƒ½
+	 * @param[in]	const std::string&			å‰Šé™¤ã™ã‚‹ã‚­ãƒ¼ã®å­˜åœ¨ã™ã‚‹ã‚­ãƒ¼ãƒãƒƒãƒ—
+	 * @param[in]	const std::vector<int>&		å‰Šé™¤ã™ã‚‹ã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰
+	 * @param[in]	const InputType&			å‰Šé™¤ã™ã‚‹ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ã®ç¨®é¡
 	 * @author		NZ
 	 * @date		24/09/07
 	 */
 	void DeleteKeyCode(const std::string& _key, const std::vector<unsigned int> _inputKey, const InputType& _inputType)
 	{
-		// ƒL[ƒ}ƒbƒv‚ª‘¶İ‚µ‚È‚¢ê‡‚Í‚»‚Ì‚Ü‚ÜI—¹
+		// ã‚­ãƒ¼ãƒãƒƒãƒ—ãŒå­˜åœ¨ã—ãªã„å ´åˆã¯ãã®ã¾ã¾çµ‚äº†
 		auto keyMapIt = keyMap.find(_key);
 		if (keyMapIt == keyMap.end())
 			return;
 
 		for(auto keyCodeIt = _inputKey.begin(); keyCodeIt != _inputKey.end(); ++keyCodeIt)
 		{
-			// ƒL[ƒR[ƒh‚ª‘¶İ‚µ‚Ä‚¢‚ê‚Îíœ‚·‚é
+			// ã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰ãŒå­˜åœ¨ã—ã¦ã„ã‚Œã°å‰Šé™¤ã™ã‚‹
 			for (auto it = keyMapIt->second->keyInfoVec.begin(); it != keyMapIt->second->keyInfoVec.end(); ++it)
 				if (it->keyCode == *keyCodeIt && it->inputType == _inputType)
 				{
@@ -477,77 +477,77 @@ public:
 
 #pragma endregion
 
-#pragma region ƒR[ƒ‹ƒoƒbƒN’Ç‰Á
+#pragma region Add callback
 
 	/**
-	 * @brief		InputAction‚ÉƒR[ƒ‹ƒoƒbƒNŠÖ”‚ğ“o˜^‚·‚é
-	 * @param[in]	std::string&	“o˜^‚·‚éƒL[
-	 * @param[in]	std::function<void(InputAction::CallBackContext&)> “o˜^‚·‚éƒR[ƒ‹ƒoƒbƒNŠÖ”
-	 * @return		int	“o˜^‚µ‚½ƒR[ƒ‹ƒoƒbƒNŠÖ”‚ÌID
+	 * @brief		InputActionã«ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã‚’ç™»éŒ²ã™ã‚‹
+	 * @param[in]	std::string&	ç™»éŒ²ã™ã‚‹ã‚­ãƒ¼
+	 * @param[in]	std::function<void(InputAction::CallBackContext&)> ç™»éŒ²ã™ã‚‹ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°
+	 * @return		int	ç™»éŒ²ã—ãŸã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã®ID
 	 * @author		NZ
 	 * @date		24/09/08
 	 */
 	int AddCallBack(const std::string& _key, const std::function<void(const InputAction::CallBackContext&)> _callBack)
 	{
-		//! “o˜^‚µ‚½ƒR[ƒ‹ƒoƒbƒNŠÖ”‚ÌID
+		//! ç™»éŒ²ã—ãŸã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã®ID
 		int id = -1;
 
-		// ƒL[‚ªŠù‚É‘¶İ‚µ‚Ä‚¢‚éê‡‚Í—v‘f‚ğ’Ç‰Á‚·‚é
+		// ã‚­ãƒ¼ãŒæ—¢ã«å­˜åœ¨ã—ã¦ã„ã‚‹å ´åˆã¯è¦ç´ ã‚’è¿½åŠ ã™ã‚‹
 		auto it = keyMap.find(_key);
-		// ‘¶İ‚µ‚Ä‚¢‚½ê‡
+		// å­˜åœ¨ã—ã¦ã„ãŸå ´åˆ
 		if (it != keyMap.end())
 			id = it->second->AddCallBack(_callBack);
-		// ‘¶İ‚µ‚Ä‚¢‚È‚©‚Á‚½ê‡‚ÍAV‚½‚ÉƒAƒNƒVƒ‡ƒ“ƒ}ƒbƒv‚ğì¬‚·‚é
+		// å­˜åœ¨ã—ã¦ã„ãªã‹ã£ãŸå ´åˆã¯ã€æ–°ãŸã«ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ãƒãƒƒãƒ—ã‚’ä½œæˆã™ã‚‹
 		else
 		{
 			keyMap[_key] = new InputAction();
 			id = keyMap[_key]->AddCallBack(_callBack);
 		}
 
-		// “o˜^‚µ‚½ID‚ğ•Ô‚·
+		// ç™»éŒ²ã—ãŸIDã‚’è¿”ã™
 		return id;
 	}
 
 #pragma endregion
 
-#pragma region ƒR[ƒ‹ƒoƒbƒNíœ
+#pragma region ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯å‰Šé™¤
 
 	/**
-	 * @brief		InputAction‚ÉƒR[ƒ‹ƒoƒbƒNŠÖ”‚ğ“o˜^‚·‚é
-	 * @param[in]	std::string	íœ‚·‚éƒL[‚Ì‘¶İ‚·‚éƒL[ƒ}ƒbƒv
-	 * @param[in]	const int	íœ‚·‚éƒR[ƒ‹ƒoƒbƒNŠÖ”‚ÌID
+	 * @brief		InputActionã«ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã‚’ç™»éŒ²ã™ã‚‹
+	 * @param[in]	std::string	å‰Šé™¤ã™ã‚‹ã‚­ãƒ¼ã®å­˜åœ¨ã™ã‚‹ã‚­ãƒ¼ãƒãƒƒãƒ—
+	 * @param[in]	const int	å‰Šé™¤ã™ã‚‹ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã®ID
 	 * @author		NZ
 	 * @date		24/09/08
 	 */
 	void DeleteCallBack(const std::string& _key, const int _id)
 	{
-		// ƒL[ƒ}ƒbƒv‚ª‘¶İ‚µ‚È‚¢ê‡‚Í‚»‚Ì‚Ü‚ÜI—¹
+		// ã‚­ãƒ¼ãƒãƒƒãƒ—ãŒå­˜åœ¨ã—ãªã„å ´åˆã¯ãã®ã¾ã¾çµ‚äº†
 		auto keyMapIt = keyMap.find(_key);
 		if (keyMapIt == keyMap.end())
 			return;
 
-		// ƒL[ƒR[ƒh‚ª‘¶İ‚µ‚Ä‚¢‚ê‚Îíœ‚·‚é
+		// ã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰ãŒå­˜åœ¨ã—ã¦ã„ã‚Œã°å‰Šé™¤ã™ã‚‹
 		keyMapIt->second->DeleteCallBack(_id);
 	}
 
 #pragma endregion
 
-#pragma region ƒL[ƒ}ƒbƒvíœ
+#pragma region ã‚­ãƒ¼ãƒãƒƒãƒ—å‰Šé™¤
 
 	/**
-	 * @brief		“o˜^‚³‚ê‚Ä‚¢‚éƒL[ƒ}ƒbƒv‚ğíœ‚·‚é
-	 * @param[in]	std::string& _key íœ‚·‚éƒL[ƒ}ƒbƒv‚ÌƒL[
+	 * @brief		ç™»éŒ²ã•ã‚Œã¦ã„ã‚‹ã‚­ãƒ¼ãƒãƒƒãƒ—ã‚’å‰Šé™¤ã™ã‚‹
+	 * @param[in]	std::string& _key å‰Šé™¤ã™ã‚‹ã‚­ãƒ¼ãƒãƒƒãƒ—ã®ã‚­ãƒ¼
 	 * @author		NZ
 	 * @date		24/10/02
 	 */
 	void DeleteKeyMap(const std::string& _key)
 	{
-		// ƒL[ƒ}ƒbƒv‚ª‘¶İ‚µ‚È‚¢ê‡‚Í‚»‚Ì‚Ü‚ÜI—¹
+		// ã‚­ãƒ¼ãƒãƒƒãƒ—ãŒå­˜åœ¨ã—ãªã„å ´åˆã¯ãã®ã¾ã¾çµ‚äº†
 		auto keyMapIt = keyMap.find(_key);
 		if (keyMapIt == keyMap.end())
 			return;
 
-		// íœˆ—
+		// å‰Šé™¤å‡¦ç†
 		keyMap.erase(keyMapIt);
 	}
 
@@ -558,36 +558,36 @@ public:
 private:
 
 	/**
-	 * @brief		ƒAƒNƒVƒ‡ƒ“ƒ}ƒbƒv‚É“o˜^‚³‚ê‚Ä‚¢‚éƒL[‚ğŠÄ‹‚·‚é
+	 * @brief		ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ãƒãƒƒãƒ—ã«ç™»éŒ²ã•ã‚Œã¦ã„ã‚‹ã‚­ãƒ¼ã‚’ç›£è¦–ã™ã‚‹
 	 * @author		NZ
 	 * @date		24/09/08
 	 */
 	void KeyCheck()
 	{
-		// “o˜^‚³‚ê‚Ä‚¢‚éƒL[‚Ì“ü—Íó‘Ô‚ğŠÄ‹
+		// ç™»éŒ²ã•ã‚Œã¦ã„ã‚‹ã‚­ãƒ¼ã®å…¥åŠ›çŠ¶æ…‹ã‚’ç›£è¦–
 		for (auto it = keyMap.begin(); it != keyMap.end(); ++it)
 		{
-			//! ‚±‚ÌƒAƒNƒVƒ‡ƒ“ƒ}ƒbƒv“à‚Å“ü—Í‚ª‚ ‚Á‚½‚©
+			//! ã“ã®ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ãƒãƒƒãƒ—å†…ã§å…¥åŠ›ãŒã‚ã£ãŸã‹
 			bool isInput = false;
-			//! “ü—ÍŠÔ
+			//! å…¥åŠ›æ™‚é–“
 			unsigned int inputTime = 0;			
-			//! DInput‚Ì“ü—Í
+			//! DInputã®å…¥åŠ›
 			DINPUT_JOYSTATE dInput;
-			// ‰Šú‰»
+			// åˆæœŸåŒ–
 			memset(&dInput, NULL, sizeof(DINPUT_JOYSTATE));
 
 			for (auto it2 = it->second->GetKeyInfoRef().begin(); it2 != it->second->GetKeyInfoRef().end(); ++it2)
 			{
-				//! DInput‚Ì“ü—Í‚ª‚ ‚Á‚½ê‡A“ü—Í‚ª‚ ‚Á‚½‚±‚Æ‚É‚·‚é
+				//! DInputã®å…¥åŠ›ãŒã‚ã£ãŸå ´åˆã€å…¥åŠ›ãŒã‚ã£ãŸã“ã¨ã«ã™ã‚‹
 				bool isDInput = false;
-				// DInput‚Ì“ü—Í‚ğæ“¾‚·‚é
-				// “ü—Íƒ^ƒCƒv‚ª KEY or Pad1 ‚Ìê‡‚ÍPad1‚Ì“ü—Í‚ğæ“¾‚·‚é 
+				// DInputã®å…¥åŠ›ã‚’å–å¾—ã™ã‚‹
+				// å…¥åŠ›ã‚¿ã‚¤ãƒ—ãŒ KEY or Pad1 ã®å ´åˆã¯Pad1ã®å…¥åŠ›ã‚’å–å¾—ã™ã‚‹ 
 				if(it2->inputType != InputType::Key && it2->keyCode == PAD_INPUT_DINPUT)
 				{
 					GetJoypadDirectInputState(it2->inputType == InputType::Key_Pad1 ? (int)InputType::Pad1 : (int)it2->inputType, &dInput);					
 
 					//
-					// ƒpƒbƒh‚Ì“ü—Í‚ª‚ ‚Á‚½‚©‚ğ’²‚×‚é
+					// ãƒ‘ãƒƒãƒ‰ã®å…¥åŠ›ãŒã‚ã£ãŸã‹ã‚’èª¿ã¹ã‚‹
 					// 
 					if (dInput.X != NULL || dInput.Y != NULL || dInput.Z != NULL || dInput.Rx != NULL || dInput.Ry != NULL || dInput.Rz != NULL ||
 						dInput.Slider[0] != NULL || dInput.Slider[1] != NULL)
@@ -600,66 +600,66 @@ private:
 							if (dInput.Buttons[i] != 0) isDInput = true;
 				}
 
-				// “o˜^‚³‚ê‚½ƒL[‚Ì“ü—Íó‘Ô‚ğŠm”F
+				// ç™»éŒ²ã•ã‚ŒãŸã‚­ãƒ¼ã®å…¥åŠ›çŠ¶æ…‹ã‚’ç¢ºèª
 				if ((it2->inputType == InputType::Key && CheckHitKey(it2->keyCode)) ||
 					(GetJoypadInputState((int)it2->inputType) & it2->keyCode) ||
 					(it2->keyCode == PAD_INPUT_DINPUT && isDInput))
 				{
-					// “ü—Í‚ª‚ ‚Á‚½
+					// å…¥åŠ›ãŒã‚ã£ãŸ
 					isInput = true;
 
-					// ƒL[‚Ì“ü—Íó‘Ô‚Åƒpƒ‰ƒ[ƒ^[‚ğ•Ï‚¦‚é
+					// ã‚­ãƒ¼ã®å…¥åŠ›çŠ¶æ…‹ã§ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ¼ã‚’å¤‰ãˆã‚‹
 					switch (it2->inputState)
 					{
 					case InputState::Waiting:
 						it2->inputState = InputState::Started;
-						// ÀsŠÔ‚ğ•ÛŠÇ
+						// å®Ÿè¡Œæ™‚é–“ã‚’ä¿ç®¡
 						inputTime = it2->inputTime = GetNowCount();
 						break;
 
 					case InputState::Started:
-						// “ü—Í’†‚Éƒpƒ‰ƒ[ƒ^[‚ğ•ÏX
+						// å…¥åŠ›ä¸­ã«ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ¼ã‚’å¤‰æ›´
 						it2->inputState = InputState::Performed;
 						inputTime = it2->inputTime;
 						break;
 
 					case InputState::Performed:
-						// ‰Ÿ‰ºó‘Ô‚ÌŒp‘±‚È‚½‚ßAƒpƒ‰ƒ[ƒ^[‚Ì•ÏX‚Í‚È‚µ
+						// æŠ¼ä¸‹çŠ¶æ…‹ã®ç¶™ç¶šãªãŸã‚ã€ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ¼ã®å¤‰æ›´ã¯ãªã—
 						inputTime = it2->inputTime;
 						break;
 
 					case InputState::Canceled:
 						it2->inputState = InputState::Started;
-						// ÀsŠÔ‚ğ•ÛŠÇ
+						// å®Ÿè¡Œæ™‚é–“ã‚’ä¿ç®¡
 						inputTime = it2->inputTime = GetNowCount();
 						break;
 					}
 				}
-				// “ü—Í‚ª‚È‚©‚Á‚½
+				// å…¥åŠ›ãŒãªã‹ã£ãŸ
 				else
 				{
-					// ƒL[‚Ì“ü—Íó‘Ô‚Åƒpƒ‰ƒ[ƒ^[‚ğ•Ï‚¦‚é
+					// ã‚­ãƒ¼ã®å…¥åŠ›çŠ¶æ…‹ã§ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ¼ã‚’å¤‰ãˆã‚‹
 					switch (it2->inputState)
 					{
 					case InputState::Waiting:
 						inputTime = it2->inputTime;
-						// ‘Ò‹@ó‘Ô‚ğŒp‘±‚µ‚Ä‚¢‚é‚½‚ßA•ÏX‚È‚µ
+						// å¾…æ©ŸçŠ¶æ…‹ã‚’ç¶™ç¶šã—ã¦ã„ã‚‹ãŸã‚ã€å¤‰æ›´ãªã—
 						break;
 
 					case InputState::Started:
-						// “ü—ÍI—¹‚Ìƒpƒ‰ƒ[ƒ^[‚É•ÏX
+						// å…¥åŠ›çµ‚äº†ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ¼ã«å¤‰æ›´
 						it2->inputState = InputState::Canceled;
 						inputTime = it2->inputTime;
 						break;
 
 					case InputState::Performed:
-						// “ü—ÍI—¹‚Ìƒpƒ‰ƒ[ƒ^[‚É•ÏX
+						// å…¥åŠ›çµ‚äº†ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ¼ã«å¤‰æ›´
 						it2->inputState = InputState::Canceled;
 						inputTime = it2->inputTime;
 						break;
 
 					case InputState::Canceled:
-						// “ü—Í‘Ò‹@‚Ìƒpƒ‰ƒ[ƒ^[‚É•ÏX
+						// å…¥åŠ›å¾…æ©Ÿã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ¼ã«å¤‰æ›´
 						it2->inputState = InputState::Waiting;
 						inputTime = it2->inputTime;
 						break;
@@ -667,10 +667,10 @@ private:
 				}
 			}
 
-			// “ü—Í‚ª‚ ‚Á‚½ê‡
+			// å…¥åŠ›ãŒã‚ã£ãŸå ´åˆ
 			if (isInput)
 			{
-				// ƒL[ƒ}ƒbƒv‚ÌInputStatus‚ğ•ÏX‚·‚é
+				// ã‚­ãƒ¼ãƒãƒƒãƒ—ã®InputStatusã‚’å¤‰æ›´ã™ã‚‹
 				switch (it->second->GetInputState())
 				{
 				case InputState::Waiting:
@@ -680,32 +680,32 @@ private:
 					it->second->SetInputState(InputState::Performed);
 					break;
 				case InputState::Performed:
-					// “ü—Íó‘Ô‚ªŒp‘±‚È‚½‚ßAƒXƒe[ƒ^ƒX‚Ì•ÏX‚È‚µ
+					// å…¥åŠ›çŠ¶æ…‹ãŒç¶™ç¶šãªãŸã‚ã€ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã®å¤‰æ›´ãªã—
 					break;
 				case InputState::Canceled:
 					it->second->SetInputState(InputState::Started);
 					break;
 				}
-				// “o˜^‚³‚ê‚½ƒR[ƒ‹ƒoƒbƒNŠÖ”‚ğ‚·‚×‚ÄŒÄ‚Ño‚·
+				// ç™»éŒ²ã•ã‚ŒãŸã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã‚’ã™ã¹ã¦å‘¼ã³å‡ºã™
 				it->second->CallCallbacks({ it->second->GetInputState(),inputTime, it->second->GetKeyInfoVec(), dInput});
 			}
-			// “ü—Í‚ª‚È‚©‚Á‚½ê‡
+			// å…¥åŠ›ãŒãªã‹ã£ãŸå ´åˆ
 			else
 			{
-				// ƒL[ƒ}ƒbƒv‚ÌInputStatus‚ğ•ÏX‚·‚é
+				// ã‚­ãƒ¼ãƒãƒƒãƒ—ã®InputStatusã‚’å¤‰æ›´ã™ã‚‹
 				switch (it->second->GetInputState())
 				{
 				case InputState::Waiting:
-					// “ü—Íó‘Ô‚ªŒp‘±‚È‚½‚ßAƒXƒe[ƒ^ƒX‚Ì•ÏX‚È‚µ
+					// å…¥åŠ›çŠ¶æ…‹ãŒç¶™ç¶šãªãŸã‚ã€ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã®å¤‰æ›´ãªã—
 					break;
 				case InputState::Started:
 					it->second->SetInputState(InputState::Canceled);
-					// “o˜^‚³‚ê‚½ƒR[ƒ‹ƒoƒbƒNŠÖ”‚ğ‚·‚×‚ÄŒÄ‚Ño‚·
+					// ç™»éŒ²ã•ã‚ŒãŸã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã‚’ã™ã¹ã¦å‘¼ã³å‡ºã™
 					it->second->CallCallbacks({ it->second->GetInputState(),inputTime, it->second->GetKeyInfoVec(), dInput });
 					break;
 				case InputState::Performed:
 					it->second->SetInputState(InputState::Canceled);
-					// “o˜^‚³‚ê‚½ƒR[ƒ‹ƒoƒbƒNŠÖ”‚ğ‚·‚×‚ÄŒÄ‚Ño‚·
+					// ç™»éŒ²ã•ã‚ŒãŸã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã‚’ã™ã¹ã¦å‘¼ã³å‡ºã™
 					it->second->CallCallbacks({ it->second->GetInputState(),inputTime, it->second->GetKeyInfoVec(),dInput });
 					break;
 				case InputState::Canceled:
@@ -717,7 +717,7 @@ private:
 	}
 
 	/**
-	 * @brief		–ˆFŒÄ‚Î‚ê‚éƒƒ\ƒbƒh
+	 * @brief		æ¯Få‘¼ã°ã‚Œã‚‹ãƒ¡ã‚½ãƒƒãƒ‰
 	 * @author		NZ
 	 * @date		24/09/10
 	 */

@@ -1,7 +1,7 @@
 #include "h/HWDoTween.h"
 
 
-// Ã“Iƒƒ“ƒo•Ï”‚Ì‰Šú‰»
+// é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°ã®åˆæœŸåŒ–
 std::unordered_map<HWDotween::TweenEvent*, HWDotween::TweenCallback*> HWDotween::tweens = {};
 
 
@@ -9,33 +9,33 @@ void HWDotween::Update()
 {
 	for (auto it = tweens.begin(); it != tweens.end();)
 	{
-		// TweenƒCƒxƒ“ƒg‚ğÀs
+		// Tweenã‚¤ãƒ™ãƒ³ãƒˆã‚’å®Ÿè¡Œ
 		it->first->Execute();
 
-		// Tween‚ÌƒLƒƒƒ“ƒZƒ‹
+		// Tweenã®ã‚­ãƒ£ãƒ³ã‚»ãƒ«
 		if(it->first->isCancel)
 		{
 			//
-			// “o˜^‚ğ‰ğœ
+			// ç™»éŒ²ã‚’è§£é™¤
 			//
 
 			delete it->first;
 			delete it->second;
-			it = tweens.erase(it); // —v‘f‚ğíœ‚µAƒCƒeƒŒ[ƒ^‚ğXV
+			it = tweens.erase(it); // è¦ç´ ã‚’å‰Šé™¤ã—ã€ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿ã‚’æ›´æ–°
 		}
-		// TweenŠ®—¹‚ÌƒR[ƒ‹ƒoƒbƒN‚ğŒÄ‚Ño‚·
+		// Tweenå®Œäº†æ™‚ã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ã‚’å‘¼ã³å‡ºã™
 		else if(it->first->complete)
 		{
 			if(it->second->onComplete)
 				it->second->onComplete();
 
 			//
-			// “o˜^‚ğ‰ğœ
+			// ç™»éŒ²ã‚’è§£é™¤
 			//
 
 			delete it->first;
 			delete it->second;
-			it = tweens.erase(it); // —v‘f‚ğíœ‚µAƒCƒeƒŒ[ƒ^‚ğXV
+			it = tweens.erase(it); // è¦ç´ ã‚’å‰Šé™¤ã—ã€ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿ã‚’æ›´æ–°
 		}
 		else
 			++it;
@@ -45,25 +45,25 @@ void HWDotween::Update()
 
 HWDotween::TweenCallback* HWDotween::DoMove(HWTransform* _transform, const VECTOR& _targetPos, int _duration)
 {
-	//! –ß‚è’l
+	//! æˆ»ã‚Šå€¤
 	TweenCallback* tweenCallback = new TweenCallback();
-	//! TweenƒCƒxƒ“ƒg
+	//! Tweenã‚¤ãƒ™ãƒ³ãƒˆ
 	TweenEvent* tweenEvent = new TweenEvent();
 
-	// –ß‚è’l‚©‚ç•R‚Ã‚¢‚Ä‚¢‚éTweenEvent‚ğQÆ‚Å‚«‚é‚æ‚¤‚É‚·‚é
+	// æˆ»ã‚Šå€¤ã‹ã‚‰ç´ã¥ã„ã¦ã„ã‚‹TweenEventã‚’å‚ç…§ã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹
 	tweenCallback->tweenEvent = tweenEvent;
 
 	//
-	// Tween‚Ì“o˜^
+	// Tweenã®ç™»éŒ²
 	//
 
 	tweens[tweenEvent] = tweenCallback;
 	tweenEvent->Subscribe_Move([&](TweenEvent* _tweenEvent, int _frame)
 		{
 			float rate = (float)_tweenEvent->elapsedTime / (float)_tweenEvent->duration;
-			// ˆÚ“®ˆ—
+			// ç§»å‹•å‡¦ç†
 			_tweenEvent->transform->position = Lerp(_tweenEvent->prev, _tweenEvent->target, rate);
-			// Š®—¹”»’è
+			// å®Œäº†åˆ¤å®š
 			if (_tweenEvent->elapsedTime >= _tweenEvent->duration)
 				_tweenEvent->complete = true;
 		}, _transform, _targetPos, _duration);
@@ -73,25 +73,25 @@ HWDotween::TweenCallback* HWDotween::DoMove(HWTransform* _transform, const VECTO
 
 HWDotween::TweenCallback* HWDotween::DoRotate(HWTransform* _transform, const VECTOR& _targetRot, int _duration)
 {
-	//! –ß‚è’l
+	//! æˆ»ã‚Šå€¤
 	TweenCallback* tweenCallback = new TweenCallback();
-	//! TweenƒCƒxƒ“ƒg
+	//! Tweenã‚¤ãƒ™ãƒ³ãƒˆ
 	TweenEvent* tweenEvent = new TweenEvent();
 
-	// –ß‚è’l‚©‚ç•R‚Ã‚¢‚Ä‚¢‚éTweenEvent‚ğQÆ‚Å‚«‚é‚æ‚¤‚É‚·‚é
+	// æˆ»ã‚Šå€¤ã‹ã‚‰ç´ã¥ã„ã¦ã„ã‚‹TweenEventã‚’å‚ç…§ã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹
 	tweenCallback->tweenEvent = tweenEvent;
 
 	//
-	// Tween‚Ì“o˜^
+	// Tweenã®ç™»éŒ²
 	//
 
 	tweens[tweenEvent] = tweenCallback;
 	tweenEvent->Subscribe_Rot([&](TweenEvent* _tweenEvent, int _frame)
 		{
 			float rate = (float)_tweenEvent->elapsedTime / (float)_tweenEvent->duration;
-			// ˆÚ“®ˆ—
+			// ç§»å‹•å‡¦ç†
 			_tweenEvent->transform->rotate = Lerp(_tweenEvent->prev, _tweenEvent->target, rate);
-			// Š®—¹”»’è
+			// å®Œäº†åˆ¤å®š
 			if (_tweenEvent->elapsedTime >= _tweenEvent->duration)
 				_tweenEvent->complete = true;
 		}, _transform, _targetRot, _duration);
@@ -101,25 +101,25 @@ HWDotween::TweenCallback* HWDotween::DoRotate(HWTransform* _transform, const VEC
 
 HWDotween::TweenCallback* HWDotween::DoScale(HWTransform* _transform, const VECTOR& _targetScale, int _duration)
 {
-	//! –ß‚è’l
+	//! æˆ»ã‚Šå€¤
 	TweenCallback* tweenCallback = new TweenCallback();
-	//! TweenƒCƒxƒ“ƒg
+	//! Tweenã‚¤ãƒ™ãƒ³ãƒˆ
 	TweenEvent* tweenEvent = new TweenEvent();
 
-	// –ß‚è’l‚©‚ç•R‚Ã‚¢‚Ä‚¢‚éTweenEvent‚ğQÆ‚Å‚«‚é‚æ‚¤‚É‚·‚é
+	// æˆ»ã‚Šå€¤ã‹ã‚‰ç´ã¥ã„ã¦ã„ã‚‹TweenEventã‚’å‚ç…§ã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹
 	tweenCallback->tweenEvent = tweenEvent;
 
 	//
-	// Tween‚Ì“o˜^
+	// Tweenã®ç™»éŒ²
 	//
 
 	tweens[tweenEvent] = tweenCallback;
 	tweenEvent->Subscribe_Scale([&](TweenEvent* _tweenEvent, int _frame)
 		{
 			float rate = (float)_tweenEvent->elapsedTime / (float)_tweenEvent->duration;
-			// ˆÚ“®ˆ—
+			// ç§»å‹•å‡¦ç†
 			_tweenEvent->transform->scale = Lerp(_tweenEvent->prev, _tweenEvent->target, rate);
-			// Š®—¹”»’è
+			// å®Œäº†åˆ¤å®š
 			if (_tweenEvent->elapsedTime >= _tweenEvent->duration)
 				_tweenEvent->complete = true;
 		}, _transform, _targetScale, _duration);
@@ -129,25 +129,25 @@ HWDotween::TweenCallback* HWDotween::DoScale(HWTransform* _transform, const VECT
 
 HWDotween::TweenCallback* HWDotween::DoAction(VECTOR* _posPtr, const VECTOR& _targetPos, int _duration)
 {
-	//! –ß‚è’l
+	//! æˆ»ã‚Šå€¤
 	TweenCallback* tweenCallback = new TweenCallback();
-	//! TweenƒCƒxƒ“ƒg
+	//! Tweenã‚¤ãƒ™ãƒ³ãƒˆ
 	TweenEvent* tweenEvent = new TweenEvent();
 
-	// –ß‚è’l‚©‚ç•R‚Ã‚¢‚Ä‚¢‚éTweenEvent‚ğQÆ‚Å‚«‚é‚æ‚¤‚É‚·‚é
+	// æˆ»ã‚Šå€¤ã‹ã‚‰ç´ã¥ã„ã¦ã„ã‚‹TweenEventã‚’å‚ç…§ã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹
 	tweenCallback->tweenEvent = tweenEvent;
 
 	//
-	// Tween‚Ì“o˜^
+	// Tweenã®ç™»éŒ²
 	//
 
 	tweens[tweenEvent] = tweenCallback;
 	tweenEvent->Subscribe_Action([&](TweenEvent* _tweenEvent, int _frame)
 		{
 			float rate = (float)_tweenEvent->elapsedTime / (float)_tweenEvent->duration;
-			// ˆÚ“®ˆ—
+			// ç§»å‹•å‡¦ç†
 			*_tweenEvent->animPtr = Lerp(_tweenEvent->prev, _tweenEvent->target, rate);
-			// Š®—¹”»’è
+			// å®Œäº†åˆ¤å®š
 			if (_tweenEvent->elapsedTime >= _tweenEvent->duration)
 				_tweenEvent->complete = true;
 		}, _posPtr, _targetPos, _duration);
@@ -159,16 +159,16 @@ HWDotween::TweenCallback* HWDotween::DoAction(VECTOR* _posPtr, const VECTOR& _ta
 
 HWDotween::TweenCallback* HWDotween::DoDelay(int _duration)
 {
-	//! –ß‚è’l
+	//! æˆ»ã‚Šå€¤
 	TweenCallback* tweenCallback = new TweenCallback();
-	//! TweenƒCƒxƒ“ƒg
+	//! Tweenã‚¤ãƒ™ãƒ³ãƒˆ
 	TweenEvent* tweenEvent = new TweenEvent();
 
-	// –ß‚è’l‚©‚ç•R‚Ã‚¢‚Ä‚¢‚éTweenEvent‚ğQÆ‚Å‚«‚é‚æ‚¤‚É‚·‚é
+	// æˆ»ã‚Šå€¤ã‹ã‚‰ç´ã¥ã„ã¦ã„ã‚‹TweenEventã‚’å‚ç…§ã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹
 	tweenCallback->tweenEvent = tweenEvent;
 
 	//
-	// Tween‚Ì“o˜^
+	// Tweenã®ç™»éŒ²
 	//
 
 	tweens[tweenEvent] = tweenCallback;

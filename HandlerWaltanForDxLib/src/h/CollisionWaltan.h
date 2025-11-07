@@ -10,172 +10,172 @@
 /**
 * @author   NZ
 * @date     24/08/09
-* @note		ColliderWaltan‚Ì’è‹`ƒtƒ@ƒCƒ‹
+* @note		ColliderWaltanã®å®šç¾©ãƒ•ã‚¡ã‚¤ãƒ«
 */
 
 
 /**
  * @class	ColliderWaltan
- * @brief   –ˆFƒRƒ‰ƒCƒ_[ƒRƒ“ƒ|[ƒlƒ“ƒg‚Ì‚ ‚½‚è”»’è‚ğŠÄ‹‚µAğŒ‚É‰‚¶‚½ƒnƒ“ƒhƒ‰[‚ğŒÄ‚Ño‚·
+ * @brief   æ¯Fã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®ã‚ãŸã‚Šåˆ¤å®šã‚’ç›£è¦–ã—ã€æ¡ä»¶ã«å¿œã˜ãŸãƒãƒ³ãƒ‰ãƒ©ãƒ¼ã‚’å‘¼ã³å‡ºã™
  */
 class CollisionWaltan
 {
-	// “Á’è‚ÌƒNƒ‰ƒXˆÈŠO‚©‚ç‚ÌƒAƒNƒZƒX‚ğ–h‚®‚½‚ß‚ÌƒtƒŒƒ“ƒhéŒ¾
+	// ç‰¹å®šã®ã‚¯ãƒ©ã‚¹ä»¥å¤–ã‹ã‚‰ã®ã‚¢ã‚¯ã‚»ã‚¹ã‚’é˜²ããŸã‚ã®ãƒ•ãƒ¬ãƒ³ãƒ‰å®£è¨€
 	friend class HandlerWaltan;
     friend class HWBoxCollider;
     friend class HWSphereCollider;
     friend class HWCapsuleCollider;
     friend class HWModelCollider;
 
-    // ƒRƒŠƒWƒ‡ƒ“ƒ`ƒFƒbƒN‚Ég‚¤\‘¢‘Ì
+    // ã‚³ãƒªã‚¸ãƒ§ãƒ³ãƒã‚§ãƒƒã‚¯ã«ä½¿ã†æ§‹é€ ä½“
 
     /**
     * @struct	OBB
-    * @brief	—§•û‘Ì‚Ì“–‚½‚è”»’è
+    * @brief	ç«‹æ–¹ä½“ã®å½“ãŸã‚Šåˆ¤å®š
     */
     struct OBB {
-        //! OBB‚Ì’†SÀ•W
+        //! OBBã®ä¸­å¿ƒåº§æ¨™
         VECTOR c;      
-        //! OBB‚ÌŠe²(³‹K‰»‚³‚ê‚½)
+        //! OBBã®å„è»¸(æ­£è¦åŒ–ã•ã‚ŒãŸ)
         VECTOR u[3];     
-        //! Še²•ûŒü‚Ìƒn[ƒtƒTƒCƒY
+        //! å„è»¸æ–¹å‘ã®ãƒãƒ¼ãƒ•ã‚µã‚¤ã‚º
         VECTOR e;
     };
 
 private:
 
-    /*     ƒƒ“ƒo•Ï”     */
+    /*     ãƒ¡ãƒ³ãƒå¤‰æ•°     */
 
     /**
-     * @brief		ƒCƒ“ƒXƒ^ƒ“ƒX‰»‚³‚ê‚Ä‚¢‚éƒRƒ‰ƒCƒ_[
-     * @History		24/09/17 ì¬(NZ)
+     * @brief		ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹åŒ–ã•ã‚Œã¦ã„ã‚‹ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼
+     * @History		24/09/17 ä½œæˆ(NZ)
      */
     std::vector<HWCollider*> ColVec;
 
 
 private:
 
-    /*     ƒƒ\ƒbƒh     */
+    /*     ãƒ¡ã‚½ãƒƒãƒ‰     */
 
     /**
-     * @brief       ƒCƒ“ƒXƒ^ƒ“ƒX‚ğæ“¾‚·‚éÃ“Iƒƒ\ƒbƒh
-     * @detail      ‰‚ß‚Ìˆê‰ñ‚¾‚¯ƒCƒ“ƒXƒ^ƒ“ƒX‚ğ¶¬‚·‚é
-     * @return      CollisionWaltan& ƒVƒ“ƒOƒ‹ƒgƒ“ƒCƒ“ƒXƒ^ƒ“ƒX
+     * @brief       ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’å–å¾—ã™ã‚‹é™çš„ãƒ¡ã‚½ãƒƒãƒ‰
+     * @detail      åˆã‚ã®ä¸€å›ã ã‘ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ç”Ÿæˆã™ã‚‹
+     * @return      CollisionWaltan& ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹
      * @author      NZ
      * @date        24/07/19
      */
     static CollisionWaltan& Instance()
     {
-        // ƒVƒ“ƒOƒ‹ƒgƒ“ƒCƒ“ƒXƒ^ƒ“ƒX‚ğ¶¬
+        // ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ç”Ÿæˆ
         static CollisionWaltan instance;
         return instance;
     }
 
-    //ƒCƒ“ƒXƒ^ƒ“ƒX‚ÌƒRƒs[‹Ö~
-    //ƒfƒtƒHƒ‹ƒg‚ÌƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğíœ
+    //ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®ã‚³ãƒ”ãƒ¼ç¦æ­¢
+    //ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®ã‚³ãƒ”ãƒ¼ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’å‰Šé™¤
     CollisionWaltan(const CollisionWaltan&) = delete;
-    //ƒfƒtƒHƒ‹ƒg‚ÌƒRƒs[‘ã“ü‰‰Zq‚àíœ
+    //ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®ã‚³ãƒ”ãƒ¼ä»£å…¥æ¼”ç®—å­ã‚‚å‰Šé™¤
     CollisionWaltan& operator=(const CollisionWaltan&) = delete;
 
     /**
-     * @brief       ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+     * @brief       ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
      * @author      NZ
      * @date        24/07/19
      */
     CollisionWaltan();
 
     /**
-     * @brief       ƒfƒXƒgƒ‰ƒNƒ^
+     * @brief       ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
      * @author      NZ
      * @date        24/07/19
      */
     ~CollisionWaltan();
 
     /**
-      * @brief       ŠeƒRƒ“ƒ|[ƒlƒ“ƒg‚ÌUpdateƒƒ\ƒbƒh‚ğ‘S‚ÄŒÄ‚Ño‚·
+      * @brief       å„ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®Updateãƒ¡ã‚½ãƒƒãƒ‰ã‚’å…¨ã¦å‘¼ã³å‡ºã™
       * @author      NZ
       * @date        24/08/22
       */
     void Update();
 
     /**
-     * @brief       “o˜^‚³‚ê‚Ä‚¢‚éƒRƒ‰ƒCƒ_[î•ñ‚ğíœ‚·‚é
-     * @param[in]   HWCollider* íœ‚·‚éƒRƒ‰ƒCƒ_[î•ñ
+     * @brief       ç™»éŒ²ã•ã‚Œã¦ã„ã‚‹ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼æƒ…å ±ã‚’å‰Šé™¤ã™ã‚‹
+     * @param[in]   HWCollider* å‰Šé™¤ã™ã‚‹ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼æƒ…å ±
      * @author      NZ
      * @date        24/09/17
      */
     void UnRegister(HWCollider* _collider);
 
     /**
-      * @brief       —v‘f1 ‚ªBoxCollider‚Ìê‡‚ÌƒRƒŠƒWƒ‡ƒ“ƒ`ƒFƒbƒN
-      * @param[in]   HWBoxCollider* ‚ ‚½‚è”»’è‚Ìd‚È‚è‚ğŒ©‚é—§•û‘ÌŒ^Colliderî•ñ1
-      * @param[in]   HWCollider*    ‚ ‚½‚è”»’è‚Ìd‚È‚è‚ğŒ©‚éColliderî•ñ2
+      * @brief       è¦ç´ 1 ãŒBoxColliderã®å ´åˆã®ã‚³ãƒªã‚¸ãƒ§ãƒ³ãƒã‚§ãƒƒã‚¯
+      * @param[in]   HWBoxCollider* ã‚ãŸã‚Šåˆ¤å®šã®é‡ãªã‚Šã‚’è¦‹ã‚‹ç«‹æ–¹ä½“å‹Collideræƒ…å ±1
+      * @param[in]   HWCollider*    ã‚ãŸã‚Šåˆ¤å®šã®é‡ãªã‚Šã‚’è¦‹ã‚‹Collideræƒ…å ±2
       * @author      NZ
       * @date        24/09/17
       */
     bool CollCheck_Box(HWBoxCollider* _boxCol1, HWCollider* _col2);
 
     /**
-      * @brief       —v‘f1 ‚ªCapsuleCollider‚Ìê‡‚ÌƒRƒŠƒWƒ‡ƒ“ƒ`ƒFƒbƒN
-      * @param[in]   HWCapsuleCollider*  ‚ ‚½‚è”»’è‚Ìd‚È‚è‚ğŒ©‚éƒJƒvƒZƒ‹Œ^Colliderî•ñ1
-      * @param[in]   HWCollider*         ‚ ‚½‚è”»’è‚Ìd‚È‚è‚ğŒ©‚éColliderî•ñ2
+      * @brief       è¦ç´ 1 ãŒCapsuleColliderã®å ´åˆã®ã‚³ãƒªã‚¸ãƒ§ãƒ³ãƒã‚§ãƒƒã‚¯
+      * @param[in]   HWCapsuleCollider*  ã‚ãŸã‚Šåˆ¤å®šã®é‡ãªã‚Šã‚’è¦‹ã‚‹ã‚«ãƒ—ã‚»ãƒ«å‹Collideræƒ…å ±1
+      * @param[in]   HWCollider*         ã‚ãŸã‚Šåˆ¤å®šã®é‡ãªã‚Šã‚’è¦‹ã‚‹Collideræƒ…å ±2
       * @author      NZ
       * @date        24/09/17
       */
     bool CollCheck_Capsule(HWCapsuleCollider* _col1, HWCollider* _col2);
 
     /**
-      * @brief       —v‘f1 ‚ªSphereCollider‚Ìê‡‚ÌƒRƒŠƒWƒ‡ƒ“ƒ`ƒFƒbƒN
-      * @param[in]   HWSphereCollider*   ‚ ‚½‚è”»’è‚Ìd‚È‚è‚ğŒ©‚é‹…‘ÌŒ^Colliderî•ñ1
-      * @param[in]   HWCollider*         ‚ ‚½‚è”»’è‚Ìd‚È‚è‚ğŒ©‚éColliderî•ñ2
+      * @brief       è¦ç´ 1 ãŒSphereColliderã®å ´åˆã®ã‚³ãƒªã‚¸ãƒ§ãƒ³ãƒã‚§ãƒƒã‚¯
+      * @param[in]   HWSphereCollider*   ã‚ãŸã‚Šåˆ¤å®šã®é‡ãªã‚Šã‚’è¦‹ã‚‹çƒä½“å‹Collideræƒ…å ±1
+      * @param[in]   HWCollider*         ã‚ãŸã‚Šåˆ¤å®šã®é‡ãªã‚Šã‚’è¦‹ã‚‹Collideræƒ…å ±2
       * @author      NZ
       * @date        24/09/17
       */
     bool CollCheck_Sphere(HWSphereCollider* _col1, HWCollider* _col2);
 
     /**
-      * @brief       —v‘f1 ‚ªModelCollider‚Ìê‡‚ÌƒRƒŠƒWƒ‡ƒ“ƒ`ƒFƒbƒN
-      * @param[in]   HWModelCollider*    ‚ ‚½‚è”»’è‚Ìd‚È‚è‚ğŒ©‚éƒ‚ƒfƒ‹Colliderî•ñ1
-      * @param[in]   HWCollider*         ‚ ‚½‚è”»’è‚Ìd‚È‚è‚ğŒ©‚éColliderî•ñ2
+      * @brief       è¦ç´ 1 ãŒModelColliderã®å ´åˆã®ã‚³ãƒªã‚¸ãƒ§ãƒ³ãƒã‚§ãƒƒã‚¯
+      * @param[in]   HWModelCollider*    ã‚ãŸã‚Šåˆ¤å®šã®é‡ãªã‚Šã‚’è¦‹ã‚‹ãƒ¢ãƒ‡ãƒ«Collideræƒ…å ±1
+      * @param[in]   HWCollider*         ã‚ãŸã‚Šåˆ¤å®šã®é‡ãªã‚Šã‚’è¦‹ã‚‹Collideræƒ…å ±2
       * @author      NZ
       * @date        24/10/17
       */
     bool CollCheck_Model(HWModelCollider* _col1, HWCollider* _col2);
 
 
-#pragma region BOXƒ^ƒCƒv‚ÌÕ“Ë”»’è
+#pragma region BOX
 
     /**
-      * @brief       ƒJƒvƒZƒ‹‚Æƒ|ƒŠƒSƒ“‚Ì‚ ‚½‚è”»’è
-      * @param[in]   HWBoxCollider*      ‚ ‚½‚è”»’è‚Ìd‚È‚è‚ğŒ©‚éColliderî•ñ1
-      * @param[in]   HWModelCollider*    ‚ ‚½‚è”»’è‚Ìd‚È‚è‚ğŒ©‚éƒ‚ƒfƒ‹ƒnƒ“ƒhƒ‹
+      * @brief       ã‚«ãƒ—ã‚»ãƒ«ã¨ãƒãƒªã‚´ãƒ³ã®ã‚ãŸã‚Šåˆ¤å®š
+      * @param[in]   HWBoxCollider*      ã‚ãŸã‚Šåˆ¤å®šã®é‡ãªã‚Šã‚’è¦‹ã‚‹Collideræƒ…å ±1
+      * @param[in]   HWModelCollider*    ã‚ãŸã‚Šåˆ¤å®šã®é‡ãªã‚Šã‚’è¦‹ã‚‹ãƒ¢ãƒ‡ãƒ«ãƒãƒ³ãƒ‰ãƒ«
       * @author      NZ
       * @date        24/09/30
       */
     bool CollCheck_Box_Model(HWBoxCollider* _boxCol, HWModelCollider* _modelCol);
 
     /**
-      * @brief       ƒ{ƒbƒNƒX‚Æƒ{ƒbƒNƒX‚Ì‚ ‚½‚è”»’è
-      * @param[in]   HWBoxCollider*      ‚ ‚½‚è”»’è‚Ìd‚È‚è‚ğŒ©‚éColliderî•ñ1
-      * @param[in]   HWBoxCollider*      ‚ ‚½‚è”»’è‚Ìd‚È‚è‚ğŒ©‚éColliderî•ñ2
+      * @brief       ãƒœãƒƒã‚¯ã‚¹ã¨ãƒœãƒƒã‚¯ã‚¹ã®ã‚ãŸã‚Šåˆ¤å®š
+      * @param[in]   HWBoxCollider*      ã‚ãŸã‚Šåˆ¤å®šã®é‡ãªã‚Šã‚’è¦‹ã‚‹Collideræƒ…å ±1
+      * @param[in]   HWBoxCollider*      ã‚ãŸã‚Šåˆ¤å®šã®é‡ãªã‚Šã‚’è¦‹ã‚‹Collideræƒ…å ±2
       * @author      NZ
       * @date        24/09/17
       */
     bool CollCheck_Box_Box(HWBoxCollider* _boxCol, HWBoxCollider* _boxCol2);
 
     /**
-      * @brief       ƒ{ƒbƒNƒX‚ÆƒJƒvƒZƒ‹‚Ì‚ ‚½‚è”»’è
-      * @param[in]   HWBoxCollider*      ‚ ‚½‚è”»’è‚Ìd‚È‚è‚ğŒ©‚éColliderî•ñ1
-      * @param[in]   HWCapsuleCollider*  ‚ ‚½‚è”»’è‚Ìd‚È‚è‚ğŒ©‚éColliderî•ñ2
+      * @brief       ãƒœãƒƒã‚¯ã‚¹ã¨ã‚«ãƒ—ã‚»ãƒ«ã®ã‚ãŸã‚Šåˆ¤å®š
+      * @param[in]   HWBoxCollider*      ã‚ãŸã‚Šåˆ¤å®šã®é‡ãªã‚Šã‚’è¦‹ã‚‹Collideræƒ…å ±1
+      * @param[in]   HWCapsuleCollider*  ã‚ãŸã‚Šåˆ¤å®šã®é‡ãªã‚Šã‚’è¦‹ã‚‹Collideræƒ…å ±2
       * @author      NZ
       * @date        24/09/17
       */
     bool CollCheck_Box_Capsule(HWBoxCollider* _boxCol, HWCapsuleCollider* _capsuleCol);
 
     /**
-      * @brief       ƒ{ƒbƒNƒX‚ÆƒXƒtƒBƒA‚Ì‚ ‚½‚è”»’è
-      * @param[in]   HWBoxCollider*      ‚ ‚½‚è”»’è‚Ìd‚È‚è‚ğŒ©‚éColliderî•ñ1
-      * @param[in]   HWSphereCollider*   ‚ ‚½‚è”»’è‚Ìd‚È‚è‚ğŒ©‚éColliderî•ñ2
+      * @brief       ãƒœãƒƒã‚¯ã‚¹ã¨ã‚¹ãƒ•ã‚£ã‚¢ã®ã‚ãŸã‚Šåˆ¤å®š
+      * @param[in]   HWBoxCollider*      ã‚ãŸã‚Šåˆ¤å®šã®é‡ãªã‚Šã‚’è¦‹ã‚‹Collideræƒ…å ±1
+      * @param[in]   HWSphereCollider*   ã‚ãŸã‚Šåˆ¤å®šã®é‡ãªã‚Šã‚’è¦‹ã‚‹Collideræƒ…å ±2
       * @author      NZ
       * @date        24/09/17
       */
@@ -183,39 +183,39 @@ private:
 
 #pragma endregion
 
-#pragma region CAPSULEƒ^ƒCƒv‚ÌÕ“Ë”»’è
+#pragma region CAPSULE
 
     /**
-      * @brief       ƒJƒvƒZƒ‹‚Æƒ|ƒŠƒSƒ“‚Ì‚ ‚½‚è”»’è
-      * @param[in]   HWCapsuleCollider*  ‚ ‚½‚è”»’è‚Ìd‚È‚è‚ğŒ©‚éColliderî•ñ1
-      * @param[in]   HWModelCollider*    ‚ ‚½‚è”»’è‚Ìd‚È‚è‚ğŒ©‚éƒ‚ƒfƒ‹ƒnƒ“ƒhƒ‹
+      * @brief       ã‚«ãƒ—ã‚»ãƒ«ã¨ãƒãƒªã‚´ãƒ³ã®ã‚ãŸã‚Šåˆ¤å®š
+      * @param[in]   HWCapsuleCollider*  ã‚ãŸã‚Šåˆ¤å®šã®é‡ãªã‚Šã‚’è¦‹ã‚‹Collideræƒ…å ±1
+      * @param[in]   HWModelCollider*    ã‚ãŸã‚Šåˆ¤å®šã®é‡ãªã‚Šã‚’è¦‹ã‚‹ãƒ¢ãƒ‡ãƒ«ãƒãƒ³ãƒ‰ãƒ«
       * @author      NZ
       * @date        24/09/30
       */
     bool CollCheck_Capsule_Model(HWCapsuleCollider* _capsuleCol, HWModelCollider* _modelCol);
 
     /**
-      * @brief       ƒJƒvƒZƒ‹‚Æƒ{ƒbƒNƒX‚Ì‚ ‚½‚è”»’è
-      * @param[in]   HWCapsuleCollider*  ‚ ‚½‚è”»’è‚Ìd‚È‚è‚ğŒ©‚éColliderî•ñ1
-      * @param[in]   HWBoxCollider*      ‚ ‚½‚è”»’è‚Ìd‚È‚è‚ğŒ©‚éColliderî•ñ2
+      * @brief       ã‚«ãƒ—ã‚»ãƒ«ã¨ãƒœãƒƒã‚¯ã‚¹ã®ã‚ãŸã‚Šåˆ¤å®š
+      * @param[in]   HWCapsuleCollider*  ã‚ãŸã‚Šåˆ¤å®šã®é‡ãªã‚Šã‚’è¦‹ã‚‹Collideræƒ…å ±1
+      * @param[in]   HWBoxCollider*      ã‚ãŸã‚Šåˆ¤å®šã®é‡ãªã‚Šã‚’è¦‹ã‚‹Collideræƒ…å ±2
       * @author      NZ
       * @date        24/09/17
       */
     bool CollCheck_Capsule_Box(HWCapsuleCollider* _capsuleCol, HWBoxCollider* _boxCol);
 
     /**
-      * @brief       ƒJƒvƒZƒ‹‚ÆƒJƒvƒZƒ‹‚Ì‚ ‚½‚è”»’è
-      * @param[in]   HWCapsuleCollider*  ‚ ‚½‚è”»’è‚Ìd‚È‚è‚ğŒ©‚éColliderî•ñ1
-      * @param[in]   HWCapsuleCollider*  ‚ ‚½‚è”»’è‚Ìd‚È‚è‚ğŒ©‚éColliderî•ñ2
+      * @brief       ã‚«ãƒ—ã‚»ãƒ«ã¨ã‚«ãƒ—ã‚»ãƒ«ã®ã‚ãŸã‚Šåˆ¤å®š
+      * @param[in]   HWCapsuleCollider*  ã‚ãŸã‚Šåˆ¤å®šã®é‡ãªã‚Šã‚’è¦‹ã‚‹Collideræƒ…å ±1
+      * @param[in]   HWCapsuleCollider*  ã‚ãŸã‚Šåˆ¤å®šã®é‡ãªã‚Šã‚’è¦‹ã‚‹Collideræƒ…å ±2
       * @author      NZ
       * @date        24/09/17
       */
     bool CollCheck_Capsule_Capsule(HWCapsuleCollider* _capsuleCol, HWCapsuleCollider* _capsuleCol2);
 
     /**
-      * @brief       ƒJƒvƒZƒ‹‚ÆƒXƒtƒBƒA‚Ì‚ ‚½‚è”»’è
-      * @param[in]   HWCapsuleCollider*  ‚ ‚½‚è”»’è‚Ìd‚È‚è‚ğŒ©‚éColliderî•ñ1
-      * @param[in]   HWSphereCollider*   ‚ ‚½‚è”»’è‚Ìd‚È‚è‚ğŒ©‚éColliderî•ñ2
+      * @brief       ã‚«ãƒ—ã‚»ãƒ«ã¨ã‚¹ãƒ•ã‚£ã‚¢ã®ã‚ãŸã‚Šåˆ¤å®š
+      * @param[in]   HWCapsuleCollider*  ã‚ãŸã‚Šåˆ¤å®šã®é‡ãªã‚Šã‚’è¦‹ã‚‹Collideræƒ…å ±1
+      * @param[in]   HWSphereCollider*   ã‚ãŸã‚Šåˆ¤å®šã®é‡ãªã‚Šã‚’è¦‹ã‚‹Collideræƒ…å ±2
       * @author      NZ
       * @date        24/09/17
       */
@@ -223,12 +223,12 @@ private:
 
 #pragma endregion
 
-#pragma region SPHEREƒ^ƒCƒv‚ÌÕ“Ë”»’è
+#pragma region SPHERE
 
     /**
-      * @brief       ƒXƒtƒBƒA‚Æƒ|ƒŠƒSƒ“‚Ì‚ ‚½‚è”»’è
-      * @param[in]   HWSphereCollider*   ‚ ‚½‚è”»’è‚Ìd‚È‚è‚ğŒ©‚éColliderî•ñ1
-      * @param[in]   HWModelCollider*    ‚ ‚½‚è”»’è‚Ìd‚È‚è‚ğŒ©‚éƒ‚ƒfƒ‹ƒnƒ“ƒhƒ‹
+      * @brief       ã‚¹ãƒ•ã‚£ã‚¢ã¨ãƒãƒªã‚´ãƒ³ã®ã‚ãŸã‚Šåˆ¤å®š
+      * @param[in]   HWSphereCollider*   ã‚ãŸã‚Šåˆ¤å®šã®é‡ãªã‚Šã‚’è¦‹ã‚‹Collideræƒ…å ±1
+      * @param[in]   HWModelCollider*    ã‚ãŸã‚Šåˆ¤å®šã®é‡ãªã‚Šã‚’è¦‹ã‚‹ãƒ¢ãƒ‡ãƒ«ãƒãƒ³ãƒ‰ãƒ«
       * @author      NZ
       * @date        24/09/30
       */
@@ -236,27 +236,27 @@ private:
 
 
     /**
-      * @brief       ƒXƒtƒBƒA‚Æƒ{ƒbƒNƒX‚Ì‚ ‚½‚è”»’è
-      * @param[in]   HWSphereCollider*   ‚ ‚½‚è”»’è‚Ìd‚È‚è‚ğŒ©‚éColliderî•ñ1
-      * @param[in]   HWBoxCollider*      ‚ ‚½‚è”»’è‚Ìd‚È‚è‚ğŒ©‚éColliderî•ñ2
+      * @brief       ã‚¹ãƒ•ã‚£ã‚¢ã¨ãƒœãƒƒã‚¯ã‚¹ã®ã‚ãŸã‚Šåˆ¤å®š
+      * @param[in]   HWSphereCollider*   ã‚ãŸã‚Šåˆ¤å®šã®é‡ãªã‚Šã‚’è¦‹ã‚‹Collideræƒ…å ±1
+      * @param[in]   HWBoxCollider*      ã‚ãŸã‚Šåˆ¤å®šã®é‡ãªã‚Šã‚’è¦‹ã‚‹Collideræƒ…å ±2
       * @author      NZ
       * @date        24/09/17
       */
     bool CollCheck_Sphere_Box(HWSphereCollider* _sphereCol, HWBoxCollider* _boxCol);
 
     /**
-      * @brief       ƒXƒtƒBƒA‚ÆƒJƒvƒZƒ‹‚Ì‚ ‚½‚è”»’è
-      * @param[in]   HWSphereCollider*   ‚ ‚½‚è”»’è‚Ìd‚È‚è‚ğŒ©‚éColliderî•ñ1
-      * @param[in]   HWCapsuleCollider*  ‚ ‚½‚è”»’è‚Ìd‚È‚è‚ğŒ©‚éColliderî•ñ2
+      * @brief       ã‚¹ãƒ•ã‚£ã‚¢ã¨ã‚«ãƒ—ã‚»ãƒ«ã®ã‚ãŸã‚Šåˆ¤å®š
+      * @param[in]   HWSphereCollider*   ã‚ãŸã‚Šåˆ¤å®šã®é‡ãªã‚Šã‚’è¦‹ã‚‹Collideræƒ…å ±1
+      * @param[in]   HWCapsuleCollider*  ã‚ãŸã‚Šåˆ¤å®šã®é‡ãªã‚Šã‚’è¦‹ã‚‹Collideræƒ…å ±2
       * @author      NZ
       * @date        24/09/17
       */
     bool CollCheck_Sphere_Capsule(HWSphereCollider* _sphereCol, HWCapsuleCollider* _capsuleCol);
 
     /**
-      * @brief       ƒXƒtƒBƒA‚ÆƒXƒtƒBƒA‚Ì‚ ‚½‚è”»’è
-      * @param[in]   HWSphereCollider*   ‚ ‚½‚è”»’è‚Ìd‚È‚è‚ğŒ©‚éColliderî•ñ1
-      * @param[in]   HWSphereCollider*   ‚ ‚½‚è”»’è‚Ìd‚È‚è‚ğŒ©‚éColliderî•ñ2
+      * @brief       ã‚¹ãƒ•ã‚£ã‚¢ã¨ã‚¹ãƒ•ã‚£ã‚¢ã®ã‚ãŸã‚Šåˆ¤å®š
+      * @param[in]   HWSphereCollider*   ã‚ãŸã‚Šåˆ¤å®šã®é‡ãªã‚Šã‚’è¦‹ã‚‹Collideræƒ…å ±1
+      * @param[in]   HWSphereCollider*   ã‚ãŸã‚Šåˆ¤å®šã®é‡ãªã‚Šã‚’è¦‹ã‚‹Collideræƒ…å ±2
       * @author      NZ
       * @date        24/09/17
       */
@@ -264,12 +264,12 @@ private:
 
 #pragma endregion
 
-#pragma region MODELƒ^ƒCƒv‚ÌÕ“Ë”»’è
+#pragma region MODEL
 
     /**
-      * @brief       ƒ|ƒŠƒSƒ“‚Æƒ|ƒŠƒSƒ“‚Ì‚ ‚½‚è”»’è
-      * @param[in]   HWModelCollider*    ‚ ‚½‚è”»’è‚Ìd‚È‚è‚ğŒ©‚éColliderî•ñ1
-      * @param[in]   HWModelCollider*    ‚ ‚½‚è”»’è‚Ìd‚È‚è‚ğŒ©‚éƒ‚ƒfƒ‹ƒnƒ“ƒhƒ‹
+      * @brief       ãƒãƒªã‚´ãƒ³ã¨ãƒãƒªã‚´ãƒ³ã®ã‚ãŸã‚Šåˆ¤å®š
+      * @param[in]   HWModelCollider*    ã‚ãŸã‚Šåˆ¤å®šã®é‡ãªã‚Šã‚’è¦‹ã‚‹Collideræƒ…å ±1
+      * @param[in]   HWModelCollider*    ã‚ãŸã‚Šåˆ¤å®šã®é‡ãªã‚Šã‚’è¦‹ã‚‹ãƒ¢ãƒ‡ãƒ«ãƒãƒ³ãƒ‰ãƒ«
       * @author      NZ
       * @date        24/09/30
       */
@@ -277,27 +277,27 @@ private:
 
 
     /**
-      * @brief       ƒ|ƒŠƒSƒ“‚Æƒ{ƒbƒNƒX‚Ì‚ ‚½‚è”»’è
-      * @param[in]   HWModelCollider*    ‚ ‚½‚è”»’è‚Ìd‚È‚è‚ğŒ©‚éColliderî•ñ1
-      * @param[in]   HWBoxCollider*      ‚ ‚½‚è”»’è‚Ìd‚È‚è‚ğŒ©‚éColliderî•ñ2
+      * @brief       ãƒãƒªã‚´ãƒ³ã¨ãƒœãƒƒã‚¯ã‚¹ã®ã‚ãŸã‚Šåˆ¤å®š
+      * @param[in]   HWModelCollider*    ã‚ãŸã‚Šåˆ¤å®šã®é‡ãªã‚Šã‚’è¦‹ã‚‹Collideræƒ…å ±1
+      * @param[in]   HWBoxCollider*      ã‚ãŸã‚Šåˆ¤å®šã®é‡ãªã‚Šã‚’è¦‹ã‚‹Collideræƒ…å ±2
       * @author      NZ
       * @date        24/09/17
       */
     bool CollCheck_Model_Box(HWModelCollider* _modelCol, HWBoxCollider* _boxCol);
 
     /**
-      * @brief       ƒ|ƒŠƒSƒ“‚ÆƒJƒvƒZƒ‹‚Ì‚ ‚½‚è”»’è
-      * @param[in]   HWModelCollider*    ‚ ‚½‚è”»’è‚Ìd‚È‚è‚ğŒ©‚éColliderî•ñ1
-      * @param[in]   HWCapsuleCollider*  ‚ ‚½‚è”»’è‚Ìd‚È‚è‚ğŒ©‚éColliderî•ñ2
+      * @brief       ãƒãƒªã‚´ãƒ³ã¨ã‚«ãƒ—ã‚»ãƒ«ã®ã‚ãŸã‚Šåˆ¤å®š
+      * @param[in]   HWModelCollider*    ã‚ãŸã‚Šåˆ¤å®šã®é‡ãªã‚Šã‚’è¦‹ã‚‹Collideræƒ…å ±1
+      * @param[in]   HWCapsuleCollider*  ã‚ãŸã‚Šåˆ¤å®šã®é‡ãªã‚Šã‚’è¦‹ã‚‹Collideræƒ…å ±2
       * @author      NZ
       * @date        24/09/17
       */
     bool CollCheck_Model_Capsule(HWModelCollider* _modelCol, HWCapsuleCollider* _capsuleCol);
 
     /**
-      * @brief       ƒ|ƒŠƒSƒ“‚ÆƒXƒtƒBƒA‚Ì‚ ‚½‚è”»’è
-      * @param[in]   HWModelCollider*    ‚ ‚½‚è”»’è‚Ìd‚È‚è‚ğŒ©‚éColliderî•ñ1
-      * @param[in]   HWSphereCollider*   ‚ ‚½‚è”»’è‚Ìd‚È‚è‚ğŒ©‚éColliderî•ñ2
+      * @brief       ãƒãƒªã‚´ãƒ³ã¨ã‚¹ãƒ•ã‚£ã‚¢ã®ã‚ãŸã‚Šåˆ¤å®š
+      * @param[in]   HWModelCollider*    ã‚ãŸã‚Šåˆ¤å®šã®é‡ãªã‚Šã‚’è¦‹ã‚‹Collideræƒ…å ±1
+      * @param[in]   HWSphereCollider*   ã‚ãŸã‚Šåˆ¤å®šã®é‡ãªã‚Šã‚’è¦‹ã‚‹Collideræƒ…å ±2
       * @author      NZ
       * @date        24/09/17
       */
@@ -307,21 +307,21 @@ private:
 
 
     /**
-      * @brief       ƒRƒŠƒWƒ‡ƒ“Hit‚ÌƒR[ƒ‹ƒoƒbƒNŠÖ”‚ğŒÄ‚Ño‚·
+      * @brief       ã‚³ãƒªã‚¸ãƒ§ãƒ³Hitæ™‚ã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã‚’å‘¼ã³å‡ºã™
       * @author      NZ
       * @date        24/09/17
       */
     void ColliderHitCallBacks(std::vector<HWCollider*>::iterator colIt, HWCollider* _col1, HWCollider* _col2, bool _isTrigger);
 
     /**
-      * @brief       ƒRƒŠƒWƒ‡ƒ“ÚG‚ª‚È‚¢ê‡‚Ìˆ—
+      * @brief       ã‚³ãƒªã‚¸ãƒ§ãƒ³æ¥è§¦ãŒãªã„å ´åˆã®å‡¦ç†
       * @author      NZ
       * @date        24/09/17
       */
     void ColliderAvoidCallBacks(std::vector<HWCollider*>::iterator colIt, HWCollider* _col1, HWCollider* _col2, bool _isTrigger);
 
     /**
-      * @brief       OBB“¯m‚Ì“–‚½‚è”»’è
+      * @brief       OBBåŒå£«ã®å½“ãŸã‚Šåˆ¤å®š
       * @author      NZ
       * @date        24/09/24
       */

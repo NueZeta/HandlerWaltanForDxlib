@@ -5,50 +5,50 @@
 /**
 * @author   NZ
 * @date     24/09/15
-* @note		ƒ‚ƒfƒ‹‚ÌƒRƒ‰ƒCƒ_[ƒRƒ“ƒ|[ƒlƒ“ƒg‚Ì’è‹`
+* @note		ãƒ¢ãƒ‡ãƒ«ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®å®šç¾©
 */
 
 
 /**
  * @class	HWModelCollider
- * @brief	ƒ‚ƒfƒ‹‚ÌƒRƒ‰ƒCƒ_[ƒRƒ“ƒ|[ƒlƒ“ƒg
+ * @brief	ãƒ¢ãƒ‡ãƒ«ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ
  */
 class HWModelCollider: public HWCollider
 {
-	// “Á’è‚ÌƒNƒ‰ƒXˆÈŠO‚©‚ç‚ÌƒAƒNƒZƒX‚ğ–h‚®‚½‚ß‚ÌƒtƒŒƒ“ƒhéŒ¾
+	// ç‰¹å®šã®ã‚¯ãƒ©ã‚¹ä»¥å¤–ã‹ã‚‰ã®ã‚¢ã‚¯ã‚»ã‚¹ã‚’é˜²ããŸã‚ã®ãƒ•ãƒ¬ãƒ³ãƒ‰å®£è¨€
 	friend class HWGameObject;
 	friend class CollisionWaltan;
 
 public:
 
-	/*     ƒƒ“ƒo•Ï”     */
+	/*     ãƒ¡ãƒ³ãƒå¤‰æ•°     */
 
 	/**
-	 * @brief		ƒ‚ƒfƒ‹ƒnƒ“ƒhƒ‹
-	 * @History		24/10/17 ì¬(NZ)
+	 * @brief		ãƒ¢ãƒ‡ãƒ«ãƒãƒ³ãƒ‰ãƒ«
+	 * @History		24/10/17 ä½œæˆ(NZ)
 	 */
 	int modelHandle;
 
 	/**
-	 * @brief		ƒRƒŠƒWƒ‡ƒ“‚Ìî•ñ‚ğXV‚·‚éƒtƒŒ[ƒ€‚Ì”Ô†
-	 * @History		24/10/17 ì¬(NZ)
+	 * @brief		ã‚³ãƒªã‚¸ãƒ§ãƒ³ã®æƒ…å ±ã‚’æ›´æ–°ã™ã‚‹ãƒ•ãƒ¬ãƒ¼ãƒ ã®ç•ªå·
+	 * @History		24/10/17 ä½œæˆ(NZ)
 	 */
 	int frameIndex;
 
 
-	 /*     ƒƒ\ƒbƒh     */
+	 /*     ãƒ¡ã‚½ãƒƒãƒ‰     */
 
 public:
 
 	/**
-	 * @brief		ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	 * @brief		ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	 * @author		NZ
 	 * @date		24/10/17
 	 */
 	HWModelCollider();
 
 	/**
-	 * @brief		ƒfƒXƒgƒ‰ƒNƒ^
+	 * @brief		ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	 * @author		NZ
 	 * @date		24/10/17
 	 */
@@ -56,35 +56,35 @@ public:
 
 private:
 
-#pragma region ƒI[ƒo[ƒ‰ƒCƒhƒƒ\ƒbƒh
+#pragma region ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰ãƒ¡ã‚½ãƒƒãƒ‰
 
 	/**
-	 * @brief		ƒ‚ƒfƒ‹‚ÌƒRƒ‰ƒCƒ_[‚ğ•`‰æ‚·‚é
-	 * @detail		ƒI[ƒoƒ‰ƒCƒhƒƒ\ƒbƒh
+	 * @brief		ãƒ¢ãƒ‡ãƒ«ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚’æç”»ã™ã‚‹
+	 * @detail		ã‚ªãƒ¼ãƒãƒ©ã‚¤ãƒ‰ãƒ¡ã‚½ãƒƒãƒ‰
 	 * @author		NZ
 	 * @date		24/10/17
 	 */
 	void DrawCollider() override;
 
 	/**
-	 * @brief		ƒ‚ƒfƒ‹‚ÌƒRƒ‰ƒCƒ_[‚ğ\¬‚·‚é
-	 * @detail		ƒI[ƒoƒ‰ƒCƒhƒƒ\ƒbƒh
+	 * @brief		ãƒ¢ãƒ‡ãƒ«ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚’æ§‹æˆã™ã‚‹
+	 * @detail		ã‚ªãƒ¼ãƒãƒ©ã‚¤ãƒ‰ãƒ¡ã‚½ãƒƒãƒ‰
 	 * @author		NZ
 	 * @date		24/10/17
 	 */
 	void SetCollider() override;
 
 	/**
-	 * @brief		HWGameObject‚ÉƒAƒ^ƒbƒ`‚³‚ê‚½uŠÔ‚É“­‚­
-	 * @detail		ƒI[ƒoƒ‰ƒCƒhƒƒ\ƒbƒh
+	 * @brief		HWGameObjectã«ã‚¢ã‚¿ãƒƒãƒã•ã‚ŒãŸç¬é–“ã«åƒã
+	 * @detail		ã‚ªãƒ¼ãƒãƒ©ã‚¤ãƒ‰ãƒ¡ã‚½ãƒƒãƒ‰
 	 * @author		NZ
 	 * @date		24/10/17
 	 */
 	void Awake()override;
 
 	/**
-	 * @brief		–ˆƒtƒŒ[ƒ€ŒÄ‚Î‚ê‚é
-	 * @detail		ƒI[ƒo[ƒ‰ƒCƒhƒƒ\ƒbƒh
+	 * @brief		æ¯ãƒ•ãƒ¬ãƒ¼ãƒ å‘¼ã°ã‚Œã‚‹
+	 * @detail		ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰ãƒ¡ã‚½ãƒƒãƒ‰
 	 * @author		NZ
 	 * @date		24/10/17
 	 */

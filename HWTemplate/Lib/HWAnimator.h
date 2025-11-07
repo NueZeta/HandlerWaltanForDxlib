@@ -282,6 +282,12 @@ public:
 	double playTime;
 
 	/**
+	 * @brief		ブレンド速度
+	 * @History		24/09/25 作成(NZ)
+	 */
+	float blendSpeed;
+
+	/**
 	 * @brief		遷移情報
 	 * @History		25/10/20 作成(NZ)
 	 */
