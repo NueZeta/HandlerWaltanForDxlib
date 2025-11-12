@@ -240,20 +240,22 @@ public:
 
 	/**
 	 * @brief		遷移元で登録されているトランジションで、自動遷移が設定されているものを取得
-	 * @return		Transition*	紐づけるトランジション
+	 * @return		std::vector<Transition*> HasExitTimeがtrueの遷移情報の配列
 	 * @author		NZ
 	 * @date		25/10/21
 	 */
-	Transition* GetHasExitTimeTransition()
+	std::vector<Transition*> GetHasExitTimeTransition()
 	{
+		std::vector<Transition*> result;
+
 		for (auto& transition : transitions)
 		{
 			if (transition->fromAnimId == registerIndex && transition->hasExitTime)
 			{
-				return transition;
+				result.push_back(transition);
 			}
 		}
-		return nullptr;
+		return result;
 	}
 };
 

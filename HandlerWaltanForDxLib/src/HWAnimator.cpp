@@ -45,10 +45,39 @@ void HWAnimator::AnimPlay()
 					animInfoVec[playIndex1]->endPlaybackCallback();
 
 				// トランジションの自動遷移が設定されている場合
-				Transition* transition = animInfoVec[playIndex1]->GetHasExitTimeTransition();
-				if (transition != nullptr)
+				auto transitions = animInfoVec[playIndex1]->GetHasExitTimeTransition();
+				if (transitions.size() > 0)
 				{
-					AnimChange(transition->toAnimId);
+					// 条件を持つトランジションがある場合はそちらを優先する
+					for (auto& transition : transitions)
+					{
+						if (transition->condition == nullptr) continue;
+
+						if (transition->condition->type == Transition::ConditionType::TRIGGER)
+						{
+							if (*(transition->condition->value))
+							{
+								AnimChange(transition->toAnimId);
+								// トリガー条件は一度発動したらfalseに戻す
+								*(transition->condition->value) = false;
+							}
+						}
+						else if (transition->condition->type == Transition::ConditionType::BOOL)
+						{
+							if (*(transition->condition->value))
+							{
+								AnimChange(transition->toAnimId);
+							}
+						}
+					}
+					// ない場合は、条件を持たないトランジションで遷移
+					for (auto& transition : transitions)
+					{
+						if (transition->condition == nullptr)
+						{
+							AnimChange(transition->toAnimId);
+						}
+					}
 				}
 
 				// 登録されているデフォルトのアニメーションを再生する
