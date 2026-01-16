@@ -1,19 +1,19 @@
-#include "h/HWGameObject.h"
+ï»¿#include "h/HWGameObject.h"
 
 
 /**
 * @author   NZ
 * @date     24/07/29
-* @note		HWGameObject‚ÌÀ‘•ƒtƒ@ƒCƒ‹
+* @note		HWGameObjectã®å®Ÿè£…ãƒ•ã‚¡ã‚¤ãƒ«
 */
 
 
-// Ã“Iƒƒ“ƒo•Ï”‚Ì‰Šú‰»
+// é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°ã®åˆæœŸåŒ–
 std::vector<HWGameObject*> HWGameObject::gameObjects;
 std::vector<HWGameObject::PendingDestroy> HWGameObject::destroyList;
 
 
-#pragma region ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+#pragma region ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 
 
 HWGameObject::HWGameObject() : priority(0), name("hwObj"), tag(0), parent(nullptr), active(true)
@@ -80,7 +80,7 @@ HWGameObject::HWGameObject(const HWGameObject& _other, const CopyType copyType) 
     switch (copyType)
     {
     case CopyType::Shallow:
-        // –¢À‘•(DeepCopy‚Ìˆ—‚Æˆê)
+        // æœªå®Ÿè£…(DeepCopyã®å‡¦ç†ã¨ä¸€ç·’)
         ShallowCopy(_other);
         break;
 
@@ -135,7 +135,7 @@ HWGameObject::~HWGameObject()
 }
 
 
-#pragma region privateƒƒ\ƒbƒh
+#pragma region privateãƒ¡ã‚½ãƒƒãƒ‰
 
 
 void HWGameObject::BubbleSort()
@@ -151,35 +151,35 @@ void HWGameObject::DeepCopy(const HWGameObject& _other)
     hwComponents.push_back(std::move(transformCp));
     transform = GetComponent<HWTransform>();
 
-    // ƒRƒs[Œ³‚ÌComponent‚ÌƒRƒs[‚ğs‚¤
+    // ã‚³ãƒ”ãƒ¼å…ƒã®Componentã®ã‚³ãƒ”ãƒ¼ã‚’è¡Œã†
     for (const auto& cp : _other.hwComponents)
     {
-        // HWTransform‚Í–³‹
+        // HWTransformã¯ç„¡è¦–
         if (typeid(*cp) == typeid(HWTransform)) continue;
         
-        // HWRenderer‚Ìê‡‚Íƒ‚ƒfƒ‹‚Ì•¡»‚ğs‚¤
+        // HWRendererã®å ´åˆã¯ãƒ¢ãƒ‡ãƒ«ã®è¤‡è£½ã‚’è¡Œã†
         if (typeid(*cp) == typeid(HWRenderer))
         {
-            // dynamic_cast‚Å³Šm‚ÈŒ^‚É•ÏŠ·‚µAƒfƒB[ƒvƒRƒs[‚ğs‚¤
+            // dynamic_castã§æ­£ç¢ºãªå‹ã«å¤‰æ›ã—ã€ãƒ‡ã‚£ãƒ¼ãƒ—ã‚³ãƒ”ãƒ¼ã‚’è¡Œã†
             HWRenderer* renderer = dynamic_cast<HWRenderer*>(cp.get());
             if (renderer) 
             {
                 auto component = std::make_unique<HWRenderer>(renderer->GetModelHandle());
-                // ƒRƒ“ƒ|[ƒlƒ“ƒg‚©‚çƒAƒ^ƒbƒ`‚³‚ê‚Ä‚¢‚éGameObject‚ÆTransform‚ğŠm”F‚Å‚«‚é‚æ‚¤‚É‚·‚é
+                // ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‹ã‚‰ã‚¢ã‚¿ãƒƒãƒã•ã‚Œã¦ã„ã‚‹GameObjectã¨Transformã‚’ç¢ºèªã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹
                 component->gameObject = this;
                 component->transform = (GetComponent<HWTransform>());
-                // Š—LŒ ‚ğ÷“n
+                // æ‰€æœ‰æ¨©ã‚’è­²æ¸¡
                 hwComponents.push_back(std::move(component));
             }
         }
         else
         {
-            // ‚»‚Ì‚Ù‚©‚ÌƒRƒ“ƒ|[ƒlƒ“ƒg‚Í’Êí‚ÌƒRƒs[‚ğs‚¤
+            // ãã®ã»ã‹ã®ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã¯é€šå¸¸ã®ã‚³ãƒ”ãƒ¼ã‚’è¡Œã†
             auto component = std::make_unique<HWComponent>(*cp);
-            // ƒRƒ“ƒ|[ƒlƒ“ƒg‚©‚çƒAƒ^ƒbƒ`‚³‚ê‚Ä‚¢‚éGameObject‚ÆTransform‚ğŠm”F‚Å‚«‚é‚æ‚¤‚É‚·‚é
+            // ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‹ã‚‰ã‚¢ã‚¿ãƒƒãƒã•ã‚Œã¦ã„ã‚‹GameObjectã¨Transformã‚’ç¢ºèªã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹
             component->gameObject = this;
             component->transform = (GetComponent<HWTransform>());
-            // Š—LŒ ‚ğ÷“n
+            // æ‰€æœ‰æ¨©ã‚’è­²æ¸¡
             hwComponents.push_back(std::move(component));
         }
     }
@@ -188,7 +188,7 @@ void HWGameObject::DeepCopy(const HWGameObject& _other)
 
 void HWGameObject::ShallowCopy(const HWGameObject& _other)
 {
-        // HWTransform‚ÌƒRƒs[
+        // HWTransformã®ã‚³ãƒ”ãƒ¼
         auto transformCp = std::make_unique<HWTransform>(*(_other.transform));
         transformCp->gameObject = this;
         hwComponents.push_back(std::move(transformCp));
@@ -196,17 +196,17 @@ void HWGameObject::ShallowCopy(const HWGameObject& _other)
 
         for (const auto& cp : _other.hwComponents)
         {
-            // HWTransform‚Í–³‹
+            // HWTransformã¯ç„¡è¦–
             if (typeid(*cp) == typeid(HWTransform)) continue;
 
-            // HWRenderer‚Ìê‡‚Í“Á’è‚ÌƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğŒÄ‚Ô
+            // HWRendererã®å ´åˆã¯ç‰¹å®šã®ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’å‘¼ã¶
             if (typeid(*cp) == typeid(HWRenderer))
             {
-                // dynamic_cast‚Å³Šm‚ÈŒ^‚É•ÏŠ·‚µA“Á’è‚ÌƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğŒÄ‚Ño‚·
+                // dynamic_castã§æ­£ç¢ºãªå‹ã«å¤‰æ›ã—ã€ç‰¹å®šã®ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’å‘¼ã³å‡ºã™
                 HWRenderer* renderer = dynamic_cast<HWRenderer*>(cp.get());
                 if (renderer)
                 {
-                    // HWRenderer‚Ì“Á’è‚ÌƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğg—p‚µ‚ÄA•¡»‚ğì¬
+                    // HWRendererã®ç‰¹å®šã®ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’ä½¿ç”¨ã—ã¦ã€è¤‡è£½ã‚’ä½œæˆ
                     auto component = std::make_unique<HWRenderer>(renderer->GetModelHandle());
                     component->gameObject = this;
                     component->transform = GetComponent<HWTransform>();
@@ -215,7 +215,7 @@ void HWGameObject::ShallowCopy(const HWGameObject& _other)
             }
             else
             {
-                // ‚»‚Ì‚Ù‚©‚ÌƒRƒ“ƒ|[ƒlƒ“ƒg‚Í’Êí‚ÌƒRƒs[‚ğs‚¤
+                // ãã®ã»ã‹ã®ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã¯é€šå¸¸ã®ã‚³ãƒ”ãƒ¼ã‚’è¡Œã†
                 auto component = std::make_unique<std::decay_t<decltype(*cp)>>(*cp);
                 component->gameObject = this;
                 component->transform = GetComponent<HWTransform>();
@@ -236,16 +236,16 @@ void HWGameObject::CallAllUpdates()
 
     for (auto& component : hwComponents)
     {
-        // HWTransform‚Í–³‹
+        // HWTransformã¯ç„¡è¦–
         if (typeid(*component) == typeid(HWTransform)) continue;
 
         if(component->active)
         {
-            // ‚Ü‚¾Startƒƒ\ƒbƒh‚ğÀs‚µ‚Ä‚¢‚È‚¢ê‡‚ÍÀs‚·‚é
+            // ã¾ã Startãƒ¡ã‚½ãƒƒãƒ‰ã‚’å®Ÿè¡Œã—ã¦ã„ãªã„å ´åˆã¯å®Ÿè¡Œã™ã‚‹
             if(!component->completedStartMethod)
             {
                 component.get()->Start();
-                // Startƒƒ\ƒbƒh‚ğÀsÏ‚İ‚É‚·‚é
+                // Startãƒ¡ã‚½ãƒƒãƒ‰ã‚’å®Ÿè¡Œæ¸ˆã¿ã«ã™ã‚‹
                 component->completedStartMethod = true;
             }
             component.get()->Update();
@@ -261,6 +261,17 @@ void HWGameObject::CallAllLateUpdates()
     {
         if (component->active)
             component.get()->LateUpdate();
+    }
+}
+
+void HWGameObject::CallAllLastUpdates()
+{
+    if (!active.load()) return;
+
+    for (auto& component : hwComponents)
+    {
+        if (component->active)
+            component.get()->LastUpdate();
     }
 }
 
@@ -333,7 +344,7 @@ void HWGameObject::CallAllOnTriggerExits(HWCollider& _collider)
 
 #pragma endregion
 
-#pragma region publicƒƒ\ƒbƒh
+#pragma region publicãƒ¡ã‚½ãƒƒãƒ‰
 
 
 
@@ -346,7 +357,7 @@ HWGameObject* HWGameObject::GetChild(const int _index)
 
 void HWGameObject::SetParent(HWGameObject* _parent, const bool _isAffect)
 {
-    // ‚·‚Å‚ÉeƒIƒuƒWƒFƒNƒg‚ª‘¶İ‚·‚éê‡AeqŠÖŒW‚ğ‰ğÁ‚·‚é
+    // ã™ã§ã«è¦ªã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒå­˜åœ¨ã™ã‚‹å ´åˆã€è¦ªå­é–¢ä¿‚ã‚’è§£æ¶ˆã™ã‚‹
     if (parent != nullptr)
     {
         auto it = std::find(parent->children.begin(), parent->children.end(), this);
@@ -358,22 +369,22 @@ void HWGameObject::SetParent(HWGameObject* _parent, const bool _isAffect)
     }
 
     parent = _parent;
-    // eƒIƒuƒWƒFƒNƒg‚ÌqƒIƒuƒWƒFƒNƒg‚Æ‚µ‚Ä“o˜^
+    // è¦ªã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å­ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¨ã—ã¦ç™»éŒ²
     parent->children.push_back(this);
     isAffect = _isAffect;
 }
 
 void HWGameObject::Destroy(HWGameObject* _obj, float delay)
 {
-    // Šù‚ÉíœƒŠƒXƒg‚É“o˜^‚³‚ê‚Ä‚¢‚é‚©‚ğ’²‚×‚é
+    // æ—¢ã«å‰Šé™¤ãƒªã‚¹ãƒˆã«ç™»éŒ²ã•ã‚Œã¦ã„ã‚‹ã‹ã‚’èª¿ã¹ã‚‹
     auto it = std::find_if(destroyList.begin(), destroyList.end(), [_obj](const PendingDestroy& item) {
         return item.object == _obj;
         });
 
-    // “o˜^‚³‚ê‚Ä‚¢‚È‚¢ê‡‚Í—v‘f‚ğ’Ç‰Á‚·‚é
+    // ç™»éŒ²ã•ã‚Œã¦ã„ãªã„å ´åˆã¯è¦ç´ ã‚’è¿½åŠ ã™ã‚‹
     if(it == destroyList.end())
         destroyList.push_back({ _obj, GetNowCount() + static_cast<int>(delay * 1000) });
-    // Šù‚É“o˜^‚³‚ê‚Ä‚¢‚éê‡‚ÍAíœŠÔ‚ğã‘‚«
+    // æ—¢ã«ç™»éŒ²ã•ã‚Œã¦ã„ã‚‹å ´åˆã¯ã€å‰Šé™¤æ™‚é–“ã‚’ä¸Šæ›¸ã
     else if (it != destroyList.end())
         it->time = GetNowCount() + static_cast<int>(delay * 1000);
 }

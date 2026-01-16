@@ -8,6 +8,45 @@
 */
 
 /**
+ * @enum	EaseType
+ * @brief	イージング関数の種類
+ */
+enum class EaseType
+{
+	Linear,			// 線形
+
+	EaseInQuad,		// 2次イーズイン
+	EaseOutQuad,	// 2次イーズアウト
+	EaseInOutQuad,	// 2次イーズインアウト
+
+	EaseInCubic,	// 3次イーズイン
+	EaseOutCubic,	// 3次イーズアウト
+	EaseInOutCubic,	// 3次イーズインアウト
+
+	EaseInQuart,	// 4次イーズイン
+	EaseOutQuart,	// 4次イーズアウト
+	EaseInOutQuart,	// 4次イーズインアウト
+
+	EaseInQuint,	// 5次イーズイン
+	EaseOutQuint,	// 5次イーズアウト
+	EaseInOutQuint,	// 5次イーズインアウト
+
+	EaseInExpo,
+	EaseOutExpo,
+	EaseInOutExpo,
+
+	EaseInSine,
+	EaseOutSine,
+	EaseInOutSine,
+
+	EaseInCirc,
+	EaseOutCirc,
+	EaseInOutCirc,
+};
+
+ 
+ 
+ /**
  * @class	Dotween
  * @brief	自作Dotween
  */

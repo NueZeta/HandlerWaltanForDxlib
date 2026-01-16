@@ -83,7 +83,6 @@ void HandlerWaltan::Update()
     // シーンの更新
 	HWSceneManager::Update();
 
-
     // Effekseerにより再生中のエフェクトを更新する。
     UpdateEffekseer3D();
 
@@ -92,6 +91,12 @@ void HandlerWaltan::Update()
 
     // DXライブラリのカメラとEffekseerのカメラを同期する。
     Effekseer_Sync3DSetting();
+
+    // インスタンス化された全てのHWGameObjectのLastUpdateメソッドを呼び出す
+    for (auto obj : gameObjects)
+        if(obj->active.load())
+            obj->CallAllLastUpdates();
+
 
 	// インスペクターの更新
 	HWInspector::Update();

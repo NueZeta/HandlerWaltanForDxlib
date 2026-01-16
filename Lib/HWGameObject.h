@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <stdarg.h>
 #include <algorithm>
 #include <unordered_set>
@@ -11,200 +11,207 @@
 /**
 * @author   NZ
 * @date     24/07/16
-* @note		ƒRƒ“ƒ|[ƒlƒ“ƒg‚ğŠÇ—‚·‚éA‚·‚×‚Ä‚ÌƒIƒuƒWƒFƒNƒg‚ª‚ÂƒNƒ‰ƒX‚Ì’è‹`
+* @note		ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’ç®¡ç†ã™ã‚‹ã€ã™ã¹ã¦ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒæŒã¤ã‚¯ãƒ©ã‚¹ã®å®šç¾©
 */
 
 
 /**
  * @class	CopyType
- * @brief	ƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚Ìƒ^ƒCƒv
+ * @brief	ã‚³ãƒ”ãƒ¼ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã®ã‚¿ã‚¤ãƒ—
  */
 enum class CopyType
 {
-	//! ƒVƒƒƒ[ƒRƒs[(0)
+	//! ã‚·ãƒ£ãƒ­ãƒ¼ã‚³ãƒ”ãƒ¼(0)
 	Shallow,
-	//! ƒfƒB[ƒvƒRƒs[(1)
+	//! ãƒ‡ã‚£ãƒ¼ãƒ—ã‚³ãƒ”ãƒ¼(1)
 	Deep,
 };
 
 
 /**
  * @class	HWGameObject
- * @brief	ƒIƒuƒWƒFƒNƒg‚ÉŠÖ‚·‚éî•ñ‚ğ‚Ü‚Æ‚ß‚½ƒNƒ‰ƒX
+ * @brief	ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«é–¢ã™ã‚‹æƒ…å ±ã‚’ã¾ã¨ã‚ãŸã‚¯ãƒ©ã‚¹
  */
 class HWGameObject
 {
-	// “Á’è‚ÌƒNƒ‰ƒXˆÈŠO‚©‚ç‚ÌƒAƒNƒZƒX‚ğ–h‚®‚½‚ß‚ÌƒtƒŒƒ“ƒhéŒ¾
+	// ç‰¹å®šã®ã‚¯ãƒ©ã‚¹ä»¥å¤–ã‹ã‚‰ã®ã‚¢ã‚¯ã‚»ã‚¹ã‚’é˜²ããŸã‚ã®ãƒ•ãƒ¬ãƒ³ãƒ‰å®£è¨€
 	friend class HandlerWaltan;
 	friend class CollisionWaltan;
 
 private:
 
-	/*     ƒƒ“ƒo•Ï”     */
+	/*     ãƒ¡ãƒ³ãƒå¤‰æ•°     */
 
 	/**
-	 * @brief   ƒCƒ“ƒXƒ^ƒ“ƒX‰»‚³‚ê‚½ƒIƒuƒWƒFƒNƒg‘S‚Ä‚ğ•ÛŠÇ‚µ‚Ä‚¨‚­ƒRƒ“ƒeƒi
-	 * @History 24/07/19 ì¬(NZ)
+	 * @brief   ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹åŒ–ã•ã‚ŒãŸã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆå…¨ã¦ã‚’ä¿ç®¡ã—ã¦ãŠãã‚³ãƒ³ãƒ†ãƒŠ
+	 * @History 24/07/19 ä½œæˆ(NZ)
 	 */
 	static std::vector<HWGameObject*> gameObjects;
 
 
-	// íœ‘Ò‚¿ƒIƒuƒWƒFƒNƒg‚Ì\‘¢‘Ì
+	// å‰Šé™¤å¾…ã¡ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®æ§‹é€ ä½“
 	struct PendingDestroy {
 		HWGameObject* object;
-		int time;  // íœ‚Ü‚Å‚Ìc‚èŠÔims’PˆÊj
+		int time;  // å‰Šé™¤ã¾ã§ã®æ®‹ã‚Šæ™‚é–“ï¼ˆmså˜ä½ï¼‰
 	};
 
 	/**
-	 * @brief   íœ—\’è‚ÌƒIƒuƒWƒFƒNƒg‚ğ•ÛŠÇ‚·‚éƒRƒ“ƒeƒi
-	 * @History 24/11/07 ì¬(NZ)
+	 * @brief   å‰Šé™¤äºˆå®šã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ä¿ç®¡ã™ã‚‹ã‚³ãƒ³ãƒ†ãƒŠ
+	 * @History 24/11/07 ä½œæˆ(NZ)
 	 */
 	static std::vector<PendingDestroy> destroyList;
 
 	/**
-	 * @brief		ƒAƒ^ƒbƒ`‚³‚ê‚Ä‚¢‚é‘S‚Ä‚ÌƒRƒ“ƒ|[ƒlƒ“ƒg
-	 * @History		24/06/17 ì¬(NZ)
+	 * @brief		ã‚¢ã‚¿ãƒƒãƒã•ã‚Œã¦ã„ã‚‹å…¨ã¦ã®ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ
+	 * @History		24/06/17 ä½œæˆ(NZ)
 	 */
 	std::vector<std::unique_ptr<HWComponent>> hwComponents;
 
 	/**
-	 * @brief		qƒIƒuƒWƒFƒNƒg
-	 * @History		24/09/26 ì¬(NZ)
+	 * @brief		å­ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	 * @History		24/09/26 ä½œæˆ(NZ)
 	 */
 	std::vector<HWGameObject*> children;
 
 	/**
-	 * @brief		eƒIƒuƒWƒFƒNƒg
-	 * @History		24/09/26 ì¬(NZ)
+	 * @brief		è¦ªã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	 * @History		24/09/26 ä½œæˆ(NZ)
 	 */
 	HWGameObject* parent;
 
 public:
 
 	/**
-	 * @brief		ƒAƒNƒeƒBƒu
-	 * @History		24/10/03 ì¬(NZ)
+	 * @brief		ã‚¢ã‚¯ãƒ†ã‚£ãƒ–
+	 * @History		24/10/03 ä½œæˆ(NZ)
 	 */
 	std::atomic<bool> active;
 
 	/**
-	 * @brief		ƒIƒuƒWƒFƒNƒg‚Ì–¼‘O
-	 * @History		24/07/29 ì¬(NZ)
+	 * @brief		ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®åå‰
+	 * @History		24/07/29 ä½œæˆ(NZ)
 	 */
 	std::string name;
 
 	/**
-	 * @brief		ƒIƒuƒWƒFƒNƒg‚Ìƒ^ƒO(enum‚È‚Ç‚Å•ÊŒÂ’è‹`‚µ‚Ä‚­‚¾‚³‚¢)
-	 * @History		24/10/04 ì¬(NZ)
+	 * @brief		ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚¿ã‚°(enumãªã©ã§åˆ¥å€‹å®šç¾©ã—ã¦ãã ã•ã„)
+	 * @History		24/10/04 ä½œæˆ(NZ)
 	 */
 	int tag;
 
 	/**
-	 * @brief		ƒnƒ“ƒhƒ‰[‚âUpdateƒƒ\ƒbƒh‚Ì—Dæ‡ˆÊ(~‡)
-	 * @History		24/07/21 ì¬(NZ)
+	 * @brief		ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ã‚„Updateãƒ¡ã‚½ãƒƒãƒ‰ã®å„ªå…ˆé †ä½(é™é †)
+	 * @History		24/07/21 ä½œæˆ(NZ)
 	 */
 	int priority;
 
 	/**
-	 * @brief		À•W‚ªeƒIƒuƒWƒFƒNƒg‚Ì‰e‹¿‚ğó‚¯‚é‚©
-	 * @History		24/11/01 ì¬(NZ)
+	 * @brief		åº§æ¨™ãŒè¦ªã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å½±éŸ¿ã‚’å—ã‘ã‚‹ã‹
+	 * @History		24/11/01 ä½œæˆ(NZ)
 	 */
 	bool isAffect;
 
 
 
 	/**
-	 * @brief		TransformƒRƒ“ƒ|[ƒlƒ“ƒg
-	 * @History		24/09/26 ì¬(NZ)
+	 * @brief		Transformã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ
+	 * @History		24/09/26 ä½œæˆ(NZ)
 	 */
 	HWTransform* transform;
 
 
 private:
 
-	/*     ƒƒ\ƒbƒh     */
+	/*     ãƒ¡ã‚½ãƒƒãƒ‰     */
 
 	/**
-	 * @brief       ƒvƒ‰ƒCƒIƒŠƒeƒB‚ğQÆ‚µ‚Äƒ\[ƒg‚·‚é(~‡)
+	 * @brief       ãƒ—ãƒ©ã‚¤ã‚ªãƒªãƒ†ã‚£ã‚’å‚ç…§ã—ã¦ã‚½ãƒ¼ãƒˆã™ã‚‹(é™é †)
 	 * @author      NZ
 	 * @date        24/07/19
 	 */
 	void BubbleSort();
 
 	/**
-	 * @brief       ƒIƒuƒWƒFƒNƒg‚ğƒRƒs[‚·‚é(ƒIƒuƒWƒFƒNƒg‚Æƒƒ‚ƒŠã‚Ìƒf[ƒ^‚ÌƒRƒs[)
-	 * @param[in]	HWGameObject& ƒRƒs[Œ³‚É‚È‚éƒIƒuƒWƒFƒNƒg
+	 * @brief       ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ã‚³ãƒ”ãƒ¼ã™ã‚‹(ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¨ãƒ¡ãƒ¢ãƒªä¸Šã®ãƒ‡ãƒ¼ã‚¿ã®ã‚³ãƒ”ãƒ¼)
+	 * @param[in]	HWGameObject& ã‚³ãƒ”ãƒ¼å…ƒã«ãªã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	 * @author      NZ
 	 * @date        24/10/03
 	 */
 	void DeepCopy(const HWGameObject& _other);
 
 	/**
-	 * @brief       ƒIƒuƒWƒFƒNƒg‚ğƒRƒs[‚·‚é(QÆ‚ÌƒRƒs[)
-	 * @param[in]	HWGameObject& ƒRƒs[Œ³‚É‚È‚éƒIƒuƒWƒFƒNƒg
+	 * @brief       ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ã‚³ãƒ”ãƒ¼ã™ã‚‹(å‚ç…§ã®ã‚³ãƒ”ãƒ¼)
+	 * @param[in]	HWGameObject& ã‚³ãƒ”ãƒ¼å…ƒã«ãªã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	 * @author      NZ
 	 * @date        24/10/03
 	 */
 	void ShallowCopy(const HWGameObject& _other);
 
 	/**
-	 * @brief       TransformƒRƒ“ƒ|[ƒlƒ“ƒg‚ÌUpdateƒƒ\ƒbƒh‚ğŒÄ‚Ñ‚¾‚·
+	 * @brief       Transformã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®Updateãƒ¡ã‚½ãƒƒãƒ‰ã‚’å‘¼ã³ã ã™
 	 * @author      NZ
 	 * @date        24/08/22
 	 */
 	void CallTransformUpdate();
 
 	/**
-	 * @brief       ‘S‚Ä‚ÌƒRƒ“ƒ|[ƒlƒ“ƒg‚ÌUpdateƒƒ\ƒbƒh‚ğŒÄ‚Ñ‚¾‚·
+	 * @brief       å…¨ã¦ã®ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®Updateãƒ¡ã‚½ãƒƒãƒ‰ã‚’å‘¼ã³ã ã™
 	 * @author      NZ
 	 * @date        24/08/22
 	 */
 	void CallAllUpdates();
 
 	/**
-	 * @brief       ‘S‚Ä‚ÌƒRƒ“ƒ|[ƒlƒ“ƒg‚ÌLateUpdateƒƒ\ƒbƒh‚ğŒÄ‚Ñ‚¾‚·
+	 * @brief       å…¨ã¦ã®ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®LateUpdateãƒ¡ã‚½ãƒƒãƒ‰ã‚’å‘¼ã³ã ã™
 	 * @author      NZ
 	 * @date        24/08/22
 	 */
 	void CallAllLateUpdates();
 
 	/**
-	 * @brief       ‘S‚Ä‚ÌƒRƒ“ƒ|[ƒlƒ“ƒg‚ÌOnCollisionEnterCallBackƒƒ\ƒbƒh‚ğŒÄ‚Ñ‚¾‚·
+	 * @brief       å…¨ã¦ã®ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®LastUpdateãƒ¡ã‚½ãƒƒãƒ‰ã‚’å‘¼ã³ã ã™
+	 * @author      NZ
+	 * @date        24/1/16
+	 */
+	void CallAllLastUpdates();
+
+	/**
+	 * @brief       å…¨ã¦ã®ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®OnCollisionEnterCallBackãƒ¡ã‚½ãƒƒãƒ‰ã‚’å‘¼ã³ã ã™
 	 * @author      NZ
 	 * @date        24/08/22
 	 */
 	void CallAllOnCollisionEnters(HWCollider& _collider);
 
 	/**
-	 * @brief       ‘S‚Ä‚ÌƒRƒ“ƒ|[ƒlƒ“ƒg‚ÌOnCollisionStayCallBackƒƒ\ƒbƒh‚ğŒÄ‚Ñ‚¾‚·
+	 * @brief       å…¨ã¦ã®ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®OnCollisionStayCallBackãƒ¡ã‚½ãƒƒãƒ‰ã‚’å‘¼ã³ã ã™
 	 * @author      NZ
 	 * @date        24/08/22
 	 */
 	void CallAllOnCollisionStays(HWCollider& _collider);
 
 	/**
-	 * @brief       ‘S‚Ä‚ÌƒRƒ“ƒ|[ƒlƒ“ƒg‚ÌOnCollisionExitCallBackƒƒ\ƒbƒh‚ğŒÄ‚Ñ‚¾‚·
+	 * @brief       å…¨ã¦ã®ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®OnCollisionExitCallBackãƒ¡ã‚½ãƒƒãƒ‰ã‚’å‘¼ã³ã ã™
 	 * @author      NZ
 	 * @date        24/08/22
 	 */
 	void CallAllOnCollisionExits(HWCollider& _collider);
 	
 	/**
-	 * @brief       ‘S‚Ä‚ÌƒRƒ“ƒ|[ƒlƒ“ƒg‚ÌOnTriggerEnterCallBackƒƒ\ƒbƒh‚ğŒÄ‚Ñ‚¾‚·
+	 * @brief       å…¨ã¦ã®ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®OnTriggerEnterCallBackãƒ¡ã‚½ãƒƒãƒ‰ã‚’å‘¼ã³ã ã™
 	 * @author      NZ
 	 * @date        24/08/22
 	 */
 	void CallAllOnTriggerEnters(HWCollider& _collider);
 
 	/**
-	 * @brief       ‘S‚Ä‚ÌƒRƒ“ƒ|[ƒlƒ“ƒg‚ÌOnTriggerStayCallBackƒƒ\ƒbƒh‚ğŒÄ‚Ñ‚¾‚·
+	 * @brief       å…¨ã¦ã®ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®OnTriggerStayCallBackãƒ¡ã‚½ãƒƒãƒ‰ã‚’å‘¼ã³ã ã™
 	 * @author      NZ
 	 * @date        24/08/22
 	 */
 	void CallAllOnTriggerStays(HWCollider& _collider);
 
 	/**
-	 * @brief       ‘S‚Ä‚ÌƒRƒ“ƒ|[ƒlƒ“ƒg‚ÌOnTriggerExitCallBackƒƒ\ƒbƒh‚ğŒÄ‚Ñ‚¾‚·
+	 * @brief       å…¨ã¦ã®ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®OnTriggerExitCallBackãƒ¡ã‚½ãƒƒãƒ‰ã‚’å‘¼ã³ã ã™
 	 * @author      NZ
 	 * @date        24/08/22
 	 */
@@ -213,59 +220,59 @@ private:
 
 public:
 
-#pragma region ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+#pragma region ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 
 	/**
-	 * @brief		ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	 * @brief		ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	 * @author		NZ
 	 * @date		24/07/21
 	 */
 	HWGameObject();
 
 	/**
-	 * @brief		ƒRƒ“ƒXƒgƒ‰ƒNƒ^(–¼‘O‚Ì‰Šú‰»éŒ¾)
-	 * @param[in]	std::string ƒIƒuƒWƒFƒNƒg–¼
+	 * @brief		ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿(åå‰ã®åˆæœŸåŒ–å®£è¨€)
+	 * @param[in]	std::string ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆå
 	 * @author		NZ
 	 * @date		24/07/21
 	 */
 	HWGameObject(const std::string& _name);
 
 	/**
-	 * @brief		ƒRƒ“ƒXƒgƒ‰ƒNƒ^(ƒvƒ‰ƒCƒIƒŠƒeƒB‚Ì‰Šú‰»éŒ¾)
-	 * @param[in]	int ƒvƒ‰ƒCƒIƒŠƒeƒB
+	 * @brief		ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿(ãƒ—ãƒ©ã‚¤ã‚ªãƒªãƒ†ã‚£ã®åˆæœŸåŒ–å®£è¨€)
+	 * @param[in]	int ãƒ—ãƒ©ã‚¤ã‚ªãƒªãƒ†ã‚£
 	 * @author		NZ
 	 * @date		24/07/21
 	 */
 	HWGameObject(const int _priority);
 
 	/**
-	 * @brief		ƒRƒ“ƒXƒgƒ‰ƒNƒ^(–¼‘O‚Æƒvƒ‰ƒCƒIƒŠƒeƒB‚Ì‰Šú‰»éŒ¾)
-	 * @param[in]	std::string ƒIƒuƒWƒFƒNƒg–¼
-	 * @param[in]	int	ƒvƒ‰ƒCƒIƒŠƒeƒB
+	 * @brief		ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿(åå‰ã¨ãƒ—ãƒ©ã‚¤ã‚ªãƒªãƒ†ã‚£ã®åˆæœŸåŒ–å®£è¨€)
+	 * @param[in]	std::string ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆå
+	 * @param[in]	int	ãƒ—ãƒ©ã‚¤ã‚ªãƒªãƒ†ã‚£
 	 * @author		NZ
 	 * @date		24/07/21
 	 */
 	HWGameObject(const std::string& _name, const int _priority);
 
 	/**
-	 * @brief		ƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-	 * @param[in]	HWGameObject& ƒRƒs[Œ³‚ÌHWGameObject
-	 * @param[in]	const CopyType ƒRƒs[‚Ìí—Ş
+	 * @brief		ã‚³ãƒ”ãƒ¼ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+	 * @param[in]	HWGameObject& ã‚³ãƒ”ãƒ¼å…ƒã®HWGameObject
+	 * @param[in]	const CopyType ã‚³ãƒ”ãƒ¼ã®ç¨®é¡
 	 * @author		NZ
 	 * @date		24/07/21
 	 */
 	HWGameObject(const HWGameObject& _other, const CopyType copyType = CopyType::Deep);
 
 	/**
-	 * @brief		”ñ“¯Šú“Ç‚İ‚İƒRƒ“ƒXƒgƒ‰ƒNƒ^
-	 * @param[in]	const CopyType ƒRƒs[‚Ìí—Ş
+	 * @brief		éåŒæœŸèª­ã¿è¾¼ã¿ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+	 * @param[in]	const CopyType ã‚³ãƒ”ãƒ¼ã®ç¨®é¡
 	 */
 	HWGameObject(bool _active);
 
 	/**
-	 * @brief		”ñ“¯Šú“Ç‚İ‚İƒRƒ“ƒXƒgƒ‰ƒNƒ^
-	 * @param[in]	std::string ƒIƒuƒWƒFƒNƒg–¼
-	 * @param[in]	const CopyType ƒRƒs[‚Ìí—Ş
+	 * @brief		éåŒæœŸèª­ã¿è¾¼ã¿ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+	 * @param[in]	std::string ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆå
+	 * @param[in]	const CopyType ã‚³ãƒ”ãƒ¼ã®ç¨®é¡
 	 */
 	HWGameObject(const std::string& _name, bool _active);
 
@@ -273,44 +280,44 @@ public:
 
 
 	/**
-	 * @brief		ƒfƒXƒgƒ‰ƒNƒ^
+	 * @brief		ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	 * @author		NZ
 	 * @date		24/07/21
 	 */
 	~HWGameObject();
 
 
-#pragma region Getterƒƒ\ƒbƒhŒQ
+#pragma region Getterãƒ¡ã‚½ãƒƒãƒ‰ç¾¤
 
 	/**
-	 * @brief		ƒRƒ“ƒ|[ƒlƒ“ƒg‚ğ’Ç‰Á‚·‚é
-	 * @return		std::vector<HWGameObject*> Worldã‚Ì‘S‚Ä‚ÌGameObject‚ğæ“¾‚·‚é
+	 * @brief		ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’è¿½åŠ ã™ã‚‹
+	 * @return		std::vector<HWGameObject*> Worldä¸Šã®å…¨ã¦ã®GameObjectã‚’å–å¾—ã™ã‚‹
 	 * @author		NZ
 	 * @date		24/06/17
 	 */
 	static std::vector<HWGameObject*> GetGameObjects(){ return gameObjects; }
 
 	/**
-	 * @brief		‘S‚Ä‚ÌqƒIƒuƒWƒFƒNƒg‚ğæ“¾‚·‚é
-	 * @detail		ˆø”‚Å“Á’è‚ÌƒCƒ“ƒfƒbƒNƒX‚ÌqƒIƒuƒWƒFƒNƒg‚ğæ“¾‚Å‚«‚é
-	 * @return		const std::vector<HWGameObject*>& ‘S‚Ä‚ÌqƒIƒuƒWƒFƒNƒg‚ğæ“¾‚·‚é
+	 * @brief		å…¨ã¦ã®å­ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å–å¾—ã™ã‚‹
+	 * @detail		å¼•æ•°ã§ç‰¹å®šã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®å­ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å–å¾—ã§ãã‚‹
+	 * @return		const std::vector<HWGameObject*>& å…¨ã¦ã®å­ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å–å¾—ã™ã‚‹
 	 * @author		NZ
 	 * @date		24/10/02
 	 */
 	std::vector<HWGameObject*>& GetChildren() { return children; }
 
 	/**
-	 * @brief		qƒIƒuƒWƒFƒNƒg‚ğæ“¾‚·‚é
-	 * @detail		ˆø”‚Å“Á’è‚ÌƒCƒ“ƒfƒbƒNƒX‚ÌqƒIƒuƒWƒFƒNƒg‚ğæ“¾‚Å‚«‚é
-	 * @return		const std::vector<HWGameObject*>& ‘S‚Ä‚ÌqƒIƒuƒWƒFƒNƒg‚ğæ“¾‚·‚é
+	 * @brief		å­ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å–å¾—ã™ã‚‹
+	 * @detail		å¼•æ•°ã§ç‰¹å®šã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®å­ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å–å¾—ã§ãã‚‹
+	 * @return		const std::vector<HWGameObject*>& å…¨ã¦ã®å­ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å–å¾—ã™ã‚‹
 	 * @author		NZ
 	 * @date		24/10/02
 	 */
 	HWGameObject* GetChild(const int _index);
 
 	/**
-	 * @brief		eƒIƒuƒWƒFƒNƒg‚ğæ“¾‚·‚é
-	 * @return		HWGameObject* eƒIƒuƒWƒFƒNƒg 
+	 * @brief		è¦ªã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å–å¾—ã™ã‚‹
+	 * @return		HWGameObject* è¦ªã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ 
 	 * @author		NZ
 	 * @date		24/10/02
 	 */
@@ -319,13 +326,13 @@ public:
 
 #pragma endregion
 
-#pragma region Setterƒƒ\ƒbƒhŒQ
+#pragma region Setterãƒ¡ã‚½ãƒƒãƒ‰ç¾¤
 
 	/**
-	 * @brief		eƒIƒuƒWƒFƒNƒg‚ğİ’è‚·‚é
-	 * @param[in]	const int æ“¾‚·‚éqƒIƒuƒWƒFƒNƒg‚ÌƒCƒ“ƒfƒbƒNƒX
-	 * @param[in]	const bool À•W‚ªe‚Ì‰e‹¿‚ğó‚¯‚é‚©
-	 * @return		const std::vector<HWGameObject*>& ‘S‚Ä‚ÌqƒIƒuƒWƒFƒNƒg‚ğæ“¾‚·‚é
+	 * @brief		è¦ªã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’è¨­å®šã™ã‚‹
+	 * @param[in]	const int å–å¾—ã™ã‚‹å­ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+	 * @param[in]	const bool åº§æ¨™ãŒè¦ªã®å½±éŸ¿ã‚’å—ã‘ã‚‹ã‹
+	 * @return		const std::vector<HWGameObject*>& å…¨ã¦ã®å­ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å–å¾—ã™ã‚‹
 	 * @author		NZ
 	 * @date		24/10/02
 	 */
@@ -335,29 +342,29 @@ public:
 
 
 	/**
-	 * @brief		ƒRƒ“ƒ|[ƒlƒ“ƒg‚ğ’Ç‰Á‚·‚é
-	 * @param[in]	std::unique_ptr<HWComponent> ƒAƒ^ƒbƒ`‚·‚éƒRƒ“ƒ|[ƒlƒ“ƒg
+	 * @brief		ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’è¿½åŠ ã™ã‚‹
+	 * @param[in]	std::unique_ptr<HWComponent> ã‚¢ã‚¿ãƒƒãƒã™ã‚‹ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ
 	 * @author		NZ
 	 * @date		24/06/17
 	 */
 	template<class T, typename... Args>
 	T* AddComponent(Args&&... args)
 	{
-		//ƒeƒ“ƒvƒŒ[ƒg‚ÌType‚ªComponent‚Ì”h¶ƒNƒ‰ƒX‚©’²‚×Aˆá‚Á‚½ê‡‚ÍƒRƒ“ƒpƒCƒ‹‚ÉƒGƒ‰[‚ğ“f‚­
+		//ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã®TypeãŒComponentã®æ´¾ç”Ÿã‚¯ãƒ©ã‚¹ã‹èª¿ã¹ã€é•ã£ãŸå ´åˆã¯ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«æ™‚ã«ã‚¨ãƒ©ãƒ¼ã‚’åã
 		static_assert(std::is_base_of<HWComponent, T>::value, "Error : Attempted to attach a non-component");
 
 		std::unique_ptr<HWComponent> component = std::make_unique<T>(std::forward<Args>(args)...);
 
-		// ƒRƒ“ƒ|[ƒlƒ“ƒg‚©‚çƒAƒ^ƒbƒ`‚³‚ê‚Ä‚¢‚éGameObject‚ÆTransform‚ğŠm”F‚Å‚«‚é‚æ‚¤‚É‚·‚é
+		// ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‹ã‚‰ã‚¢ã‚¿ãƒƒãƒã•ã‚Œã¦ã„ã‚‹GameObjectã¨Transformã‚’ç¢ºèªã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹
 		component->gameObject = this;
 		component->transform = (GetComponent<HWTransform>());
 		hwComponents.push_back(std::move(component));
 
 		T* ret = dynamic_cast<T*>(hwComponents.back().get());
-		// ƒRƒ“ƒ|[ƒlƒ“ƒg‚ªƒAƒ^ƒbƒ`‚³‚ê‚½uŠÔ‚É‘–‚éƒƒ\ƒbƒh‚ğŒÄ‚Ño‚·
+		// ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆãŒã‚¢ã‚¿ãƒƒãƒã•ã‚ŒãŸç¬é–“ã«èµ°ã‚‹ãƒ¡ã‚½ãƒƒãƒ‰ã‚’å‘¼ã³å‡ºã™
 		ret->Awake();
 
-		// ƒRƒ“ƒ|[ƒlƒ“ƒg‚ğƒvƒ‰ƒCƒIƒŠƒeƒB‡‚É•À‚Ñ•Ï‚¦‚é(~‡)
+		// ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’ãƒ—ãƒ©ã‚¤ã‚ªãƒªãƒ†ã‚£é †ã«ä¸¦ã³å¤‰ãˆã‚‹(é™é †)
 		std::sort(hwComponents.begin(), hwComponents.end(), 
 			[](const std::unique_ptr<HWComponent>& a, const std::unique_ptr<HWComponent>& b) {
 			return a->priority > b->priority; });
@@ -366,18 +373,18 @@ public:
 	}
 
 	/**
-	 * @brief		w’è‚ÌƒRƒ“ƒ|[ƒlƒ“ƒg‚ğ•Ô‚·
-	 * @return		ƒAƒ^ƒbƒ`‚³‚ê‚Ä‚¢‚½ê‡‚ÍƒCƒ“ƒXƒ^ƒ“ƒX‚ğ•Ô‚µA‚»‚êˆÈŠO‚È‚çnullPtr‚ğ•Ô‚·
+	 * @brief		æŒ‡å®šã®ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’è¿”ã™
+	 * @return		ã‚¢ã‚¿ãƒƒãƒã•ã‚Œã¦ã„ãŸå ´åˆã¯ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’è¿”ã—ã€ãã‚Œä»¥å¤–ãªã‚‰nullPtrã‚’è¿”ã™
 	 * @author		NZ
 	 * @date		24/06/17
 	 */
 	template<class T >
 	T* GetComponent()
 	{
-		//ƒeƒ“ƒvƒŒ[ƒg‚ÌType‚ªComponent‚Ì”h¶ƒNƒ‰ƒX‚©’²‚×Aˆá‚Á‚½ê‡‚ÍƒRƒ“ƒpƒCƒ‹‚ÉƒGƒ‰[‚ğ“f‚­
+		//ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã®TypeãŒComponentã®æ´¾ç”Ÿã‚¯ãƒ©ã‚¹ã‹èª¿ã¹ã€é•ã£ãŸå ´åˆã¯ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«æ™‚ã«ã‚¨ãƒ©ãƒ¼ã‚’åã
 		static_assert(std::is_base_of<HWComponent, T>::value, "Error : Trying to get something other than Component");
 
-		//java‚âC#‚Å‚¢‚¤‚Æ‚±‚ë‚Ìforeach\•¶
+		//javaã‚„C#ã§ã„ã†ã¨ã“ã‚ã®foreachæ§‹æ–‡
 		for (auto& component : hwComponents)
 		{
 			if (auto* targetComponent = dynamic_cast<T*>(component.get()))
@@ -388,9 +395,9 @@ public:
 	}
 
 	/**
-	 * @brief		w’è‚ÌƒRƒ“ƒ|[ƒlƒ“ƒg‚ğ•Ô‚·
-	 * @param[in]	HWGameObject* íœ‚·‚éƒIƒuƒWƒFƒNƒg
-	 * @param[in]	int			  ‰½•bŒã‚Éíœ‚·‚é‚© 
+	 * @brief		æŒ‡å®šã®ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’è¿”ã™
+	 * @param[in]	HWGameObject* å‰Šé™¤ã™ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	 * @param[in]	int			  ä½•ç§’å¾Œã«å‰Šé™¤ã™ã‚‹ã‹ 
 	 * @author		NZ
 	 * @date		24/06/17
 	 */

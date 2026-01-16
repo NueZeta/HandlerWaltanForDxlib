@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Utilities.h"
 
 
@@ -162,6 +162,15 @@ protected:
 	 * @date		24/10/12
 	 */
 	virtual void LateUpdate() {}
+
+
+	/**
+	 * @brief		毎フレーム呼ばれるメソッド(シーンの更新後に呼ばれる)
+	 * @detail		仮想関数
+	 * @author		NZ
+	 * @date		24/1/16
+	 */
+	virtual void LastUpdate() {}
 
 
 	/**

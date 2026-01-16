@@ -513,6 +513,188 @@ inline VECTOR Lerp(VECTOR start, VECTOR end, float t)
 	return result;
 }
 
+#pragma region イージング関数
+
+	inline float EaseInQuad(float t) {
+		return t * t;
+	}
+
+	inline float EaseOutQuad(float t) {
+		return t * (2 - t);
+	}
+
+	inline float EaseInOutQuad(float t) {
+		return t < 0.5f ? 2 * t * t : -1 + (4 - 2 * t) * t;
+	}
+
+
+	inline float EaseInCubic(float t) {
+		return t * t * t;
+	}
+
+	inline float EaseOutCubic(float t) {
+		t--;
+		return t * t * t + 1;
+	}
+
+	inline float EaseInOutCubic(float t) {
+		return t < 0.5f ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+	}
+
+
+	inline float EaseInQuart(float t) {
+		return t * t * t * t;
+	}
+
+	inline float EaseOutQuart(float t) {
+		t--;
+		return 1 - t * t * t * t;
+	}
+
+	inline float EaseInOutQuart(float t) {
+		return t < 0.5f ? 8 * t * t * t * t :
+			1 - 8 * (--t) * t * t * t;
+	}
+
+
+	inline float EaseInQuint(float t) {
+		return t * t * t * t * t;
+	}
+
+	inline float EaseOutQuint(float t) {
+		t--;
+		return t * t * t * t * t + 1;
+	}
+
+	inline float EaseInOutQuint(float t) {
+		return t < 0.5f ? 16 * t * t * t * t * t :
+			1 + 16 * (--t) * t * t * t * t;
+	}
+
+
+	inline float EaseInSine(float t) {
+		return 1 - cosf((t * DX_PI_F) / 2);
+	}
+
+	inline float EaseOutSine(float t) {
+		return sinf((t * DX_PI_F) / 2);
+	}
+
+	inline float EaseInOutSine(float t) {
+		return -0.5f * (cosf(DX_PI_F * t) - 1);
+	}
+
+
+	inline float EaseInExpo(float t) {
+		return t == 0 ? 0 : powf(2, 10 * (t - 1));
+	}
+
+	inline float EaseOutExpo(float t) {
+		return t == 1 ? 1 : 1 - powf(2, -10 * t);
+	}
+
+	inline float EaseInOutExpo(float t) {
+		if (t == 0) return 0;
+		if (t == 1) return 1;
+		return t < 0.5f
+			? 0.5f * powf(2, (20 * t) - 10)
+			: 1 - 0.5f * powf(2, (-20 * t) + 10);
+	}
+
+
+	inline float EaseInCirc(float t) {
+		return 1 - sqrtf(1 - t * t);
+	}
+
+	inline float EaseOutCirc(float t) {
+		t--;
+		return sqrtf(1 - t * t);
+	}
+
+	inline float EaseInOutCirc(float t) {
+		return t < 0.5f ?
+			(1 - sqrtf(1 - 4 * t * t)) * 0.5f :
+			(sqrtf(1 - (2 * t - 2) * (2 * t - 2)) + 1) * 0.5f;
+	}
+
+
+	inline float EaseInBack(float t, float s = 1.70158f) {
+		return t * t * ((s + 1) * t - s);
+	}
+
+	inline float EaseOutBack(float t, float s = 1.70158f) {
+		t--;
+		return t * t * ((s + 1) * t + s) + 1;
+	}
+
+	inline float EaseInOutBack(float t, float s = 1.70158f) {
+		s *= 1.525f;
+		if (t < 0.5f) {
+			t *= 2.0f;
+			return 0.5f * (t * t * ((s + 1) * t - s));
+		}
+		t = t * 2 - 2;
+		return 0.5f * (t * t * ((s + 1) * t + s) + 2);
+	}
+
+
+	inline float EaseInElastic(float t) {
+		if (t == 0) return 0;
+		if (t == 1) return 1;
+		return -powf(2, 10 * (t - 1)) * sinf((t - 1.075f) * (2 * DX_PI_F) / 0.3f);
+	}
+
+	inline float EaseOutElastic(float t) {
+		if (t == 0) return 0;
+		if (t == 1) return 1;
+		return powf(2, -10 * t) * sinf((t - 0.075f) * (2 * DX_PI_F) / 0.3f) + 1;
+	}
+
+	inline float EaseInOutElastic(float t) {
+		if (t == 0) return 0;
+		if (t == 1) return 1;
+
+		t *= 2;
+		if (t < 1) {
+			return -0.5f * powf(2, 10 * (t - 1)) *
+				sinf((t - 1.1125f) * (2 * DX_PI_F) / 0.45f);
+		}
+		return powf(2, -10 * (t - 1)) *
+			sinf((t - 1.1125f) * (2 * DX_PI_F) / 0.45f) * 0.5f + 1;
+	}
+
+
+	inline float EaseOutBounce(float t)
+	{
+		if (t < (1 / 2.75f)) {
+			return 7.5625f * t * t;
+		}
+		else if (t < (2 / 2.75f)) {
+			t -= 1.5f / 2.75f;
+			return 7.5625f * t * t + 0.75f;
+		}
+		else if (t < (2.5 / 2.75)) {
+			t -= 2.25f / 2.75f;
+			return 7.5625f * t * t + 0.9375f;
+		}
+		else {
+			t -= 2.625f / 2.75f;
+			return 7.5625f * t * t + 0.984375f;
+		}
+	}
+
+	inline float EaseInBounce(float t) {
+		return 1.0f - EaseOutBounce(1.0f - t);
+	}
+
+	inline float EaseInOutBounce(float t) {
+		return t < 0.5f
+			? (1 - EaseOutBounce(1 - 2 * t)) * 0.5f
+			: (1 + EaseOutBounce(2 * t - 1)) * 0.5f;
+	}
+#pragma endregion
+
+
 
 // 値Aを0から1の間に調整する関数
 inline float Normalize(float A, float min, float max) {
