@@ -60,6 +60,12 @@ public:
 	static void RegisterScene(const std::string& name, std::function<HWSceneBase*()> factory);
 
 	/**
+	 * @brief		実行中のシーンを取得
+	 */
+	static HWSceneBase* GetCurrentScene() {return crrScene;};
+
+
+	/**
 	 * @brief		更新処理
 	 */
 	static void Update();
