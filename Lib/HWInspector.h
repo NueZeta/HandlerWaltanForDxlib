@@ -275,6 +275,15 @@ public:
 		void* data, InspectorItem::Type type);
 
 	/**
+	 * @brief		インスペクターへの登録を削除
+	 * @param[in]	inspectorName	登録しているインスペクター名
+	 * @param[in]	name	パラメータ名
+	 * @author		NZ
+	 * @date		25/02/06
+	 */
+	static void Deregister(const std::string& inspectorName, const std::string& name);
+
+	/**
 	 * @brief		インスペクターの描画
 	 * @author		NZ
 	 * @date		25/09/19
