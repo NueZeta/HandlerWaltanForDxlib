@@ -53,10 +53,10 @@ void HandlerWaltan::Update()
     HWDotween::Update();
 
     //! インスタンス化された全てのGameObject
-    auto gameObjects = HWGameObject::GetGameObjects();
+    //auto& gameObjects = HWGameObject::GetGameObjects();
 
     // TransformのUpdateメソッドを呼び出す
-    for (auto obj : gameObjects)
+    for (auto obj : HWGameObject::GetGameObjects())
         if(obj->active.load())
             obj->CallTransformUpdate();
 
@@ -68,12 +68,12 @@ void HandlerWaltan::Update()
     }
 
     // インスタンス化された全てのHWGameObjectのUpdateメソッドを呼び出す
-    for (auto obj : gameObjects)
+    for (auto obj : HWGameObject::GetGameObjects())
         if(obj->active.load())
             obj->CallAllUpdates();
 
     // インスタンス化された全てのHWGameObjectのLateUpdateメソッドを呼び出す
-    for (auto obj : gameObjects)
+    for (auto obj : HWGameObject::GetGameObjects())
         if(obj->active.load())
             obj->CallAllLateUpdates();
 
@@ -93,7 +93,7 @@ void HandlerWaltan::Update()
     Effekseer_Sync3DSetting();
 
     // インスタンス化された全てのHWGameObjectのLastUpdateメソッドを呼び出す
-    for (auto obj : gameObjects)
+    for (auto obj : HWGameObject::GetGameObjects())
         if(obj->active.load())
             obj->CallAllLastUpdates();
 

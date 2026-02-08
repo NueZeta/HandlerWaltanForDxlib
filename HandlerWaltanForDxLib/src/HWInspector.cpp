@@ -38,6 +38,23 @@ void HWInspector::Register(const std::string& inspectorName, const std::string& 
 	window[inspectorName].items.push_back(item);
 }
 
+void HWInspector::Deregister(const std::string& inspectorName, const std::string& name)
+{
+	if (window.find(inspectorName) == window.end())
+	{
+		return;
+	}
+	
+	for (auto it = window[inspectorName].items.begin(); it != window[inspectorName].items.end(); ) {
+		if (it->name == name) {
+			it = window[inspectorName].items.erase(it); // 削除後の次の要素を指すイテレータが返る
+		}
+		else {
+			++it;
+		}
+	}
+}
+
 void HWInspector::Update()
 {
 	if (!active) return;
